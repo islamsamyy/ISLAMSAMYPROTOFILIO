@@ -484,17 +484,7 @@ try {
 <div className="absolute top-[5200px] right-[10%] w-[900px] h-[600px] rounded-full bg-tertiary-container/10 blur-[150px] opacity-40"></div>
 </div>
 {/*  SECTION 1: HERO SECTION - EXECUTIVE 3D COMMAND CENTER  */}
-<section className="relative z-10 w-full max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-8 pt-2 sm:pt-3 pb-8 flex flex-col items-center text-center">
-{/*  Status Pill Badge  */}
-<motion.div
-  initial={{ opacity: 0, y: -12 }}
-  animate={{ opacity: 1, y: 0 }}
-  transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-  className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-surface-container-high/90 border border-secondary/30 shadow-[0_0_24px_rgba(123,208,255,0.2)] mb-2.5 backdrop-blur-md"
->
-  <span className="w-2.5 h-2.5 rounded-full bg-secondary animate-pulse shadow-[0_0_8px_#7bd0ff]"></span>
-  <span className="font-label-sm text-[11px] sm:text-xs uppercase tracking-wider text-secondary font-semibold">Available for Strategic Advisory • Cairo, Egypt (GMT+2) • 6+ Yrs Exp</span>
-</motion.div>
+<section className="relative z-10 w-full max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8 pb-8 flex flex-col items-center text-center">
 {/*  Main Headline  */}
 <motion.div
   initial={{ opacity: 0, scale: 0.98 }}

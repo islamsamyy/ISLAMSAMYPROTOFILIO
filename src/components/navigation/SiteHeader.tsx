@@ -101,7 +101,7 @@ export function SiteHeader() {
             <img
               src="/images/artboard-mark.png"
               alt="Islam Samy"
-              className="h-7 sm:h-8 w-auto object-contain filter drop-shadow-[0_0_12px_rgba(123,208,255,0.9)] brightness-110 transition-all duration-300"
+              className="h-9 sm:h-10 w-auto object-contain filter drop-shadow-[0_0_16px_rgba(123,208,255,0.95)] brightness-110 transition-all duration-300"
             />
           </div>
           <div className="flex flex-col min-w-0">
@@ -164,16 +164,13 @@ export function SiteHeader() {
         </nav>
 
         {/* Right Action Cluster */}
-        <div className="flex items-center gap-2 shrink-0">
+        <div className="flex items-center gap-2.5 shrink-0">
           
-          {/* Live Cairo Telemetry Clock (visible from xl: 1280px) */}
-          <CairoTelemetry className="hidden xl:inline-flex" />
-
           {/* Book Consultation CTA Button */}
           <Link
             href="/book"
             onClick={() => setCurrentHash('')}
-            className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-primary-container via-primary to-secondary text-white font-nexa font-bold text-xs tracking-wide shadow-[0_0_20px_rgba(160,120,255,0.4)] hover:shadow-[0_0_30px_rgba(123,208,255,0.6)] border border-white/25 backdrop-blur-md transition-all hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary whitespace-nowrap"
+            className="hidden sm:inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-gradient-to-r from-primary-container via-primary to-secondary text-white font-nexa font-bold text-xs tracking-wide shadow-[0_0_20px_rgba(160,120,255,0.4)] hover:shadow-[0_0_30px_rgba(123,208,255,0.6)] border border-white/25 backdrop-blur-md transition-all hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary whitespace-nowrap"
           >
             <span className="material-symbols-outlined text-[15px]">calendar_month</span>
             <span>Book Advisory</span>

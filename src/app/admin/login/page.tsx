@@ -17,17 +17,24 @@ export default function AdminLoginPage() {
   const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMsg(null);
+
+    const trimmedPwd = password.trim();
+    if (!trimmedPwd) {
+      setErrorMsg('Please enter your admin PIN or password.');
+      return;
+    }
+
     setLoading(true);
 
     try {
-      // If user enters the legacy PIN 7749 or the real password
-      const pwd = password.trim() || 'IslamAdmin2026!';
-      const res = await signIn(identifier, pwd);
+      const res = await signIn(identifier, trimmedPwd);
 
       if (res.success) {
-        router.push('/admin');
+        const params = new URLSearchParams(window.location.search);
+        const redirect = params.get('redirect') || '/admin';
+        router.push(redirect);
       } else {
-        setErrorMsg(res.error || 'Invalid credentials. Please verify your password or PIN.');
+        setErrorMsg(res.error || 'Access denied. Invalid credentials.');
       }
     } catch (err: any) {
       setErrorMsg(err.message || 'Authentication error.');
@@ -98,16 +105,14 @@ export default function AdminLoginPage() {
           </div>
 
           <div className="flex flex-col gap-1.5">
-            <div className="flex items-center justify-between">
-              <label className="text-xs font-semibold text-on-surface">Password or PIN</label>
-              <span className="text-[11px] font-mono text-on-surface-variant">Default: 7749</span>
-            </div>
+            <label className="text-xs font-semibold text-on-surface">Master Password or Admin PIN</label>
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="Enter PIN (7749) or password"
+              placeholder="Enter admin PIN or password"
               className="w-full px-4 py-2.5 rounded-xl bg-surface-container-lowest border border-outline-variant/30 text-xs font-mono text-on-surface focus:outline-none focus:ring-2 focus:ring-primary shadow-inner"
+              required
             />
             {errorMsg && (
               <span className="text-[11px] text-error font-mono text-center mt-1">
@@ -121,18 +126,7 @@ export default function AdminLoginPage() {
             disabled={loading}
             className="w-full mt-1 py-3.5 rounded-xl bg-primary-container text-on-primary-container font-semibold text-xs uppercase tracking-wider hover:bg-primary hover:text-on-primary shadow-[0_0_20px_rgba(160,120,255,0.4)] transition-all disabled:opacity-50"
           >
-            {loading ? 'Authenticating with Supabase...' : 'Authenticate & Enter Console'}
-          </button>
-
-          {/* Quick Demo Bypass */}
-          <button
-            type="button"
-            onClick={handleQuickUnlock}
-            disabled={loading}
-            className="w-full py-2.5 rounded-xl bg-surface-container-high hover:bg-surface-container-highest text-secondary text-xs font-mono border border-secondary/30 transition-all flex items-center justify-center gap-2"
-          >
-            <span className="material-symbols-outlined text-base">fingerprint</span>
-            <span>1-Click Authenticate as islam</span>
+            {loading ? 'Verifying Admin Credentials...' : 'Authenticate & Enter Console'}
           </button>
         </form>
 

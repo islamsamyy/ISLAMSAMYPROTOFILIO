@@ -156,7 +156,7 @@ export function MobileNavDrawer({
                   <img
                     src="/images/artboard-mark.png"
                     alt="Islam Samy"
-                    className="h-8 w-auto object-contain filter drop-shadow-[0_0_12px_rgba(123,208,255,0.85)] brightness-110"
+                    className="h-9 w-auto object-contain filter drop-shadow-[0_0_14px_rgba(123,208,255,0.9)] brightness-110"
                   />
                 </div>
                 <div className="flex flex-col">
@@ -184,11 +184,6 @@ export function MobileNavDrawer({
 
             {/* Drawer Body */}
             <div className="flex-1 px-5 py-4 flex flex-col gap-4">
-              {/* Dynamic Cairo Telemetry Status Card */}
-              <div className="p-3 rounded-xl bg-surface-container-high/50 border border-secondary/20 shadow-sm flex items-center justify-between">
-                <CairoTelemetry showStatus={true} showPulse={true} />
-              </div>
-
               {/* Navigation Links */}
               <nav className="flex flex-col gap-1.5" aria-label="Mobile Navigation Links">
                 {navLinks.map((item) => {
