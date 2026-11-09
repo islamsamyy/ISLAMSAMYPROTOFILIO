@@ -1,27 +1,8 @@
 import type { Metadata } from "next";
-import { Inter, JetBrains_Mono, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
 import { ScrollProgress } from "@/components/navigation/ScrollProgress";
 import { ThreeBackgroundCanvas } from "@/components/canvas/ThreeBackgroundCanvas";
-
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-  display: "swap",
-});
-
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
-  variable: "--font-mono",
-  display: "swap",
-});
-
-const plusJakartaSans = Plus_Jakarta_Sans({
-  subsets: ["latin"],
-  variable: "--font-jakarta",
-  display: "swap",
-});
 
 export const metadata: Metadata = {
   title: "Islam Samy — Technology & Business Portfolio | Solutions Architect",
@@ -67,7 +48,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`dark ${inter.variable} ${jetbrainsMono.variable} ${plusJakartaSans.variable}`}
+      className="dark"
     >
       <head>
         {/* Anti-FOUC Blocking Theme Initializer: executes synchronously before render */}
@@ -83,7 +64,7 @@ export default function RootLayout({
         <link rel="preload" href="/fonts/NexaBold.woff" as="font" type="font/woff" crossOrigin="anonymous" />
         <link rel="preload" href="/fonts/NexaLight.woff" as="font" type="font/woff" crossOrigin="anonymous" />
         <link href="https://fonts.cdnfonts.com/css/nexa-bold" rel="stylesheet" />
-        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet" />
       </head>
       <body className="bg-background text-on-surface min-h-screen antialiased transition-colors duration-300 selection:bg-primary-container selection:text-on-primary-container relative">
         <ThemeProvider defaultTheme="dark">

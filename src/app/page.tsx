@@ -54,6 +54,21 @@ export default function PortfolioHomePage() {
   };
 
   useEffect(() => {
+    let isWindowScrolling = false;
+    let scrollDebounceTimer: ReturnType<typeof setTimeout> | null = null;
+    if (typeof window !== 'undefined') {
+      window.addEventListener(
+        'scroll',
+        () => {
+          isWindowScrolling = true;
+          if (scrollDebounceTimer) clearTimeout(scrollDebounceTimer);
+          scrollDebounceTimer = setTimeout(() => {
+            isWindowScrolling = false;
+          }, 90);
+        },
+        { passive: true }
+      );
+    }
     try {
 (() => { const tabMilestone = document.getElementById('pricing-tab-milestone'); const tabRetainer = document.getElementById('pricing-tab-retainer'); if (!tabMilestone || !tabRetainer) return; tabMilestone.addEventListener('click', () => { tabMilestone.className = 'px-5 py-2 rounded-full font-label-md text-label-md bg-primary-container text-on-primary shadow-[0_0_16px_rgba(160,120,255,0.4)] transition-all duration-300 font-semibold'; tabRetainer.className = 'px-5 py-2 rounded-full font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-all duration-300 font-medium'; document.querySelectorAll('.price-display').forEach(el => { const val = el.getAttribute('data-milestone'); if (val) el.textContent = val; }); const labels = document.querySelectorAll('.frequency-label'); if (labels[0]) labels[0].textContent = '/ project milestone'; if (labels[1]) labels[1].textContent = '/ system deployment'; if (labels[2]) labels[2].textContent = '/ month retainer'; }); tabRetainer.addEventListener('click', () => { tabRetainer.className = 'px-5 py-2 rounded-full font-label-md text-label-md bg-primary-container text-on-primary shadow-[0_0_16px_rgba(160,120,255,0.4)] transition-all duration-300 font-semibold'; tabMilestone.className = 'px-5 py-2 rounded-full font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-all duration-300 font-medium'; document.querySelectorAll('.price-display').forEach(el => { const val = el.getAttribute('data-retainer'); if (val) el.textContent = val; }); const labels = document.querySelectorAll('.frequency-label'); if (labels[0]) labels[0].textContent = '/ month (4 sprints)'; if (labels[1]) labels[1].textContent = '/ month SLA dedicated'; if (labels[2]) labels[2].textContent = '/ month retainer'; }); })();
 } catch(err) { console.warn('Script error:', err); }
@@ -71,16 +86,6 @@ document.getElementById('project-form')?.addEventListener('submit', function(e) 
 
 try {
 (() => {
-  let isWindowScrolling = false;
-  let scrollDebounceTimer: ReturnType<typeof setTimeout> | null = null;
-  if (typeof window !== 'undefined') {
-    window.addEventListener('scroll', () => {
-      isWindowScrolling = true;
-      if (scrollDebounceTimer) clearTimeout(scrollDebounceTimer);
-      scrollDebounceTimer = setTimeout(() => { isWindowScrolling = false; }, 90);
-    }, { passive: true });
-  }
-
   function attachViewportLoop(canvas: HTMLElement, renderFn: () => void) {
     let animId: number | null = null;
     let isVisible = false;
@@ -418,7 +423,7 @@ try {
     let glowAnimId: number | null = null;
 
     const updateGlow = () => {
-      if (isWindowScrolling) {
+      if (typeof isWindowScrolling !== 'undefined' && isWindowScrolling) {
         glowAnimId = null;
         return;
       }
