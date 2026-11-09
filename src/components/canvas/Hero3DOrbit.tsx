@@ -233,18 +233,25 @@ export const Hero3DOrbit = React.forwardRef<HTMLDivElement, Hero3DOrbitProps>(
           ctx.stroke();
           ctx.setLineDash([]);
 
-          // 2. Draw Orbiting Glowing Satellites
+          // 2. Draw Orbiting Glowing Satellites (High-performance dual-arc glow, zero shadowBlur CPU stall)
           ring.satellites.forEach((sat) => {
             const satTheta = sat.phase + time * sat.speed;
             const pt = projectPoint(ring.radius, satTheta, effectiveTiltX, effectiveTiltY);
+            const coreRadius = Math.max(1, sat.radius * pt.scale);
 
+            // Outer soft glow halo
             ctx.beginPath();
-            ctx.arc(pt.px, pt.py, Math.max(1, sat.radius * pt.scale), 0, Math.PI * 2);
-            ctx.fillStyle = sat.color;
-            ctx.shadowBlur = 10 * pt.scale;
-            ctx.shadowColor = sat.glow;
+            ctx.arc(pt.px, pt.py, coreRadius * 2.2, 0, Math.PI * 2);
+            ctx.fillStyle = sat.glow.startsWith('#')
+              ? `${sat.glow}40`
+              : 'rgba(123, 208, 255, 0.25)';
             ctx.fill();
-            ctx.shadowBlur = 0;
+
+            // Inner crisp core
+            ctx.beginPath();
+            ctx.arc(pt.px, pt.py, coreRadius, 0, Math.PI * 2);
+            ctx.fillStyle = sat.color;
+            ctx.fill();
           });
         });
 

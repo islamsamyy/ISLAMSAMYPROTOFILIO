@@ -45,13 +45,15 @@ export function ThreeBackgroundCanvas({
       const camera = new THREE.PerspectiveCamera(60, width / height, 1, 2600);
       camera.position.set(0, 40, 480);
 
-      // 3. WebGL Renderer with solid theme background
+      // 3. WebGL Renderer with performance optimizations
+      // antialias: false eliminates MSAA multisample buffers on high-res displays
       renderer = new THREE.WebGLRenderer({
-        antialias: true,
+        antialias: false,
         powerPreference: 'high-performance',
       });
       renderer.setSize(width, height);
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+      // Cap at 1.5 DPR for massive GPU fill-rate savings during scroll
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
       renderer.setClearColor(getBgColor(), 1.0);
       container.appendChild(renderer.domElement);
 
@@ -78,22 +80,19 @@ export function ThreeBackgroundCanvas({
 
       const particleTexture = createGlowTexture();
 
-      // 5. Volumetric Particle System (1,000 particles)
-      const particleCount = 1000;
+      // 5. Volumetric Particle System (Optimized to 240 particles - clean & lightweight)
+      const particleCount = 240;
       const particleGeometry = new THREE.BufferGeometry();
       const positions = new Float32Array(particleCount * 3);
       const originalPositions = new Float32Array(particleCount * 3);
       const colors = new Float32Array(particleCount * 3);
-      const velocities = new Float32Array(particleCount * 3);
 
-      const colorViolet = new THREE.Color(0xd0bcff); // #d0bcff
-      const colorCyan = new THREE.Color(0x7bd0ff); // #7bd0ff
-      const colorAmber = new THREE.Color(0xffb690); // #ffb690
-      const colorWhite = new THREE.Color(0xffffff);
+      const colorViolet = new THREE.Color(0xd0bcff);
+      const colorCyan = new THREE.Color(0x7bd0ff);
+      const colorAmber = new THREE.Color(0xffb690);
 
       for (let i = 0; i < particleCount; i++) {
         const i3 = i * 3;
-        // Full viewport 3D box distribution
         const x = (Math.random() - 0.5) * 1800;
         const y = (Math.random() - 0.5) * 2200;
         const z = (Math.random() - 0.5) * 1200 - 100;
@@ -106,11 +105,6 @@ export function ThreeBackgroundCanvas({
         originalPositions[i3 + 1] = y;
         originalPositions[i3 + 2] = z;
 
-        velocities[i3] = (Math.random() - 0.5) * 0.3;
-        velocities[i3 + 1] = (Math.random() - 0.5) * 0.4;
-        velocities[i3 + 2] = (Math.random() - 0.5) * 0.25;
-
-        // Color distribution: 50% Violet, 40% Cyan, 10% Amber
         const rnd = Math.random();
         const chosenColor = rnd < 0.5 ? colorViolet : rnd < 0.9 ? colorCyan : colorAmber;
 
@@ -123,7 +117,7 @@ export function ThreeBackgroundCanvas({
       particleGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
       const particleMaterial = new THREE.PointsMaterial({
-        size: 13.0,
+        size: 14.0,
         map: particleTexture,
         vertexColors: true,
         transparent: true,
@@ -135,8 +129,8 @@ export function ThreeBackgroundCanvas({
       const particleSystem = new THREE.Points(particleGeometry, particleMaterial);
       scene.add(particleSystem);
 
-      // 6. Neural Constellation Line Network (Dynamic links between nearby particles)
-      const maxLines = 500;
+      // 6. Neural Constellation Line Network (Optimized to 120 max lines)
+      const maxLines = 120;
       const linePositions = new Float32Array(maxLines * 6);
       const lineColors = new Float32Array(maxLines * 6);
       const lineGeometry = new THREE.BufferGeometry();
@@ -154,10 +148,10 @@ export function ThreeBackgroundCanvas({
       const lineSegments = new THREE.LineSegments(lineGeometry, lineMaterial);
       scene.add(lineSegments);
 
-      // 7. Undulating 3D Topography Grid Wave
-      const gridCols = 52;
-      const gridRows = 52;
-      const gridSpacing = 52;
+      // 7. Undulating 3D Topography Grid Wave (24x24 instead of 52x52: 78% fewer vertices)
+      const gridCols = 24;
+      const gridRows = 24;
+      const gridSpacing = 85;
       const gridVertexCount = gridCols * gridRows;
       const gridGeometry = new THREE.BufferGeometry();
       const gridPositions = new Float32Array(gridVertexCount * 3);
@@ -209,7 +203,7 @@ export function ThreeBackgroundCanvas({
 
       ringRadii.forEach((r, idx) => {
         const ringGeom = new THREE.BufferGeometry();
-        const segments = 96;
+        const segments = 48; // reduced from 96
         const pts = new Float32Array((segments + 1) * 3);
         for (let s = 0; s <= segments; s++) {
           const angle = (s / segments) * Math.PI * 2;
@@ -234,13 +228,15 @@ export function ThreeBackgroundCanvas({
       orbitGroup.position.set(0, 0, -140);
       scene.add(orbitGroup);
 
-      // 9. Interaction & Animation Variables
+      // 9. Interaction & Animation Variables with Active Scroll Throttling
       let targetMouseX = 0;
       let targetMouseY = 0;
       let currentMouseX = 0;
       let currentMouseY = 0;
       let scrollY = 0;
       let targetScrollY = 0;
+      let isScrolling = false;
+      let scrollDebounceTimer: ReturnType<typeof setTimeout> | null = null;
       let clock = new THREE.Clock();
 
       const handleMouseMove = (e: MouseEvent) => {
@@ -250,6 +246,11 @@ export function ThreeBackgroundCanvas({
 
       const handleScroll = () => {
         targetScrollY = window.scrollY || window.pageYOffset || 0;
+        isScrolling = true;
+        if (scrollDebounceTimer) clearTimeout(scrollDebounceTimer);
+        scrollDebounceTimer = setTimeout(() => {
+          isScrolling = false;
+        }, 110);
       };
 
       const handleResize = () => {
@@ -258,7 +259,7 @@ export function ThreeBackgroundCanvas({
         camera.aspect = nw / nh;
         camera.updateProjectionMatrix();
         renderer?.setSize(nw, nh);
-        renderer?.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+        renderer?.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
       };
 
       const handleThemeChange = () => {
@@ -288,11 +289,10 @@ export function ThreeBackgroundCanvas({
       });
 
       let isTabVisible = !document.hidden;
-      let isElementIntersecting = true;
 
       const handleVisibilityChange = () => {
         isTabVisible = !document.hidden;
-        if (isTabVisible && isElementIntersecting && !animId) {
+        if (isTabVisible && !animId) {
           clock.start();
           animate();
         } else if (!isTabVisible && animId) {
@@ -302,71 +302,62 @@ export function ThreeBackgroundCanvas({
       };
       document.addEventListener('visibilitychange', handleVisibilityChange);
 
-      let containerObserver: IntersectionObserver | null = null;
-      if (typeof IntersectionObserver !== 'undefined') {
-        containerObserver = new IntersectionObserver(([entry]) => {
-          isElementIntersecting = entry.isIntersecting;
-          if (isElementIntersecting && isTabVisible && !animId) {
-            clock.start();
-            animate();
-          } else if (!isElementIntersecting && animId) {
-            cancelAnimationFrame(animId);
-            animId = 0;
-          }
-        }, { threshold: 0.01 });
-        containerObserver.observe(container);
-      }
+      // 10. Frame-Budgeted Animation Loop (Smooth 45-60 FPS cap, zero CPU math during active scroll)
+      let lastFrameTimestamp = 0;
+      const targetInterval = 1000 / 50; // Cap at 50fps: saves up to 60% GPU cycles on 120-144Hz monitors
 
-      // 10. Main Animation Loop
-      const animate = () => {
-        if (!isTabVisible || !isElementIntersecting) {
+      const animate = (timestamp = 0) => {
+        if (!isTabVisible) {
           animId = 0;
           return;
         }
         animId = requestAnimationFrame(animate);
 
+        const delta = timestamp - lastFrameTimestamp;
+        if (delta < targetInterval) return;
+        lastFrameTimestamp = timestamp - (delta % targetInterval);
+
         const elapsedTime = clock.getElapsedTime();
 
         // Mouse & scroll smoothing
-        currentMouseX += (targetMouseX - currentMouseX) * 0.045;
-        currentMouseY += (targetMouseY - currentMouseY) * 0.045;
-        scrollY += (targetScrollY - scrollY) * 0.065;
+        currentMouseX += (targetMouseX - currentMouseX) * 0.05;
+        currentMouseY += (targetMouseY - currentMouseY) * 0.05;
+        scrollY += (targetScrollY - scrollY) * 0.12;
 
         // Camera positioning with perspective tilt
-        camera.position.x = currentMouseX * 60;
-        camera.position.y = 40 - currentMouseY * 45 - scrollY * 0.18;
+        camera.position.x = currentMouseX * 50;
+        camera.position.y = 40 - currentMouseY * 35 - scrollY * 0.18;
         camera.position.z = 480 - scrollY * 0.04;
 
         const camY = camera.position.y;
         camera.lookAt(0, camY - 20, 0);
 
-        if (!prefersReducedMotion) {
-          // A. Particles animation with infinite vertical wrapping around camera
+        // DURING ACTIVE RAPID SCROLLING: Skip heavy CPU buffer mutations!
+        // The existing particles & grid smoothly glide with the camera at 60 FPS without dropping frames.
+        if (!isScrolling && !prefersReducedMotion) {
+          // A. Particles animation with vertical wrapping
           const posAttr = particleGeometry.getAttribute('position') as THREE.BufferAttribute;
           const posArr = posAttr.array as Float32Array;
 
           for (let i = 0; i < particleCount; i++) {
             const i3 = i * 3;
-            // Harmonic floating and drift
-            posArr[i3] += Math.sin(elapsedTime * 0.6 + i) * 0.22;
-            posArr[i3 + 1] = originalPositions[i3 + 1] + Math.sin(elapsedTime * 0.75 + i * 0.18) * 16;
-            posArr[i3 + 2] += Math.cos(elapsedTime * 0.5 + i) * 0.18;
+            posArr[i3] += Math.sin(elapsedTime * 0.5 + i) * 0.2;
+            posArr[i3 + 1] = originalPositions[i3 + 1] + Math.sin(elapsedTime * 0.6 + i * 0.2) * 14;
+            posArr[i3 + 2] += Math.cos(elapsedTime * 0.4 + i) * 0.15;
 
-            // Seamless vertical wrapping around active camera view
             while (posArr[i3 + 1] > camY + 950) posArr[i3 + 1] -= 1900;
             while (posArr[i3 + 1] < camY - 950) posArr[i3 + 1] += 1900;
 
-            // Slow orbital revolution
             const curX = posArr[i3];
             const curZ = posArr[i3 + 2];
-            const cosRot = Math.cos(0.00045);
-            const sinRot = Math.sin(0.00045);
+            const cosRot = Math.cos(0.0004);
+            const sinRot = Math.sin(0.0004);
             posArr[i3] = curX * cosRot - curZ * sinRot;
             posArr[i3 + 2] = curX * sinRot + curZ * cosRot;
           }
           posAttr.needsUpdate = true;
 
-          // B. Dynamic Neural Constellation Line Network (Connect nearby nodes)
+          // B. Dynamic Neural Constellation Line Network (Max 35 particles checked = ~595 checks)
           const linePosAttr = lineGeometry.getAttribute('position') as THREE.BufferAttribute;
           const lineColAttr = lineGeometry.getAttribute('color') as THREE.BufferAttribute;
           const lPos = linePosAttr.array as Float32Array;
@@ -374,8 +365,8 @@ export function ThreeBackgroundCanvas({
 
           let lineIndex = 0;
           const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
-          const checkCount = Math.min(isMobile ? 70 : 130, particleCount); // Adaptive threshold for consistent 60+ FPS
-          const maxDist = 135;
+          const checkCount = Math.min(isMobile ? 22 : 36, particleCount);
+          const maxDist = 145;
           const maxDistSq = maxDist * maxDist;
 
           for (let i = 0; i < checkCount && lineIndex < maxLines; i++) {
@@ -384,8 +375,7 @@ export function ThreeBackgroundCanvas({
             const y1 = posArr[i3 + 1];
             const z1 = posArr[i3 + 2];
 
-            // Only connect if near camera vertical view
-            if (Math.abs(y1 - camY) > 600) continue;
+            if (Math.abs(y1 - camY) > 550) continue;
 
             for (let j = i + 1; j < checkCount && lineIndex < maxLines; j++) {
               const j3 = j * 3;
@@ -416,7 +406,6 @@ export function ThreeBackgroundCanvas({
             }
           }
 
-          // Clear remaining unused lines
           for (let k = lineIndex * 6; k < maxLines * 6; k++) {
             lPos[k] = 0;
             lCol[k] = 0;
@@ -424,7 +413,7 @@ export function ThreeBackgroundCanvas({
           linePosAttr.needsUpdate = true;
           lineColAttr.needsUpdate = true;
 
-          // C. Undulating 3D Topography Grid Wave tracking camera
+          // C. Undulating 3D Topography Grid Wave
           gridLines.position.y = camY - 240;
 
           const gridPosAttr = gridGeometry.getAttribute('position') as THREE.BufferAttribute;
@@ -438,10 +427,9 @@ export function ThreeBackgroundCanvas({
               const gz = gridPositions[i3 + 2];
 
               const elevation =
-                Math.sin(gx * 0.007 + elapsedTime * 1.3 + scrollY * 0.001) *
-                Math.cos(gz * 0.007 + elapsedTime * 0.95) *
-                45 +
-                Math.sin((gx + gz) * 0.0045 + elapsedTime * 1.6) * 22;
+                Math.sin(gx * 0.007 + elapsedTime * 1.1 + scrollY * 0.001) *
+                Math.cos(gz * 0.007 + elapsedTime * 0.8) *
+                40;
 
               gridPosArray[i3 + 1] = elevation;
             }
@@ -450,8 +438,8 @@ export function ThreeBackgroundCanvas({
 
           // D. Ambient Gyroscopic Orbital Rings tracking camera
           orbitGroup.position.y = camY;
-          orbitGroup.rotation.y = elapsedTime * 0.06;
-          orbitGroup.rotation.x = Math.sin(elapsedTime * 0.035) * 0.12;
+          orbitGroup.rotation.y = elapsedTime * 0.05;
+          orbitGroup.rotation.x = Math.sin(elapsedTime * 0.03) * 0.1;
         }
 
         renderer?.render(scene, camera);
@@ -461,13 +449,13 @@ export function ThreeBackgroundCanvas({
 
       return () => {
         if (animId) cancelAnimationFrame(animId);
+        if (scrollDebounceTimer) clearTimeout(scrollDebounceTimer);
         window.removeEventListener('mousemove', handleMouseMove);
         window.removeEventListener('scroll', handleScroll);
         window.removeEventListener('resize', handleResize);
         window.removeEventListener('islam_theme_change', handleThemeChange);
         document.removeEventListener('visibilitychange', handleVisibilityChange);
         themeObserver.disconnect();
-        containerObserver?.disconnect();
 
         particleGeometry.dispose();
         particleMaterial.dispose();
@@ -486,7 +474,6 @@ export function ThreeBackgroundCanvas({
     } catch (err) {
       console.warn('WebGL initialization failed, falling back to 2D Canvas:', err);
 
-      // Fallback 2D Canvas Animation Engine
       const canvas = document.createElement('canvas');
       canvas.className = 'w-full h-full';
       container.appendChild(canvas);
@@ -504,12 +491,12 @@ export function ThreeBackgroundCanvas({
 
       const nodes: Array<{ x: number; y: number; vx: number; vy: number; r: number; color: string }> = [];
       const colors = ['rgba(208, 188, 255, ', 'rgba(123, 208, 255, ', 'rgba(255, 182, 144, '];
-      for (let i = 0; i < 90; i++) {
+      for (let i = 0; i < 40; i++) {
         nodes.push({
           x: Math.random() * w,
           y: Math.random() * h,
-          vx: (Math.random() - 0.5) * 0.8,
-          vy: (Math.random() - 0.5) * 0.8,
+          vx: (Math.random() - 0.5) * 0.6,
+          vy: (Math.random() - 0.5) * 0.6,
           r: Math.random() * 2 + 1,
           color: colors[Math.floor(Math.random() * colors.length)],
         });
@@ -527,9 +514,7 @@ export function ThreeBackgroundCanvas({
 
           ctx.beginPath();
           ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
-          ctx.fillStyle = n.color + '0.85)';
-          ctx.shadowBlur = 10;
-          ctx.shadowColor = '#7bd0ff';
+          ctx.fillStyle = n.color + '0.75)';
           ctx.fill();
         });
 

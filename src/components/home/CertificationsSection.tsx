@@ -39,7 +39,7 @@ export function CertificationsSection() {
   };
 
   return (
-    <section id="certifications" className="w-full max-w-[1280px] mx-auto px-gutter py-24 relative z-10 scroll-mt-24">
+    <section id="certifications" className="w-full max-w-[1280px] mx-auto px-gutter py-24 relative z-10 scroll-mt-24 content-auto">
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}

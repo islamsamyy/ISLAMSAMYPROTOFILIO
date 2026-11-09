@@ -130,12 +130,7 @@ export function CyberneticGridCanvas({
       ctx.lineTo(width, currentVpY);
       ctx.strokeStyle = isDark ? `rgba(${purple}, 0.85)` : `rgba(${purple}, 0.7)`;
       ctx.lineWidth = 1.6;
-      if (isDark) {
-        ctx.shadowColor = '#d0bcff';
-        ctx.shadowBlur = 8;
-      }
       ctx.stroke();
-      ctx.shadowBlur = 0;
 
       // 3. Perspective Longitudinal (Vertical) Lines
       const numLines = Math.ceil((width * 2) / gridSpacing);

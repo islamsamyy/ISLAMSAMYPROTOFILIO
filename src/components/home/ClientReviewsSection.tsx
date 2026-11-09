@@ -9,7 +9,7 @@ export function ClientReviewsSection() {
   const { reviews, loaded } = useReviews();
 
   return (
-    <section id="reviews" className="relative z-10 w-full max-w-[1280px] mx-auto px-gutter py-20 scroll-mt-24">
+    <section id="reviews" className="relative z-10 w-full max-w-[1280px] mx-auto px-gutter py-20 scroll-mt-24 content-auto">
       {/* Section Header */}
       <motion.div
         initial={{ opacity: 0, y: 24 }}

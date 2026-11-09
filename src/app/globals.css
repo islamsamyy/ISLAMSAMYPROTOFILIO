@@ -156,7 +156,8 @@
   }
 
   html {
-    scroll-behavior: smooth;
+    /* Native responsive scrolling response without wheel-tick interpolation lag */
+    scroll-behavior: auto;
   }
 
   body {
@@ -220,4 +221,16 @@
 /* Nexa Typography Utilities */
 .font-nexa {
   font-family: 'Nexa', 'Plus Jakarta Sans', sans-serif;
+}
+
+/* High-Performance Section Rendering & Scroll Optimization */
+.content-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: 1000px 900px;
+}
+
+/* GPU Compositing Layer Elevation */
+.gpu-layer {
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }

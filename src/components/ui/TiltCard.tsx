@@ -47,6 +47,8 @@ export const TiltCard = React.forwardRef<HTMLDivElement, TiltCardProps>(
     forwardedRef
   ) => {
     const cardRef = React.useRef<HTMLDivElement | null>(null);
+    const rafRef = React.useRef<number | null>(null);
+    const pendingUpdateRef = React.useRef<{ tiltX: number; tiltY: number; glareX: number; glareY: number } | null>(null);
     const [tiltX, setTiltX] = React.useState(0);
     const [tiltY, setTiltY] = React.useState(0);
     const [glarePos, setGlarePos] = React.useState({ x: 50, y: 50 });
@@ -102,17 +104,23 @@ export const TiltCard = React.forwardRef<HTMLDivElement, TiltCardProps>(
         const normX = clientX / rect.width - 0.5;
         const normY = clientY / rect.height - 0.5;
 
-        // Tilt rotation: cursor at top tilts card top towards viewer (+X), cursor at right tilts right (+Y)
         const calcTiltX = -normY * maxTilt * 2;
         const calcTiltY = normX * maxTilt * 2;
+        const glareX = Math.round((clientX / rect.width) * 100);
+        const glareY = Math.round((clientY / rect.height) * 100);
 
-        setTiltX(calcTiltX);
-        setTiltY(calcTiltY);
+        pendingUpdateRef.current = { tiltX: calcTiltX, tiltY: calcTiltY, glareX, glareY };
 
-        if (glare) {
-          setGlarePos({
-            x: Math.round((clientX / rect.width) * 100),
-            y: Math.round((clientY / rect.height) * 100),
+        if (!rafRef.current) {
+          rafRef.current = requestAnimationFrame(() => {
+            rafRef.current = null;
+            if (pendingUpdateRef.current) {
+              setTiltX(pendingUpdateRef.current.tiltX);
+              setTiltY(pendingUpdateRef.current.tiltY);
+              if (glare) {
+                setGlarePos({ x: pendingUpdateRef.current.glareX, y: pendingUpdateRef.current.glareY });
+              }
+            }
           });
         }
 
@@ -133,6 +141,11 @@ export const TiltCard = React.forwardRef<HTMLDivElement, TiltCardProps>(
 
     const handleMouseLeave = React.useCallback(
       (e: React.MouseEvent<HTMLDivElement>) => {
+        if (rafRef.current) {
+          cancelAnimationFrame(rafRef.current);
+          rafRef.current = null;
+        }
+        pendingUpdateRef.current = null;
         setIsHovered(false);
         setTiltX(0);
         setTiltY(0);

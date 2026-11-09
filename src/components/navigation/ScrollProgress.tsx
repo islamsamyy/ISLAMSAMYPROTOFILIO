@@ -13,14 +13,25 @@ export function ScrollProgress() {
 
   const [showBackToTop, setShowBackToTop] = useState(false);
   const [scrollPercentage, setScrollPercentage] = useState(0);
+  const prevShowRef = React.useRef(false);
+  const prevPercentRef = React.useRef(-1);
 
   useEffect(() => {
     const unsubscribeScrollY = scrollY.on('change', (latest) => {
-      setShowBackToTop(latest > 350);
+      const shouldShow = latest > 350;
+      if (shouldShow !== prevShowRef.current) {
+        prevShowRef.current = shouldShow;
+        setShowBackToTop(shouldShow);
+      }
     });
 
     const unsubscribeProgress = scrollYProgress.on('change', (latest) => {
-      setScrollPercentage(Math.round(latest * 100));
+      const rounded = Math.round(latest * 100);
+      // Only trigger React re-render every 5% step or at extremes (0 or 100)
+      if (Math.abs(rounded - prevPercentRef.current) >= 5 || rounded === 100 || rounded === 0) {
+        prevPercentRef.current = rounded;
+        setScrollPercentage(rounded);
+      }
     });
 
     return () => {
