@@ -166,12 +166,14 @@ export const TiltCard = React.forwardRef<HTMLDivElement, TiltCardProps>(
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         className={cn(
-          'relative will-change-transform transform-gpu select-none',
+          'relative select-none',
+          isHovered && isInteractionActive && 'transform-gpu',
           className
         )}
         style={{
           transform: transformStyleString,
-          transformStyle: 'preserve-3d',
+          transformStyle: isHovered && isInteractionActive ? 'preserve-3d' : 'flat',
+          willChange: isHovered && isInteractionActive ? 'transform' : 'auto',
           transition: isHovered
             ? 'transform 100ms cubic-bezier(0.03, 0.98, 0.52, 0.99)'
             : `transform ${speed}ms cubic-bezier(0.03, 0.98, 0.52, 0.99)`,

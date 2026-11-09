@@ -55,7 +55,7 @@ export function ExperienceTimelineSection() {
             </div>
 
             {/* Role Card */}
-            <div className="p-6 sm:p-8 rounded-2xl bg-surface-container-low/45 hover:bg-surface-container-low/70 backdrop-blur-xl border border-outline-variant/30 hover:border-primary/50 shadow-[0_8px_32px_rgba(0,0,0,0.4)] transition-all duration-300">
+            <div className="p-6 sm:p-8 rounded-2xl bg-surface-container-low/90 dark:bg-[#14161f]/95 hover:bg-surface-container-high/90 border border-outline-variant/30 hover:border-primary/50 shadow-[0_8px_32px_rgba(0,0,0,0.4)] transition-all duration-300">
               {/* Header Info */}
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
                 <div>

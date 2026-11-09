@@ -83,6 +83,7 @@ export default function RootLayout({
         <link rel="preload" href="/fonts/NexaBold.woff" as="font" type="font/woff" crossOrigin="anonymous" />
         <link rel="preload" href="/fonts/NexaLight.woff" as="font" type="font/woff" crossOrigin="anonymous" />
         <link href="https://fonts.cdnfonts.com/css/nexa-bold" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
       </head>
       <body className="bg-background text-on-surface min-h-screen antialiased transition-colors duration-300 selection:bg-primary-container selection:text-on-primary-container relative">
         <ThemeProvider defaultTheme="dark">

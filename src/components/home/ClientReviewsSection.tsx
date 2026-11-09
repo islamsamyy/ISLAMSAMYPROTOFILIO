@@ -42,7 +42,7 @@ export function ClientReviewsSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.4, delay: index * 0.1 }}
             whileHover={{ y: -4 }}
-            className="group relative p-6 sm:p-8 rounded-2xl bg-surface-container-low/45 hover:bg-surface-container/70 backdrop-blur-xl border border-outline-variant/30 hover:border-primary/50 shadow-[0_8px_32px_rgba(0,0,0,0.4)] transition-all duration-300 flex flex-col justify-between"
+            className="group relative p-6 sm:p-8 rounded-2xl bg-surface-container-low/90 dark:bg-[#14161f]/95 hover:bg-surface-container/90 border border-outline-variant/30 hover:border-primary/50 shadow-[0_8px_32px_rgba(0,0,0,0.4)] transition-all duration-300 flex flex-col justify-between"
           >
             {/* Top Row: Stars & Project Tag */}
             <div>

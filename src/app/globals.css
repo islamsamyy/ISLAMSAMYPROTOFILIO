@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
-@import url('https://fonts.cdnfonts.com/css/nexa-bold');
+/* Fonts linked in root layout for zero CSS-blocking waterfall */
 
 /* Local and CDN Fallback @font-face for Nexa */
 @font-face {
@@ -233,4 +232,10 @@
 .gpu-layer {
   transform: translateZ(0);
   backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Fast tap response and layout thrashing prevention */
+img, svg, canvas {
+  content-visibility: auto;
 }

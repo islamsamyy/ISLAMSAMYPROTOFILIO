@@ -58,8 +58,8 @@ export const Hero3DOrbit = React.forwardRef<HTMLDivElement, Hero3DOrbitProps>(
         typeof window !== 'undefined' &&
         window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-      // HiDPI Scaling
-      const dpr = Math.min(typeof window !== 'undefined' ? window.devicePixelRatio || 1 : 1, 2);
+      // HiDPI Scaling (Capped at 1.2 to eliminate high-DPI GPU pixel pipeline load)
+      const dpr = Math.min(typeof window !== 'undefined' ? window.devicePixelRatio || 1 : 1, 1.2);
       canvas.width = Math.floor(size * dpr);
       canvas.height = Math.floor(size * dpr);
       canvas.style.width = `${size}px`;
@@ -211,8 +211,8 @@ export const Hero3DOrbit = React.forwardRef<HTMLDivElement, Hero3DOrbitProps>(
           const effectiveTiltY = ring.tiltY + smoothTiltY;
           const ringAngle = time * ring.speed;
 
-          // 1. Draw Ring Ellipse Path (subdivided 3D circle for perspective curvature)
-          const segments = 72;
+          // 1. Draw Ring Ellipse Path (Streamlined 36 segments)
+          const segments = 36;
           ctx.beginPath();
           for (let i = 0; i <= segments; i++) {
             const theta = (i / segments) * Math.PI * 2 + ringAngle;

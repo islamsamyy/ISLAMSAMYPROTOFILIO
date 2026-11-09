@@ -96,7 +96,7 @@ export function CertificationsSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.4, delay: index * 0.05 }}
             whileHover={{ y: -5 }}
-            className="group relative p-6 sm:p-7 rounded-3xl bg-surface-container-low/40 hover:bg-surface-container-low/65 backdrop-blur-2xl border border-white/20 dark:border-white/[0.08] hover:border-primary/50 shadow-[0_8px_32px_rgba(0,0,0,0.35)] hover:shadow-[0_16px_48px_rgba(160,120,255,0.3)] transition-all duration-300 flex flex-col justify-between"
+            className="group relative p-6 sm:p-7 rounded-3xl bg-surface-container-low/90 dark:bg-[#14161f]/95 hover:bg-surface-container-low/95 border border-white/20 dark:border-white/[0.08] hover:border-primary/50 shadow-[0_8px_32px_rgba(0,0,0,0.35)] hover:shadow-[0_16px_48px_rgba(160,120,255,0.3)] transition-all duration-300 flex flex-col justify-between"
           >
             {/* Top Specular Rim Light */}
             <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/30 dark:via-primary/30 to-transparent pointer-events-none rounded-t-3xl" />

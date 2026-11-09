@@ -5,11 +5,7 @@ import { motion, useScroll, useSpring, AnimatePresence } from 'framer-motion';
 
 export function ScrollProgress() {
   const { scrollYProgress, scrollY } = useScroll();
-  const scaleX = useSpring(scrollYProgress, {
-    stiffness: 280,
-    damping: 30,
-    restDelta: 0.001,
-  });
+  const scaleX = scrollYProgress;
 
   const [showBackToTop, setShowBackToTop] = useState(false);
   const [scrollPercentage, setScrollPercentage] = useState(0);

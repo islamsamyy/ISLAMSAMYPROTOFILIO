@@ -81,8 +81,8 @@ export function SiteHeader() {
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
         scrolled
-          ? "bg-black/60 dark:bg-[#070913]/70 backdrop-blur-2xl border-b border-white/[0.12] shadow-[0_8px_32px_rgba(0,0,0,0.5)]"
-          : "bg-transparent backdrop-blur-sm border-b border-white/[0.06]"
+          ? "bg-black/75 dark:bg-[#0c0e15]/85 backdrop-blur-md border-b border-white/[0.10] shadow-[0_4px_24px_rgba(0,0,0,0.5)]"
+          : "bg-transparent backdrop-blur-[2px] border-b border-white/[0.05]"
       )}
     >
       {/* Top Specular Rim Reflection */}
