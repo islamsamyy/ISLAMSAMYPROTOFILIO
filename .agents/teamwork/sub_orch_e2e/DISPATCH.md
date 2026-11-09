@@ -1,0 +1,15 @@
+# Dispatch: E2E Testing Orchestrator
+- **Working Directory**: c:\Users\Eslam\Desktop\islamweb\.agents\teamwork\sub_orch_e2e
+- **Scope**: E2E Testing Track (Requirement-Driven, Opaque-Box Test Suite)
+  - Create `TEST_INFRA.md` at project root
+  - Build test harness & runner (Tiers 1-4: Feature coverage, Boundary/Corner, Cross-feature pairwise, Real-world application scenarios)
+  - Exercise the portfolio across all 11 routes (`/`, `/projects`, `/blog`, `/book`, `/my-bookings`, `/admin/*`)
+  - Verify navigation, theme switching, canvas interactivity, and form workflows as an opaque-box end-user
+  - Publish `TEST_READY.md` at project root upon completion
+- **Documents to read**:
+  - `c:\Users\Eslam\Desktop\islamweb\.agents\teamwork\ORIGINAL_REQUEST.md`
+  - `c:\Users\Eslam\Desktop\islamweb\PROJECT.md`
+- **Constraints**:
+  - Requirement-driven from ORIGINAL_REQUEST.md and PROJECT.md, independent of internal implementation code
+  - Opaque-box testing (test user entry points, DOM interactions, routes, theme toggles, visual element mounts)
+  - For test creation, dispatch `teamwork_test_writer`

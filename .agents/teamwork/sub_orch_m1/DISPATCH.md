@@ -1,0 +1,20 @@
+# Dispatch: Sub-Orchestrator for Milestone 1
+- **Working Directory**: c:\Users\Eslam\Desktop\islamweb\.agents\teamwork\sub_orch_m1
+- **Scope**: Milestone 1 — Foundational Theme Tokens & UI Primitives System
+  - Features: F1 (Dual Theme Design Tokens), F2 (Zero-FOUC Theme Provider), F3 (Accessible Radix UI Primitives)
+  - Files owned:
+    - `src/app/globals.css`
+    - `tailwind.config.ts`
+    - `src/app/layout.tsx`
+    - `src/components/theme/ThemeProvider.tsx`
+    - `src/components/theme/ThemeToggle.tsx`
+    - `src/components/ui/*.tsx` (`dialog.tsx`, `tabs.tsx`, `card.tsx`, `input.tsx`, `textarea.tsx`, `label.tsx`, `select.tsx`, `avatar.tsx`, `tooltip.tsx`, and enhancement of `button.tsx`/`badge.tsx`)
+- **Documents to read**:
+  - `c:\Users\Eslam\Desktop\islamweb\.agents\teamwork\ORIGINAL_REQUEST.md`
+  - `c:\Users\Eslam\Desktop\islamweb\PROJECT.md`
+  - `c:\Users\Eslam\Desktop\islamweb\.agents\teamwork\teamwork_explorer_survey_1\handoff.md`
+  - `c:\Users\Eslam\Desktop\islamweb\.agents\teamwork\teamwork_explorer_survey_2\handoff.md`
+- **Constraints**:
+  - Integrity mode: demo
+  - The team must NOT: read test source code to understand expected behaviour before implementing
+  - Follow the 2B Iteration Loop (Explorers -> Worker -> Reviewers -> Challengers -> Forensic Auditor -> Gate)

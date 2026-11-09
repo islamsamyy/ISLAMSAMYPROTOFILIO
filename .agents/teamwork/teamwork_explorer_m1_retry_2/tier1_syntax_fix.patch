@@ -1,0 +1,10 @@
+--- a/tests/tier1-feature-coverage.test.mjs
++++ b/tests/tier1-feature-coverage.test.mjs
+@@ -590,5 +590,5 @@
+     });
+ 
+     it('F12.4: should support type="hyperplane" category canvas rendering', () => {
+-      const hyperplaneConfig = { type: 'hyperplane', vectors: 48, depth: 3D => 3 };
++      const hyperplaneConfig = { type: 'hyperplane', vectors: 48, depth: 3 };
+       assert.strictEqual(hyperplaneConfig.type, 'hyperplane');
+     });
