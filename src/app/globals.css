@@ -27,11 +27,6 @@
   :root {
     color-scheme: light;
 
-    /* Base Font Family Variables */
-    --font-inter: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    --font-mono: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
-    --font-jakarta: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-
     /* Light Mode Tokens (Crisp High-Contrast) */
     --background: 248 249 253;
     --on-background: 23 26 31;
@@ -162,6 +157,9 @@
   html {
     /* Native responsive scrolling response without wheel-tick interpolation lag */
     scroll-behavior: auto;
+    --font-inter: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    --font-mono: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+    --font-jakarta: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   }
 
   body {
@@ -244,3 +242,52 @@
 img, svg, canvas {
   content-visibility: auto;
 }
+
+/* Continuous Horizontal Slideshow Animations (Gliding to Right) */
+@keyframes slide-to-right {
+  0% {
+    transform: translate3d(-50%, 0, 0);
+  }
+  100% {
+    transform: translate3d(0%, 0, 0);
+  }
+}
+
+@keyframes slide-to-left {
+  0% {
+    transform: translate3d(0%, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.animate-slide-right-slow {
+  display: flex;
+  width: max-content;
+  animation: slide-to-right 48s linear infinite;
+  will-change: transform;
+}
+
+.animate-slide-right-medium {
+  display: flex;
+  width: max-content;
+  animation: slide-to-right 36s linear infinite;
+  will-change: transform;
+}
+
+.animate-slide-right-slow:hover,
+.animate-slide-right-medium:hover,
+.animate-slide-paused {
+  animation-play-state: paused !important;
+}
+
+/* Smooth hide scrollbar utility */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+

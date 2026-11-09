@@ -101,7 +101,7 @@ export function SiteHeader() {
             <img
               src="/images/artboard-mark.png"
               alt="Islam Samy"
-              className="h-9 sm:h-10 w-auto object-contain filter drop-shadow-[0_0_16px_rgba(123,208,255,0.95)] brightness-110 transition-all duration-300"
+              className="h-11 sm:h-12 w-auto object-contain filter drop-shadow-[0_0_18px_rgba(123,208,255,0.95)] brightness-110 transition-all duration-300"
             />
           </div>
           <div className="flex flex-col min-w-0">

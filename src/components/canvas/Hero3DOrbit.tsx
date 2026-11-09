@@ -186,22 +186,46 @@ export const Hero3DOrbit = React.forwardRef<HTMLDivElement, Hero3DOrbitProps>(
         };
       };
 
+      // Precomputed Core Hologram Glow Radial Gradient (Instantiated ONCE instead of every frame)
+      const coreGrad = ctx.createRadialGradient(cx, cy, 10, cx, cy, size * 0.45);
+      coreGrad.addColorStop(0, 'rgba(160, 120, 255, 0.08)');
+      coreGrad.addColorStop(0.5, 'rgba(123, 208, 255, 0.03)');
+      coreGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+
+      let isWindowScrolling = false;
+      let scrollTimer: ReturnType<typeof setTimeout> | null = null;
+      const handleScroll = () => {
+        isWindowScrolling = true;
+        if (scrollTimer) clearTimeout(scrollTimer);
+        scrollTimer = setTimeout(() => {
+          isWindowScrolling = false;
+        }, 90);
+      };
+      window.addEventListener('scroll', handleScroll, { passive: true });
+
       let time = 0;
       let animId: number = 0;
       let isVisible = true;
+      let lastFrameTime = 0;
+      const minInterval = 1000 / 30; // 30 FPS ceiling
 
-      const render = () => {
+      const render = (timestamp = 0) => {
+        if (!isVisible || prefersReducedMotion) return;
+        animId = requestAnimationFrame(render);
+
+        // Dedicated 100% compositor thread during rapid page scrolling
+        if (isWindowScrolling) return;
+
+        if (timestamp - lastFrameTime < minInterval) return;
+        lastFrameTime = timestamp;
+
         ctx.clearRect(0, 0, size, size);
 
         // Smooth cursor parallax lerp
         smoothTiltX += (targetTiltX - smoothTiltX) * 0.06;
         smoothTiltY += (targetTiltY - smoothTiltY) * 0.06;
 
-        // Ambient Core Hologram Glow
-        const coreGrad = ctx.createRadialGradient(cx, cy, 10, cx, cy, size * 0.45);
-        coreGrad.addColorStop(0, 'rgba(160, 120, 255, 0.08)');
-        coreGrad.addColorStop(0.5, 'rgba(123, 208, 255, 0.03)');
-        coreGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+        // Ambient Core Hologram Glow using cached gradient
         ctx.fillStyle = coreGrad;
         ctx.fillRect(0, 0, size, size);
 
@@ -256,15 +280,16 @@ export const Hero3DOrbit = React.forwardRef<HTMLDivElement, Hero3DOrbitProps>(
         });
 
         time += 1;
-        if (isVisible && !prefersReducedMotion) {
-          animId = requestAnimationFrame(render);
-        }
       };
 
       // If prefers-reduced-motion, draw single static frame
       if (prefersReducedMotion) {
-        render();
+        ctx.clearRect(0, 0, size, size);
+        ctx.fillStyle = coreGrad;
+        ctx.fillRect(0, 0, size, size);
         return () => {
+          if (scrollTimer) clearTimeout(scrollTimer);
+          window.removeEventListener('scroll', handleScroll);
           if (interactive) {
             window.removeEventListener('mousemove', handleMouseMove);
             window.removeEventListener('mouseleave', handleMouseLeave);
@@ -295,6 +320,8 @@ export const Hero3DOrbit = React.forwardRef<HTMLDivElement, Hero3DOrbitProps>(
 
       return () => {
         if (animId) cancelAnimationFrame(animId);
+        if (scrollTimer) clearTimeout(scrollTimer);
+        window.removeEventListener('scroll', handleScroll);
         observer?.disconnect();
         if (interactive) {
           window.removeEventListener('mousemove', handleMouseMove);

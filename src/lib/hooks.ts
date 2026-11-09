@@ -85,17 +85,21 @@ export function useProjects() {
       } catch (e) {}
     }
 
-    const channel = supabase
-      .channel('rt-projects')
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'projects' }, () => {
-        load();
-      })
-      .subscribe();
+    let channel: any = null;
+    const subTimer = setTimeout(() => {
+      channel = supabase
+        .channel('rt-projects')
+        .on('postgres_changes', { event: '*', schema: 'public', table: 'projects' }, () => {
+          load();
+        })
+        .subscribe();
+    }, 1000);
 
     return () => {
+      clearTimeout(subTimer);
       window.removeEventListener('islam_store_sync', onSync);
       try { bus?.close(); } catch (e) {}
-      supabase.removeChannel(channel);
+      if (channel) supabase.removeChannel(channel);
     };
   }, [load]);
 
@@ -165,20 +169,24 @@ export function usePricing() {
       } catch (e) {}
     }
 
-    const channel = supabase
-      .channel('rt-packages')
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'packages' }, () => {
-        load();
-      })
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'consultation_rates' }, () => {
-        load();
-      })
-      .subscribe();
+    let channel: any = null;
+    const subTimer = setTimeout(() => {
+      channel = supabase
+        .channel('rt-packages')
+        .on('postgres_changes', { event: '*', schema: 'public', table: 'packages' }, () => {
+          load();
+        })
+        .on('postgres_changes', { event: '*', schema: 'public', table: 'consultation_rates' }, () => {
+          load();
+        })
+        .subscribe();
+    }, 1000);
 
     return () => {
+      clearTimeout(subTimer);
       window.removeEventListener('islam_store_sync', onSync);
       try { bus?.close(); } catch (e) {}
-      supabase.removeChannel(channel);
+      if (channel) supabase.removeChannel(channel);
     };
   }, [load]);
 
@@ -249,17 +257,21 @@ export function useArticles() {
       } catch (e) {}
     }
 
-    const channel = supabase
-      .channel('rt-articles')
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'articles' }, () => {
-        load();
-      })
-      .subscribe();
+    let channel: any = null;
+    const subTimer = setTimeout(() => {
+      channel = supabase
+        .channel('rt-articles')
+        .on('postgres_changes', { event: '*', schema: 'public', table: 'articles' }, () => {
+          load();
+        })
+        .subscribe();
+    }, 1000);
 
     return () => {
+      clearTimeout(subTimer);
       window.removeEventListener('islam_store_sync', onSync);
       try { bus?.close(); } catch (e) {}
-      supabase.removeChannel(channel);
+      if (channel) supabase.removeChannel(channel);
     };
   }, [load]);
 
@@ -318,17 +330,21 @@ export function useReviews() {
       } catch (e) {}
     }
 
-    const channel = supabase
-      .channel('rt-reviews')
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'reviews' }, () => {
-        load();
-      })
-      .subscribe();
+    let channel: any = null;
+    const subTimer = setTimeout(() => {
+      channel = supabase
+        .channel('rt-reviews')
+        .on('postgres_changes', { event: '*', schema: 'public', table: 'reviews' }, () => {
+          load();
+        })
+        .subscribe();
+    }, 1000);
 
     return () => {
+      clearTimeout(subTimer);
       window.removeEventListener('islam_store_sync', onSync);
       try { bus?.close(); } catch (e) {}
-      supabase.removeChannel(channel);
+      if (channel) supabase.removeChannel(channel);
     };
   }, [load]);
 
@@ -387,17 +403,21 @@ export function useReservations() {
       } catch (e) {}
     }
 
-    const channel = supabase
-      .channel('rt-reservations')
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'reservations' }, () => {
-        load();
-      })
-      .subscribe();
+    let channel: any = null;
+    const subTimer = setTimeout(() => {
+      channel = supabase
+        .channel('rt-reservations')
+        .on('postgres_changes', { event: '*', schema: 'public', table: 'reservations' }, () => {
+          load();
+        })
+        .subscribe();
+    }, 1000);
 
     return () => {
+      clearTimeout(subTimer);
       window.removeEventListener('islam_store_sync', onSync);
       try { bus?.close(); } catch (e) {}
-      supabase.removeChannel(channel);
+      if (channel) supabase.removeChannel(channel);
     };
   }, [load]);
 
@@ -461,17 +481,21 @@ export function useCertifications() {
       } catch (e) {}
     }
 
-    const channel = supabase
-      .channel('rt-certifications')
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'certifications' }, () => {
-        load();
-      })
-      .subscribe();
+    let channel: any = null;
+    const subTimer = setTimeout(() => {
+      channel = supabase
+        .channel('rt-certifications')
+        .on('postgres_changes', { event: '*', schema: 'public', table: 'certifications' }, () => {
+          load();
+        })
+        .subscribe();
+    }, 1000);
 
     return () => {
+      clearTimeout(subTimer);
       window.removeEventListener('islam_store_sync', onSync);
       try { bus?.close(); } catch (e) {}
-      supabase.removeChannel(channel);
+      if (channel) supabase.removeChannel(channel);
     };
   }, [load]);
 
@@ -530,17 +554,21 @@ export function useExperiences() {
       } catch (e) {}
     }
 
-    const channel = supabase
-      .channel('rt-experiences')
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'experiences' }, () => {
-        load();
-      })
-      .subscribe();
+    let channel: any = null;
+    const subTimer = setTimeout(() => {
+      channel = supabase
+        .channel('rt-experiences')
+        .on('postgres_changes', { event: '*', schema: 'public', table: 'experiences' }, () => {
+          load();
+        })
+        .subscribe();
+    }, 1000);
 
     return () => {
+      clearTimeout(subTimer);
       window.removeEventListener('islam_store_sync', onSync);
       try { bus?.close(); } catch (e) {}
-      supabase.removeChannel(channel);
+      if (channel) supabase.removeChannel(channel);
     };
   }, [load]);
 
@@ -599,20 +627,24 @@ export function useCrmLeads() {
       } catch (e) {}
     }
 
-    const channel = supabase
-      .channel('rt-crm')
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'crm_leads' }, () => {
-        load();
-      })
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'crm_activities' }, () => {
-        load();
-      })
-      .subscribe();
+    let channel: any = null;
+    const subTimer = setTimeout(() => {
+      channel = supabase
+        .channel('rt-crm')
+        .on('postgres_changes', { event: '*', schema: 'public', table: 'crm_leads' }, () => {
+          load();
+        })
+        .on('postgres_changes', { event: '*', schema: 'public', table: 'crm_activities' }, () => {
+          load();
+        })
+        .subscribe();
+    }, 1000);
 
     return () => {
+      clearTimeout(subTimer);
       window.removeEventListener('islam_store_sync', onSync);
       try { bus?.close(); } catch (e) {}
-      supabase.removeChannel(channel);
+      if (channel) supabase.removeChannel(channel);
     };
   }, [load]);
 

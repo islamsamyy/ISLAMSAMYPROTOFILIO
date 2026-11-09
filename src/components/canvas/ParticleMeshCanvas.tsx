@@ -216,28 +216,49 @@ export function ParticleMeshCanvas({
         }
       }
 
-      // Draw particles
+      // Draw particles (Hardware-accelerated dual-arc halo, zero shadowBlur CPU stall)
       for (let i = 0; i < particles.length; i++) {
         const p = particles[i];
+        if (isDark && p.alpha > 0.4) {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.radius * 2.2, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(${primaryNode}, 0.15)`;
+          ctx.fill();
+        }
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
         ctx.fillStyle = `rgba(${primaryNode}, ${p.alpha})`;
-        if (isDark && p.alpha > 0.4) {
-          ctx.shadowColor = '#7bd0ff';
-          ctx.shadowBlur = 6;
-        }
         ctx.fill();
-        ctx.shadowBlur = 0;
       }
     };
 
     const drawStaticFrame = () => draw(false);
 
+    let isWindowScrolling = false;
+    let scrollDebounceTimer: ReturnType<typeof setTimeout> | null = null;
+    const handleScroll = () => {
+      isWindowScrolling = true;
+      if (scrollDebounceTimer) clearTimeout(scrollDebounceTimer);
+      scrollDebounceTimer = setTimeout(() => {
+        isWindowScrolling = false;
+      }, 90);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    let lastFrameTime = 0;
+    const minFrameInterval = 1000 / 30; // 30 FPS ceiling
+
     // Continuous Animation loop
-    const renderLoop = () => {
+    const renderLoop = (timestamp = 0) => {
       if (!isVisibleRef.current) return;
-      draw(true);
       animFrameIdRef.current = requestAnimationFrame(renderLoop);
+
+      // Dedicated 100% compositor thread during rapid page scrolling
+      if (isWindowScrolling) return;
+
+      if (timestamp - lastFrameTime < minFrameInterval) return;
+      lastFrameTime = timestamp;
+      draw(true);
     };
 
     const startAnimation = () => {
@@ -275,6 +296,8 @@ export function ParticleMeshCanvas({
 
     return () => {
       stopAnimation();
+      if (scrollDebounceTimer) clearTimeout(scrollDebounceTimer);
+      window.removeEventListener('scroll', handleScroll);
       resizeObserver?.disconnect();
       intersectionObserver?.disconnect();
     };

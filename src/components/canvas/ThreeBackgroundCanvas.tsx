@@ -48,6 +48,7 @@ export function ThreeBackgroundCanvas({
       camera.position.set(0, 40, 460);
 
       // 3. WebGL Renderer with performance optimizations
+      const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
       renderer = new THREE.WebGLRenderer({
         antialias: false,
         powerPreference: 'high-performance',
@@ -56,8 +57,8 @@ export function ThreeBackgroundCanvas({
         depth: true,
       });
       renderer.setSize(width, height);
-      // Cap at 1.2 DPR to drastically cut fragment shader fill-rate on 4K/Retina displays
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.2));
+      // Cap at 1.15 DPR (1.0 on mobile) to drastically cut fragment shader fill-rate
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, isMobile ? 1.0 : 1.15));
       renderer.setClearColor(getBgColor(), 1.0);
       container.appendChild(renderer.domElement);
 
@@ -336,8 +337,8 @@ export function ThreeBackgroundCanvas({
 
       // 10. Frame-Budgeted Animation Loop (GPU-Accelerated Matrix Operations only, zero CPU buffer updates)
       let lastFrameTimestamp = 0;
-      let frameSkipCounter = 0;
-      const targetInterval = 1000 / 45; // 45 FPS ceiling for background = ultra-efficient
+      const targetFps = isMobile ? 22 : 30; // 30 FPS ceiling for ambient background = saves 33-50% GPU fill rate
+      const targetInterval = 1000 / targetFps;
 
       const animate = (timestamp = 0) => {
         if (!isTabVisible) {
@@ -346,10 +347,10 @@ export function ThreeBackgroundCanvas({
         }
         animId = requestAnimationFrame(animate);
 
-        // DURING RAPID SCROLLING: Skip every second frame to dedicate 100% compositor thread to butter-smooth scrolling
+        // DURING RAPID SCROLLING: Pause WebGL rendering completely!
+        // Leaves 100% of compositor thread & GPU bandwidth to browser native 60/120 FPS page scrolling
         if (isWindowScrolling) {
-          frameSkipCounter++;
-          if (frameSkipCounter % 2 !== 0) return;
+          return;
         }
 
         const delta = timestamp - lastFrameTimestamp;

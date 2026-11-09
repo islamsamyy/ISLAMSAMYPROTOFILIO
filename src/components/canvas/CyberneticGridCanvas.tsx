@@ -61,12 +61,29 @@ export function CyberneticGridCanvas({
 
     let currentVpX = 0;
     let currentVpY = 0;
+    let scanlinePattern: CanvasPattern | null = null;
+
+    const createScanlinePattern = () => {
+      try {
+        const patternCanvas = document.createElement('canvas');
+        patternCanvas.width = 4;
+        patternCanvas.height = 3;
+        const pctx = patternCanvas.getContext('2d');
+        if (pctx) {
+          pctx.fillStyle = isDark ? 'rgba(0, 0, 0, 0.06)' : 'rgba(0, 0, 0, 0.03)';
+          pctx.fillRect(0, 0, 4, 1);
+          scanlinePattern = ctx.createPattern(patternCanvas, 'repeat');
+        }
+      } catch (e) {
+        scanlinePattern = null;
+      }
+    };
 
     const updateDimensions = () => {
       const rect = canvas.getBoundingClientRect();
       width = rect.width || canvas.clientWidth || 400;
       height = rect.height || canvas.clientHeight || 250;
-      dpr = Math.min(typeof window !== 'undefined' ? window.devicePixelRatio || 1 : 1, 2);
+      dpr = Math.min(typeof window !== 'undefined' ? window.devicePixelRatio || 1 : 1, 1.2);
 
       canvas.width = Math.round(width * dpr);
       canvas.height = Math.round(height * dpr);
@@ -78,6 +95,7 @@ export function CyberneticGridCanvas({
       currentVpX = width * vanishingPointX;
       currentVpY = height * horizonY;
       mouseRef.current = { x: width * 0.5, y: height * 0.5 };
+      createScanlinePattern();
     };
 
     updateDimensions();
@@ -132,24 +150,24 @@ export function CyberneticGridCanvas({
       ctx.lineWidth = 1.6;
       ctx.stroke();
 
-      // 3. Perspective Longitudinal (Vertical) Lines
+      // 3. Perspective Longitudinal (Vertical) Lines - Batched in 1 GPU draw-call with reusable gradient
       const numLines = Math.ceil((width * 2) / gridSpacing);
       const startX = currentVpX - (numLines / 2) * gridSpacing;
 
+      const vGrad = ctx.createLinearGradient(0, currentVpY, 0, height);
+      vGrad.addColorStop(0, `rgba(${cyan}, 0.03)`);
+      vGrad.addColorStop(0.4, `rgba(${cyan}, 0.25)`);
+      vGrad.addColorStop(1, `rgba(${cyan}, 0.65)`);
+
+      ctx.beginPath();
       for (let i = 0; i <= numLines; i++) {
         const bottomX = startX + i * gridSpacing;
-        const grad = ctx.createLinearGradient(currentVpX, currentVpY, bottomX, height);
-        grad.addColorStop(0, `rgba(${cyan}, 0.03)`);
-        grad.addColorStop(0.4, `rgba(${cyan}, 0.25)`);
-        grad.addColorStop(1, `rgba(${cyan}, 0.65)`);
-
-        ctx.beginPath();
         ctx.moveTo(currentVpX, currentVpY);
         ctx.lineTo(bottomX, height);
-        ctx.strokeStyle = grad;
-        ctx.lineWidth = 1.0;
-        ctx.stroke();
       }
+      ctx.strokeStyle = vGrad;
+      ctx.lineWidth = 1.0;
+      ctx.stroke();
 
       // 4. Perspective Transverse (Horizontal) Receding Lines
       const horizontalLineCount = 20;
@@ -172,10 +190,10 @@ export function CyberneticGridCanvas({
 
       // 5. Pulsing Scanlines & CRT HUD beam
       if (scanlines) {
-        // Static CRT scanlines
-        ctx.fillStyle = isDark ? 'rgba(0, 0, 0, 0.06)' : 'rgba(0, 0, 0, 0.03)';
-        for (let y = 0; y < height; y += 3) {
-          ctx.fillRect(0, y, width, 1);
+        // Single tiled draw call using cached pattern (eliminates 160+ fillRect calls)
+        if (scanlinePattern) {
+          ctx.fillStyle = scanlinePattern;
+          ctx.fillRect(0, 0, width, height);
         }
 
         // Active sweeping scanline pulse beam
@@ -190,10 +208,30 @@ export function CyberneticGridCanvas({
       }
     };
 
-    const renderLoop = () => {
+    let isWindowScrolling = false;
+    let scrollDebounceTimer: ReturnType<typeof setTimeout> | null = null;
+    const handleScroll = () => {
+      isWindowScrolling = true;
+      if (scrollDebounceTimer) clearTimeout(scrollDebounceTimer);
+      scrollDebounceTimer = setTimeout(() => {
+        isWindowScrolling = false;
+      }, 90);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    let lastFrameTime = 0;
+    const minFrameInterval = 1000 / 30; // 30 FPS ceiling
+
+    const renderLoop = (timestamp = 0) => {
       if (!isVisibleRef.current) return;
-      draw(true);
       animFrameIdRef.current = requestAnimationFrame(renderLoop);
+
+      // Dedicated 100% compositor thread during rapid scrolling
+      if (isWindowScrolling) return;
+
+      if (timestamp - lastFrameTime < minFrameInterval) return;
+      lastFrameTime = timestamp;
+      draw(true);
     };
 
     const startAnimation = () => {
@@ -230,6 +268,8 @@ export function CyberneticGridCanvas({
 
     return () => {
       stopAnimation();
+      if (scrollDebounceTimer) clearTimeout(scrollDebounceTimer);
+      window.removeEventListener('scroll', handleScroll);
       resizeObserver?.disconnect();
       intersectionObserver?.disconnect();
     };
