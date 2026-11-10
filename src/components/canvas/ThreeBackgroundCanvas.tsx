@@ -2,17 +2,23 @@
 
 import React, { useEffect, useRef } from 'react';
 import * as THREE from 'three';
+import { usePathname } from 'next/navigation';
 
 export interface ThreeBackgroundCanvasProps {
   className?: string;
   style?: React.CSSProperties;
+  frozen?: boolean;
 }
 
 export function ThreeBackgroundCanvas({
   className,
   style,
+  frozen,
 }: ThreeBackgroundCanvasProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const pathname = usePathname();
+  // Automatically freeze on non-home pages unless explicitly overridden
+  const isFrozen = frozen !== undefined ? frozen : pathname !== '/';
 
   useEffect(() => {
     const container = containerRef.current;
@@ -293,6 +299,7 @@ export function ThreeBackgroundCanvas({
         camera.updateProjectionMatrix();
         renderer?.setSize(nw, nh);
         renderer?.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.2));
+        if (isFrozen) renderer?.render(scene, camera);
       };
 
       const handleThemeChange = () => {
@@ -300,6 +307,7 @@ export function ThreeBackgroundCanvas({
         const color = getBgColor();
         scene.fog = new THREE.FogExp2(new THREE.Color(color), 0.0008);
         renderer?.setClearColor(color, 1.0);
+        if (isFrozen) requestAnimationFrame(() => renderer?.render(scene, camera));
         particleMaterial.opacity = dark ? 0.92 : 0.65;
         lineMaterial.opacity = dark ? 0.35 : 0.2;
         gridMaterial.opacity = dark ? 0.25 : 0.14;
@@ -389,7 +397,17 @@ export function ThreeBackgroundCanvas({
         renderer?.render(scene, camera);
       };
 
-      animate();
+      if (isFrozen) {
+        // Frozen mode (all pages except Home): render a single static frame, no RAF loop.
+        camera.position.set(0, 40, 460);
+        camera.lookAt(0, 20, 0);
+        renderer.render(scene, camera);
+        document.removeEventListener('visibilitychange', handleVisibilityChange);
+        window.removeEventListener('mousemove', handleMouseMove);
+        window.removeEventListener('scroll', handleScroll);
+      } else {
+        animate();
+      }
 
       return () => {
         if (animId) cancelAnimationFrame(animId);
@@ -466,7 +484,7 @@ export function ThreeBackgroundCanvas({
         }
       };
     }
-  }, []);
+  }, [isFrozen]);
 
   return (
     <div

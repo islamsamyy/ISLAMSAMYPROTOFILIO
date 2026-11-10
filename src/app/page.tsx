@@ -746,8 +746,8 @@ try {
       {/* SECTION 4: PROFESSIONAL EXPERIENCE TIMELINE */}
       <ExperienceTimelineSection />
 {/*  SECTION 5: FEATURED REAL PROJECTS  */}
-<ScrollRevealSection className="w-full max-w-[1280px] mx-auto px-gutter py-24 relative z-10 content-auto" id="projects" suppressHydrationWarning>
-<div className="text-center max-w-3xl mx-auto mb-16">
+<ScrollRevealSection className="w-full max-w-[1280px] mx-auto px-gutter py-12 relative z-10 content-auto" id="projects" suppressHydrationWarning>
+<div className="text-center max-w-3xl mx-auto mb-10">
 <span className="font-label-sm text-label-sm uppercase tracking-widest text-primary font-semibold">Production Systems</span>
 <h2 className="font-headline-lg text-headline-lg text-on-surface mt-2 mb-4">Featured Engineering &amp; Analytics Projects</h2>
 <p className="font-body-md text-body-md text-on-surface-variant">Real implementations delivering business value, predictive clarity, and operational savings.</p>
@@ -831,7 +831,7 @@ try {
 </ScrollRevealSection>
       {/* SECTION 6: EDUCATION & PROFESSIONAL CREDENTIALS */}
 {/*  SECTION 7: INTERACTIVE CONTACT & INQUIRY FORM  */}
-<ScrollRevealSection className="w-full max-w-[1280px] mx-auto px-gutter py-24 relative z-10 content-auto" id="pricing" suppressHydrationWarning>
+<ScrollRevealSection className="w-full max-w-[1280px] mx-auto px-gutter py-12 relative z-10 content-auto" id="pricing" suppressHydrationWarning>
   <div className="text-center max-w-3xl mx-auto mb-12">
     <div className="inline-flex items-center gap-space-xs px-space-md py-1.5 rounded-full bg-surface-container-high/90 border border-primary/30 shadow-[0_0_24px_rgba(160,120,255,0.2)] mb-space-sm backdrop-blur-md">
       <span className="w-2 h-2 rounded-full bg-primary shadow-[0_0_8px_#d0bcff]"></span>
@@ -951,7 +951,7 @@ try {
         <CyberneticGridCanvas className="w-full max-w-[1280px] h-48 opacity-40 dark:opacity-30" />
       </div>
 
-      <ScrollRevealSection className="w-full max-w-[1280px] mx-auto px-gutter py-24 relative z-10 content-auto" id="contact">
+      <ScrollRevealSection className="w-full max-w-[1280px] mx-auto px-gutter py-12 relative z-10 content-auto" id="contact">
 <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
 {/*  Islam Samy Direct Contact Info  */}
 <div className="lg:col-span-5 flex flex-col justify-between">

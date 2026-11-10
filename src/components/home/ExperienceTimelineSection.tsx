@@ -9,14 +9,14 @@ export function ExperienceTimelineSection() {
   const { experiences } = useExperiences();
 
   return (
-    <section id="experience" className="w-full max-w-[1280px] mx-auto px-gutter py-24 relative z-10 scroll-mt-24 content-auto">
+    <section id="experience" className="w-full max-w-[1280px] mx-auto px-gutter py-12 relative z-10 scroll-mt-24 content-auto">
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-60px' }}
         transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-        className="text-center max-w-3xl mx-auto mb-16"
+        className="text-center max-w-3xl mx-auto mb-10"
       >
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-surface-container-high/90 border border-secondary/30 shadow-[0_0_20px_rgba(123,208,255,0.2)] mb-3.5 backdrop-blur-md">
           <Briefcase className="w-4 h-4 text-secondary" />

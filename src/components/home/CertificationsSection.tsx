@@ -58,7 +58,7 @@ export function CertificationsSection() {
   };
 
   return (
-    <section id="certifications" className="w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-16 relative z-10 scroll-mt-24 content-auto">
+    <section id="certifications" className="w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-10 relative z-10 scroll-mt-24 content-auto">
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -170,7 +170,7 @@ export function CertificationsSection() {
             {displayItems.map((cert, index) => (
               <div
                 key={`${cert.id}-${index}`}
-                className="group/card relative w-[320px] sm:w-[360px] min-h-[380px] shrink-0 p-6 sm:p-7 rounded-3xl bg-surface-container-low/90 dark:bg-[#14161f]/95 hover:bg-surface-container-low/95 border border-white/20 dark:border-white/[0.08] hover:border-primary/50 shadow-[0_8px_32px_rgba(0,0,0,0.35)] hover:shadow-[0_16px_48px_rgba(160,120,255,0.3)] transition-all duration-300 flex flex-col justify-between"
+                className="group/card relative w-[320px] sm:w-[360px] min-h-[340px] shrink-0 p-6 sm:p-7 rounded-3xl bg-surface-container-low/90 dark:bg-[#14161f]/95 hover:bg-surface-container-low/95 border border-white/20 dark:border-white/[0.08] hover:border-primary/50 shadow-[0_8px_32px_rgba(0,0,0,0.35)] hover:shadow-[0_16px_48px_rgba(160,120,255,0.3)] transition-all duration-300 flex flex-col justify-between"
               >
                 {/* Top Specular Rim Light */}
                 <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/30 dark:via-primary/30 to-transparent pointer-events-none rounded-t-3xl" />

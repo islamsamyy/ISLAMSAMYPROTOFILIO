@@ -224,7 +224,7 @@ export function TechArsenalSection() {
   };
 
   return (
-    <section id="skills" className="w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-16 relative z-10 scroll-mt-24 content-auto">
+    <section id="skills" className="w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-10 relative z-10 scroll-mt-24 content-auto">
       {/* Section Header */}
       <div className="text-center max-w-3xl mx-auto mb-10">
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/40 dark:bg-white/[0.06] border border-primary/40 shadow-[0_0_24px_rgba(208,188,255,0.3)] mb-4 backdrop-blur-xl">
@@ -266,7 +266,7 @@ export function TechArsenalSection() {
         <div className="relative w-full overflow-hidden my-3">
           <canvas
             id="safir-telemetry-canvas"
-            className="w-full h-[180px] sm:h-[220px] bg-transparent my-2 rounded-2xl overflow-hidden border border-white/10 shadow-2xl"
+            className="w-full h-[140px] sm:h-[170px] bg-transparent my-2 rounded-2xl overflow-hidden border border-white/10 shadow-2xl"
           />
         </div>
 
@@ -415,7 +415,7 @@ export function TechArsenalSection() {
               return (
                 <div
                   key={`${tech.id}-${index}`}
-                  className={`tech-card group/card relative w-[310px] sm:w-[350px] min-h-[360px] shrink-0 p-6 rounded-2xl bg-surface-container-low/90 dark:bg-[#14161f]/95 border ${borderTheme} shadow-[0_8px_24px_rgba(0,0,0,0.45)] transition-all duration-300 flex flex-col justify-between`}
+                  className={`tech-card group/card relative w-[310px] sm:w-[350px] min-h-[320px] shrink-0 p-6 rounded-2xl bg-surface-container-low/90 dark:bg-[#14161f]/95 border ${borderTheme} shadow-[0_8px_24px_rgba(0,0,0,0.45)] transition-all duration-300 flex flex-col justify-between`}
                   data-categories={tech.categories}
                 >
                   {/* Top Specular Rim Light */}

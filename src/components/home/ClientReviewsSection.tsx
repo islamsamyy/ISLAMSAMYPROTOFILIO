@@ -16,7 +16,7 @@ export function ClientReviewsSection() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-60px' }}
         transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-        className="flex flex-col items-center text-center mb-14"
+        className="flex flex-col items-center text-center mb-9"
       >
         <div className="inline-flex items-center gap-space-xs px-3.5 py-1.5 rounded-full bg-surface-container-high border border-primary/30 shadow-[0_0_20px_rgba(208,188,255,0.2)] mb-4">
           <span className="material-symbols-outlined text-primary text-base">verified</span>
