@@ -97,14 +97,14 @@ export function SiteHeader() {
         <Link
           href="/"
           onClick={() => setCurrentHash('')}
-          className="flex items-center gap-2.5 group shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-xl"
+          className="flex items-center gap-4 sm:gap-5 group shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-xl"
         >
           {/* Transparent Logo Crest without frame */}
           <div className="relative flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-105">
             <img
               src="/images/250LOGO.png"
               alt="Islam Samy"
-              className="h-14 sm:h-16 w-auto object-contain scale-125 filter drop-shadow-[0_0_18px_rgba(123,208,255,0.95)] brightness-110 transition-all duration-300"
+              className="h-12 sm:h-14 w-auto object-contain filter drop-shadow-[0_0_18px_rgba(123,208,255,0.95)] brightness-110 transition-all duration-300"
             />
           </div>
           <div className="flex flex-col min-w-0">
