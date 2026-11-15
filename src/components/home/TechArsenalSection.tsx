@@ -2,6 +2,7 @@
 
 import React, { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
+import { useLanguage } from '@/context/LanguageContext';
 import {
   ChevronLeft,
   ChevronRight,
@@ -31,10 +32,66 @@ export interface TechArsenalItem {
 
 export const techArsenalData: TechArsenalItem[] = [
   {
+    id: 'ai-agents',
+    name: 'Autonomous AI Agents',
+    category: 'ml-ai',
+    categories: 'ml-ai automation backend',
+    level: 'Advanced • CrewAI / LangChain',
+    badge: 'Agents',
+    badgeColor: 'primary',
+    description: 'Multi-agent reasoning graphs, autonomous task swarms, tool calling, vector RAG retrieval & prompt orchestration.',
+    proficiency: 95,
+    icon: 'smart_toy',
+    projectName: 'Nexalytix Autonomous Swarm',
+    credentialName: 'Nexalytix Lead AI Architecture',
+  },
+  {
+    id: 'custom-erp',
+    name: 'Custom ERP Systems',
+    category: 'databases',
+    categories: 'databases backend prog-data',
+    level: 'Expert • Modular Ledgers',
+    badge: 'Enterprise',
+    badgeColor: 'secondary',
+    description: 'Bespoke ERP architecture, inventory tracking, bill of materials, OPERA PMS sync, and high-concurrency schemas.',
+    proficiency: 96,
+    icon: 'hub',
+    projectName: 'Sotex Manufacturing ERP',
+    credentialName: 'BIS Degree: Enterprise Information Systems',
+  },
+  {
+    id: 'n8n',
+    name: 'n8n & Automations',
+    category: 'automation',
+    categories: 'automation backend',
+    level: 'Advanced • 60% Cost Cut',
+    badge: 'Orchestration',
+    badgeColor: 'primary',
+    description: 'Self-hosted autonomous event pipelines, webhook triggers, multi-system synchronization & zero-loss error recovery.',
+    proficiency: 94,
+    icon: 'alt_route',
+    projectName: 'Enterprise n8n Task Flow',
+    credentialName: 'Nexalytix Architecture Certified',
+  },
+  {
+    id: 'nextjs',
+    name: 'Next.js 15 & React 19',
+    category: 'frontend',
+    categories: 'frontend backend',
+    level: 'Advanced • Full-Stack Web',
+    badge: 'Modern Web',
+    badgeColor: 'tertiary',
+    description: 'Production App Router, Server Actions, micro-frontend telemetry, Tailwind CSS, and sub-250ms web applications.',
+    proficiency: 93,
+    icon: 'web',
+    projectName: 'Sotex Plant Web Portal',
+    credentialName: 'Full-Stack Software Engineering',
+  },
+  {
     id: 'python',
-    name: 'Python',
+    name: 'Python Data Engineering',
     category: 'prog-data',
-    categories: 'prog-data ml-ai',
+    categories: 'prog-data ml-ai backend',
     level: 'Advanced • 4+ Yrs',
     badge: 'Core',
     badgeColor: 'primary',
@@ -45,22 +102,8 @@ export const techArsenalData: TechArsenalItem[] = [
     credentialName: 'DataCamp: Associate Data Scientist',
   },
   {
-    id: 'mysql',
-    name: 'MySQL & SQL',
-    category: 'databases',
-    categories: 'prog-data backend databases',
-    level: 'Advanced • Star Schemas',
-    badge: 'Relational',
-    badgeColor: 'secondary',
-    description: 'High-volume query optimization, indexing, complex analytical joins, and relational schema modeling.',
-    proficiency: 94,
-    icon: 'database',
-    projectName: 'Sotex Operations Hub',
-    credentialName: 'DataCamp: Associate Data Analyst',
-  },
-  {
     id: 'powerbi',
-    name: 'Power BI & DAX',
+    name: 'Power BI & DAX Telemetry',
     category: 'bi-viz',
     categories: 'bi-viz',
     level: 'Expert • Real-time Sync',
@@ -71,6 +114,20 @@ export const techArsenalData: TechArsenalItem[] = [
     icon: 'query_stats',
     projectName: 'Safir Hotels Live Cockpit',
     credentialName: 'Cisco: Data Analytics Essentials',
+  },
+  {
+    id: 'clickhouse-kafka',
+    name: 'ClickHouse & Kafka',
+    category: 'databases',
+    categories: 'databases prog-data backend',
+    level: 'Advanced • 1.4M msg/sec',
+    badge: 'Lakehouse',
+    badgeColor: 'secondary',
+    description: 'Columnar analytical storage, Change Data Capture (CDC) streaming, partitioned topics, and sub-second SQL queries.',
+    proficiency: 92,
+    icon: 'database',
+    projectName: 'Safir Multi-Property Lakehouse',
+    credentialName: 'Distributed Systems & Lakehouse Engineering',
   },
   {
     id: 'xgboost',
@@ -201,6 +258,7 @@ export const techArsenalData: TechArsenalItem[] = [
 ];
 
 export function TechArsenalSection() {
+  const { t, language } = useLanguage();
   const [filter, setFilter] = useState<string>('all');
   const [isPaused, setIsPaused] = useState<boolean>(false);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -230,14 +288,14 @@ export function TechArsenalSection() {
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/40 dark:bg-white/[0.06] border border-primary/40 shadow-[0_0_24px_rgba(208,188,255,0.3)] mb-4 backdrop-blur-xl">
           <Cpu className="w-4 h-4 text-primary" />
           <span className="font-label-sm text-xs uppercase tracking-wider text-primary font-bold">
-            Technical Arsenal &amp; Capabilities
+            {t('tech.badge', 'Technical Arsenal & Capabilities')}
           </span>
         </div>
         <h2 className="font-nexa text-3xl sm:text-5xl text-on-surface font-extrabold tracking-tight">
-          The Technology Behind My Solutions
+          {t('tech.title', 'The Engineering Stack Behind Scalable Systems')}
         </h2>
         <p className="font-body-md text-sm sm:text-base text-on-surface-variant mt-3 leading-relaxed">
-          Interactive production stack matrix deployed across high-precision machine learning, data engineering pipelines, full-stack web platforms, and executive telemetry.
+          {t('tech.subtitle', 'Production-tested stack matrix deployed across custom ERP architectures, autonomous AI agent networks, zero-overhead automations, real-time lakehouses, and full-stack web applications.')}
         </p>
       </div>
 
@@ -291,14 +349,14 @@ export function TechArsenalSection() {
         {/* Category Filter Pills */}
         <div className="flex items-center justify-center flex-wrap gap-2 mx-auto sm:mx-0">
           {[
-            { id: 'all', label: 'All Technologies' },
-            { id: 'prog-data', label: 'Programming & Data' },
-            { id: 'ml-ai', label: 'Machine Learning' },
-            { id: 'frontend', label: 'Frontend' },
-            { id: 'backend', label: 'Backend' },
-            { id: 'databases', label: 'Databases' },
-            { id: 'bi-viz', label: 'BI & Visualization' },
-            { id: 'automation', label: 'Marketing & Automation' },
+            { id: 'all', label: language === 'ar' ? 'كافة التقنيات' : 'All Technologies' },
+            { id: 'prog-data', label: language === 'ar' ? 'البرمجة والبيانات' : 'Programming & Data' },
+            { id: 'ml-ai', label: language === 'ar' ? 'الذكاء الاصطناعي وML' : 'Machine Learning' },
+            { id: 'frontend', label: language === 'ar' ? 'الواجهة الأمامية' : 'Frontend' },
+            { id: 'backend', label: language === 'ar' ? 'الواجهة الخلفية' : 'Backend' },
+            { id: 'databases', label: language === 'ar' ? 'قواعد البيانات' : 'Databases' },
+            { id: 'bi-viz', label: language === 'ar' ? 'لوحات BI والتحليل' : 'BI & Visualization' },
+            { id: 'automation', label: language === 'ar' ? 'التسويق والأتمتة' : 'Marketing & Automation' },
           ].map((tab) => (
             <button
               key={tab.id}

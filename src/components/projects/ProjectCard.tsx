@@ -89,17 +89,41 @@ export function ProjectCard({ project, onSelectBlueprint }: ProjectCardProps) {
     return () => cancelAnimationFrame(animId);
   }, [project.category]);
 
+  const coverSrc =
+    (project as ProjectItem & { coverImage?: string }).coverImage ||
+    (project.companyLogo ? project.companyLogo.replace('w=120', 'w=800') : '');
+
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 16 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      whileHover={{ y: -6 }}
       transition={{ duration: 0.3 }}
-      className="group relative flex flex-col justify-between rounded-3xl bg-surface-container-low/40 hover:bg-surface-container-low/65 backdrop-blur-2xl border border-white/20 dark:border-white/[0.08] hover:border-primary/50 shadow-[0_8px_32px_rgba(0,0,0,0.35)] hover:shadow-[0_16px_48px_rgba(160,120,255,0.3)] transition-all duration-300 overflow-hidden"
+      className="relative flex flex-col justify-between rounded-3xl bg-surface-container-low/50 backdrop-blur-2xl border border-white/20 dark:border-white/[0.08] shadow-[0_8px_32px_rgba(0,0,0,0.35)] overflow-hidden"
     >
       {/* Top Specular Rim Light */}
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/30 dark:via-primary/30 to-transparent pointer-events-none rounded-t-3xl" />
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/30 dark:via-primary/30 to-transparent pointer-events-none rounded-t-3xl z-10" />
+
+      {/* Project Cover Image */}
+      {coverSrc && (
+        <Link href={`/projects/${project.id}`} className="relative w-full h-44 overflow-hidden bg-surface-container-lowest/80 border-b border-white/[0.06] block">
+          <img
+            src={coverSrc}
+            alt={project.title}
+            loading="lazy"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-surface-container-low/90 via-surface-container-low/20 to-transparent" />
+          <span className="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-black/50 backdrop-blur-md border border-white/15 text-[10px] font-mono uppercase tracking-wider text-zinc-200">
+            {project.category}
+          </span>
+          {project.galleryImages && project.galleryImages.length > 1 && (
+            <span className="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-black/50 backdrop-blur-md border border-white/15 text-[10px] font-mono text-zinc-200">
+              {project.galleryImages.length} Photos
+            </span>
+          )}
+        </Link>
+      )}
 
       {/* Top Section */}
       <div className="p-6 sm:p-7 flex flex-col gap-4">
@@ -138,21 +162,13 @@ export function ProjectCard({ project, onSelectBlueprint }: ProjectCardProps) {
         {/* Title & Summary */}
         <div className="flex flex-col gap-2">
           <Link href={`/projects/${project.id}`}>
-            <h3 className="font-nexa text-lg sm:text-xl font-bold text-on-surface group-hover:text-primary transition-colors leading-snug cursor-pointer">
+            <h3 className="font-nexa text-lg sm:text-xl font-bold text-on-surface leading-snug cursor-pointer">
               {project.title}
             </h3>
           </Link>
           <p className="font-body-sm text-xs sm:text-sm text-on-surface-variant leading-relaxed line-clamp-3">
             {project.summary}
           </p>
-        </div>
-
-        {/* 3D Telemetry Canvas Box */}
-        <div className="relative w-full h-[120px] rounded-2xl bg-surface-container-lowest/80 border border-outline-variant/20 overflow-hidden flex items-center justify-center">
-          <canvas ref={canvasRef} className="w-full h-full bg-transparent" />
-          <div className="absolute bottom-2 right-2 px-2 py-0.5 rounded bg-surface-container-high/90 text-[10px] font-mono text-on-surface-variant border border-white/5">
-            Realtime 3D Telemetry
-          </div>
         </div>
 
         {/* Tech Stack Pills */}
@@ -178,15 +194,30 @@ export function ProjectCard({ project, onSelectBlueprint }: ProjectCardProps) {
           <span className="material-symbols-outlined text-sm">arrow_forward</span>
         </Link>
 
-        <button
-          type="button"
-          onClick={() => onSelectBlueprint(project)}
-          className="inline-flex items-center gap-1 text-xs font-mono text-on-surface-variant hover:text-on-surface transition-colors p-1"
-          title="Quick Architectural Blueprint"
-        >
-          <span className="material-symbols-outlined text-base">schema</span>
-          <span className="hidden sm:inline">Blueprint</span>
-        </button>
+        <div className="flex items-center gap-3">
+          {project.liveDemoUrl && (
+            <a
+              href={project.liveDemoUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 text-xs font-mono text-secondary hover:text-secondary-fixed transition-colors p-1"
+              title="Open Project URL"
+            >
+              <span className="material-symbols-outlined text-base">open_in_new</span>
+              <span className="hidden sm:inline">Live URL</span>
+            </a>
+          )}
+
+          <button
+            type="button"
+            onClick={() => onSelectBlueprint(project)}
+            className="inline-flex items-center gap-1 text-xs font-mono text-on-surface-variant hover:text-on-surface transition-colors p-1"
+            title="Quick Architectural Blueprint"
+          >
+            <span className="material-symbols-outlined text-base">schema</span>
+            <span className="hidden sm:inline">Blueprint</span>
+          </button>
+        </div>
       </div>
 
       {/* Cybernetic Accent Glow */}

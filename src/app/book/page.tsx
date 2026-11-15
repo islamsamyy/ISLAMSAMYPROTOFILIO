@@ -8,6 +8,7 @@ import { TiltCard } from '@/components/ui/TiltCard';
 import { usePricing } from '@/lib/hooks';
 import { saveReservation } from '@/lib/data-store';
 import { PricingPackage } from '@/data/seedPricing';
+import { WhatsAppBanner, WhatsAppFloatingButton, WHATSAPP_NUMBER, WHATSAPP_URL, WhatsAppIcon } from '@/components/ui/WhatsAppButton';
 
 export default function BookPage() {
   const { packages, consultationRates, loaded } = usePricing();
@@ -167,6 +168,9 @@ export default function BookPage() {
               </button>
             </div>
           </motion.div>
+
+          {/* Direct Immediate WhatsApp Contact Banner */}
+          <WhatsAppBanner />
 
           {/* MODE 1: ENGAGEMENT PACKAGES */}
           {bookingMode === 'packages' && (
@@ -500,6 +504,19 @@ export default function BookPage() {
                   >
                     Confirm &amp; Generate Calendar Invite
                   </button>
+
+                  <div className="pt-2 text-center">
+                    <span className="text-[11px] text-on-surface-variant font-mono block mb-2">— or reach out immediately without booking —</span>
+                    <a
+                      href={WHATSAPP_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center gap-2 w-full py-2.5 rounded-xl bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-400 border border-emerald-500/30 text-xs font-semibold transition-all"
+                    >
+                      <WhatsAppIcon className="w-4 h-4" />
+                      <span>Instant WhatsApp Chat: {WHATSAPP_NUMBER}</span>
+                    </a>
+                  </div>
                 </form>
               </div>
 
@@ -566,6 +583,7 @@ export default function BookPage() {
         )}
       </AnimatePresence>
 
+      <WhatsAppFloatingButton />
       <SiteFooter />
     </div>
   );

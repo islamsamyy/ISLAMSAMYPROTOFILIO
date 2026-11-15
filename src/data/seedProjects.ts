@@ -17,12 +17,14 @@ export interface ProjectItem {
   keyDecisions?: { title: string; rationale: string; tradeOff: string }[];
   systemFlow?: string[];
   outcomeMetrics?: { label: string; value: string; description: string }[];
+  galleryImages?: string[];
+  steps?: { title: string; description: string }[];
 }
 
 export const initialProjects: ProjectItem[] = [
   {
     id: 'safir-lakehouse',
-    title: 'Hospitality Multi-Property Real-Time Lakehouse',
+    title: 'Hospitality Multi-Property ERP & Real-Time Lakehouse',
     client: 'Safir Hotels & Resorts',
     companyLogo: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=120&q=80',
     category: 'Lakehouse & BI',
@@ -34,7 +36,7 @@ export const initialProjects: ProjectItem[] = [
       { label: 'Data Lake Sync', value: '5-min incremental' },
       { label: 'Properties Unified', value: '14 Hotels' }
     ],
-    techStack: ['OPERA PMS', 'Apache Kafka', 'ClickHouse', 'Python', 'Power BI', 'Docker', 'Kubernetes'],
+    techStack: ['OPERA PMS', 'Custom ERP', 'Apache Kafka', 'ClickHouse', 'Python', 'Power BI', 'Docker'],
     summary: 'Architected and deployed a multi-tenant telemetry and reporting lakehouse ingesting transactional records across 14 hospitality properties with zero service downtime.',
     challenge: 'Safir Hotels & Resorts operated 14 distinct regional properties each using on-premise Oracle OPERA PMS databases. Night audit reporting took 8+ hours, preventing corporate leadership from obtaining consolidated RevPAR (Revenue Per Available Room) and occupancy telemetry before morning executive briefings. In addition, network connectivity between resort locations and headquarters suffered frequent drops, creating data drift and duplicate records.',
     solution: 'Designed an event-driven Change Data Capture (CDC) streaming lakehouse. Deployed lightweight edge Go daemons at each property to stream delta journals directly into a partitioned Apache Kafka cluster. Real-time stream workers cleaned, enriched, and upserted transactional events into a high-performance ClickHouse columnar store with automatic materialized views, providing sub-250ms query SLAs for corporate Power BI telemetry cockpits.',
@@ -69,16 +71,128 @@ export const initialProjects: ProjectItem[] = [
       { label: 'Storage Savings', value: '18x', description: 'ClickHouse columnar compression reduced multi-terabyte logs to a fraction of original size.' },
       { label: 'Uptime SLA', value: '99.99%', description: 'Zero reported lost transactions across 18 consecutive operating months.' }
     ],
+    galleryImages: [
+      'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80'
+    ],
+    steps: [
+      { title: 'Edge CDC Extraction', description: 'Deployed lightweight Go daemons across 14 properties to capture OPERA PMS transaction journals with local disk buffering.' },
+      { title: 'Kafka Event Streaming', description: 'Routed compressed delta events into partitioned Apache Kafka topics for fault-tolerant multi-tenant ingestion.' },
+      { title: 'ClickHouse Lakehouse & BI', description: 'Materialized real-time RevPAR and ADR views in ClickHouse powering sub-250ms executive Power BI dashboards.' }
+    ],
+    liveDemoUrl: 'https://github.com/islam-samy',
+    featured: true
+  },
+  {
+    id: 'autonomous-ai-agents',
+    title: 'Autonomous Multi-Agent AI System & Workflow Orchestration',
+    client: 'Nexalytix Enterprise Intelligence',
+    companyLogo: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=120&q=80',
+    category: 'AI & Machine Learning',
+    role: 'Lead AI Engineer & Solutions Architect',
+    impactMetric: '60% Cost Reduction',
+    metrics: [
+      { label: 'Operational Cost', value: '-60%' },
+      { label: 'Autonomous Tasks', value: '120K / month' },
+      { label: 'Agent Routing SLA', value: '< 450ms' },
+      { label: 'Human Handoff Rate', value: '< 4%' }
+    ],
+    techStack: ['Python', 'CrewAI', 'LangChain', 'n8n Automation', 'OpenAI API', 'FastAPI', 'Redis', 'Docker'],
+    summary: 'Constructed an enterprise autonomous multi-agent AI network orchestrating document analysis, customer inquiry routing, and automated business operations with n8n event bridges.',
+    challenge: 'Enterprise client operations spent over 350 staff hours each week manually reviewing unstructured supplier invoices, triaging complex inbound support requests, and updating isolated ERP and CRM databases. Latency in manual triage resulted in missed SLA deadlines and elevated payroll expenses.',
+    solution: 'Engineered an autonomous multi-agent swarm using CrewAI and LangChain connected to self-hosted n8n workflow triggers. Specialized agent personas (Document Parser, Reasoning Validator, Database Mutator, and Executive Notifier) collaborate through shared Redis state to parse, validate, and write business records into production databases automatically.',
+    architectureHighlights: [
+      'Built multi-agent reasoning graphs with LangChain & CrewAI for autonomous invoice verification and anomaly flags.',
+      'Integrated self-hosted n8n webhooks with automatic retries, zero-loss queues, and Telegram/Slack alerts.',
+      'Engineered vector-augmented RAG memory with Redis for sub-50ms context retrieval on domain business rules.',
+      'Automated bidirectional synchronization between customer web applications, relational databases, and ERPs.'
+    ],
+    keyDecisions: [
+      {
+        title: 'Multi-Agent Specialization vs Single Monolithic LLM Call',
+        rationale: 'Splitting tasks across dedicated lightweight agent roles improved accuracy from 74% to 98.2% and cut prompt token consumption by 52%.',
+        tradeOff: 'Requires maintaining state choreography and circuit breakers between agent steps.'
+      },
+      {
+        title: 'Self-Hosted n8n Orchestrator vs Cloud SaaS Webhooks',
+        rationale: 'Self-hosted n8n retained enterprise data sovereignty on-premise, reduced API cost per execution to zero, and supported custom Python worker extensions.',
+        tradeOff: 'Required establishing dedicated monitoring with Prometheus and automated database backups.'
+      }
+    ],
+    systemFlow: [
+      'Event Ingestion: Webhooks capture inbound emails, documents, or ERP change events.',
+      'Triage Agent: Classifies intent, extracts metadata, and triggers specialized agent sub-tasks.',
+      'Validation Agent: Compares invoice line items against purchase orders via SQL queries.',
+      'Mutation Agent: Automatically executes database upserts and triggers downstream billing workflows.',
+      'Audit & Alert Dispatcher: Pushes executive summary briefings to Slack and records audit hashes.'
+    ],
+    outcomeMetrics: [
+      { label: 'Operational Cost Reduction', value: '60%', description: 'Eliminated manual invoice processing and data entry across department teams.' },
+      { label: 'Task Execution Speed', value: '12x', description: 'Average ticket processing speed accelerated from 4 hours to under 20 seconds.' },
+      { label: 'Accuracy Rating', value: '98.2%', description: 'Validated zero error rate on high-volume financial data extractions.' }
+    ],
+    liveDemoUrl: 'https://github.com/islam-samy',
+    featured: true
+  },
+  {
+    id: 'sotex-manufacturing-erp',
+    title: 'Industrial Manufacturing ERP & Real-Time Telemetry System',
+    client: 'Sotex Factory & Industrial Group',
+    companyLogo: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=120&q=80',
+    category: 'Distributed Systems',
+    role: 'Principal ERP & Data Architect',
+    impactMetric: '75% Discrepancy Cut',
+    metrics: [
+      { label: 'Inventory Accuracy', value: '99.4%' },
+      { label: 'Discrepancy Cut', value: '-75%' },
+      { label: 'Annual Cost Savings', value: '$18K+' },
+      { label: 'Real-Time Sync', value: 'Sub-second' }
+    ],
+    techStack: ['Custom ERP', 'PostgreSQL', 'Python', 'Next.js 15', 'n8n', 'Power BI', 'TailwindCSS'],
+    summary: 'Architected and deployed a full-scale industrial manufacturing ERP platform synchronizing shop-floor raw material procurement, inventory reconciliation, web portals, and executive telemetry.',
+    challenge: 'Sotex Factory struggled with disparate manual logbooks and fragmented spreadsheets across yarn spinning, textile weaving, and finishing divisions. Inventory records suffered 75% reconciliation lag, causing sudden material stockouts, production halts, and untracked scrap material losses.',
+    solution: 'Designed and deployed an integrated custom manufacturing ERP system. Built a normalized PostgreSQL relational foundation with strict ACID transaction guarantees. Developed role-based Next.js 15 web portals for warehouse supervisors and shift leads, automated barcode scan updates via n8n webhooks, and linked live inventory depletion to executive Power BI dashboards.',
+    architectureHighlights: [
+      'Modeled complete multi-stage Bill of Materials (BOM) schema in PostgreSQL with automated yield calculations.',
+      'Engineered full-stack responsive web portal in Next.js 15 & React 19 for real-time plant floor order logging.',
+      'Implemented automated n8n inventory reorder triggers dispatching purchase alerts when stock reached safety thresholds.',
+      'Designed executive visual dashboards tracking daily machine throughput, downtime causes, and operator efficiency.'
+    ],
+    keyDecisions: [
+      {
+        title: 'Custom Modular ERP vs Expensive Legacy Proprietary Suite (SAP/Odoo)',
+        rationale: 'Building a tailored Next.js + PostgreSQL ERP saved the enterprise $65,000 in upfront licensing and provided 100% exact alignment with textile production line steps.',
+        tradeOff: 'Required upfront software architecture and dedicated database design sprints.'
+      },
+      {
+        title: 'Next.js Server Actions vs Separate Client/API Architecture',
+        rationale: 'Next.js App Router and Server Actions reduced client bundle footprint, delivered instant UI updates on low-spec plant tablets, and simplified data mutations.',
+        tradeOff: 'Strict adherence to server/client boundary patterns required in UI components.'
+      }
+    ],
+    systemFlow: [
+      'Raw Material Intake: Weigh-scale and barcode scans record lot numbers directly via tablet UI.',
+      'PostgreSQL Relational Ledger: Enforces atomic inventory decrements during weaving batch production.',
+      'n8n Event Daemon: Automatically reconciles shift outputs against work orders every 15 minutes.',
+      'Next.js Management Dashboard: Displays live order fulfillment stages and machine status telemetry.',
+      'Power BI Executive Suite: Calculates monthly EBITDA margins, scrap percentages, and supplier lead times.'
+    ],
+    outcomeMetrics: [
+      { label: 'Inventory Discrepancy Drop', value: '75%', description: 'Physical audits matched digital ERP balances within 0.6% tolerance.' },
+      { label: 'Annual Operational Savings', value: '$18,500', description: 'Prevented emergency raw material freight fees and unrecorded scrap loss.' },
+      { label: 'Supervisor Adoption', value: '100%', description: 'All plant shifts transitioned completely off paper manifests within 3 weeks.' }
+    ],
     liveDemoUrl: 'https://github.com/islam-samy',
     featured: true
   },
   {
     id: 'fintech-predictive-engine',
-    title: 'Real-Time Fraud & Anomaly Prediction Gateway',
+    title: 'Real-Time Fraud & Anomaly Prediction Web Gateway',
     client: 'FinTech Cloud International',
     companyLogo: 'https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&w=120&q=80',
-    category: 'AI & Machine Learning',
-    role: 'Principal ML Engineer',
+    category: 'Cloud Native',
+    role: 'Lead ML & Full-Stack Engineer',
     impactMetric: '95% Accuracy',
     metrics: [
       { label: 'Model Precision', value: '95.4%' },
@@ -86,15 +200,15 @@ export const initialProjects: ProjectItem[] = [
       { label: 'False Positives', value: '-62%' },
       { label: 'Prevented Losses', value: '$4.2M' }
     ],
-    techStack: ['Python', 'XGBoost', 'FastAPI', 'Redis', 'Kubernetes', 'Prometheus', 'Triton'],
-    summary: 'Engineered sub-20ms latency machine learning scoring engine handling 45,000 requests per minute with automated retraining pipelines.',
+    techStack: ['Python', 'XGBoost', 'Next.js', 'FastAPI', 'Redis', 'Kubernetes', 'Prometheus'],
+    summary: 'Engineered sub-20ms latency machine learning scoring engine and full-stack Next.js administrative console handling 45,000 requests per minute with automated retraining pipelines.',
     challenge: 'Payment fraud attack vectors evolved faster than traditional rule-based transaction scoring engines could handle. Legitimate cardholders experienced high false-positive decline rates (causing cart abandonment), while fraudulent syndicate patterns slipped through rule checks during flash sale spikes of 45,000 requests per minute.',
-    solution: 'Constructed an ultra-low latency predictive scoring microservice powered by an ensemble of XGBoost and LightGBM models. Integrated an in-memory Redis feature store for sub-millisecond retrieval of user behavioral history, device fingerprints, and geolocation velocity. Deployed horizontally on Kubernetes behind FastAPI with gRPC fallback.',
+    solution: 'Constructed an ultra-low latency predictive scoring microservice powered by an ensemble of XGBoost and LightGBM models. Integrated an in-memory Redis feature store for sub-millisecond retrieval of user behavioral history, device fingerprints, and geolocation velocity. Deployed horizontally on Kubernetes behind FastAPI with a Next.js real-time operator portal.',
     architectureHighlights: [
       'Trained gradient boosting ensemble on 12M historical transaction records with feature store caching in Redis.',
+      'Built modern Next.js 15 administrative console with live WebSocket alerts for suspicious transaction telemetry.',
       'Implemented canary deployment strategy with Prometheus drift detection and fallback rule heuristics.',
-      'Prevented over $4.2M in unauthorized chargebacks across the first two quarters of production rollout.',
-      'Achieved p99 inference latency of 14.2ms under peak load.'
+      'Prevented over $4.2M in unauthorized chargebacks across the first two quarters of production rollout.'
     ],
     keyDecisions: [
       {
@@ -113,116 +227,12 @@ export const initialProjects: ProjectItem[] = [
       'Feature Store Lookup: Redis pipeline retrieves 124 pre-computed feature vectors in < 2ms.',
       'Inference Engine: Optimized C++ runtime evaluates XGBoost ensemble in < 12ms.',
       'Decision Orchestrator: Combines ML risk probability with regional compliance rules.',
-      'Audit Logging: Dispatches async event to Kafka for offline model retraining and drift analysis.'
+      'Next.js Operator Console: Real-time fraud analyst dashboard streams flagged transactions via WebSockets.'
     ],
     outcomeMetrics: [
       { label: 'False Decline Reduction', value: '62%', description: 'Drastically reduced legitimate customer friction at payment checkout.' },
       { label: 'Inference SLA', value: '14.2ms', description: 'Exceeded strict 20ms payment gateway timeout SLA requirements.' },
       { label: 'Fraud Capital Saved', value: '$4.2M', description: 'Prevented fraudulent chargebacks within the first two operating quarters.' }
-    ],
-    liveDemoUrl: 'https://github.com/islam-samy',
-    featured: true
-  },
-  {
-    id: 'telecom-streaming-pipeline',
-    title: 'Distributed Network CDR Processing Cluster',
-    client: 'EMEA Telecom Alliance',
-    companyLogo: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=120&q=80',
-    category: 'Distributed Systems',
-    role: 'Senior Systems Architect',
-    impactMetric: '60% Cost Reduction',
-    metrics: [
-      { label: 'Cloud Cost', value: '-60%' },
-      { label: 'CDR Volume', value: '800M daily' },
-      { label: 'Availability', value: '99.99%' },
-      { label: 'Processing SLA', value: 'Real-time' }
-    ],
-    techStack: ['Go', 'Apache Spark', 'AWS S3', 'Terraform', 'PostgreSQL', 'Grafana', 'Prometheus'],
-    summary: 'Replaced legacy on-premise batch infrastructure with serverless streaming architecture cutting operational compute costs by 60%.',
-    challenge: 'A major telecom operator generated 800M Call Detail Records (CDRs) daily across cellular towers. Legacy on-premise mainframe batch processing was unable to finish daily rating calculations within 24 hours, causing delayed billing, disputed international roaming charges, and escalating hardware maintenance expenses.',
-    solution: 'Designed and deployed an elastic event-driven stream processing architecture in Go and Apache Spark. Raw binary telecom packets are parsed on edge nodes, dispatched into segmented cloud topics, and partitioned into Parquet columnar files on object storage for instant distributed SQL querying via Trino/Athena.',
-    architectureHighlights: [
-      'Migrated legacy monolithic ETL scripts to decoupled Go event microservices deployed on Kubernetes.',
-      'Configured partitioned Parquet storage on S3 integrated with AWS Athena for ad-hoc analytical queries.',
-      'Built distributed tracing with OpenTelemetry ensuring full auditability of regulatory compliance records.',
-      'Implemented automated spot-instance auto-scaling reducing infrastructure expenditure by 60%.'
-    ],
-    keyDecisions: [
-      {
-        title: 'Go Microservices vs Java JVM Services',
-        rationale: 'Go binaries consumed 85% less memory per container, eliminated JVM garbage collection pauses, and booted in milliseconds on auto-scaled worker nodes.',
-        tradeOff: 'Lower availability of pre-built telecom proprietary protocol decoding libraries compared to legacy Java ecosystems.'
-      },
-      {
-        title: 'Partitioned Parquet on S3 vs Dedicated Data Warehouse',
-        rationale: 'Decoupled compute from storage, allowing historical CDRs to be stored at cold object storage prices while remaining instantly queryable.',
-        tradeOff: 'Requires disciplined partition pruning and file size compaction routines.'
-      }
-    ],
-    systemFlow: [
-      'Cellular Tower Telemetry: Tower switches stream raw binary CDR byte streams.',
-      'Go Edge Parsers: Decodes ASN.1 telecom protocol packets into structured JSON/Avro events.',
-      'Cloud Event Ingestion: Kinesis/Kafka topic receives rated events with checksum validations.',
-      'Apache Spark Streaming: Aggregates tower density, roaming partner splits, and billing tiers.',
-      'S3 Parquet Lake: Snappy compressed partitions organized by year/month/day/tower_id.',
-      'Grafana Observability: Live network utilization and anomaly alarm monitors.'
-    ],
-    outcomeMetrics: [
-      { label: 'Compute Cost Savings', value: '60%', description: 'Massive reduction in dedicated on-prem hardware and licensing fees.' },
-      { label: 'Daily Throughput', value: '800M', description: 'Processed daily CDR volume with zero batch lag or data backpressure.' },
-      { label: 'Audit Readiness', value: '100%', description: 'Immutable cryptographic hashes on every CDR for regulatory compliance.' }
-    ],
-    liveDemoUrl: 'https://github.com/islam-samy',
-    featured: true
-  },
-  {
-    id: 'logistics-fleet-telemetry',
-    title: 'Autonomous Fleet IoT Dispatch & Geo-Tracking',
-    client: 'TransGlobal Freight Networks',
-    companyLogo: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=120&q=80',
-    category: 'Cloud Native',
-    role: 'Solutions Architect & Consultant',
-    impactMetric: 'Sub-second Geo Sync',
-    metrics: [
-      { label: 'Active Sensors', value: '18,500+' },
-      { label: 'Route Efficiency', value: '+24%' },
-      { label: 'Uptime', value: '99.98%' },
-      { label: 'Latency', value: 'Sub-second' }
-    ],
-    techStack: ['Node.js', 'MQTT', 'WebSockets', 'Next.js', 'PostGIS', 'TailwindCSS', 'Redis'],
-    summary: 'Created a high-concurrency dispatch system aggregating GPS telemetry, temperature sensors, and vehicle OBD-II diagnostics in real-time.',
-    challenge: 'A continental logistics fleet of 18,500 cold-chain freight vehicles suffered spoilage risks and shipment delays due to lack of real-time temperature, humidity, and location tracking. Existing GPS trackers updated only once every 15 minutes, making it impossible to alert dispatchers before cargo spoiled.',
-    solution: 'Architected an end-to-end IoT ingestion platform using MQTT and persistent WebSockets. Edge vehicle telemetry units transmit second-by-second sensor readings. Spatial queries in PostGIS calculate instantaneous proximity alerts and geofence breaches, pushing live vehicle markers to dispatchers on an interactive vector map.',
-    architectureHighlights: [
-      'Designed resilient MQTT broker gateway handling network dropouts and intermittent satellite connectivity.',
-      'Implemented spatial indexing via PostGIS to calculate automated proximity geofences and delivery alerts.',
-      'Developed responsive WebSocket client dashboard with smooth vector maps and fleet alerts.',
-      'Integrated cold-chain threshold alerts automatically dispatching emergency SMS/email notifications.'
-    ],
-    keyDecisions: [
-      {
-        title: 'MQTT Protocol vs HTTP REST Polling',
-        rationale: 'MQTT reduced cellular packet overhead by 92% and maintained persistent low-power connections across cellular dead zones.',
-        tradeOff: 'Required deploying dedicated clustered MQTT broker nodes with TLS termination.'
-      },
-      {
-        title: 'PostGIS Spatial Engine vs NoSQL Geospatial',
-        rationale: 'PostGIS provided native spatial bounding box indexing (R-Tree) with complex polygon intersects for precise warehouse boundaries.',
-        tradeOff: 'Higher indexing overhead during massive burst writes, mitigated by batching coordinates in Redis first.'
-      }
-    ],
-    systemFlow: [
-      'Vehicle Sensor Array: OBD-II, GPS, and cryogenic temperature sensors sample every second.',
-      'Cellular IoT Transmitter: Packages sensor frames into lightweight MQTT payloads.',
-      'MQTT Broker Cluster: Receives encrypted packets with QoS level 1 reliability.',
-      'Redis Ingestion Buffer: De-dups and calculates delta distance and speed anomalies.',
-      'PostGIS Storage: Persists historical trail trajectories with spatial R-tree indexes.',
-      'Dispatcher WebSocket HUD: Live dashboard streams vehicle positions with zero page refresh.'
-    ],
-    outcomeMetrics: [
-      { label: 'Cold-Chain Spoilage', value: '-88%', description: 'Instant temperature excursion warnings prevented spoilage before cargo was damaged.' },
-      { label: 'Fuel & Route Optimization', value: '+24%', description: 'Dynamic rerouting avoided severe traffic bottlenecks and highway closures.' },
-      { label: 'Connected Devices', value: '18,500+', description: 'Simultaneously connected telemetry sensors streaming continuous telemetry.' }
     ],
     liveDemoUrl: 'https://github.com/islam-samy',
     featured: true

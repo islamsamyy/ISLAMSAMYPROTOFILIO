@@ -21,50 +21,50 @@ export interface ConsultationRates {
 
 export const initialPackages: PricingPackage[] = [
   {
-    id: 'pkg-arch-audit',
-    name: 'Architecture & System Audit',
-    badge: 'Foundational Triage',
-    headline: 'Comprehensive deep dive into legacy or modern systems to identify concurrency bottlenecks and cost drains.',
-    price: '$3,500',
+    id: 'pkg-erp-architecture',
+    name: 'Custom ERP Architecture & System Build',
+    badge: 'Enterprise Core',
+    headline: 'Turnkey custom ERP engineering, database schema architecture, modular operational ledgers, and third-party API/PMS integrations.',
+    price: '$4,500',
     frequency: '/ milestone review',
-    duration: '2 Weeks Sprint',
+    duration: '3 Weeks Sprint',
     deliverables: [
-      'Full code & infrastructure audit (Database, APIs, Cloud Infra)',
-      'High-concurrency bottleneck identification & benchmark report',
-      'Data model & schema optimization blueprint',
-      'Executive roadmap with actionable refactoring priorities'
+      'Custom ERP module design (Inventory, Procurement, Billing, and Operations)',
+      'High-throughput database schema modeling (PostgreSQL / MySQL) & indexing',
+      'OPERA PMS / SAP / Legacy ERP bi-directional sync connectors',
+      'Production deployment architecture, CI/CD pipelines & role-based access control'
     ],
     isPopular: false
   },
   {
-    id: 'pkg-lakehouse-build',
-    name: 'Lakehouse & Stream Deployment',
+    id: 'pkg-ai-agents-automation',
+    name: 'Autonomous AI Agents & Workflow Automation',
     badge: 'Most Popular',
-    headline: 'Turnkey data platform engineering connecting your operational databases into a high-speed analytical lakehouse.',
-    price: '$6,500',
+    headline: 'Multi-agent autonomous LLM orchestration and zero-overhead n8n workflows that eliminate manual operational bottlenecks.',
+    price: '$6,800',
     frequency: '/ system deployment',
     duration: '4 Weeks Build',
     deliverables: [
-      'End-to-end Kafka/CDC pipeline from ERP/PMS/DB to ClickHouse/S3',
-      'Automated incremental ETL pipelines with data validation checks',
-      '3x Executive BI Dashboards (Power BI / Grafana / Metabase)',
-      'Full CI/CD IaC scripts & 30-day post-launch warranty'
+      'Autonomous multi-agent task networks (CrewAI, LangChain, OpenAI & Anthropic APIs)',
+      'Self-hosted n8n workflow automations with automated error recovery & queues',
+      'Real-time data synchronization between web apps, databases, and third-party APIs',
+      'Executive telemetry dashboard integration & 30-day post-launch warranty SLA'
     ],
     isPopular: true
   },
   {
-    id: 'pkg-fractional-cto',
-    name: 'Fractional Staff Architect / CTO',
-    badge: 'Enterprise Retainer',
-    headline: 'Dedicated weekly architecture leadership, sprint technical oversight, and senior engineering mentorship.',
-    price: '$4,800',
+    id: 'pkg-lakehouse-fractional',
+    name: 'Enterprise Lakehouse & Fractional CTO',
+    badge: 'Executive Retainer',
+    headline: 'Dedicated weekly architecture leadership, streaming lakehouse engineering, and high-concurrency systems governance.',
+    price: '$5,200',
     frequency: '/ month retainer',
     duration: 'Month-to-Month SLA',
     deliverables: [
-      '15 hours weekly direct architectural governance & code review',
-      'Sprint design leadership & high-concurrency technical direction',
-      'Direct client & vendor negotiation for cloud contracts',
-      'Priority emergency SLA for production incidents (< 1 hr response)'
+      '15 hours weekly direct architectural governance, code review & system design',
+      'Kafka & ClickHouse streaming lakehouse deployment for real-time executive BI',
+      'Executive Power BI / Tableau dashboard suites with sub-second query speeds',
+      'Priority emergency SLA for production systems & vendor contract negotiation'
     ],
     isPopular: false
   }
@@ -80,4 +80,3 @@ export const initialConsultationRates: ConsultationRates = [
     availableTimezones: ['Cairo EET (UTC+2)', 'London GMT (UTC+0)', 'New York EST (UTC-5)', 'Dubai GST (UTC+4)']
   }
 ][0];
-

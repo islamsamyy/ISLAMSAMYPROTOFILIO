@@ -36,7 +36,7 @@ export const TiltCard = React.forwardRef<HTMLDivElement, TiltCardProps>(
       scale = 1.02,
       glareMaxOpacity = 0.25,
       speed = 400,
-      disabled = false,
+      disabled = true,
       className,
       style,
       onMouseMove,

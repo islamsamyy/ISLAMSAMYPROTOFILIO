@@ -279,6 +279,93 @@ export function ProjectDetailClient({ projectId, initialProject }: ProjectDetail
             ))}
           </section>
 
+          {/* PROJECT GALLERY PHOTOS */}
+          {(() => {
+            const gallery =
+              project.galleryImages && project.galleryImages.length > 0
+                ? project.galleryImages
+                : project.companyLogo
+                ? [project.companyLogo.replace('w=120', 'w=1200')]
+                : [];
+            if (gallery.length === 0) return null;
+            return (
+              <section className="flex flex-col gap-5">
+                <div className="flex items-center justify-between">
+                  <div className="flex flex-col gap-1">
+                    <span className="font-mono text-xs text-secondary uppercase tracking-widest font-semibold">
+                      Visual Showcase
+                    </span>
+                    <h2 className="font-nexa text-2xl sm:text-3xl font-bold text-on-surface">
+                      Project Gallery
+                    </h2>
+                  </div>
+                </div>
+                <div className={`grid grid-cols-1 ${gallery.length > 1 ? 'md:grid-cols-2 lg:grid-cols-3' : ''} gap-5`}>
+                  {gallery.map((imgUrl, idx) => (
+                    <a
+                      key={idx}
+                      href={imgUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="relative aspect-video rounded-3xl overflow-hidden bg-surface-container-low/50 border border-white/15 shadow-[0_8px_32px_rgba(0,0,0,0.3)] block"
+                    >
+                      <img
+                        src={imgUrl}
+                        alt={`${project.title} — Gallery ${idx + 1}`}
+                        loading="lazy"
+                        className="w-full h-full object-cover"
+                      />
+                    </a>
+                  ))}
+                </div>
+              </section>
+            );
+          })()}
+
+          {/* IMPLEMENTATION STEPS */}
+          {(() => {
+            const stepsList =
+              project.steps && project.steps.length > 0
+                ? project.steps
+                : (project.systemFlow || []).map((flow, i) => ({
+                    title: `Step ${i + 1}`,
+                    description: flow,
+                  }));
+            if (stepsList.length === 0) return null;
+            return (
+              <section className="flex flex-col gap-5">
+                <div className="flex flex-col gap-1">
+                  <span className="font-mono text-xs text-primary uppercase tracking-widest font-semibold">
+                    Execution Blueprint
+                  </span>
+                  <h2 className="font-nexa text-2xl sm:text-3xl font-bold text-on-surface">
+                    Project Steps &amp; Architecture Flow
+                  </h2>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                  {stepsList.map((step, idx) => (
+                    <div
+                      key={idx}
+                      className="relative p-6 rounded-3xl bg-surface-container-low/40 backdrop-blur-2xl border border-white/20 dark:border-white/[0.08] shadow-[0_8px_32px_rgba(0,0,0,0.25)] flex flex-col gap-3"
+                    >
+                      <div className="flex items-center gap-3">
+                        <span className="w-8 h-8 rounded-xl bg-primary/15 border border-primary/30 text-primary font-mono text-xs font-bold flex items-center justify-center shrink-0">
+                          {String(idx + 1).padStart(2, '0')}
+                        </span>
+                        <h3 className="font-nexa text-base font-bold text-on-surface leading-snug">
+                          {step.title}
+                        </h3>
+                      </div>
+                      <p className="font-body-sm text-xs sm:text-sm text-on-surface-variant leading-relaxed">
+                        {step.description}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            );
+          })()}
+
           {/* TWO-COLUMN CASE STUDY DEEP DIVE: CHALLENGE & SOLUTION */}
           <section className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
             {/* The Technical Challenge */}

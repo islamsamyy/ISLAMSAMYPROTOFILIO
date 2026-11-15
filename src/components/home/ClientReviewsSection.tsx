@@ -4,9 +4,11 @@ import React from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { useReviews } from '@/lib/hooks';
+import { useLanguage } from '@/context/LanguageContext';
 
 export function ClientReviewsSection() {
   const { reviews, loaded } = useReviews();
+  const { t, language } = useLanguage();
 
   return (
     <section id="reviews" className="relative z-10 w-full max-w-[1280px] mx-auto px-gutter py-20 scroll-mt-24 content-auto">
@@ -21,14 +23,14 @@ export function ClientReviewsSection() {
         <div className="inline-flex items-center gap-space-xs px-3.5 py-1.5 rounded-full bg-surface-container-high border border-primary/30 shadow-[0_0_20px_rgba(208,188,255,0.2)] mb-4">
           <span className="material-symbols-outlined text-primary text-base">verified</span>
           <span className="font-label-sm text-xs uppercase tracking-wider text-primary font-semibold">
-            Verified Client Endorsements
+            {t('reviews.badge', 'Verified Client Endorsements')}
           </span>
         </div>
         <h2 className="font-display-xl text-3xl sm:text-4xl text-on-surface font-bold tracking-tight">
-          Client Reviews &amp; Production Impact
+          {t('reviews.title', 'Client Reviews & Production Impact')}
         </h2>
         <p className="font-body-lg text-sm sm:text-base text-on-surface-variant max-w-2xl mt-3 leading-relaxed">
-          Direct testimonials from CIOs, VPs of Engineering, and Directors whose critical systems and data pipelines I have re-architected.
+          {t('reviews.subtitle', 'Direct testimonials from CIOs, VPs of Engineering, and Directors whose critical systems and data pipelines I have re-architected.')}
         </p>
       </motion.div>
 

@@ -143,6 +143,8 @@ export function mapProjectRowToItem(row: any): ProjectItem {
     keyDecisions: row.key_decisions || [],
     systemFlow: row.system_flow || [],
     outcomeMetrics: row.outcome_metrics || [],
+    galleryImages: row.gallery_images || [],
+    steps: row.steps || [],
   };
 }
 
@@ -166,6 +168,8 @@ export function mapProjectItemToRow(p: ProjectItem) {
     key_decisions: p.keyDecisions || [],
     system_flow: p.systemFlow || [],
     outcome_metrics: p.outcomeMetrics || [],
+    gallery_images: p.galleryImages || [],
+    steps: p.steps || [],
     updated_at: new Date().toISOString()
   };
 }

@@ -3,6 +3,7 @@
 import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useCertifications } from '@/lib/hooks';
+import { useLanguage } from '@/context/LanguageContext';
 import { CertificationItem } from '@/data/seedCertifications';
 import {
   Award,
@@ -25,6 +26,7 @@ import {
 
 export function CertificationsSection() {
   const { certifications } = useCertifications();
+  const { t, language } = useLanguage();
   const [filter, setFilter] = useState<string>('all');
   const [viewingCert, setViewingCert] = useState<CertificationItem | null>(null);
   const [copiedId, setCopiedId] = useState<string | null>(null);
@@ -70,14 +72,14 @@ export function CertificationsSection() {
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/40 dark:bg-white/[0.06] border border-primary/40 shadow-[0_0_24px_rgba(208,188,255,0.3)] mb-4 backdrop-blur-xl">
           <Award className="w-4 h-4 text-primary" />
           <span className="font-label-sm text-xs uppercase tracking-wider text-primary font-bold">
-            Verified Industry Accreditations &amp; Degrees
+            {t('certifications.badge', 'Verified Industry Accreditations & Degrees')}
           </span>
         </div>
         <h2 className="font-nexa text-3xl sm:text-5xl text-on-surface font-extrabold tracking-tight">
-          Certifications &amp; Academic Credentials
+          {t('certifications.title', 'Certifications & Academic Credentials')}
         </h2>
         <p className="font-body-md text-sm sm:text-base text-on-surface-variant mt-3 leading-relaxed">
-          Rigorous independent validations from DataCamp, Cisco, MaharaTech ITI, IBM, and Tanta University across high-performance machine learning, data engineering pipelines, and distributed analytics.
+          {t('certifications.subtitle', 'Rigorous independent validations from DataCamp, Cisco, MaharaTech ITI, IBM, and Tanta University across high-performance machine learning, data engineering pipelines, and distributed analytics.')}
         </p>
 
         {/* Filter Pills & Interactive Controls */}
@@ -85,11 +87,11 @@ export function CertificationsSection() {
           {/* Category Filter Pills */}
           <div className="flex items-center justify-center flex-wrap gap-2 mx-auto sm:mx-0">
             {[
-              { id: 'all', label: 'All Credentials' },
-              { id: 'machine learning', label: 'Machine Learning & AI' },
-              { id: 'data analytics', label: 'Data Analytics & SQL' },
-              { id: 'cloud', label: 'Cloud & Big Data' },
-              { id: 'academic', label: 'Academic Degrees' },
+              { id: 'all', label: t('certifications.filterAll', 'All Credentials') },
+              { id: 'machine learning', label: t('certifications.filterML', 'Machine Learning & AI') },
+              { id: 'data analytics', label: t('certifications.filterData', 'Data Analytics & SQL') },
+              { id: 'cloud', label: t('certifications.filterCloud', 'Cloud & Big Data') },
+              { id: 'academic', label: language === 'ar' ? 'الدرجات الأكاديمية' : 'Academic Degrees' },
             ].map((tab) => (
               <button
                 key={tab.id}
@@ -390,7 +392,7 @@ export function CertificationsSection() {
                 {/* Credential ID Key */}
                 {viewingCert.credentialId && (
                   <div className="w-full flex items-center justify-between p-3 rounded-xl bg-surface-container-high/40 border border-white/[0.06] font-mono text-xs mb-6">
-                    <span className="text-on-surface-variant">Credential Verification ID:</span>
+                    <span className="text-on-surface-variant">{t('certifications.credentialId', 'Credential Verification ID')}:</span>
                     <button
                       type="button"
                       onClick={() => handleCopyId(viewingCert.credentialId!)}
@@ -434,7 +436,7 @@ export function CertificationsSection() {
                     rel="noopener noreferrer"
                     className="w-full sm:flex-1 inline-flex items-center justify-center gap-2 py-3 px-5 rounded-xl bg-primary text-on-primary font-nexa font-bold text-xs uppercase tracking-wider shadow-[0_0_20px_rgba(160,120,255,0.4)] hover:shadow-[0_0_30px_rgba(160,120,255,0.6)] transition-all hover:scale-[1.02] active:scale-95"
                   >
-                    <span>Verify On Official Registry</span>
+                    <span>{t('certifications.verifyOnline', 'Verify On Official Registry')}</span>
                     <ExternalLink className="w-4 h-4" />
                   </a>
                 )}
@@ -443,7 +445,7 @@ export function CertificationsSection() {
                   onClick={() => setViewingCert(null)}
                   className="w-full sm:w-auto px-6 py-3 rounded-xl bg-surface-container-high hover:bg-surface-container-highest text-on-surface text-xs font-nexa uppercase tracking-wider font-semibold transition-colors"
                 >
-                  Close Dossier
+                  {t('certifications.close', 'Close Dossier')}
                 </button>
               </div>
 

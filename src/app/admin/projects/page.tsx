@@ -33,6 +33,8 @@ export default function AdminProjectsPage() {
   const [techStackStr, setTechStackStr] = useState('Kafka, Go, ClickHouse, Docker');
   const [highlightsStr, setHighlightsStr] = useState('Sub-second analytics lakehouse\nReal-time CDC pipeline from OPERA PMS');
   const [liveDemoUrl, setLiveDemoUrl] = useState('');
+  const [galleryImagesStr, setGalleryImagesStr] = useState('');
+  const [stepsStr, setStepsStr] = useState('');
   const [featured, setFeatured] = useState(true);
 
   const startCreate = () => {
@@ -71,6 +73,8 @@ export default function AdminProjectsPage() {
     setTechStackStr(p.techStack.join(', '));
     setHighlightsStr(p.architectureHighlights.join('\n'));
     setLiveDemoUrl(p.liveDemoUrl || '');
+    setGalleryImagesStr((p.galleryImages || []).join('\n'));
+    setStepsStr((p.steps || []).map((st) => `${st.title} | ${st.description}`).join('\n'));
     setFeatured(p.featured);
     setEditingProject(p);
     setIsCreating(true);
@@ -85,6 +89,18 @@ export default function AdminProjectsPage() {
       const id = editingProject ? editingProject.id : `proj-${Date.now()}`;
       const techStack = techStackStr.split(',').map((s) => s.trim()).filter(Boolean);
       const architectureHighlights = highlightsStr.split('\n').map((s) => s.trim()).filter(Boolean);
+      const galleryImages = galleryImagesStr.split('\n').map((s) => s.trim()).filter(Boolean);
+      const steps = stepsStr
+        .split('\n')
+        .map((line) => line.trim())
+        .filter(Boolean)
+        .map((line, idx) => {
+          const [t, ...rest] = line.split('|');
+          return {
+            title: rest.length > 0 ? t.trim() : `Step ${idx + 1}`,
+            description: rest.length > 0 ? rest.join('|').trim() : t.trim(),
+          };
+        });
 
       const updated: ProjectItem = {
         id,
@@ -109,6 +125,8 @@ export default function AdminProjectsPage() {
         keyDecisions: editingProject?.keyDecisions || [],
         systemFlow: editingProject?.systemFlow || [],
         outcomeMetrics: editingProject?.outcomeMetrics || [],
+        galleryImages,
+        steps,
       };
 
       await saveProject(updated);
@@ -356,6 +374,28 @@ export default function AdminProjectsPage() {
                         value={highlightsStr}
                         onChange={(e) => setHighlightsStr(e.target.value)}
                         placeholder="Engineered bi-directional CDC connectors&#10;Constructed columnar store with 18x compression"
+                        className="px-3.5 py-2 rounded-xl bg-surface-container-lowest border border-outline-variant/30 text-xs text-on-surface focus:outline-none focus:ring-2 focus:ring-primary"
+                      />
+                    </div>
+
+                    <div className="flex flex-col gap-1">
+                      <label className="text-xs font-semibold text-on-surface">Project Gallery Image URLs (one per line)</label>
+                      <textarea
+                        rows={2}
+                        value={galleryImagesStr}
+                        onChange={(e) => setGalleryImagesStr(e.target.value)}
+                        placeholder="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200"
+                        className="px-3.5 py-2 rounded-xl bg-surface-container-lowest border border-outline-variant/30 text-xs text-on-surface focus:outline-none focus:ring-2 focus:ring-primary"
+                      />
+                    </div>
+
+                    <div className="flex flex-col gap-1">
+                      <label className="text-xs font-semibold text-on-surface">Project Steps (Title | Description per line)</label>
+                      <textarea
+                        rows={3}
+                        value={stepsStr}
+                        onChange={(e) => setStepsStr(e.target.value)}
+                        placeholder="Edge Ingestion | Deployed Go CDC daemons across 14 properties&#10;Stream Processing | Routed events into Kafka & ClickHouse"
                         className="px-3.5 py-2 rounded-xl bg-surface-container-lowest border border-outline-variant/30 text-xs text-on-surface focus:outline-none focus:ring-2 focus:ring-primary"
                       />
                     </div>

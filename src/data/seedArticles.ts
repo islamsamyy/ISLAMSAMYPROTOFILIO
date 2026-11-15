@@ -14,18 +14,18 @@ export interface ArticleItem {
 
 export const initialArticles: ArticleItem[] = [
   {
-    id: 'art-lakehouse-zero-downtime',
+    id: 'art-custom-erp-lakehouse-opera',
     slug: 'zero-downtime-lakehouse-opera-pms',
-    title: 'Building a Zero-Downtime Real-Time Lakehouse for Hospitality Enterprises',
+    title: 'Building a Zero-Downtime Real-Time Lakehouse & Custom ERP Connectors for Hospitality Enterprises',
     category: 'Data Engineering',
     readTime: '8 min read',
     date: 'Nov 2024',
     author: 'Islam Samy',
     excerpt: 'How we captured Change Data Capture streams from legacy Oracle/OPERA PMS systems into ClickHouse with sub-250ms latency across 14 hotel chains.',
-    content: `### The Challenge: Legacy Transactional Silos
+    content: `### The Challenge: Legacy Transactional Silos & ERP Lockouts
 Hospitality enterprises operating on OPERA PMS often suffer from fragmented databases that lock away critical reservation and financial metrics. Querying production transaction tables for executive reports frequently leads to database lockouts and degraded check-in speeds.
 
-### The Architecture: CDC + Kafka + ClickHouse
+### The Architecture: CDC + Kafka + ClickHouse Lakehouse
 To bypass reporting locks entirely, we engineered a non-invasive Change Data Capture (CDC) pipeline:
 1. **Debezium Connectors** monitor Oracle redo logs asynchronously without database overhead.
 2. **Kafka Brokers** buffer transaction events into partitioned topics keyed by Property ID.
@@ -49,46 +49,56 @@ ORDER BY (property_id, check_in_date, booking_id);
 - **Zero lockups:** Operational PMS load reduced by 78%.
 - **Sub-second dashboards:** Financial rollups execute in under 180ms across 12M historical rows.
 - **Immediate ROI:** Automated ADR yield recommendations captured an estimated 6.2% revenue lift.`,
-    tags: ['Kafka', 'ClickHouse', 'OPERA PMS', 'CDC', 'Distributed Systems'],
+    tags: ['Custom ERP', 'Kafka', 'ClickHouse', 'OPERA PMS', 'CDC', 'Data Engineering'],
     featured: true
   },
   {
-    id: 'art-sub-20ms-fraud-detection',
-    slug: 'sub-20ms-ml-scoring-pipeline',
-    title: 'Designing Sub-20ms Machine Learning Inference Pipelines in FinTech',
+    id: 'art-autonomous-ai-agents-automation',
+    slug: 'autonomous-ai-agents-workflow-automation',
+    title: 'Architecting Autonomous Multi-Agent AI Systems for Enterprise Workflow Automation',
     category: 'Machine Learning',
-    readTime: '6 min read',
+    readTime: '7 min read',
     date: 'Oct 2024',
     author: 'Islam Samy',
-    excerpt: 'Optimizing feature store retrieval, model quantization, and asynchronous scoring to prevent fraud on high-volume payment rails.',
-    content: `### High-Throughput Fraud Detection
-When evaluating 45,000 requests per minute on payment authorization gateways, every millisecond counts. A traditional ML server with remote database lookups introduces latency spikes that violate merchant SLAs.
+    excerpt: 'How to combine CrewAI, LangChain, and self-hosted n8n webhooks to build production-grade autonomous agent networks that eliminate 60% of manual operational overhead.',
+    content: `### Beyond Chatbots: Autonomous Agent Systems in Production
+Most enterprises struggle with single-prompt LLM scripts that hallucinate or fail silently on multi-step workflows. True operational ROI requires autonomous agent graphs with strict task specialization, memory checkpoints, and deterministic fallback loops.
 
-### Optimization Strategies
-- **Redis Cluster Feature Store:** Pre-aggregating customer transaction frequencies into sliding memory windows.
-- **Model Quantization:** Compiling XGBoost ensembles into optimized C-bindings via Treelite, reducing CPU inference time from 42ms to 4.5ms.
-- **Asynchronous Telemetry:** Streaming audit trails to Prometheus and ClickHouse asynchronously off the critical request path.`,
-    tags: ['Machine Learning', 'FastAPI', 'Redis', 'Python', 'XGBoost'],
-    featured: false
+### The 4-Tier Agent Architecture
+1. **Triage & Classification Agent:** Evaluates inbound payloads (invoices, emails, webhooks) and maps them to deterministic intent classes.
+2. **Context Retrieval Agent (RAG):** Queries an in-memory Redis vector store for enterprise operational policies and business constraints.
+3. **Execution Agent:** Interacts with self-hosted n8n APIs to mutate database states and dispatch transactions.
+4. **Validation & Audit Agent:** Verifies output schema integrity, computes cryptographic hashes, and notifies stakeholders via Slack.
+
+### Production Results
+- **60% Cost Reduction:** Automated over 120,000 monthly operational events without adding administrative headcount.
+- **Sub-450ms Routing:** Average agent dispatch latency kept under half a second.
+- **Zero Hallucination Leaks:** Multi-agent peer validation reduced data mutation errors to near zero.`,
+    tags: ['AI Agents', 'CrewAI', 'LangChain', 'n8n', 'Python', 'Workflow Automation'],
+    featured: true
   },
   {
-    id: 'art-distributed-event-driven-pitfalls',
-    slug: 'distributed-event-driven-pitfalls',
-    title: '5 Costly Traps in Distributed Event-Driven Architecture (And How to Evade Them)',
+    id: 'art-manufacturing-erp-architecture',
+    slug: 'custom-manufacturing-erp-architecture',
+    title: 'Designing Custom Manufacturing ERP Systems: From Paper Manifests to Sub-Second Telemetry',
     category: 'Architecture',
-    readTime: '10 min read',
+    readTime: '9 min read',
     date: 'Sep 2024',
     author: 'Islam Samy',
-    excerpt: 'Key lessons learned over 6 years of architecting distributed event-driven systems: ordering guarantees, poison pill deadlocks, and idempotency.',
-    content: `### 1. Dual-Write Inconsistencies
-Updating a relational database and publishing a Kafka message inside a standard application transaction leads to orphan states if the broker rejects the network call.
+    excerpt: 'Key lessons learned designing a tailored Next.js and PostgreSQL manufacturing ERP: Bill of Materials modeling, shop-floor barcode telemetry, and real-time scrap reduction.',
+    content: `### Why Generic Off-The-Shelf ERPs Fail Industrial Plants
+Commercial ERP behemoths often cost hundreds of thousands of dollars, demand painful multi-year implementations, and force unique factory shop floors into rigid generic molds. A tailored modular ERP solves this by mirroring exact physical manufacturing stages.
 
-**The Solution:** The Transactional Outbox Pattern with automated CDC or dedicated log-tailing workers.
+### Core Architectural Pillars
+1. **Multi-Stage BOM Relational Schema:** Modeling yarn, weaving, and dye stages with dynamic loss coefficients in PostgreSQL.
+2. **Low-Latency Shop-Floor UI:** Next.js 15 App Router delivering lightning-fast touch interfaces on ruggedized industrial tablets.
+3. **Automated Barcode & n8n Reorder Daemons:** Immediate atomic decrements prevent inventory reconciliation discrepancies before shifts end.
+4. **Live Executive Cockpits:** Real-time Power BI scorecards translating plant-floor telemetry into immediate executive profit metrics.
 
-### 2. Underestimating Poison Pills
-One corrupted payload can crash a consumer group, creating backpressure that overwhelms your cluster. Always construct automated Dead Letter Queues (DLQ) with retry policies.`,
-    tags: ['Event-Driven', 'Kafka', 'System Design', 'Microservices'],
-    featured: false
+### Production Results
+- **75% Reconciliation Discrepancy Reduction:** Physical inventory audits matched digital ledgers within 0.6% tolerance.
+- **$18,500 Annual Savings:** Stopped emergency material orders and undiscovered scrap loss.`,
+    tags: ['Custom ERP', 'PostgreSQL', 'Next.js 15', 'Full-Stack Web', 'Manufacturing', 'BI'],
+    featured: true
   }
 ];
-

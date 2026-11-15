@@ -3,23 +3,39 @@
 
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 import { motion } from 'framer-motion';
 import { SiteHeader } from '@/components/navigation/SiteHeader';
 import { SiteFooter } from '@/components/navigation/SiteFooter';
-import { ClientReviewsSection } from '@/components/home/ClientReviewsSection';
-import { ExperienceTimelineSection } from '@/components/home/ExperienceTimelineSection';
-import { CertificationsSection } from '@/components/home/CertificationsSection';
-import { TechArsenalSection } from '@/components/home/TechArsenalSection';
 import { Hero3DOrbit } from '@/components/canvas/Hero3DOrbit';
-import { ThreeBackgroundCanvas } from '@/components/canvas/ThreeBackgroundCanvas';
 import { ParticleMeshCanvas } from '@/components/canvas/ParticleMeshCanvas';
 import { CyberneticGridCanvas } from '@/components/canvas/CyberneticGridCanvas';
 import { TiltCard } from '@/components/ui/TiltCard';
 import { ScrollRevealSection } from '@/components/animation/ScrollRevealSection';
 import { submitContactInquiry } from '@/lib/data-store';
 import { useProjects, usePricing } from '@/lib/hooks';
+import { useLanguage } from '@/context/LanguageContext';
+import { WhatsAppFloatingButton, WHATSAPP_NUMBER, WHATSAPP_INTERNATIONAL, WHATSAPP_URL, WhatsAppIcon } from '@/components/ui/WhatsAppButton';
+
+const ClientReviewsSection = dynamic(
+  () => import('@/components/home/ClientReviewsSection').then((m) => m.ClientReviewsSection),
+  { ssr: false, loading: () => <div className="py-12 max-w-7xl mx-auto px-4"><div className="h-64 rounded-2xl bg-surface-container/30 animate-pulse" /></div> }
+);
+const ExperienceTimelineSection = dynamic(
+  () => import('@/components/home/ExperienceTimelineSection').then((m) => m.ExperienceTimelineSection),
+  { ssr: false, loading: () => <div className="py-12 max-w-7xl mx-auto px-4"><div className="h-64 rounded-2xl bg-surface-container/30 animate-pulse" /></div> }
+);
+const CertificationsSection = dynamic(
+  () => import('@/components/home/CertificationsSection').then((m) => m.CertificationsSection),
+  { ssr: false, loading: () => <div className="py-12 max-w-7xl mx-auto px-4"><div className="h-48 rounded-2xl bg-surface-container/30 animate-pulse" /></div> }
+);
+const TechArsenalSection = dynamic(
+  () => import('@/components/home/TechArsenalSection').then((m) => m.TechArsenalSection),
+  { ssr: false, loading: () => <div className="py-12 max-w-7xl mx-auto px-4"><div className="h-48 rounded-2xl bg-surface-container/30 animate-pulse" /></div> }
+);
 
 export default function PortfolioHomePage() {
+  const { t, language } = useLanguage();
   const { projects } = useProjects();
   const { packages } = usePricing();
   const [inqName, setInqName] = useState('');
@@ -535,10 +551,10 @@ try {
   className="max-w-4xl mx-auto mb-2"
 >
   <h1 className="font-display-xl text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-on-surface leading-tight">
-    Engineering Digital Solutions. <span className="bg-gradient-to-r from-primary via-secondary to-tertiary-fixed bg-clip-text text-transparent">Turning Data into Business Growth.</span>
+    Custom ERP Systems, AI Agents &amp; Data Engineering. <span className="bg-gradient-to-r from-primary via-secondary to-tertiary-fixed bg-clip-text text-transparent">Built to Scale Business Revenue.</span>
   </h1>
   <p className="font-body-md text-xs sm:text-sm text-on-surface-variant max-w-2xl mx-auto mt-1 leading-relaxed">
-    Data Engineer &amp; Software Developer specializing in Business Development, Performance Marketing, Real-Time Distributed Systems, and Enterprise AI.
+    Lead Data Engineer &amp; Full-Stack Architect specializing in high-concurrency custom ERP platforms, autonomous AI agent workflows, zero-overhead automations, executive BI analytics, and modern web applications.
   </p>
 </motion.div>
 {/*  Hero CTAs  */}
@@ -555,6 +571,15 @@ try {
   <a className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-surface-container-high/80 text-on-surface hover:text-secondary font-headline-sm text-xs uppercase tracking-wider shadow-[inset_0_1px_1px_rgba(255,255,255,0.1)] hover:bg-surface-container-highest border border-outline-variant/40 transition-all duration-300 hover:scale-105 active:scale-95" href="#contact">
     <span className="material-symbols-outlined text-[18px]">handshake</span>
     <span>Let's Collaborate</span>
+  </a>
+  <a
+    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-400 hover:text-white border border-emerald-500/40 shadow-[0_0_20px_rgba(16,185,129,0.25)] font-headline-sm text-xs uppercase tracking-wider transition-all duration-300 hover:scale-105 active:scale-95"
+    href={WHATSAPP_URL}
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    <WhatsAppIcon className="w-4 h-4 text-emerald-400" />
+    <span>WhatsApp: {WHATSAPP_NUMBER}</span>
   </a>
   <a className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-surface-container-lowest/80 text-on-surface-variant hover:text-on-surface border border-outline-variant/30 font-label-md text-xs transition-all duration-300 hover:scale-105 active:scale-95" href="https://www.linkedin.com/in/islam-samy-3b72061a9/" rel="noopener noreferrer" target="_blank">
     <span className="material-symbols-outlined text-[18px]">open_in_new</span>
@@ -574,31 +599,31 @@ try {
       <TiltCard maxTilt={6} depth={10} glare={true} className="rounded-xl">
         <div className="group relative p-space-md rounded-xl bg-surface-container-low/90 dark:bg-[#14161f]/95 hover:bg-surface-container/95 border border-primary/20 hover:border-primary/40 shadow-[0_4px_24px_rgba(0,0,0,0.4)] transition-all duration-300">
           <div className="flex items-center justify-between mb-1">
-            <span className="font-label-sm text-label-sm text-primary uppercase tracking-widest font-semibold">01 • ACCURACY</span>
+            <span className="font-label-sm text-label-sm text-primary uppercase tracking-widest font-semibold">01 • CUSTOM ERP SYSTEMS</span>
             <span className="w-2 h-2 rounded-full bg-primary shadow-[0_0_8px_#d0bcff]"></span>
           </div>
-          <h2 className="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary transition-colors">95% Predictive Accuracy</h2>
-          <p className="font-body-sm text-body-sm text-on-surface-variant mt-1">Supervised &amp; gradient boosting algorithms validated in production forecasting.</p>
+          <h2 className="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary transition-colors">Custom ERP Architecture</h2>
+          <p className="font-body-sm text-body-sm text-on-surface-variant mt-1">Engineered modular ERPs integrating inventory, financial ledgers, and OPERA PMS with zero downtime.</p>
         </div>
       </TiltCard>
       <TiltCard maxTilt={6} depth={10} glare={true} className="rounded-xl">
         <div className="group relative p-space-md rounded-xl bg-surface-container-low/90 dark:bg-[#14161f]/95 hover:bg-surface-container/95 border border-secondary/20 hover:border-secondary/40 shadow-[0_4px_24px_rgba(0,0,0,0.4)] transition-all duration-300">
           <div className="flex items-center justify-between mb-1">
-            <span className="font-label-sm text-label-sm text-secondary uppercase tracking-widest font-semibold">02 • AUTOMATION</span>
+            <span className="font-label-sm text-label-sm text-secondary uppercase tracking-widest font-semibold">02 • WORKFLOW AUTOMATION</span>
             <span className="w-2 h-2 rounded-full bg-secondary shadow-[0_0_8px_#7bd0ff]"></span>
           </div>
           <h2 className="font-headline-sm text-headline-sm text-on-surface group-hover:text-secondary transition-colors">60% Cost Reduction</h2>
-          <p className="font-body-sm text-body-sm text-on-surface-variant mt-1">Eliminated manual operational overhead through automated n8n workflows &amp; ETL.</p>
+          <p className="font-body-sm text-body-sm text-on-surface-variant mt-1">Eliminated manual operational overhead through event-driven n8n orchestrations and automated ETL.</p>
         </div>
       </TiltCard>
       <TiltCard maxTilt={6} depth={10} glare={true} className="rounded-xl">
         <div className="group relative p-space-md rounded-xl bg-surface-container-low/90 dark:bg-[#14161f]/95 hover:bg-surface-container/95 border border-tertiary/20 hover:border-tertiary/40 shadow-[0_4px_24px_rgba(0,0,0,0.4)] transition-all duration-300">
           <div className="flex items-center justify-between mb-1">
-            <span className="font-label-sm text-label-sm text-tertiary uppercase tracking-widest font-semibold">03 • TELEMETRY</span>
+            <span className="font-label-sm text-label-sm text-tertiary uppercase tracking-widest font-semibold">03 • AUTONOMOUS AI AGENTS</span>
             <span className="w-2 h-2 rounded-full bg-tertiary shadow-[0_0_8px_#ffb690]"></span>
           </div>
-          <h2 className="font-headline-sm text-headline-sm text-on-surface group-hover:text-tertiary transition-colors">Executive Dashboards</h2>
-          <p className="font-body-sm text-body-sm text-on-surface-variant mt-1">Multi-source Power BI &amp; Tableau suites connecting MySQL, OPERA PMS &amp; APIs.</p>
+          <h2 className="font-headline-sm text-headline-sm text-on-surface group-hover:text-tertiary transition-colors">Multi-Agent AI Workflows</h2>
+          <p className="font-body-sm text-body-sm text-on-surface-variant mt-1">Autonomous LLM agent networks (LangChain, CrewAI) executing real-time data analysis and routing.</p>
         </div>
       </TiltCard>
     </motion.div>
@@ -641,12 +666,12 @@ try {
         {/* Islam Samy Portrait Card with Glowing Violet-Cyan Border */}
         <div className="relative z-10 p-1.5 rounded-3xl bg-gradient-to-br from-primary via-secondary to-tertiary shadow-[0_0_60px_rgba(160,120,255,0.4),0_0_20px_rgba(123,208,255,0.3)] hover:shadow-[0_0_80px_rgba(160,120,255,0.6),0_0_30px_rgba(123,208,255,0.5)] transition-all duration-500">
           <div className="relative w-64 h-72 sm:w-72 sm:h-80 rounded-[22px] overflow-hidden bg-surface-container-lowest flex items-center justify-center group">
-            <img alt="Islam Samy - Senior Solutions Architect &amp; Lead Engineer" className="w-full h-full object-cover object-top filter brightness-105 contrast-105 group-hover:scale-105 transition-transform duration-500" src="/images/islam-samy-portrait.jpg" />
+            <img alt="Islam Samy - Lead Data Engineer &amp; ERP Architect" className="w-full h-full object-cover object-top filter brightness-105 contrast-105 group-hover:scale-105 transition-transform duration-500" src="/images/islam-samy-portrait.jpg" />
             <div className="absolute inset-0 bg-gradient-to-t from-surface-container-lowest via-transparent to-transparent opacity-80"></div>
             <div className="absolute bottom-3 left-3 right-3 p-2.5 rounded-xl bg-surface-container-lowest/95 border border-white/15 shadow-sm flex items-center justify-between">
               <div className="flex flex-col text-left">
                 <span className="font-headline-sm text-body-sm font-bold text-on-surface">Islam Samy</span>
-                <span className="font-label-sm text-[10px] text-secondary uppercase font-semibold">Data Engineer &amp; Software Developer</span>
+                <span className="font-label-sm text-[10px] text-secondary uppercase font-semibold">Lead Data Engineer &amp; ERP Architect</span>
               </div>
               <div className="flex items-center gap-1.5 px-2 py-1 rounded-full bg-surface-container-high/80 border border-secondary/30">
                 <span className="w-2 h-2 rounded-full bg-secondary animate-ping"></span>
@@ -660,7 +685,7 @@ try {
       {/* Pipeline Status Sub-Badge */}
       <div className="mt-4 flex items-center gap-2 relative z-10">
         <span className="inline-block w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
-        <span className="font-label-sm text-label-sm text-on-surface-variant font-medium">Enterprise Data Intelligence Pipeline</span>
+        <span className="font-label-sm text-label-sm text-on-surface-variant font-medium">Autonomous ERP &amp; AI Intelligence Pipeline</span>
       </div>
     </motion.div>
     {/*  Right 3 Execution Capabilities  */}
@@ -673,31 +698,31 @@ try {
       <TiltCard maxTilt={6} depth={10} glare={true} className="rounded-xl">
         <div className="group relative p-space-md rounded-xl bg-surface-container-low/90 dark:bg-[#14161f]/95 hover:bg-surface-container/95 border border-secondary/20 hover:border-secondary/40 shadow-[0_4px_24px_rgba(0,0,0,0.4)] transition-all duration-300">
           <div className="flex items-center justify-between mb-1">
-            <span className="font-label-sm text-label-sm text-secondary uppercase tracking-widest font-semibold">04 • PLATFORMS</span>
+            <span className="font-label-sm text-label-sm text-secondary uppercase tracking-widest font-semibold">04 • DATA ANALYSIS &amp; BI</span>
             <span className="w-2 h-2 rounded-full bg-secondary shadow-[0_0_8px_#7bd0ff]"></span>
           </div>
-          <h2 className="font-headline-sm text-headline-sm text-on-surface group-hover:text-secondary transition-colors">OPERA PMS &amp; ERP</h2>
-          <p className="font-body-sm text-body-sm text-on-surface-variant mt-1">Hospitality &amp; retail integrations handling 200+ daily live transactions seamlessly.</p>
+          <h2 className="font-headline-sm text-headline-sm text-on-surface group-hover:text-secondary transition-colors">Sub-Second Executive BI</h2>
+          <p className="font-body-sm text-body-sm text-on-surface-variant mt-1">High-speed analytical lakehouses &amp; Power BI suites delivering real-time telemetry across revenue channels.</p>
         </div>
       </TiltCard>
       <TiltCard maxTilt={6} depth={10} glare={true} className="rounded-xl">
         <div className="group relative p-space-md rounded-xl bg-surface-container-low/90 dark:bg-[#14161f]/95 hover:bg-surface-container/95 border border-tertiary/20 hover:border-tertiary/40 shadow-[0_4px_24px_rgba(0,0,0,0.4)] transition-all duration-300">
           <div className="flex items-center justify-between mb-1">
-            <span className="font-label-sm text-label-sm text-tertiary uppercase tracking-widest font-semibold">05 • SPEED</span>
+            <span className="font-label-sm text-label-sm text-tertiary uppercase tracking-widest font-semibold">05 • FULL-STACK WEB DEV</span>
             <span className="w-2 h-2 rounded-full bg-tertiary shadow-[0_0_8px_#ffb690]"></span>
           </div>
-          <h2 className="font-headline-sm text-headline-sm text-on-surface group-hover:text-tertiary transition-colors">Sub-2s Query Speeds</h2>
-          <p className="font-body-sm text-body-sm text-on-surface-variant mt-1">Schema indexing, star schemas &amp; optimized DAX calculations for instantaneous reports.</p>
+          <h2 className="font-headline-sm text-headline-sm text-on-surface group-hover:text-tertiary transition-colors">Modern Web Platforms</h2>
+          <p className="font-body-sm text-body-sm text-on-surface-variant mt-1">Production Next.js 15 &amp; React architectures with sub-250ms p99 response times and resilient distributed APIs.</p>
         </div>
       </TiltCard>
       <TiltCard maxTilt={6} depth={10} glare={true} className="rounded-xl">
         <div className="group relative p-space-md rounded-xl bg-surface-container-low/90 dark:bg-[#14161f]/95 hover:bg-surface-container/95 border border-primary/20 hover:border-primary/40 shadow-[0_4px_24px_rgba(0,0,0,0.4)] transition-all duration-300">
           <div className="flex items-center justify-between mb-1">
-            <span className="font-label-sm text-label-sm text-primary uppercase tracking-widest font-semibold">06 • LEADERSHIP</span>
+            <span className="font-label-sm text-label-sm text-primary uppercase tracking-widest font-semibold">06 • DATA PIPELINE SCALE</span>
             <span className="w-2 h-2 rounded-full bg-primary shadow-[0_0_8px_#d0bcff]"></span>
           </div>
-          <h2 className="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary transition-colors">95% Client Retention</h2>
-          <p className="font-body-sm text-body-sm text-on-surface-variant mt-1">Led multi-functional tech teams delivering client delight across corporate milestones.</p>
+          <h2 className="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary transition-colors">1.4M msg/sec Streaming</h2>
+          <p className="font-body-sm text-body-sm text-on-surface-variant mt-1">High-throughput CDC streaming using Kafka &amp; ClickHouse, delivering 95%+ predictive modeling accuracy.</p>
         </div>
       </TiltCard>
     </motion.div>
@@ -712,31 +737,31 @@ try {
 <ScrollRevealSection className="w-full relative z-10 bg-surface-container-lowest/40 backdrop-blur-md py-6 border-y border-white/[0.06]">
 <div className="max-w-[1280px] mx-auto px-gutter grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
 <div className="flex items-center gap-space-sm p-space-sm rounded-lg bg-surface-container/40 border border-primary/10">
-<span className="material-symbols-outlined text-primary text-[28px]">school</span>
+<span className="material-symbols-outlined text-primary text-[28px]">hub</span>
 <div className="flex flex-col">
-<span className="font-label-sm text-label-sm text-on-surface-variant uppercase">Academic Core</span>
-<span className="font-body-sm text-body-sm font-semibold text-on-surface">Master's (In Progress) &amp; BIS (Tanta)</span>
+<span className="font-label-sm text-label-sm text-on-surface-variant uppercase">ERP Architecture</span>
+<span className="font-body-sm text-body-sm font-semibold text-on-surface">Custom ERP Systems &amp; OPERA PMS</span>
 </div>
 </div>
 <div className="flex items-center gap-space-sm p-space-sm rounded-lg bg-surface-container/40 border border-secondary/10">
 <span className="material-symbols-outlined text-secondary text-[28px]">smart_toy</span>
 <div className="flex flex-col">
-<span className="font-label-sm text-label-sm text-on-surface-variant uppercase">Predictive ML</span>
-<span className="font-body-sm text-body-sm font-semibold text-on-surface">Supervised, XGBoost, Deep Learning</span>
+<span className="font-label-sm text-label-sm text-on-surface-variant uppercase">AI Agents &amp; ML</span>
+<span className="font-body-sm text-body-sm font-semibold text-on-surface">Multi-Agent Systems &amp; RAG Chains</span>
 </div>
 </div>
 <div className="flex items-center gap-space-sm p-space-sm rounded-lg bg-surface-container/40 border border-tertiary/10">
-<span className="material-symbols-outlined text-tertiary text-[28px]">query_stats</span>
+<span className="material-symbols-outlined text-tertiary text-[28px]">alt_route</span>
 <div className="flex flex-col">
-<span className="font-label-sm text-label-sm text-on-surface-variant uppercase">BI &amp; Automation</span>
-<span className="font-body-sm text-body-sm font-semibold text-on-surface">Power BI, Tableau, n8n Automation</span>
+<span className="font-label-sm text-label-sm text-on-surface-variant uppercase">Automations &amp; ETL</span>
+<span className="font-body-sm text-body-sm font-semibold text-on-surface">n8n Orchestration &amp; Webhook Flows</span>
 </div>
 </div>
 <div className="flex items-center gap-space-sm p-space-sm rounded-lg bg-surface-container/40 border border-primary/10">
-<span className="material-symbols-outlined text-primary text-[28px]">cases</span>
+<span className="material-symbols-outlined text-primary text-[28px]">terminal</span>
 <div className="flex flex-col">
-<span className="font-label-sm text-label-sm text-on-surface-variant uppercase">Proven Impact</span>
-<span className="font-body-sm text-body-sm font-semibold text-on-surface">Nexalytix, Safir Hotels, Sotex Factory</span>
+<span className="font-label-sm text-label-sm text-on-surface-variant uppercase">Data &amp; Web Dev</span>
+<span className="font-body-sm text-body-sm font-semibold text-on-surface">Power BI Lakehouses &amp; Next.js 15</span>
 </div>
 </div>
 </div>
@@ -748,9 +773,9 @@ try {
 {/*  SECTION 5: FEATURED REAL PROJECTS  */}
 <ScrollRevealSection className="w-full max-w-[1280px] mx-auto px-gutter py-12 relative z-10 content-auto" id="projects" suppressHydrationWarning>
 <div className="text-center max-w-3xl mx-auto mb-10">
-<span className="font-label-sm text-label-sm uppercase tracking-widest text-primary font-semibold">Production Systems</span>
-<h2 className="font-headline-lg text-headline-lg text-on-surface mt-2 mb-4">Featured Engineering &amp; Analytics Projects</h2>
-<p className="font-body-md text-body-md text-on-surface-variant">Real implementations delivering business value, predictive clarity, and operational savings.</p>
+<span className="font-label-sm text-label-sm uppercase tracking-widest text-primary font-semibold">Flagship Production Systems</span>
+<h2 className="font-headline-lg text-headline-lg text-on-surface mt-2 mb-4">Enterprise ERP, Autonomous AI Agents &amp; Data Lakehouses</h2>
+<p className="font-body-md text-body-md text-on-surface-variant">Real-world production architectures delivering tangible business revenue, zero-overhead automation, and sub-second analytics.</p>
 </div>
 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8" suppressHydrationWarning>
   {projects.map((proj, idx) => {
@@ -835,10 +860,10 @@ try {
   <div className="text-center max-w-3xl mx-auto mb-12">
     <div className="inline-flex items-center gap-space-xs px-space-md py-1.5 rounded-full bg-surface-container-high/90 border border-primary/30 shadow-[0_0_24px_rgba(160,120,255,0.2)] mb-space-sm backdrop-blur-md">
       <span className="w-2 h-2 rounded-full bg-primary shadow-[0_0_8px_#d0bcff]"></span>
-      <span className="font-label-sm text-label-sm uppercase tracking-wider text-primary font-semibold">Flexible Collaboration &amp; Pricing</span>
+      <span className="font-label-sm text-label-sm uppercase tracking-wider text-primary font-semibold">Enterprise Engagement &amp; Advisory</span>
     </div>
-    <h2 className="font-headline-lg text-headline-lg text-on-surface mt-2 mb-4 tracking-tight">Transparent Engagement Models.</h2>
-    <p className="font-body-md text-body-md text-on-surface-variant leading-relaxed">Flexible contract structures tailored for enterprise transformations, high-velocity startups, and end-to-end data systems engineering.</p>
+    <h2 className="font-headline-lg text-headline-lg text-on-surface mt-2 mb-4 tracking-tight">Custom ERP, AI Automation &amp; Data Engineering Sprints.</h2>
+    <p className="font-body-md text-body-md text-on-surface-variant leading-relaxed">Turnkey architecture sprints and dedicated advisory engagements tailored for scaling enterprises, hospitality brands, and modern platforms.</p>
     <div className="mt-8 flex flex-col items-center gap-4">
       <div className="inline-flex items-center p-1 rounded-full bg-surface-container-low/50 border border-surface-container-high/60 backdrop-blur-md shadow-[inset_0_1px_2px_rgba(0,0,0,0.4)]">
         <button type="button" id="pricing-tab-milestone" className="px-5 py-2 rounded-full font-label-md text-label-md bg-primary-container text-on-primary shadow-[0_0_16px_rgba(160,120,255,0.4)] transition-all duration-300 font-semibold">Project-Based / Milestones</button>
@@ -961,13 +986,35 @@ try {
 <span className="">Direct Communications</span>
 </div>
 <h2 className="font-headline-lg text-headline-lg text-on-surface leading-tight mb-4">
-  Let's Build Intelligent Systems Together.
+  Let's Build Scalable Systems Together.
 </h2>
 <p className="font-body-md text-body-md text-on-surface-variant mb-8">
-  Available for high-impact Data Engineering, Machine Learning deployment, Power BI dashboard architecture, and automated operations consulting across Egypt, the Gulf, and international markets.
+  Available for high-impact Custom ERP Systems, Autonomous AI Agents, Workflow Automation, Lakehouse Architecture, and Full-Stack Web Development across Egypt, the GCC, and international markets.
 </p>
 {/*  Verified Direct Contact Info Cards  */}
 <div className="space-y-4">
+<a
+  className="flex items-center justify-between p-3.5 rounded-xl bg-emerald-500/10 border border-emerald-500/35 hover:border-emerald-500/60 shadow-[0_0_24px_rgba(16,185,129,0.18)] transition-all hover:scale-[1.01]"
+  href={WHATSAPP_URL}
+  target="_blank"
+  rel="noopener noreferrer"
+>
+  <div className="flex items-center gap-3">
+    <div className="w-10 h-10 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
+      <WhatsAppIcon className="w-5 h-5" />
+    </div>
+    <div>
+      <span className="font-label-sm text-[11px] text-emerald-400 uppercase font-bold flex items-center gap-1.5">
+        <span>Instant WhatsApp Chat</span>
+        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+      </span>
+      <span className="font-body-sm text-body-sm text-on-surface font-semibold">{WHATSAPP_NUMBER} ({WHATSAPP_INTERNATIONAL})</span>
+    </div>
+  </div>
+  <span className="px-3 py-1 rounded-full bg-emerald-500 text-white font-nexa text-[11px] font-bold uppercase tracking-wider shadow-sm shrink-0">
+    Chat Now
+  </span>
+</a>
 <a className="flex items-center gap-3 p-3 rounded-xl bg-surface-container-high/60 border border-white/5 hover:border-primary/40 transition-colors" href="mailto:islamsamy410@gmail.com">
 <div className="w-10 h-10 rounded-lg bg-primary-container/20 flex items-center justify-center text-primary shrink-0">
 <span className="material-symbols-outlined text-[20px]">mail</span>
@@ -977,13 +1024,13 @@ try {
 <span className="font-body-sm text-body-sm text-on-surface font-semibold">islamsamy410@gmail.com</span>
 </div>
 </a>
-<a className="flex items-center gap-3 p-3 rounded-xl bg-surface-container-high/60 border border-white/5 hover:border-secondary/40 transition-colors" href="tel:01206123824">
+<a className="flex items-center gap-3 p-3 rounded-xl bg-surface-container-high/60 border border-white/5 hover:border-secondary/40 transition-colors" href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
 <div className="w-10 h-10 rounded-lg bg-secondary-container/20 flex items-center justify-center text-secondary shrink-0">
 <span className="material-symbols-outlined text-[20px]">phone</span>
 </div>
 <div>
-<span className="font-label-sm text-[11px] text-on-surface-variant uppercase block">Phone / WhatsApp</span>
-<span className="font-body-sm text-body-sm text-on-surface font-semibold">01206123824</span>
+<span className="font-label-sm text-[11px] text-on-surface-variant uppercase block">Phone / WhatsApp (Direct)</span>
+<span className="font-body-sm text-body-sm text-on-surface font-semibold">{WHATSAPP_NUMBER}</span>
 </div>
 </a>
 <a className="flex items-center gap-3 p-3 rounded-xl bg-surface-container-high/60 border border-white/5 hover:border-primary/40 transition-colors" href="https://www.linkedin.com/in/islam-samy-3b72061a9/" rel="noopener noreferrer" target="_blank">
@@ -1036,12 +1083,13 @@ try {
 <div className="flex flex-col gap-1.5">
 <label className="font-label-sm text-label-sm text-on-surface uppercase">Engagement Focus *</label>
 <select value={inqFocus} onChange={(e) => setInqFocus(e.target.value)} className="w-full px-4 py-3 rounded-lg bg-surface-container-lowest/80 border border-outline-variant/30 text-on-surface font-body-sm text-body-sm focus:outline-none focus:ring-2 focus:ring-primary shadow-[inset_0_1px_2px_rgba(0,0,0,0.4)]" required>
-<option value="power-bi">Custom Power BI &amp; Operations Dashboard</option>
-<option value="ml-models">Machine Learning &amp; Predictive Analytics</option>
-<option value="data-engineering">Data Pipelines &amp; SQL / MySQL Optimization</option>
-<option value="n8n-automation">n8n Workflow Automation (Cost Reduction)</option>
-<option value="hospitality-bi">OPERA PMS / Hospitality Telemetry</option>
-<option value="advisory">Advisory &amp; BIS Architecture Consulting</option>
+<option value="custom-erp">Custom ERP System Architecture &amp; Development</option>
+<option value="ai-agents">Autonomous AI Agents &amp; Intelligent Workflows</option>
+<option value="n8n-automation">n8n &amp; Python Workflow Automation (Cost Reduction)</option>
+<option value="data-engineering">Data Lakehouse &amp; Distributed Pipelines (ClickHouse/Kafka)</option>
+<option value="power-bi">Executive BI &amp; Operations Telemetry (Power BI)</option>
+<option value="web-development">Full-Stack Web Application (Next.js 15 / React / Node)</option>
+<option value="advisory">Fractional Technical Architecture &amp; Advisory</option>
 </select>
 </div>
 </div>
@@ -1066,6 +1114,7 @@ try {
 </ScrollRevealSection>
 </div>
       </main>
+      <WhatsAppFloatingButton />
       <SiteFooter />
     </div>
   );

@@ -3,10 +3,12 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useExperiences } from '@/lib/hooks';
+import { useLanguage } from '@/context/LanguageContext';
 import { Briefcase, Calendar, MapPin, CheckCircle2, TrendingUp, Sparkles } from 'lucide-react';
 
 export function ExperienceTimelineSection() {
   const { experiences } = useExperiences();
+  const { t, language } = useLanguage();
 
   return (
     <section id="experience" className="w-full max-w-[1280px] mx-auto px-gutter py-12 relative z-10 scroll-mt-24 content-auto">
@@ -21,14 +23,14 @@ export function ExperienceTimelineSection() {
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-surface-container-high/90 border border-secondary/30 shadow-[0_0_20px_rgba(123,208,255,0.2)] mb-3.5 backdrop-blur-md">
           <Briefcase className="w-4 h-4 text-secondary" />
           <span className="font-label-sm text-xs uppercase tracking-wider text-secondary font-semibold">
-            Track Record &amp; Career Trajectory
+            {t('experience.badge', 'Track Record & Career Trajectory')}
           </span>
         </div>
         <h2 className="font-nexa text-3xl sm:text-4xl text-on-surface font-extrabold tracking-tight">
-          Professional Experience &amp; Engineering Roles
+          {t('experience.title', 'Professional Experience & Engineering Roles')}
         </h2>
         <p className="font-body-md text-sm sm:text-base text-on-surface-variant mt-3 leading-relaxed">
-          6+ years delivering distributed systems, enterprise machine learning models, and executive data lakehouse operations.
+          {t('experience.subtitle', '6+ years delivering distributed systems, enterprise machine learning models, and executive data lakehouse operations.')}
         </p>
       </motion.div>
 
