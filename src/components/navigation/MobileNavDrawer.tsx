@@ -16,9 +16,11 @@ import {
   UserCheck,
   Shield,
   ExternalLink,
+  Globe,
 } from 'lucide-react';
 import { ThemeToggle } from '@/components/theme/ThemeToggle';
 import { useTheme } from '@/components/theme/ThemeProvider';
+import { useLanguage } from '@/context/LanguageContext';
 import { CairoTelemetry } from './CairoTelemetry';
 import { cn } from '@/lib/utils';
 
@@ -54,6 +56,7 @@ export function MobileNavDrawer({
 }: MobileNavDrawerProps) {
   const pathname = usePathname();
   const { resolvedTheme } = useTheme();
+  const { language, toggleLanguage, t } = useLanguage();
   const [mounted, setMounted] = useState(false);
   const touchStartXRef = useRef<number | null>(null);
 
@@ -232,6 +235,25 @@ export function MobileNavDrawer({
 
               {/* Quick Actions Cluster */}
               <div className="pt-3 border-t border-surface-container-high/60 flex flex-col gap-3">
+                {/* Language Switcher Row */}
+                <div className="flex items-center justify-between p-3 rounded-xl bg-surface-container-high/40 border border-outline-variant/20">
+                  <div className="flex flex-col">
+                    <span className="text-xs font-semibold text-on-surface">Language / اللغة</span>
+                    <span className="text-[11px] text-on-surface-variant font-medium">
+                      {language === 'ar' ? 'العربية' : 'English'}
+                    </span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={toggleLanguage}
+                    aria-label={t('header.switchAria', language === 'en' ? 'Switch to Arabic' : 'التبديل إلى الإنجليزية')}
+                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary/15 hover:bg-primary/25 border border-primary/30 text-primary text-xs font-bold transition-all"
+                  >
+                    <Globe className="w-3.5 h-3.5" />
+                    <span>{t('header.switchLanguage', language === 'en' ? 'العربية' : 'English')}</span>
+                  </button>
+                </div>
+
                 {/* Theme Switcher Row */}
                 <div className="flex items-center justify-between p-3 rounded-xl bg-surface-container-high/40 border border-outline-variant/20">
                   <div className="flex flex-col">
@@ -250,7 +272,7 @@ export function MobileNavDrawer({
                   className="flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-primary-container text-on-primary-container font-semibold text-sm shadow-[0_0_16px_rgba(160,120,255,0.3)] hover:bg-primary hover:text-on-primary transition-all active:scale-[0.98] min-h-[48px]"
                 >
                   <Calendar className="w-4 h-4" />
-                  <span>Book Advisory / Consultation</span>
+                  <span>{t('header.bookAdvisory', 'Book Advisory / Consultation')}</span>
                 </Link>
 
                 {/* Admin Gateway Secondary Link */}
@@ -260,7 +282,7 @@ export function MobileNavDrawer({
                   className="flex items-center justify-center gap-2 py-2 px-3 rounded-xl bg-surface-container-high/70 hover:bg-surface-container-highest text-on-surface-variant hover:text-on-surface text-xs font-medium border border-outline-variant/20 transition-all min-h-[40px]"
                 >
                   <Shield className="w-3.5 h-3.5 text-secondary" />
-                  <span>Admin Security Gateway</span>
+                  <span>{t('header.adminTooltip', 'Admin Security Gateway')}</span>
                 </Link>
               </div>
             </div>

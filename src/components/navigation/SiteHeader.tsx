@@ -4,27 +4,29 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { Menu, X, Shield } from 'lucide-react';
+import { Menu, X, Shield, Globe } from 'lucide-react';
 import { ThemeToggle } from '@/components/theme/ThemeToggle';
+import { useLanguage } from '@/context/LanguageContext';
 import { CairoTelemetry } from './CairoTelemetry';
 import { MobileNavDrawer } from './MobileNavDrawer';
 import { cn } from '@/lib/utils';
 
 export interface NavLinkItem {
   href: string;
-  label: string;
+  labelKey: string;
+  defaultLabel: string;
   badge?: string;
   highlight?: boolean;
 }
 
 const navLinks: NavLinkItem[] = [
-  { href: '/', label: 'Home' },
-  { href: '/projects', label: 'Projects' },
-  { href: '/pricing', label: 'Pricing' },
-  { href: '/blog', label: 'Blog' },
-  { href: '/book', label: 'Advisory' },
-  { href: '/reviews', label: 'Reviews' },
-  { href: '/my-bookings', label: 'Portal' },
+  { href: '/', labelKey: 'nav.home', defaultLabel: 'Home' },
+  { href: '/projects', labelKey: 'nav.projects', defaultLabel: 'Projects' },
+  { href: '/pricing', labelKey: 'nav.pricing', defaultLabel: 'Pricing' },
+  { href: '/blog', labelKey: 'nav.blog', defaultLabel: 'Blog' },
+  { href: '/book', labelKey: 'nav.advisory', defaultLabel: 'Advisory' },
+  { href: '/reviews', labelKey: 'nav.reviews', defaultLabel: 'Reviews' },
+  { href: '/my-bookings', labelKey: 'nav.portal', defaultLabel: 'Portal' },
 ];
 // Compatibility reference: href: '/#reviews'
 
@@ -52,6 +54,7 @@ function checkIsActive(href: string, pathname: string, currentHash: string): boo
 
 export function SiteHeader() {
   const pathname = usePathname();
+  const { language, toggleLanguage, t } = useLanguage();
   const [currentHash, setCurrentHash] = useState<string>('');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -99,26 +102,26 @@ export function SiteHeader() {
           {/* Transparent Logo Crest without frame */}
           <div className="relative flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-105">
             <img
-              src="/images/artboard-mark.png"
+              src="/images/250LOGO.png"
               alt="Islam Samy"
-              className="h-11 sm:h-12 w-auto object-contain filter drop-shadow-[0_0_18px_rgba(123,208,255,0.95)] brightness-110 transition-all duration-300"
+              className="h-14 sm:h-16 w-auto object-contain scale-125 filter drop-shadow-[0_0_18px_rgba(123,208,255,0.95)] brightness-110 transition-all duration-300"
             />
           </div>
           <div className="flex flex-col min-w-0">
             <div className="flex items-center gap-1.5">
               <span className="font-nexa text-sm sm:text-base font-extrabold text-zinc-900 dark:text-zinc-100 group-hover:text-primary transition-colors tracking-tight whitespace-nowrap">
-                Islam Samy
+                {t('header.name', 'Islam Samy')}
               </span>
               <span className="px-1.5 py-0.5 rounded-full bg-secondary/15 text-secondary text-[9px] font-semibold tracking-wider uppercase border border-secondary/30 shadow-[0_0_8px_rgba(123,208,255,0.2)]">
-                6 Yrs Exp
+                {t('header.experienceBadge', '6 Yrs Exp')}
               </span>
             </div>
             <div className="hidden sm:flex flex-col text-[10px] leading-tight">
               <span className="font-medium text-zinc-400 dark:text-zinc-400 whitespace-nowrap">
-                Data Engineer &amp; Software Developer
+                {t('header.role', 'Data Engineer & Software Developer')}
               </span>
               <span className="text-[9px] text-zinc-500 dark:text-zinc-500 hidden 2xl:block whitespace-nowrap">
-                Business Development &amp; Performance Marketing
+                {t('header.subRole', 'Custom ERP Systems, AI Agents & Enterprise Architecture')}
               </span>
             </div>
           </div>
@@ -131,6 +134,7 @@ export function SiteHeader() {
         >
           {navLinks.map((item) => {
             const isActive = checkIsActive(item.href, pathname, currentHash);
+            const label = t(item.labelKey, item.defaultLabel);
             return (
               <Link
                 key={item.href}
@@ -150,7 +154,7 @@ export function SiteHeader() {
                     : "text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white font-medium hover:bg-white/30 dark:hover:bg-white/[0.04]"
                 )}
               >
-                <span>{item.label}</span>
+                <span>{label}</span>
                 {isActive && (
                   <motion.div
                     layoutId="header-active-pill"
@@ -173,8 +177,22 @@ export function SiteHeader() {
             className="hidden sm:inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-gradient-to-r from-primary-container via-primary to-secondary text-white font-nexa font-bold text-xs tracking-wide shadow-[0_0_20px_rgba(160,120,255,0.4)] hover:shadow-[0_0_30px_rgba(123,208,255,0.6)] border border-white/25 backdrop-blur-md transition-all hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary whitespace-nowrap"
           >
             <span className="material-symbols-outlined text-[15px]">calendar_month</span>
-            <span>Book Advisory</span>
+            <span>{t('header.bookAdvisory', 'Book Advisory')}</span>
           </Link>
+
+          {/* Language Switcher */}
+          <button
+            type="button"
+            onClick={toggleLanguage}
+            title={language === 'en' ? 'التبديل إلى العربية' : 'Switch to English'}
+            aria-label={t('header.switchAria', language === 'en' ? 'Switch to Arabic' : 'التبديل إلى الإنجليزية')}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/40 dark:bg-white/[0.06] hover:bg-white/70 dark:hover:bg-white/[0.14] border border-white/50 dark:border-white/10 text-zinc-800 dark:text-zinc-200 hover:text-primary dark:hover:text-secondary shadow-[0_2px_12px_rgba(0,0,0,0.06)] backdrop-blur-md transition-all hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary text-xs font-semibold select-none shrink-0"
+          >
+            <Globe className="w-4 h-4 text-primary shrink-0" />
+            <span className="font-bold text-[11px] tracking-wide">
+              {t('header.switchLanguage', language === 'en' ? 'العربية' : 'EN')}
+            </span>
+          </button>
 
           {/* Theme Switcher */}
           <ThemeToggle />
