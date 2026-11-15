@@ -551,10 +551,10 @@ try {
   className="max-w-4xl mx-auto mb-2"
 >
   <h1 className="font-display-xl text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-on-surface leading-tight">
-    Custom ERP Systems, AI Agents &amp; Data Engineering. <span className="bg-gradient-to-r from-primary via-secondary to-tertiary-fixed bg-clip-text text-transparent">Built to Scale Business Revenue.</span>
+    {t('hero.headlineStart', 'Custom ERP Systems, AI Agents & Data Engineering.')} <span className="bg-gradient-to-r from-primary via-secondary to-tertiary-fixed bg-clip-text text-transparent">{t('hero.headlineGradient', 'Built to Scale Business Revenue.')}</span>
   </h1>
   <p className="font-body-md text-xs sm:text-sm text-on-surface-variant max-w-2xl mx-auto mt-1 leading-relaxed">
-    Lead Data Engineer &amp; Full-Stack Architect specializing in high-concurrency custom ERP platforms, autonomous AI agent workflows, zero-overhead automations, executive BI analytics, and modern web applications.
+    {t('hero.subtitle', 'Lead Data Engineer & Full-Stack Architect specializing in high-concurrency custom ERP platforms, autonomous AI agent workflows, zero-overhead automations, executive BI analytics, and modern web applications.')}
   </p>
 </motion.div>
 {/*  Hero CTAs  */}
@@ -566,24 +566,24 @@ try {
 >
   <a className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-primary-container text-on-primary font-headline-sm text-xs uppercase tracking-wider shadow-[0_0_25px_rgba(160,120,255,0.5)] hover:shadow-[0_0_35px_rgba(160,120,255,0.7)] hover:bg-primary transition-all duration-300 hover:scale-105 active:scale-95" href="#projects">
     <span className="material-symbols-outlined text-[18px]">analytics</span>
-    <span>Explore Real Projects</span>
+    <span>{t('hero.ctaProjects', 'Explore Real Projects')}</span>
   </a>
   <a className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-surface-container-high/80 text-on-surface hover:text-secondary font-headline-sm text-xs uppercase tracking-wider shadow-[inset_0_1px_1px_rgba(255,255,255,0.1)] hover:bg-surface-container-highest border border-outline-variant/40 transition-all duration-300 hover:scale-105 active:scale-95" href="#contact">
     <span className="material-symbols-outlined text-[18px]">handshake</span>
-    <span>Let's Collaborate</span>
+    <span>{t('hero.ctaCollaborate', "Let's Collaborate")}</span>
   </a>
   <a
-    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-400 hover:text-white border border-emerald-500/40 shadow-[0_0_20px_rgba(16,185,129,0.25)] font-headline-sm text-xs uppercase tracking-wider transition-all duration-300 hover:scale-105 active:scale-95"
+    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-400 hover:text-white border border-emerald-500/40 shadow-[0_0_20px_rgba(160,120,255,0.25)] font-headline-sm text-xs uppercase tracking-wider transition-all duration-300 hover:scale-105 active:scale-95"
     href={WHATSAPP_URL}
     target="_blank"
     rel="noopener noreferrer"
   >
     <WhatsAppIcon className="w-4 h-4 text-emerald-400" />
-    <span>WhatsApp: {WHATSAPP_NUMBER}</span>
+    <span>{t('hero.ctaWhatsApp', 'WhatsApp:')} {WHATSAPP_NUMBER}</span>
   </a>
   <a className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-surface-container-lowest/80 text-on-surface-variant hover:text-on-surface border border-outline-variant/30 font-label-md text-xs transition-all duration-300 hover:scale-105 active:scale-95" href="https://www.linkedin.com/in/islam-samy-3b72061a9/" rel="noopener noreferrer" target="_blank">
     <span className="material-symbols-outlined text-[18px]">open_in_new</span>
-    <span>LinkedIn Profile</span>
+    <span>{t('hero.ctaLinkedIn', 'LinkedIn Profile')}</span>
   </a>
 </motion.div>
 {/*  Integrated Executive Portrait & Orbit Core  */}
@@ -599,31 +599,31 @@ try {
       <TiltCard maxTilt={6} depth={10} glare={true} className="rounded-xl">
         <div className="group relative p-space-md rounded-xl bg-surface-container-low/90 dark:bg-[#14161f]/95 hover:bg-surface-container/95 border border-primary/20 hover:border-primary/40 shadow-[0_4px_24px_rgba(0,0,0,0.4)] transition-all duration-300">
           <div className="flex items-center justify-between mb-1">
-            <span className="font-label-sm text-label-sm text-primary uppercase tracking-widest font-semibold">01 • CUSTOM ERP SYSTEMS</span>
+            <span className="font-label-sm text-label-sm text-primary uppercase tracking-widest font-semibold">{t('hero.card1Category', '01 • CUSTOM ERP SYSTEMS')}</span>
             <span className="w-2 h-2 rounded-full bg-primary shadow-[0_0_8px_#d0bcff]"></span>
           </div>
-          <h2 className="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary transition-colors">Custom ERP Architecture</h2>
-          <p className="font-body-sm text-body-sm text-on-surface-variant mt-1">Engineered modular ERPs integrating inventory, financial ledgers, and OPERA PMS with zero downtime.</p>
+          <h2 className="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary transition-colors">{t('hero.card1Title', 'Custom ERP Architecture')}</h2>
+          <p className="font-body-sm text-body-sm text-on-surface-variant mt-1">{t('hero.card1Desc', 'Engineered modular ERPs integrating inventory, financial ledgers, and OPERA PMS with zero downtime.')}</p>
         </div>
       </TiltCard>
       <TiltCard maxTilt={6} depth={10} glare={true} className="rounded-xl">
         <div className="group relative p-space-md rounded-xl bg-surface-container-low/90 dark:bg-[#14161f]/95 hover:bg-surface-container/95 border border-secondary/20 hover:border-secondary/40 shadow-[0_4px_24px_rgba(0,0,0,0.4)] transition-all duration-300">
           <div className="flex items-center justify-between mb-1">
-            <span className="font-label-sm text-label-sm text-secondary uppercase tracking-widest font-semibold">02 • WORKFLOW AUTOMATION</span>
+            <span className="font-label-sm text-label-sm text-secondary uppercase tracking-widest font-semibold">{t('hero.card2Category', '02 • WORKFLOW AUTOMATION')}</span>
             <span className="w-2 h-2 rounded-full bg-secondary shadow-[0_0_8px_#7bd0ff]"></span>
           </div>
-          <h2 className="font-headline-sm text-headline-sm text-on-surface group-hover:text-secondary transition-colors">60% Cost Reduction</h2>
-          <p className="font-body-sm text-body-sm text-on-surface-variant mt-1">Eliminated manual operational overhead through event-driven n8n orchestrations and automated ETL.</p>
+          <h2 className="font-headline-sm text-headline-sm text-on-surface group-hover:text-secondary transition-colors">{t('hero.card2Title', '60% Cost Reduction')}</h2>
+          <p className="font-body-sm text-body-sm text-on-surface-variant mt-1">{t('hero.card2Desc', 'Eliminated manual operational overhead through event-driven n8n orchestrations and automated ETL.')}</p>
         </div>
       </TiltCard>
       <TiltCard maxTilt={6} depth={10} glare={true} className="rounded-xl">
         <div className="group relative p-space-md rounded-xl bg-surface-container-low/90 dark:bg-[#14161f]/95 hover:bg-surface-container/95 border border-tertiary/20 hover:border-tertiary/40 shadow-[0_4px_24px_rgba(0,0,0,0.4)] transition-all duration-300">
           <div className="flex items-center justify-between mb-1">
-            <span className="font-label-sm text-label-sm text-tertiary uppercase tracking-widest font-semibold">03 • AUTONOMOUS AI AGENTS</span>
+            <span className="font-label-sm text-label-sm text-tertiary uppercase tracking-widest font-semibold">{t('hero.card3Category', '03 • AUTONOMOUS AI AGENTS')}</span>
             <span className="w-2 h-2 rounded-full bg-tertiary shadow-[0_0_8px_#ffb690]"></span>
           </div>
-          <h2 className="font-headline-sm text-headline-sm text-on-surface group-hover:text-tertiary transition-colors">Multi-Agent AI Workflows</h2>
-          <p className="font-body-sm text-body-sm text-on-surface-variant mt-1">Autonomous LLM agent networks (LangChain, CrewAI) executing real-time data analysis and routing.</p>
+          <h2 className="font-headline-sm text-headline-sm text-on-surface group-hover:text-tertiary transition-colors">{t('hero.card3Title', 'Multi-Agent AI Workflows')}</h2>
+          <p className="font-body-sm text-body-sm text-on-surface-variant mt-1">{t('hero.card3Desc', 'Autonomous LLM agent networks (LangChain, CrewAI) executing real-time data analysis and routing.')}</p>
         </div>
       </TiltCard>
     </motion.div>
@@ -670,12 +670,12 @@ try {
             <div className="absolute inset-0 bg-gradient-to-t from-surface-container-lowest via-transparent to-transparent opacity-80"></div>
             <div className="absolute bottom-3 left-3 right-3 p-2.5 rounded-xl bg-surface-container-lowest/95 border border-white/15 shadow-sm flex items-center justify-between">
               <div className="flex flex-col text-left">
-                <span className="font-headline-sm text-body-sm font-bold text-on-surface">Islam Samy</span>
-                <span className="font-label-sm text-[10px] text-secondary uppercase font-semibold">Lead Data Engineer &amp; ERP Architect</span>
+                <span className="font-headline-sm text-body-sm font-bold text-on-surface">{t('header.name', 'Islam Samy')}</span>
+                <span className="font-label-sm text-[10px] text-secondary uppercase font-semibold">{t('hero.portraitRole', 'Lead Data Engineer & ERP Architect')}</span>
               </div>
               <div className="flex items-center gap-1.5 px-2 py-1 rounded-full bg-surface-container-high/80 border border-secondary/30">
                 <span className="w-2 h-2 rounded-full bg-secondary animate-ping"></span>
-                <span className="text-[10px] font-label-sm text-secondary font-bold">ONLINE</span>
+                <span className="text-[10px] font-label-sm text-secondary font-bold">{t('hero.onlineBadge', 'ONLINE')}</span>
               </div>
             </div>
           </div>
@@ -685,7 +685,7 @@ try {
       {/* Pipeline Status Sub-Badge */}
       <div className="mt-4 flex items-center gap-2 relative z-10">
         <span className="inline-block w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
-        <span className="font-label-sm text-label-sm text-on-surface-variant font-medium">Autonomous ERP &amp; AI Intelligence Pipeline</span>
+        <span className="font-label-sm text-label-sm text-on-surface-variant font-medium">{t('hero.pipelineStatus', 'Autonomous ERP & AI Intelligence Pipeline')}</span>
       </div>
     </motion.div>
     {/*  Right 3 Execution Capabilities  */}
@@ -698,31 +698,31 @@ try {
       <TiltCard maxTilt={6} depth={10} glare={true} className="rounded-xl">
         <div className="group relative p-space-md rounded-xl bg-surface-container-low/90 dark:bg-[#14161f]/95 hover:bg-surface-container/95 border border-secondary/20 hover:border-secondary/40 shadow-[0_4px_24px_rgba(0,0,0,0.4)] transition-all duration-300">
           <div className="flex items-center justify-between mb-1">
-            <span className="font-label-sm text-label-sm text-secondary uppercase tracking-widest font-semibold">04 • DATA ANALYSIS &amp; BI</span>
+            <span className="font-label-sm text-label-sm text-secondary uppercase tracking-widest font-semibold">{t('hero.card4Category', '04 • DATA ANALYSIS & BI')}</span>
             <span className="w-2 h-2 rounded-full bg-secondary shadow-[0_0_8px_#7bd0ff]"></span>
           </div>
-          <h2 className="font-headline-sm text-headline-sm text-on-surface group-hover:text-secondary transition-colors">Sub-Second Executive BI</h2>
-          <p className="font-body-sm text-body-sm text-on-surface-variant mt-1">High-speed analytical lakehouses &amp; Power BI suites delivering real-time telemetry across revenue channels.</p>
+          <h2 className="font-headline-sm text-headline-sm text-on-surface group-hover:text-secondary transition-colors">{t('hero.card4Title', 'Sub-Second Executive BI')}</h2>
+          <p className="font-body-sm text-body-sm text-on-surface-variant mt-1">{t('hero.card4Desc', 'High-speed analytical lakehouses & Power BI suites delivering real-time telemetry across revenue channels.')}</p>
         </div>
       </TiltCard>
       <TiltCard maxTilt={6} depth={10} glare={true} className="rounded-xl">
         <div className="group relative p-space-md rounded-xl bg-surface-container-low/90 dark:bg-[#14161f]/95 hover:bg-surface-container/95 border border-tertiary/20 hover:border-tertiary/40 shadow-[0_4px_24px_rgba(0,0,0,0.4)] transition-all duration-300">
           <div className="flex items-center justify-between mb-1">
-            <span className="font-label-sm text-label-sm text-tertiary uppercase tracking-widest font-semibold">05 • FULL-STACK WEB DEV</span>
+            <span className="font-label-sm text-label-sm text-tertiary uppercase tracking-widest font-semibold">{t('hero.card5Category', '05 • FULL-STACK WEB DEV')}</span>
             <span className="w-2 h-2 rounded-full bg-tertiary shadow-[0_0_8px_#ffb690]"></span>
           </div>
-          <h2 className="font-headline-sm text-headline-sm text-on-surface group-hover:text-tertiary transition-colors">Modern Web Platforms</h2>
-          <p className="font-body-sm text-body-sm text-on-surface-variant mt-1">Production Next.js 15 &amp; React architectures with sub-250ms p99 response times and resilient distributed APIs.</p>
+          <h2 className="font-headline-sm text-headline-sm text-on-surface group-hover:text-tertiary transition-colors">{t('hero.card5Title', 'Modern Web Platforms')}</h2>
+          <p className="font-body-sm text-body-sm text-on-surface-variant mt-1">{t('hero.card5Desc', 'Production Next.js 15 & React architectures with sub-250ms p99 response times and resilient distributed APIs.')}</p>
         </div>
       </TiltCard>
       <TiltCard maxTilt={6} depth={10} glare={true} className="rounded-xl">
         <div className="group relative p-space-md rounded-xl bg-surface-container-low/90 dark:bg-[#14161f]/95 hover:bg-surface-container/95 border border-primary/20 hover:border-primary/40 shadow-[0_4px_24px_rgba(0,0,0,0.4)] transition-all duration-300">
           <div className="flex items-center justify-between mb-1">
-            <span className="font-label-sm text-label-sm text-primary uppercase tracking-widest font-semibold">06 • DATA PIPELINE SCALE</span>
+            <span className="font-label-sm text-label-sm text-primary uppercase tracking-widest font-semibold">{t('hero.card6Category', '06 • DATA PIPELINE SCALE')}</span>
             <span className="w-2 h-2 rounded-full bg-primary shadow-[0_0_8px_#d0bcff]"></span>
           </div>
-          <h2 className="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary transition-colors">1.4M msg/sec Streaming</h2>
-          <p className="font-body-sm text-body-sm text-on-surface-variant mt-1">High-throughput CDC streaming using Kafka &amp; ClickHouse, delivering 95%+ predictive modeling accuracy.</p>
+          <h2 className="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary transition-colors">{t('hero.card6Title', '1.4M msg/sec Streaming')}</h2>
+          <p className="font-body-sm text-body-sm text-on-surface-variant mt-1">{t('hero.card6Desc', 'High-throughput CDC streaming using Kafka & ClickHouse, delivering 95%+ predictive modeling accuracy.')}</p>
         </div>
       </TiltCard>
     </motion.div>
@@ -739,29 +739,29 @@ try {
 <div className="flex items-center gap-space-sm p-space-sm rounded-lg bg-surface-container/40 border border-primary/10">
 <span className="material-symbols-outlined text-primary text-[28px]">hub</span>
 <div className="flex flex-col">
-<span className="font-label-sm text-label-sm text-on-surface-variant uppercase">ERP Architecture</span>
-<span className="font-body-sm text-body-sm font-semibold text-on-surface">Custom ERP Systems &amp; OPERA PMS</span>
+<span className="font-label-sm text-label-sm text-on-surface-variant uppercase">{t('credibility.erpTitle', 'ERP Architecture')}</span>
+<span className="font-body-sm text-body-sm font-semibold text-on-surface">{t('credibility.erpDesc', 'Custom ERP Systems & OPERA PMS')}</span>
 </div>
 </div>
 <div className="flex items-center gap-space-sm p-space-sm rounded-lg bg-surface-container/40 border border-secondary/10">
 <span className="material-symbols-outlined text-secondary text-[28px]">smart_toy</span>
 <div className="flex flex-col">
-<span className="font-label-sm text-label-sm text-on-surface-variant uppercase">AI Agents &amp; ML</span>
-<span className="font-body-sm text-body-sm font-semibold text-on-surface">Multi-Agent Systems &amp; RAG Chains</span>
+<span className="font-label-sm text-label-sm text-on-surface-variant uppercase">{t('credibility.aiTitle', 'AI Agents & ML')}</span>
+<span className="font-body-sm text-body-sm font-semibold text-on-surface">{t('credibility.aiDesc', 'Multi-Agent Systems & RAG Chains')}</span>
 </div>
 </div>
 <div className="flex items-center gap-space-sm p-space-sm rounded-lg bg-surface-container/40 border border-tertiary/10">
 <span className="material-symbols-outlined text-tertiary text-[28px]">alt_route</span>
 <div className="flex flex-col">
-<span className="font-label-sm text-label-sm text-on-surface-variant uppercase">Automations &amp; ETL</span>
-<span className="font-body-sm text-body-sm font-semibold text-on-surface">n8n Orchestration &amp; Webhook Flows</span>
+<span className="font-label-sm text-label-sm text-on-surface-variant uppercase">{t('credibility.autoTitle', 'Automations & ETL')}</span>
+<span className="font-body-sm text-body-sm font-semibold text-on-surface">{t('credibility.autoDesc', 'n8n Orchestration & Webhook Flows')}</span>
 </div>
 </div>
 <div className="flex items-center gap-space-sm p-space-sm rounded-lg bg-surface-container/40 border border-primary/10">
 <span className="material-symbols-outlined text-primary text-[28px]">terminal</span>
 <div className="flex flex-col">
-<span className="font-label-sm text-label-sm text-on-surface-variant uppercase">Data &amp; Web Dev</span>
-<span className="font-body-sm text-body-sm font-semibold text-on-surface">Power BI Lakehouses &amp; Next.js 15</span>
+<span className="font-label-sm text-label-sm text-on-surface-variant uppercase">{t('credibility.dataTitle', 'Data & Web Dev')}</span>
+<span className="font-body-sm text-body-sm font-semibold text-on-surface">{t('credibility.dataDesc', 'Power BI Lakehouses & Next.js 15')}</span>
 </div>
 </div>
 </div>
@@ -773,9 +773,9 @@ try {
 {/*  SECTION 5: FEATURED REAL PROJECTS  */}
 <ScrollRevealSection className="w-full max-w-[1280px] mx-auto px-gutter py-12 relative z-10 content-auto" id="projects" suppressHydrationWarning>
 <div className="text-center max-w-3xl mx-auto mb-10">
-<span className="font-label-sm text-label-sm uppercase tracking-widest text-primary font-semibold">Flagship Production Systems</span>
-<h2 className="font-headline-lg text-headline-lg text-on-surface mt-2 mb-4">Enterprise ERP, Autonomous AI Agents &amp; Data Lakehouses</h2>
-<p className="font-body-md text-body-md text-on-surface-variant">Real-world production architectures delivering tangible business revenue, zero-overhead automation, and sub-second analytics.</p>
+<span className="font-label-sm text-label-sm uppercase tracking-widest text-primary font-semibold">{t('projects.badge', 'Flagship Production Systems')}</span>
+<h2 className="font-headline-lg text-headline-lg text-on-surface mt-2 mb-4">{t('projects.title', 'Enterprise ERP, Autonomous AI Agents & Data Lakehouses')}</h2>
+<p className="font-body-md text-body-md text-on-surface-variant">{t('projects.subtitle', 'Real-world production architectures delivering tangible business revenue, zero-overhead automation, and sub-second analytics.')}</p>
 </div>
 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8" suppressHydrationWarning>
   {projects.map((proj, idx) => {
@@ -844,7 +844,7 @@ try {
                 ))}
               </div>
               <Link href={`/projects/${proj.id}`} className="inline-flex items-center gap-1 text-xs text-primary hover:text-primary/80 font-semibold uppercase tracking-wider">
-                Case Study <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
+                {t('projects.caseStudy', 'Case Study')} <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
               </Link>
             </div>
           </div>
@@ -860,20 +860,20 @@ try {
   <div className="text-center max-w-3xl mx-auto mb-12">
     <div className="inline-flex items-center gap-space-xs px-space-md py-1.5 rounded-full bg-surface-container-high/90 border border-primary/30 shadow-[0_0_24px_rgba(160,120,255,0.2)] mb-space-sm backdrop-blur-md">
       <span className="w-2 h-2 rounded-full bg-primary shadow-[0_0_8px_#d0bcff]"></span>
-      <span className="font-label-sm text-label-sm uppercase tracking-wider text-primary font-semibold">Enterprise Engagement &amp; Advisory</span>
+      <span className="font-label-sm text-label-sm uppercase tracking-wider text-primary font-semibold">{t('pricing.badge', 'Enterprise Engagement & Advisory')}</span>
     </div>
-    <h2 className="font-headline-lg text-headline-lg text-on-surface mt-2 mb-4 tracking-tight">Custom ERP, AI Automation &amp; Data Engineering Sprints.</h2>
-    <p className="font-body-md text-body-md text-on-surface-variant leading-relaxed">Turnkey architecture sprints and dedicated advisory engagements tailored for scaling enterprises, hospitality brands, and modern platforms.</p>
+    <h2 className="font-headline-lg text-headline-lg text-on-surface mt-2 mb-4 tracking-tight">{t('pricing.title', 'Custom ERP, AI Automation & Data Engineering Sprints.')}</h2>
+    <p className="font-body-md text-body-md text-on-surface-variant leading-relaxed">{t('pricing.subtitle', 'Turnkey architecture sprints and dedicated advisory engagements tailored for scaling enterprises, hospitality brands, and modern platforms.')}</p>
     <div className="mt-8 flex flex-col items-center gap-4">
       <div className="inline-flex items-center p-1 rounded-full bg-surface-container-low/50 border border-surface-container-high/60 backdrop-blur-md shadow-[inset_0_1px_2px_rgba(0,0,0,0.4)]">
-        <button type="button" id="pricing-tab-milestone" className="px-5 py-2 rounded-full font-label-md text-label-md bg-primary-container text-on-primary shadow-[0_0_16px_rgba(160,120,255,0.4)] transition-all duration-300 font-semibold">Project-Based / Milestones</button>
-        <button type="button" id="pricing-tab-retainer" className="px-5 py-2 rounded-full font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-all duration-300 font-medium">Dedicated Advisory / Monthly Retainer</button>
+        <button type="button" id="pricing-tab-milestone" className="px-5 py-2 rounded-full font-label-md text-label-md bg-primary-container text-on-primary shadow-[0_0_16px_rgba(160,120,255,0.4)] transition-all duration-300 font-semibold">{t('pricing.tabMilestone', 'Project-Based / Milestones')}</button>
+        <button type="button" id="pricing-tab-retainer" className="px-5 py-2 rounded-full font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-all duration-300 font-medium">{t('pricing.tabRetainer', 'Dedicated Advisory / Monthly Retainer')}</button>
       </div>
       <Link
         href="/pricing"
         className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-surface-container-high/70 hover:bg-surface-container-highest text-secondary hover:text-secondary-fixed text-xs font-mono font-semibold border border-secondary/30 transition-all shadow-sm hover:scale-105"
       >
-        <span>View Full Dedicated Pricing &amp; Consultation Rates Page</span>
+        <span>{t('pricing.viewFullPricing', 'View Full Dedicated Pricing & Consultation Rates Page')}</span>
         <span className="material-symbols-outlined text-sm">arrow_forward</span>
       </Link>
     </div>
@@ -922,7 +922,7 @@ try {
             </div>
             <div className="space-y-3 mb-8" suppressHydrationWarning>
               <div className="font-label-sm text-[11px] uppercase text-primary font-bold tracking-wider mb-2">
-                Deliverables Included:
+                {t('pricing.deliverablesIncluded', 'Deliverables Included:')}
               </div>
               {pkg.deliverables.map((deliv, dIdx) => (
                 <div key={dIdx} className="flex items-start gap-2.5 text-body-sm text-on-surface">
@@ -941,7 +941,7 @@ try {
                   : 'bg-surface-container-high/90 hover:bg-surface-container-highest border border-primary/30 text-on-surface hover:text-primary shadow-[inset_0_1px_1px_rgba(255,255,255,0.1)]'
               }`}
             >
-              <span>{isPopular ? 'Deploy Enterprise Architecture' : `Book ${pkg.name}`}</span>
+              <span>{isPopular ? t('pricing.deployCta', 'Deploy Enterprise Architecture') : `${t('pricing.bookCta', 'Book')} ${pkg.name}`}</span>
               <span className="material-symbols-outlined text-sm">arrow_forward</span>
             </Link>
             <a
@@ -952,7 +952,7 @@ try {
               }}
               className="w-full py-1.5 text-center text-[11px] font-mono text-on-surface-variant hover:text-secondary transition-colors"
             >
-              Or send custom message &darr;
+              {t('pricing.sendCustomMsg', 'Or send custom message ↓')}
             </a>
           </div>
         </div>
@@ -960,11 +960,11 @@ try {
     })}
   </div>
   <div className="p-space-md sm:p-space-lg rounded-2xl bg-surface-container-low/90 dark:bg-[#14161f]/95 border border-surface-container-high/60 shadow-[0_8px_30px_rgba(0,0,0,0.4)] flex flex-wrap items-center justify-around gap-6 text-on-surface-variant font-label-sm text-label-sm">
-    <div className="flex items-center gap-2"><span className="material-symbols-outlined text-primary text-[20px]">verified_user</span><span className="text-on-surface font-semibold">100% Milestone-Gated Delivery</span></div>
+    <div className="flex items-center gap-2"><span className="material-symbols-outlined text-primary text-[20px]">verified_user</span><span className="text-on-surface font-semibold">{t('pricing.guarantee1', '100% Milestone-Gated Delivery')}</span></div>
     <div className="w-1.5 h-1.5 rounded-full bg-surface-container-highest hidden sm:block"></div>
-    <div className="flex items-center gap-2"><span className="material-symbols-outlined text-secondary text-[20px]">tune</span><span className="text-on-surface font-semibold">Fixed-Scope or Flexible T&amp;M</span></div>
+    <div className="flex items-center gap-2"><span className="material-symbols-outlined text-secondary text-[20px]">tune</span><span className="text-on-surface font-semibold">{t('pricing.guarantee2', 'Fixed-Scope or Flexible T&M')}</span></div>
     <div className="w-1.5 h-1.5 rounded-full bg-surface-container-highest hidden sm:block"></div>
-    <div className="flex items-center gap-2"><span className="material-symbols-outlined text-tertiary text-[20px]">lock</span><span className="text-on-surface font-semibold">Enterprise Non-Disclosure Agreement (NDA) Guaranteed</span></div>
+    <div className="flex items-center gap-2"><span className="material-symbols-outlined text-tertiary text-[20px]">lock</span><span className="text-on-surface font-semibold">{t('pricing.guarantee3', 'Enterprise Non-Disclosure Agreement (NDA) Guaranteed')}</span></div>
   </div>
 </ScrollRevealSection>
 
@@ -983,18 +983,18 @@ try {
 <div>
 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary font-label-sm text-label-sm uppercase mb-4 border border-primary/20">
 <span className="material-symbols-outlined text-[14px]">send</span>
-<span className="">Direct Communications</span>
+<span className="">{t('contact.badge', 'Direct Communications')}</span>
 </div>
 <h2 className="font-headline-lg text-headline-lg text-on-surface leading-tight mb-4">
-  Let's Build Scalable Systems Together.
+  {t('contact.title', "Let's Build Scalable Systems Together.")}
 </h2>
 <p className="font-body-md text-body-md text-on-surface-variant mb-8">
-  Available for high-impact Custom ERP Systems, Autonomous AI Agents, Workflow Automation, Lakehouse Architecture, and Full-Stack Web Development across Egypt, the GCC, and international markets.
+  {t('contact.subtitle', 'Available for high-impact Custom ERP Systems, Autonomous AI Agents, Workflow Automation, Lakehouse Architecture, and Full-Stack Web Development across Egypt, the GCC, and international markets.')}
 </p>
 {/*  Verified Direct Contact Info Cards  */}
 <div className="space-y-4">
 <a
-  className="flex items-center justify-between p-3.5 rounded-xl bg-emerald-500/10 border border-emerald-500/35 hover:border-emerald-500/60 shadow-[0_0_24px_rgba(16,185,129,0.18)] transition-all hover:scale-[1.01]"
+  className="flex items-center justify-between p-3.5 rounded-xl bg-emerald-500/10 border border-emerald-500/35 hover:border-emerald-500/60 shadow-[0_0_24px_rgba(160,120,255,0.18)] transition-all hover:scale-[1.01]"
   href={WHATSAPP_URL}
   target="_blank"
   rel="noopener noreferrer"
@@ -1005,14 +1005,14 @@ try {
     </div>
     <div>
       <span className="font-label-sm text-[11px] text-emerald-400 uppercase font-bold flex items-center gap-1.5">
-        <span>Instant WhatsApp Chat</span>
+        <span>{t('contact.whatsappCardTitle', 'Instant WhatsApp Chat')}</span>
         <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
       </span>
       <span className="font-body-sm text-body-sm text-on-surface font-semibold">{WHATSAPP_NUMBER} ({WHATSAPP_INTERNATIONAL})</span>
     </div>
   </div>
   <span className="px-3 py-1 rounded-full bg-emerald-500 text-white font-nexa text-[11px] font-bold uppercase tracking-wider shadow-sm shrink-0">
-    Chat Now
+    {t('contact.chatNow', 'Chat Now')}
   </span>
 </a>
 <a className="flex items-center gap-3 p-3 rounded-xl bg-surface-container-high/60 border border-white/5 hover:border-primary/40 transition-colors" href="mailto:islamsamy410@gmail.com">
@@ -1020,7 +1020,7 @@ try {
 <span className="material-symbols-outlined text-[20px]">mail</span>
 </div>
 <div>
-<span className="font-label-sm text-[11px] text-on-surface-variant uppercase block">Direct Email</span>
+<span className="font-label-sm text-[11px] text-on-surface-variant uppercase block">{t('contact.emailTitle', 'Direct Email')}</span>
 <span className="font-body-sm text-body-sm text-on-surface font-semibold">islamsamy410@gmail.com</span>
 </div>
 </a>
@@ -1029,7 +1029,7 @@ try {
 <span className="material-symbols-outlined text-[20px]">phone</span>
 </div>
 <div>
-<span className="font-label-sm text-[11px] text-on-surface-variant uppercase block">Phone / WhatsApp (Direct)</span>
+<span className="font-label-sm text-[11px] text-on-surface-variant uppercase block">{t('contact.phoneTitle', 'Phone / WhatsApp (Direct)')}</span>
 <span className="font-body-sm text-body-sm text-on-surface font-semibold">{WHATSAPP_NUMBER}</span>
 </div>
 </a>
@@ -1038,7 +1038,7 @@ try {
 <span className="material-symbols-outlined text-[20px]">link</span>
 </div>
 <div>
-<span className="font-label-sm text-[11px] text-on-surface-variant uppercase block">LinkedIn</span>
+<span className="font-label-sm text-[11px] text-on-surface-variant uppercase block">{t('contact.linkedinTitle', 'LinkedIn')}</span>
 <span className="font-body-sm text-body-sm text-on-surface font-semibold">linkedin.com/in/islam-samy-3b72061a9/</span>
 </div>
 </a>
@@ -1047,15 +1047,15 @@ try {
 <span className="material-symbols-outlined text-[20px]">location_on</span>
 </div>
 <div>
-<span className="font-label-sm text-[11px] text-on-surface-variant uppercase block">Location &amp; Languages</span>
-<span className="font-body-sm text-body-sm text-on-surface font-semibold">Cairo, Egypt • Arabic (Native) | English (Proficient B2)</span>
+<span className="font-label-sm text-[11px] text-on-surface-variant uppercase block">{t('contact.locationTitle', 'Location & Languages')}</span>
+<span className="font-body-sm text-body-sm text-on-surface font-semibold">{t('contact.locationDesc', 'Cairo, Egypt • Arabic (Native) | English (Proficient B2)')}</span>
 </div>
 </div>
 </div>
 </div>
 <div className="pt-8 flex items-center gap-2 text-on-surface-variant font-label-sm text-label-sm">
 <span className="w-2 h-2 rounded-full bg-secondary"></span>
-<span className="">Guaranteed confidential response within 24 hours.</span>
+<span className="">{t('contact.confidentialityNote', 'Guaranteed confidential response within 24 hours.')}</span>
 </div>
 </div>
 {/*  Interactive Project Inquiry Form  */}
@@ -1064,48 +1064,48 @@ try {
 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
 {/*  Name Input  */}
 <div className="flex flex-col gap-1.5">
-<label className="font-label-sm text-label-sm text-on-surface uppercase">Your Name *</label>
-<input value={inqName} onChange={(e) => setInqName(e.target.value)} className="w-full px-4 py-3 rounded-lg bg-surface-container-lowest/80 border border-outline-variant/30 text-on-surface font-body-sm text-body-sm placeholder:text-on-surface-variant/40 focus:outline-none focus:ring-2 focus:ring-primary shadow-[inset_0_1px_2px_rgba(0,0,0,0.4)]" placeholder="e.g. Omar Mansour" required type="text" />
+<label className="font-label-sm text-label-sm text-on-surface uppercase">{t('contact.formName', 'Your Name *')}</label>
+<input value={inqName} onChange={(e) => setInqName(e.target.value)} className="w-full px-4 py-3 rounded-lg bg-surface-container-lowest/80 border border-outline-variant/30 text-on-surface font-body-sm text-body-sm placeholder:text-on-surface-variant/40 focus:outline-none focus:ring-2 focus:ring-primary shadow-[inset_0_1px_2px_rgba(0,0,0,0.4)]" placeholder={t('contact.formNamePlaceholder', 'e.g. Omar Mansour')} required type="text" />
 </div>
 {/*  Email Input  */}
 <div className="flex flex-col gap-1.5">
-<label className="font-label-sm text-label-sm text-on-surface uppercase">Work Email *</label>
-<input value={inqEmail} onChange={(e) => setInqEmail(e.target.value)} className="w-full px-4 py-3 rounded-lg bg-surface-container-lowest/80 border border-outline-variant/30 text-on-surface font-body-sm text-body-sm placeholder:text-on-surface-variant/40 focus:outline-none focus:ring-2 focus:ring-primary shadow-[inset_0_1px_2px_rgba(0,0,0,0.4)]" placeholder="omar@company.com" required type="email" />
+<label className="font-label-sm text-label-sm text-on-surface uppercase">{t('contact.formEmail', 'Work Email *')}</label>
+<input value={inqEmail} onChange={(e) => setInqEmail(e.target.value)} className="w-full px-4 py-3 rounded-lg bg-surface-container-lowest/80 border border-outline-variant/30 text-on-surface font-body-sm text-body-sm placeholder:text-on-surface-variant/40 focus:outline-none focus:ring-2 focus:ring-primary shadow-[inset_0_1px_2px_rgba(0,0,0,0.4)]" placeholder={t('contact.formEmailPlaceholder', 'omar@company.com')} required type="email" />
 </div>
 </div>
 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
 {/*  Company / Project Name  */}
 <div className="flex flex-col gap-1.5">
-<label className="font-label-sm text-label-sm text-on-surface uppercase">Company / Venture</label>
-<input value={inqCompany} onChange={(e) => setInqCompany(e.target.value)} className="w-full px-4 py-3 rounded-lg bg-surface-container-lowest/80 border border-outline-variant/30 text-on-surface font-body-sm text-body-sm placeholder:text-on-surface-variant/40 focus:outline-none focus:ring-2 focus:ring-primary shadow-[inset_0_1px_2px_rgba(0,0,0,0.4)]" placeholder="e.g. Nexa Hospitality Group" type="text" />
+<label className="font-label-sm text-label-sm text-on-surface uppercase">{t('contact.formCompany', 'Company / Venture')}</label>
+<input value={inqCompany} onChange={(e) => setInqCompany(e.target.value)} className="w-full px-4 py-3 rounded-lg bg-surface-container-lowest/80 border border-outline-variant/30 text-on-surface font-body-sm text-body-sm placeholder:text-on-surface-variant/40 focus:outline-none focus:ring-2 focus:ring-primary shadow-[inset_0_1px_2px_rgba(0,0,0,0.4)]" placeholder={t('contact.formCompanyPlaceholder', 'e.g. Nexa Hospitality Group')} type="text" />
 </div>
 {/*  Project Type Selection  */}
 <div className="flex flex-col gap-1.5">
-<label className="font-label-sm text-label-sm text-on-surface uppercase">Engagement Focus *</label>
+<label className="font-label-sm text-label-sm text-on-surface uppercase">{t('contact.formFocus', 'Engagement Focus *')}</label>
 <select value={inqFocus} onChange={(e) => setInqFocus(e.target.value)} className="w-full px-4 py-3 rounded-lg bg-surface-container-lowest/80 border border-outline-variant/30 text-on-surface font-body-sm text-body-sm focus:outline-none focus:ring-2 focus:ring-primary shadow-[inset_0_1px_2px_rgba(0,0,0,0.4)]" required>
-<option value="custom-erp">Custom ERP System Architecture &amp; Development</option>
-<option value="ai-agents">Autonomous AI Agents &amp; Intelligent Workflows</option>
-<option value="n8n-automation">n8n &amp; Python Workflow Automation (Cost Reduction)</option>
-<option value="data-engineering">Data Lakehouse &amp; Distributed Pipelines (ClickHouse/Kafka)</option>
-<option value="power-bi">Executive BI &amp; Operations Telemetry (Power BI)</option>
-<option value="web-development">Full-Stack Web Application (Next.js 15 / React / Node)</option>
-<option value="advisory">Fractional Technical Architecture &amp; Advisory</option>
+<option value="custom-erp">{t('contact.formFocusErp', 'Custom ERP System Architecture & Development')}</option>
+<option value="ai-agents">{t('contact.formFocusAi', 'Autonomous AI Agents & Intelligent Workflows')}</option>
+<option value="n8n-automation">{t('contact.formFocusAutomation', 'n8n & Python Workflow Automation (Cost Reduction)')}</option>
+<option value="data-engineering">{t('contact.formFocusData', 'Data Lakehouse & Distributed Pipelines (ClickHouse/Kafka)')}</option>
+<option value="power-bi">{t('contact.formFocusBi', 'Executive BI & Operations Telemetry (Power BI)')}</option>
+<option value="web-development">{t('contact.formFocusWeb', 'Full-Stack Web Application (Next.js 15 / React / Node)')}</option>
+<option value="advisory">{t('contact.formFocusAdvisory', 'Fractional Technical Architecture & Advisory')}</option>
 </select>
 </div>
 </div>
 {/*  Message Input  */}
 <div className="flex flex-col gap-1.5">
-<label className="font-label-sm text-label-sm text-on-surface uppercase">Project Objectives &amp; Requirements *</label>
-<textarea value={inqMessage} onChange={(e) => setInqMessage(e.target.value)} className="w-full px-4 py-3 rounded-lg bg-surface-container-lowest/80 border border-outline-variant/30 text-on-surface font-body-sm text-body-sm placeholder:text-on-surface-variant/40 focus:outline-none focus:ring-2 focus:ring-primary shadow-[inset_0_1px_2px_rgba(0,0,0,0.4)]" placeholder="Describe your data sources, expected metrics, target timelines, or existing operational bottlenecks..." required rows={4}></textarea>
+<label className="font-label-sm text-label-sm text-on-surface uppercase">{t('contact.formMessage', 'Project Objectives & Requirements *')}</label>
+<textarea value={inqMessage} onChange={(e) => setInqMessage(e.target.value)} className="w-full px-4 py-3 rounded-lg bg-surface-container-lowest/80 border border-outline-variant/30 text-on-surface font-body-sm text-body-sm placeholder:text-on-surface-variant/40 focus:outline-none focus:ring-2 focus:ring-primary shadow-[inset_0_1px_2px_rgba(0,0,0,0.4)]" placeholder={t('contact.formMessagePlaceholder', 'Describe your data sources, expected metrics, target timelines, or existing operational bottlenecks...')} required rows={4}></textarea>
 </div>
 {/*  Submit Button  */}
 <button disabled={inqSending} className="w-full mt-2 py-4 rounded-xl bg-primary-container text-on-primary font-headline-sm text-label-md uppercase tracking-wider shadow-[0_0_25px_rgba(160,120,255,0.45)] hover:bg-primary hover:shadow-[0_0_35px_rgba(160,120,255,0.6)] transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-50" type="submit">
 <span className="material-symbols-outlined text-[20px]">send</span>
-<span>{inqSending ? 'Transmitting to Supabase...' : 'Send Message to Islam Samy'}</span>
+<span>{inqSending ? t('contact.formSending', 'Transmitting to Supabase...') : t('contact.formSubmit', 'Send Message to Islam Samy')}</span>
 </button>
 {inqSent && (
   <div className="p-3 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 font-label-sm text-label-sm text-center">
-    Inquiry transmitted to Islam's executive pipeline! A confirmation has been logged and Islam will respond within 24 hours.
+    {t('contact.formSuccess', "Inquiry transmitted to Islam's executive pipeline! A confirmation has been logged and Islam will respond within 24 hours.")}
   </div>
 )}
 </form>
