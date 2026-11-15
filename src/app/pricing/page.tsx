@@ -23,6 +23,7 @@ import { SiteHeader } from '@/components/navigation/SiteHeader';
 import { SiteFooter } from '@/components/navigation/SiteFooter';
 import { TiltCard } from '@/components/ui/TiltCard';
 import { usePricing } from '@/lib/hooks';
+import { useLanguage } from '@/context/LanguageContext';
 import { PricingPackage } from '@/data/seedPricing';
 
 const FAQS = [
@@ -55,6 +56,7 @@ const FAQS = [
 
 export default function PricingPage() {
   const { packages, consultationRates } = usePricing();
+  const { t, language } = useLanguage();
   const [billingCycle, setBillingCycle] = useState<'milestone' | 'retainer'>('milestone');
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
 
@@ -79,15 +81,15 @@ export default function PricingPage() {
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/40 dark:bg-white/[0.06] border border-primary/30 shadow-[0_0_24px_rgba(160,120,255,0.25)] mb-4 backdrop-blur-xl">
               <span className="w-2 h-2 rounded-full bg-primary animate-pulse shadow-[0_0_8px_#d0bcff]"></span>
               <span className="font-label-sm text-xs uppercase tracking-wider text-primary font-bold">
-                Transparent Engagement Models &bull; Live Pricing
+                {language === 'ar' ? 'أسعار استشارات وباقات برمجية شفافة' : 'Transparent Engagement Models • Live Pricing'}
               </span>
             </div>
 
             <h1 className="font-nexa text-3xl sm:text-5xl font-extrabold tracking-tight text-on-surface leading-tight">
-              Predictable Engineering Investment. Guaranteed Impact.
+              {t('pages.pricingTitle', 'Predictable Engineering Investment. Guaranteed Impact.')}
             </h1>
             <p className="font-body-lg text-sm sm:text-base text-on-surface-variant mt-4 leading-relaxed">
-              Transparent, milestone-gated pricing for high-throughput distributed systems, real-time data lakehouses, and production ML pipelines.
+              {t('pages.pricingSubtitle', 'Transparent, milestone-gated pricing for high-throughput distributed systems, real-time data lakehouses, and production ML pipelines.')}
             </p>
 
             {/* Interactive Billing Mode Toggle */}
@@ -101,7 +103,7 @@ export default function PricingPage() {
                     : 'text-on-surface-variant hover:text-on-surface'
                 }`}
               >
-                Project-Based / Milestones
+                {t('pricing.tabMilestone', 'Project-Based / Milestones')}
               </button>
               <button
                 type="button"
@@ -112,7 +114,7 @@ export default function PricingPage() {
                     : 'text-on-surface-variant hover:text-on-surface'
                 }`}
               >
-                <span>Monthly Dedicated Retainer</span>
+                <span>{t('pricing.tabRetainer', 'Monthly Dedicated Retainer')}</span>
                 <span className="px-1.5 py-0.5 rounded text-[10px] bg-secondary/20 text-secondary border border-secondary/30 uppercase font-bold">
                   SLA Gated
                 </span>
@@ -202,7 +204,7 @@ export default function PricingPage() {
                             : 'bg-surface-container-high hover:bg-primary-container hover:text-on-primary-container text-on-surface border border-outline-variant/30 hover:border-primary/50'
                         }`}
                       >
-                        <span>Book Engagement Package</span>
+                        <span>{isPopular ? t('pricing.deployCta', 'Deploy Enterprise Architecture') : `${t('pricing.bookCta', 'Book')} ${pkg.name}`}</span>
                         <ArrowRight className="w-4 h-4" />
                       </Link>
                     </div>

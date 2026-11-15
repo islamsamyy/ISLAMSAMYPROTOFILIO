@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useLanguage } from '@/context/LanguageContext';
 import { ArticleItem } from '@/data/seedArticles';
 
 interface ArticleCardProps {
@@ -10,6 +11,9 @@ interface ArticleCardProps {
 }
 
 export function ArticleCard({ article, onRead }: ArticleCardProps) {
+  const { language } = useLanguage();
+  const displayTitle = (language === 'ar' && article.title_ar) ? article.title_ar : article.title;
+  const displayExcerpt = (language === 'ar' && article.excerpt_ar) ? article.excerpt_ar : article.excerpt;
   return (
     <motion.div
       initial={{ opacity: 0, y: 15 }}
@@ -37,10 +41,10 @@ export function ArticleCard({ article, onRead }: ArticleCardProps) {
         {/* Title & Excerpt */}
         <div className="flex flex-col gap-2">
           <h3 className="font-nexa text-lg sm:text-xl font-bold text-on-surface group-hover:text-primary transition-colors leading-snug">
-            {article.title}
+            {displayTitle}
           </h3>
           <p className="font-body-sm text-xs sm:text-sm text-on-surface-variant leading-relaxed line-clamp-3">
-            {article.excerpt}
+            {displayExcerpt}
           </p>
         </div>
 
@@ -68,7 +72,7 @@ export function ArticleCard({ article, onRead }: ArticleCardProps) {
           onClick={() => onRead(article)}
           className="inline-flex items-center gap-1 text-xs font-semibold text-primary hover:text-primary-fixed transition-colors"
         >
-          <span>Read Deep Dive</span>
+          <span>{language === 'ar' ? 'قراءة التحليل' : 'Read Deep Dive'}</span>
           <span className="material-symbols-outlined text-sm">arrow_forward</span>
         </button>
       </div>

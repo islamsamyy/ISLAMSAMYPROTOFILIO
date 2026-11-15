@@ -109,6 +109,7 @@ const config: Config = {
         sans: ["var(--font-inter)", "Inter", "sans-serif"],
         mono: ["var(--font-mono)", "JetBrains Mono", "monospace"],
         display: ["Nexa", "var(--font-jakarta)", "Plus Jakarta Sans", "sans-serif"],
+        cairo: ["'Cairo'", "var(--font-inter)", "sans-serif"],
       },
       fontSize: {
         "label-md": ["12px", { lineHeight: "16px", letterSpacing: "0.04em", fontWeight: "500" }],

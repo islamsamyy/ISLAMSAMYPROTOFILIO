@@ -7,15 +7,25 @@ import { SiteFooter } from '@/components/navigation/SiteFooter';
 import { ArticleCard } from '@/components/blog/ArticleCard';
 import { TiltCard } from '@/components/ui/TiltCard';
 import { useArticles } from '@/lib/hooks';
+import { useLanguage } from '@/context/LanguageContext';
 import { ArticleItem } from '@/data/seedArticles';
 
 const CATEGORIES = ['All', 'Architecture', 'Data Engineering', 'Machine Learning', 'Performance'];
 
 export default function BlogPage() {
   const { articles, loaded } = useArticles();
+  const { t, language } = useLanguage();
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [readingArticle, setReadingArticle] = useState<ArticleItem | null>(null);
+
+  const CATEGORY_MAP: { [key: string]: string } = {
+    'All': language === 'ar' ? 'الكل' : 'All',
+    'Architecture': language === 'ar' ? 'معمارية النظم' : 'Architecture',
+    'Data Engineering': language === 'ar' ? 'هندسة البيانات' : 'Data Engineering',
+    'Machine Learning': language === 'ar' ? 'التعلم الآلي والذكاء الاصطناعي' : 'Machine Learning',
+    'Performance': language === 'ar' ? 'الأداء والسرعة' : 'Performance',
+  };
 
   const filteredArticles = articles.filter((a) => {
     const matchesCat = selectedCategory === 'All' || a.category === selectedCategory;
@@ -45,15 +55,15 @@ export default function BlogPage() {
             <div className="inline-flex items-center gap-space-xs px-4 py-1.5 rounded-full bg-white/40 dark:bg-white/[0.06] border border-primary/30 shadow-[0_0_24px_rgba(160,120,255,0.25)] mb-4 backdrop-blur-xl">
               <span className="material-symbols-outlined text-primary text-base">code_blocks</span>
               <span className="font-label-sm text-xs uppercase tracking-wider text-primary font-bold">
-                Engineering Blog &bull; Technical Insights
+                {language === 'ar' ? 'المدونة الهندسية • رؤى تقنية متقدمة' : 'Engineering Blog • Technical Insights'}
               </span>
             </div>
 
             <h1 className="font-nexa text-3xl sm:text-5xl font-extrabold tracking-tight text-on-surface leading-tight">
-              Architectural Blueprints &amp; Distributed Systems
+              {t('pages.blogTitle', 'Architectural Blueprints & Distributed Systems')}
             </h1>
             <p className="font-body-lg text-sm sm:text-base text-on-surface-variant mt-4 leading-relaxed">
-              In-depth engineering notes on scaling real-time lakehouses, sub-20ms machine learning inference, and high-concurrency event-driven platforms.
+              {t('pages.blogSubtitle', 'In-depth engineering notes on scaling real-time lakehouses, sub-20ms machine learning inference, and high-concurrency event-driven platforms.')}
             </p>
           </motion.div>
 
@@ -68,7 +78,7 @@ export default function BlogPage() {
                 <div className="flex flex-col gap-4 max-w-2xl">
                   <div className="flex items-center gap-2">
                     <span className="px-3 py-1 rounded-full bg-primary text-on-primary text-xs font-bold uppercase tracking-wider">
-                      Featured Publication
+                      {language === 'ar' ? 'مقال مميز' : 'Featured Publication'}
                     </span>
                     <span className="px-3 py-1 rounded-full bg-secondary/10 text-secondary border border-secondary/30 text-xs font-medium">
                       {featured.category}
@@ -79,11 +89,11 @@ export default function BlogPage() {
                   </div>
 
                   <h2 className="font-display-xl text-2xl sm:text-3xl font-bold text-on-surface leading-snug">
-                    {featured.title}
+                    {(language === 'ar' && featured.title_ar) ? featured.title_ar : featured.title}
                   </h2>
 
                   <p className="font-body-md text-sm sm:text-base text-on-surface-variant leading-relaxed">
-                    {featured.excerpt}
+                    {(language === 'ar' && featured.excerpt_ar) ? featured.excerpt_ar : featured.excerpt}
                   </p>
 
                   <div className="flex items-center gap-4 pt-2">
@@ -92,7 +102,7 @@ export default function BlogPage() {
                       className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary-container text-on-primary-container font-label-md text-xs sm:text-sm font-semibold hover:bg-primary hover:text-on-primary shadow-[0_0_20px_rgba(160,120,255,0.4)] transition-all hover:scale-105"
                     >
                       <span className="material-symbols-outlined text-base">menu_book</span>
-                      <span>Read Full Architecture Deep Dive</span>
+                      <span>{language === 'ar' ? 'قراءة التحليل المعماري الكامل' : 'Read Full Architecture Deep Dive'}</span>
                     </button>
                     <span className="text-xs text-on-surface-variant font-mono">
                       By {featured.author} &bull; {featured.date}
@@ -132,7 +142,7 @@ export default function BlogPage() {
                       : 'text-on-surface-variant hover:text-on-surface hover:bg-white/40 dark:hover:bg-white/[0.06]'
                   }`}
                 >
-                  {cat}
+                  {CATEGORY_MAP[cat] || cat}
                 </button>
               ))}
             </div>
@@ -143,7 +153,7 @@ export default function BlogPage() {
               </span>
               <input
                 type="text"
-                placeholder="Search articles, keywords..."
+                placeholder={t('pages.blogSearchPlaceholder', 'Search articles, keywords...')}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full pl-9 pr-4 py-2.5 rounded-2xl bg-white/40 dark:bg-surface-container-lowest/80 border border-white/20 dark:border-white/[0.08] text-xs text-on-surface placeholder:text-on-surface-variant/40 focus:outline-none focus:ring-2 focus:ring-primary shadow-inner"
@@ -196,7 +206,7 @@ export default function BlogPage() {
                     </span>
                   </div>
                   <h2 className="font-display-xl text-2xl sm:text-3xl font-bold text-on-surface">
-                    {readingArticle.title}
+                    {(language === 'ar' && readingArticle.title_ar) ? readingArticle.title_ar : readingArticle.title}
                   </h2>
                 </div>
 
@@ -210,7 +220,7 @@ export default function BlogPage() {
 
               {/* Formatted Article Body */}
               <div className="prose prose-invert max-w-none text-on-surface leading-relaxed space-y-4 text-sm sm:text-base">
-                {readingArticle.content.split('\n\n').map((block, idx) => {
+                {((language === 'ar' && readingArticle.content_ar) ? readingArticle.content_ar : readingArticle.content).split('\n\n').map((block, idx) => {
                   if (block.startsWith('### ')) {
                     return (
                       <h3 key={idx} className="font-display-xl text-lg sm:text-xl font-bold text-primary mt-6 mb-2">
@@ -222,7 +232,7 @@ export default function BlogPage() {
                     const lines = block.split('\n');
                     const code = lines.slice(1, -1).join('\n');
                     return (
-                      <pre key={idx} className="p-4 rounded-xl bg-surface-container-lowest border border-outline-variant/30 text-secondary font-mono text-xs overflow-x-auto shadow-inner my-4">
+                      <pre key={idx} dir="ltr" className="p-4 rounded-xl bg-surface-container-lowest border border-outline-variant/30 text-secondary font-mono text-xs overflow-x-auto shadow-inner my-4 text-left">
                         <code>{code}</code>
                       </pre>
                     );
@@ -237,13 +247,13 @@ export default function BlogPage() {
 
               <div className="pt-6 border-t border-surface-container-high/60 flex items-center justify-between gap-4">
                 <span className="text-xs text-on-surface-variant">
-                  Author: <strong className="text-secondary">{readingArticle.author}</strong>
+                  {language === 'ar' ? 'المؤلف:' : 'Author:'} <strong className="text-secondary">{readingArticle.author}</strong>
                 </span>
                 <button
                   onClick={() => setReadingArticle(null)}
                   className="px-5 py-2.5 rounded-xl bg-surface-container-high hover:bg-surface-container-highest text-on-surface text-xs font-semibold transition-all"
                 >
-                  Close Article
+                  {t('certifications.close', 'Close Article')}
                 </button>
               </div>
             </motion.div>

@@ -9,8 +9,10 @@ import { usePricing } from '@/lib/hooks';
 import { saveReservation } from '@/lib/data-store';
 import { PricingPackage } from '@/data/seedPricing';
 import { WhatsAppBanner, WhatsAppFloatingButton, WHATSAPP_NUMBER, WHATSAPP_URL, WhatsAppIcon } from '@/components/ui/WhatsAppButton';
+import { useLanguage } from '@/context/LanguageContext';
 
 export default function BookPage() {
+  const { language, t } = useLanguage();
   const { packages, consultationRates, loaded } = usePricing();
   const [bookingMode, setBookingMode] = useState<'packages' | 'consultation'>('packages');
 
@@ -133,15 +135,15 @@ export default function BookPage() {
             <div className="inline-flex items-center gap-space-xs px-4 py-1.5 rounded-full bg-white/40 dark:bg-white/[0.06] border border-primary/30 shadow-[0_0_24px_rgba(160,120,255,0.25)] mb-4 backdrop-blur-xl">
               <span className="material-symbols-outlined text-primary text-base">handshake</span>
               <span className="font-label-sm text-xs uppercase tracking-wider text-primary font-bold">
-                Direct Client Advisory Dispatch
+                {t('book.badge')}
               </span>
             </div>
 
             <h1 className="font-nexa text-3xl sm:text-5xl font-extrabold tracking-tight text-on-surface leading-tight">
-              Book an Engineering Package or Consultation
+              {t('book.title')}
             </h1>
             <p className="font-body-lg text-sm sm:text-base text-on-surface-variant mt-4 leading-relaxed">
-              Choose between milestone-based engineering packages for end-to-end data systems, or schedule an immediate 1-on-1 technical advisory session.
+              {t('book.subtitle')}
             </p>
 
             {/* Mode Switcher Toggle */}
@@ -154,7 +156,7 @@ export default function BookPage() {
                     : 'text-on-surface-variant hover:text-on-surface'
                 }`}
               >
-                <span>💼 Engagement Packages</span>
+                <span>{t('book.packagesTab')}</span>
               </button>
               <button
                 onClick={() => setBookingMode('consultation')}
@@ -164,7 +166,7 @@ export default function BookPage() {
                     : 'text-on-surface-variant hover:text-on-surface'
                 }`}
               >
-                <span>⚡ 1-on-1 Consultation</span>
+                <span>{t('book.consultTab')}</span>
               </button>
             </div>
           </motion.div>
@@ -194,7 +196,7 @@ export default function BookPage() {
 
                         {pkg.isPopular && (
                           <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full bg-gradient-to-r from-primary to-secondary text-on-primary-container font-label-sm text-[10px] font-bold uppercase tracking-wider shadow-md">
-                            Most Requested
+                            {t('book.mostRequested')}
                           </div>
                         )}
 
@@ -247,7 +249,7 @@ export default function BookPage() {
                               : 'bg-surface-container-high text-on-surface hover:bg-surface-container-highest'
                           }`}
                         >
-                          {isSelected ? '✓ Selected for Booking' : 'Select Package'}
+                          {isSelected ? t('book.selectedForBooking') : t('book.selectPackage')}
                         </button>
                       </motion.div>
                     </TiltCard>
@@ -265,7 +267,7 @@ export default function BookPage() {
                   <div className="flex items-center justify-between pb-5 border-b border-surface-container-high/60 mb-6">
                     <div>
                       <span className="text-xs font-mono text-secondary uppercase font-semibold">
-                        Confirm Package Reservation
+                        {t('book.confirmReservation')}
                       </span>
                       <h3 className="font-nexa text-xl font-bold text-on-surface mt-1">
                         {selectedPkg.name} ({selectedPkg.price})
@@ -275,55 +277,55 @@ export default function BookPage() {
                       onClick={() => setSelectedPkg(null)}
                       className="text-xs text-on-surface-variant hover:text-on-surface"
                     >
-                      Change Package
+                      {t('book.changePackage')}
                     </button>
                   </div>
 
                   <form onSubmit={handlePackageSubmit} className="flex flex-col gap-4">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div className="flex flex-col gap-1.5">
-                        <label className="text-xs font-semibold text-on-surface">Your Name *</label>
+                        <label className="text-xs font-semibold text-on-surface">{t('book.nameLabel')}</label>
                         <input
                           type="text"
                           required
                           value={pkgClientName}
                           onChange={(e) => setPkgClientName(e.target.value)}
-                          placeholder="e.g. Tarek Mansour"
+                          placeholder={t('book.namePlaceholder')}
                           className="px-4 py-2.5 rounded-xl bg-surface-container-lowest border border-outline-variant/30 text-xs text-on-surface focus:outline-none focus:ring-2 focus:ring-primary"
                         />
                       </div>
                       <div className="flex flex-col gap-1.5">
-                        <label className="text-xs font-semibold text-on-surface">Work Email *</label>
+                        <label className="text-xs font-semibold text-on-surface">{t('book.emailLabel')}</label>
                         <input
                           type="email"
                           required
                           value={pkgClientEmail}
                           onChange={(e) => setPkgClientEmail(e.target.value)}
-                          placeholder="tarek@company.com"
+                          placeholder={t('book.emailPlaceholder')}
                           className="px-4 py-2.5 rounded-xl bg-surface-container-lowest border border-outline-variant/30 text-xs text-on-surface focus:outline-none focus:ring-2 focus:ring-primary"
                         />
                       </div>
                     </div>
 
                     <div className="flex flex-col gap-1.5">
-                      <label className="text-xs font-semibold text-on-surface">Company / Venture *</label>
+                      <label className="text-xs font-semibold text-on-surface">{t('book.companyLabel')}</label>
                       <input
                         type="text"
                         required
                         value={pkgCompany}
                         onChange={(e) => setPkgCompany(e.target.value)}
-                        placeholder="e.g. Safir Hotels & Resorts"
+                        placeholder={t('book.companyPlaceholder')}
                         className="px-4 py-2.5 rounded-xl bg-surface-container-lowest border border-outline-variant/30 text-xs text-on-surface focus:outline-none focus:ring-2 focus:ring-primary"
                       />
                     </div>
 
                     <div className="flex flex-col gap-1.5">
-                      <label className="text-xs font-semibold text-on-surface">System Architecture Context &amp; Goals</label>
+                      <label className="text-xs font-semibold text-on-surface">{t('book.notesLabel')}</label>
                       <textarea
                         rows={3}
                         value={pkgNotes}
                         onChange={(e) => setPkgNotes(e.target.value)}
-                        placeholder="Describe your current tech stack, databases, expected throughput or key deliverables..."
+                        placeholder={t('book.notesPlaceholder')}
                         className="px-4 py-2.5 rounded-xl bg-surface-container-lowest border border-outline-variant/30 text-xs text-on-surface focus:outline-none focus:ring-2 focus:ring-primary"
                       ></textarea>
                     </div>
@@ -332,7 +334,7 @@ export default function BookPage() {
                       type="submit"
                       className="w-full mt-2 py-3.5 rounded-xl bg-primary-container text-on-primary-container font-semibold text-xs sm:text-sm hover:bg-primary hover:text-on-primary shadow-[0_0_24px_rgba(160,120,255,0.4)] transition-all"
                     >
-                      Submit Package Reservation Request
+                      {t('book.submitPackage')}
                     </button>
                   </form>
                 </motion.div>
@@ -349,7 +351,7 @@ export default function BookPage() {
                 
                 {/* Session Duration Tabs */}
                 <div className="flex items-center justify-between pb-4 border-b border-surface-container-high/60">
-                  <span className="text-xs font-semibold text-on-surface">Session Duration</span>
+                  <span className="text-xs font-semibold text-on-surface">{t('book.sessionDuration')}</span>
                   <div className="flex items-center gap-2">
                     <button
                       type="button"
@@ -360,7 +362,7 @@ export default function BookPage() {
                           : 'bg-surface-container-high text-on-surface-variant'
                       }`}
                     >
-                      30 Mins ({consultationRates?.session30Min || '$90'})
+                      {t('book.mins30')} ({consultationRates?.session30Min || '$90'})
                     </button>
                     <button
                       type="button"
@@ -371,14 +373,14 @@ export default function BookPage() {
                           : 'bg-surface-container-high text-on-surface-variant'
                       }`}
                     >
-                      60 Mins ({consultationRates?.session60Min || '$150'})
+                      {t('book.mins60')} ({consultationRates?.session60Min || '$150'})
                     </button>
                   </div>
                 </div>
 
                 {/* Calendar Day Picker */}
                 <div className="flex flex-col gap-3">
-                  <span className="text-xs font-semibold text-on-surface">1. Select Available Date</span>
+                  <span className="text-xs font-semibold text-on-surface">{t('book.selectDate')}</span>
                   <div className="grid grid-cols-5 gap-2">
                     {dates.map((d) => (
                       <button
@@ -400,7 +402,7 @@ export default function BookPage() {
 
                 {/* Time Slot Picker */}
                 <div className="flex flex-col gap-3">
-                  <span className="text-xs font-semibold text-on-surface">2. Select Time Slot</span>
+                  <span className="text-xs font-semibold text-on-surface">{t('book.selectSlot')}</span>
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                     {(consultationRates?.availableSlots || ['09:00 AM', '11:00 AM', '02:00 PM', '04:30 PM']).map((slot) => (
                       <button
@@ -421,7 +423,7 @@ export default function BookPage() {
 
                 {/* Timezone Selector */}
                 <div className="flex flex-col gap-2 pt-2">
-                  <span className="text-xs font-semibold text-on-surface">3. Timezone</span>
+                  <span className="text-xs font-semibold text-on-surface">{t('book.selectTz')}</span>
                   <select
                     value={selectedTz}
                     onChange={(e) => setSelectedTz(e.target.value)}
@@ -440,7 +442,7 @@ export default function BookPage() {
               <div className="lg:col-span-5 p-6 sm:p-8 rounded-3xl bg-surface-container-low/40 backdrop-blur-2xl border border-white/20 dark:border-white/[0.08] shadow-[0_16px_50px_rgba(0,0,0,0.35)] flex flex-col gap-5">
                 <div className="border-b border-surface-container-high/60 pb-4">
                   <span className="text-xs font-mono text-secondary uppercase font-semibold">
-                    Live Booking Dossier
+                    {t('book.liveDossier')}
                   </span>
                   <h3 className="font-nexa text-lg font-bold text-on-surface mt-1">
                     {selectedDate} @ {selectedTime}
@@ -452,48 +454,48 @@ export default function BookPage() {
 
                 <form onSubmit={handleConsultSubmit} className="flex flex-col gap-3.5">
                   <div className="flex flex-col gap-1">
-                    <label className="text-xs font-semibold text-on-surface">Your Name *</label>
+                    <label className="text-xs font-semibold text-on-surface">{t('book.nameLabel')}</label>
                     <input
                       type="text"
                       required
                       value={consultName}
                       onChange={(e) => setConsultName(e.target.value)}
-                      placeholder="e.g. Sarah Al-Ghamdi"
+                      placeholder={t('book.namePlaceholder')}
                       className="px-4 py-2.5 rounded-xl bg-surface-container-lowest border border-outline-variant/30 text-xs text-on-surface focus:outline-none focus:ring-2 focus:ring-primary"
                     />
                   </div>
 
                   <div className="flex flex-col gap-1">
-                    <label className="text-xs font-semibold text-on-surface">Email Address *</label>
+                    <label className="text-xs font-semibold text-on-surface">{t('book.emailLabel')}</label>
                     <input
                       type="email"
                       required
                       value={consultEmail}
                       onChange={(e) => setConsultEmail(e.target.value)}
-                      placeholder="sarah@fintechcloud.io"
+                      placeholder={t('book.emailPlaceholder')}
                       className="px-4 py-2.5 rounded-xl bg-surface-container-lowest border border-outline-variant/30 text-xs text-on-surface focus:outline-none focus:ring-2 focus:ring-primary"
                     />
                   </div>
 
                   <div className="flex flex-col gap-1">
-                    <label className="text-xs font-semibold text-on-surface">Company / Organization *</label>
+                    <label className="text-xs font-semibold text-on-surface">{t('book.companyLabel')}</label>
                     <input
                       type="text"
                       required
                       value={consultCompany}
                       onChange={(e) => setConsultCompany(e.target.value)}
-                      placeholder="e.g. FinTech Cloud"
+                      placeholder={t('book.companyPlaceholder')}
                       className="px-4 py-2.5 rounded-xl bg-surface-container-lowest border border-outline-variant/30 text-xs text-on-surface focus:outline-none focus:ring-2 focus:ring-primary"
                     />
                   </div>
 
                   <div className="flex flex-col gap-1">
-                    <label className="text-xs font-semibold text-on-surface">Agenda / Technical Challenge</label>
+                    <label className="text-xs font-semibold text-on-surface">{t('book.agendaLabel')}</label>
                     <textarea
                       rows={2}
                       value={consultChallenge}
                       onChange={(e) => setConsultChallenge(e.target.value)}
-                      placeholder="e.g. Reviewing Kafka partitions and lakehouse sync lag..."
+                      placeholder={t('book.agendaPlaceholder')}
                       className="px-4 py-2.5 rounded-xl bg-surface-container-lowest border border-outline-variant/30 text-xs text-on-surface focus:outline-none focus:ring-2 focus:ring-primary"
                     ></textarea>
                   </div>
@@ -502,11 +504,11 @@ export default function BookPage() {
                     type="submit"
                     className="w-full mt-2 py-3.5 rounded-xl bg-primary-container text-on-primary font-semibold text-xs uppercase tracking-wider hover:bg-primary shadow-[0_0_24px_rgba(160,120,255,0.4)] transition-all"
                   >
-                    Confirm &amp; Generate Calendar Invite
+                    {t('book.confirmConsult')}
                   </button>
 
                   <div className="pt-2 text-center">
-                    <span className="text-[11px] text-on-surface-variant font-mono block mb-2">— or reach out immediately without booking —</span>
+                    <span className="text-[11px] text-on-surface-variant font-mono block mb-2">{t('book.reachDirect')}</span>
                     <a
                       href={WHATSAPP_URL}
                       target="_blank"
@@ -514,7 +516,7 @@ export default function BookPage() {
                       className="inline-flex items-center justify-center gap-2 w-full py-2.5 rounded-xl bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-400 border border-emerald-500/30 text-xs font-semibold transition-all"
                     >
                       <WhatsAppIcon className="w-4 h-4" />
-                      <span>Instant WhatsApp Chat: {WHATSAPP_NUMBER}</span>
+                      <span>{t('book.instantChat')} {WHATSAPP_NUMBER}</span>
                     </a>
                   </div>
                 </form>
@@ -550,7 +552,7 @@ export default function BookPage() {
 
               <div>
                 <span className="text-xs font-mono text-secondary uppercase font-semibold">
-                  Booking Confirmed &bull; ID: {confirmedBooking.id}
+                  {t('book.confirmedBadge')} {confirmedBooking.id}
                 </span>
                 <h3 className="font-display-xl text-2xl font-bold text-on-surface mt-1">
                   {confirmedBooking.itemName}
@@ -569,13 +571,13 @@ export default function BookPage() {
                   href="/my-bookings"
                   className="py-3 rounded-xl bg-primary-container text-on-primary text-xs font-semibold hover:bg-primary shadow-md transition-all"
                 >
-                  View in Client Portal
+                  {t('book.viewPortal')}
                 </a>
                 <button
                   onClick={() => setConfirmedBooking(null)}
                   className="py-2 text-xs text-on-surface-variant hover:text-on-surface"
                 >
-                  Close Window
+                  {t('book.closeWindow')}
                 </button>
               </div>
             </motion.div>

@@ -15,7 +15,7 @@ export interface ExperienceItem {
 export const initialExperiences: ExperienceItem[] = [
   {
     id: 'exp-nexalytix',
-    role: 'Founder & Lead Data Engineer / ERP Architect',
+    role: 'Founder & Lead Data Engineer / ERP Architect', // Founder & Lead AI / BI Solutions Architect
     company: 'Nexalytix',
     location: 'Cairo, Egypt (Remote / International)',
     period: 'May 2025 – Present',

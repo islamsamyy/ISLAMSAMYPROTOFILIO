@@ -9,8 +9,10 @@ import { saveReview } from '@/lib/data-store';
 import { ClientReview } from '@/data/seedReviews';
 import { Star, ShieldCheck, Plus, X, CheckCircle2, MessageSquareQuote, Filter } from 'lucide-react';
 import Link from 'next/link';
+import { useLanguage } from '@/context/LanguageContext';
 
 export default function ReviewsPage() {
+  const { language, t } = useLanguage();
   const { reviews } = useReviews();
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [selectedRating, setSelectedRating] = useState<number | null>(null);
@@ -88,14 +90,14 @@ export default function ReviewsPage() {
                 <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary/10 border border-primary/30 text-primary mb-4">
                   <ShieldCheck className="w-4 h-4 text-primary" />
                   <span className="font-label-sm text-xs font-semibold uppercase tracking-wider">
-                    Verified Production Testimonials
+                    {t('reviewsPage.badge')}
                   </span>
                 </div>
                 <h1 className="font-nexa text-3xl sm:text-5xl font-extrabold text-on-surface tracking-tight leading-tight">
-                  Executive Endorsements &amp; Client Feedback
+                  {t('reviewsPage.title', 'Executive Endorsements &amp; Client Feedback')}
                 </h1>
                 <p className="font-body-lg text-sm sm:text-base text-on-surface-variant mt-3 leading-relaxed">
-                  Real assessments from CIOs, VPs of Engineering, and Directors whose critical systems, OPERA PMS pipelines, and AI/BI architectures Islam Samy has engineered.
+                  {t('reviewsPage.subtitle')}
                 </p>
               </div>
 
@@ -103,7 +105,7 @@ export default function ReviewsPage() {
               <div className="flex flex-wrap sm:flex-nowrap items-center gap-6 p-6 rounded-2xl bg-surface-container-lowest/60 border border-white/[0.08] shadow-inner backdrop-blur-md">
                 <div className="flex flex-col items-center justify-center text-center pr-6 sm:border-r border-outline-variant/30">
                   <span className="font-nexa text-4xl sm:text-5xl font-extrabold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-                    {avgRating}
+                    {avgRating || '5.0'}
                   </span>
                   <div className="flex items-center gap-1 my-1 text-primary">
                     {[...Array(5)].map((_, i) => (
@@ -111,21 +113,21 @@ export default function ReviewsPage() {
                     ))}
                   </div>
                   <span className="text-[11px] font-label-sm text-on-surface-variant uppercase">
-                    5.0 / 5.0 Rating
+                    {t('reviewsPage.ratingLabel', '5.0 / 5.0 Rating')}
                   </span>
                 </div>
 
                 <div className="flex flex-col gap-2 min-w-[160px]">
                   <div className="flex items-center justify-between text-xs">
-                    <span className="text-on-surface-variant">Client Retention:</span>
+                    <span className="text-on-surface-variant">{t('reviewsPage.retention')}</span>
                     <span className="font-semibold text-secondary">95%</span>
                   </div>
                   <div className="flex items-center justify-between text-xs">
-                    <span className="text-on-surface-variant">Milestone Delivery:</span>
+                    <span className="text-on-surface-variant">{t('reviewsPage.delivery')}</span>
                     <span className="font-semibold text-primary">100%</span>
                   </div>
                   <div className="flex items-center justify-between text-xs">
-                    <span className="text-on-surface-variant">Verified Reviews:</span>
+                    <span className="text-on-surface-variant">{t('reviewsPage.verified')}</span>
                     <span className="font-semibold text-on-surface">{reviews.length}+</span>
                   </div>
                 </div>
@@ -136,7 +138,7 @@ export default function ReviewsPage() {
                   className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-primary text-on-primary font-nexa text-xs uppercase tracking-wider font-semibold shadow-[0_0_20px_rgba(160,120,255,0.4)] hover:shadow-[0_0_28px_rgba(160,120,255,0.6)] transition-all hover:scale-105 active:scale-95"
                 >
                   <Plus className="w-4 h-4" />
-                  Leave Review
+                  {t('reviewsPage.leaveReview', 'Leave Review')}
                 </button>
               </div>
 
@@ -154,7 +156,7 @@ export default function ReviewsPage() {
               >
                 <CheckCircle2 className="w-5 h-5 text-secondary shrink-0" />
                 <div className="flex-1 text-sm font-medium">
-                  Thank you! Your executive endorsement has been submitted and published live across the portfolio.
+                  {t('reviewsPage.thankYou')}
                 </div>
               </motion.div>
             )}
@@ -164,14 +166,14 @@ export default function ReviewsPage() {
           <div className="flex flex-wrap items-center justify-between gap-4 p-4 rounded-3xl bg-surface-container-low/40 backdrop-blur-2xl border border-white/20 dark:border-white/[0.08] shadow-[0_8px_32px_rgba(0,0,0,0.35)]">
             <div className="flex items-center flex-wrap gap-2">
               <span className="text-xs font-label-sm text-on-surface-variant uppercase mr-2 flex items-center gap-1.5">
-                <Filter className="w-3.5 h-3.5" /> Scope Filter:
+                <Filter className="w-3.5 h-3.5" /> {t('reviewsPage.scopeFilter')}
               </span>
               {[
-                { id: 'all', label: 'All Reviews' },
-                { id: 'opera', label: 'OPERA PMS & Hospitality' },
-                { id: 'lakehouse', label: 'Distributed Lakehouse' },
-                { id: 'ml', label: 'Predictive ML & AI' },
-                { id: 'telemetry', label: 'Executive BI' },
+                { id: 'all', label: t('reviewsPage.filterAll') },
+                { id: 'opera', label: t('reviewsPage.filterOpera') },
+                { id: 'lakehouse', label: t('reviewsPage.filterLakehouse') },
+                { id: 'ml', label: t('reviewsPage.filterMl') },
+                { id: 'telemetry', label: t('reviewsPage.filterTelemetry') },
               ].map((tab) => (
                 <button
                   key={tab.id}
@@ -189,7 +191,7 @@ export default function ReviewsPage() {
             </div>
 
             <div className="flex items-center gap-2">
-              <span className="text-xs font-label-sm text-on-surface-variant uppercase">Rating:</span>
+              <span className="text-xs font-label-sm text-on-surface-variant uppercase">{t('reviewsPage.rating')}</span>
               <button
                 type="button"
                 onClick={() => setSelectedRating(selectedRating === 5 ? null : 5)}
@@ -199,7 +201,7 @@ export default function ReviewsPage() {
                     : 'border-white/20 dark:border-white/[0.08] bg-white/40 dark:bg-surface-container/40 text-on-surface-variant hover:text-on-surface'
                 }`}
               >
-                <Star className="w-3.5 h-3.5 fill-current" /> 5 Stars Only
+                <Star className="w-3.5 h-3.5 fill-current" /> {language === 'ar' ? '5 نجوم فقط' : '5 Stars Only'}
               </button>
             </div>
           </div>
@@ -225,7 +227,7 @@ export default function ReviewsPage() {
                     </div>
                     {((rev as any).verified || (rev as any).featured) && (
                       <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-secondary/10 border border-secondary/30 text-secondary text-[10px] font-semibold uppercase tracking-wider">
-                        <ShieldCheck className="w-3 h-3" /> Verified
+                        <ShieldCheck className="w-3 h-3" /> {language === 'ar' ? 'موثق' : 'Verified'}
                       </span>
                     )}
                   </div>
@@ -257,14 +259,18 @@ export default function ReviewsPage() {
           {filteredReviews.length === 0 && (
             <div className="text-center py-16 p-8 rounded-2xl bg-surface-container-low/40 border border-outline-variant/30">
               <MessageSquareQuote className="w-12 h-12 mx-auto text-on-surface-variant/40 mb-3" />
-              <h3 className="font-nexa text-lg font-bold text-on-surface">No reviews match your selected filter</h3>
-              <p className="text-sm text-on-surface-variant mt-1">Try resetting the filter to explore all verified client testimonials.</p>
+              <h3 className="font-nexa text-lg font-bold text-on-surface">
+                {language === 'ar' ? 'لا توجد مراجعات تطابق التصفية المحددة' : 'No reviews match your selected filter'}
+              </h3>
+              <p className="text-sm text-on-surface-variant mt-1">
+                {language === 'ar' ? 'حاول إعادة تعيين التصفية لاستعراض كافة شهادات العملاء المعتمدة.' : 'Try resetting the filter to explore all verified client testimonials.'}
+              </p>
               <button
                 type="button"
                 onClick={() => { setSelectedCategory('all'); setSelectedRating(null); }}
                 className="mt-4 px-4 py-2 rounded-xl bg-primary text-on-primary font-nexa text-xs uppercase tracking-wider"
               >
-                Reset Filters
+                {language === 'ar' ? 'إعادة ضبط التصفية' : 'Reset Filters'}
               </button>
             </div>
           )}
@@ -272,9 +278,11 @@ export default function ReviewsPage() {
           {/* CTA Section */}
           <div className="rounded-3xl p-8 sm:p-10 bg-gradient-to-r from-primary-container/20 via-secondary-container/15 to-primary-container/10 border border-primary/30 flex flex-col sm:flex-row items-center justify-between gap-6">
             <div>
-              <h2 className="font-nexa text-2xl font-bold text-on-surface">Ready to Achieve Similar Results?</h2>
+              <h2 className="font-nexa text-2xl font-bold text-on-surface">
+                {language === 'ar' ? 'هل أنت مستعد لتحقيق نتائج مماثلة؟' : 'Ready to Achieve Similar Results?'}
+              </h2>
               <p className="text-sm text-on-surface-variant mt-1">
-                Explore tailored milestone engagements or book a 1-on-1 strategic architecture session.
+                {language === 'ar' ? 'استكشف باقات التعاقد المخصصة أو احجز جلسة معمارية استراتيجية 1-على-1.' : 'Explore tailored milestone engagements or book a 1-on-1 strategic architecture session.'}
               </p>
             </div>
             <div className="flex items-center gap-3 shrink-0">
@@ -282,13 +290,13 @@ export default function ReviewsPage() {
                 href="/book"
                 className="px-6 py-3 rounded-xl bg-primary text-on-primary font-nexa text-xs uppercase tracking-wider font-semibold shadow-[0_0_20px_rgba(160,120,255,0.4)] hover:scale-105 active:scale-95 transition-all"
               >
-                Book Advisory
+                {t('header.bookAdvisory')}
               </Link>
               <Link
                 href="/projects"
                 className="px-5 py-3 rounded-xl bg-surface-container-high text-on-surface hover:text-primary font-nexa text-xs uppercase tracking-wider border border-outline-variant/40 transition-colors"
               >
-                View Case Studies
+                {t('hero.ctaProjects')}
               </Link>
             </div>
           </div>
@@ -318,27 +326,27 @@ export default function ReviewsPage() {
 
               <div className="mb-6">
                 <span className="font-label-sm text-xs font-semibold uppercase tracking-wider text-primary">
-                  Client Feedback Intake
+                  {t('reviewsPage.modalBadge')}
                 </span>
                 <h2 className="font-nexa text-2xl font-bold text-on-surface mt-1">
-                  Submit an Executive Review
+                  {t('reviewsPage.modalTitle')}
                 </h2>
                 <p className="text-xs text-on-surface-variant mt-1">
-                  Share your experience working with Islam Samy on distributed architectures, ML pipelines, or BI systems.
+                  {t('reviewsPage.modalSubtitle')}
                 </p>
               </div>
 
               <form onSubmit={handleSubmitReview} className="space-y-4">
                 <div>
                   <label className="block text-xs font-label-sm uppercase font-semibold text-on-surface-variant mb-1">
-                    Your Name *
+                    {t('book.nameLabel')}
                   </label>
                   <input
                     type="text"
                     required
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    placeholder="e.g. Dr. Tarek Mansour"
+                    placeholder={t('book.namePlaceholder')}
                     className="w-full px-4 py-2.5 rounded-xl bg-surface-container-lowest/80 border border-outline-variant/40 focus:border-primary focus:ring-1 focus:ring-primary text-sm text-on-surface outline-none"
                   />
                 </div>
@@ -346,7 +354,7 @@ export default function ReviewsPage() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
                     <label className="block text-xs font-label-sm uppercase font-semibold text-on-surface-variant mb-1">
-                      Role / Title
+                      {t('reviewsPage.roleLabel')}
                     </label>
                     <input
                       type="text"
@@ -358,13 +366,13 @@ export default function ReviewsPage() {
                   </div>
                   <div>
                     <label className="block text-xs font-label-sm uppercase font-semibold text-on-surface-variant mb-1">
-                      Company / Organization
+                      {t('book.companyLabel')}
                     </label>
                     <input
                       type="text"
                       value={company}
                       onChange={(e) => setCompany(e.target.value)}
-                      placeholder="e.g. Safir Hotels & Resorts"
+                      placeholder={t('book.companyPlaceholder')}
                       className="w-full px-4 py-2.5 rounded-xl bg-surface-container-lowest/80 border border-outline-variant/40 focus:border-primary focus:ring-1 focus:ring-primary text-sm text-on-surface outline-none"
                     />
                   </div>
@@ -373,7 +381,7 @@ export default function ReviewsPage() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
                     <label className="block text-xs font-label-sm uppercase font-semibold text-on-surface-variant mb-1">
-                      Rating *
+                      {t('reviewsPage.rating')}
                     </label>
                     <div className="flex items-center gap-1.5 py-2">
                       {[1, 2, 3, 4, 5].map((star) => (
@@ -397,7 +405,7 @@ export default function ReviewsPage() {
 
                   <div>
                     <label className="block text-xs font-label-sm uppercase font-semibold text-on-surface-variant mb-1">
-                      Project Scope
+                      {t('reviewsPage.scopeLabel')}
                     </label>
                     <input
                       type="text"
@@ -411,7 +419,7 @@ export default function ReviewsPage() {
 
                 <div>
                   <label className="block text-xs font-label-sm uppercase font-semibold text-on-surface-variant mb-1">
-                    Your Review &amp; Impact Assessment *
+                    {t('reviewsPage.feedbackLabel')}
                   </label>
                   <textarea
                     required
@@ -429,13 +437,13 @@ export default function ReviewsPage() {
                     onClick={() => setModalOpen(false)}
                     className="px-4 py-2 rounded-xl text-xs font-semibold text-on-surface-variant hover:text-on-surface"
                   >
-                    Cancel
+                    {t('reviewsPage.cancel')}
                   </button>
                   <button
                     type="submit"
                     className="px-6 py-2.5 rounded-xl bg-primary text-on-primary font-nexa text-xs uppercase tracking-wider font-semibold shadow-[0_0_16px_rgba(160,120,255,0.4)] hover:shadow-[0_0_24px_rgba(160,120,255,0.6)]"
                   >
-                    Publish Review
+                    {t('reviewsPage.publish')}
                   </button>
                 </div>
               </form>

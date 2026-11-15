@@ -291,3 +291,27 @@ img, svg, canvas {
   scrollbar-width: none;
 }
 
+/* RTL Typography & Direction Utilities */
+html[dir="rtl"] {
+  font-family: 'Cairo', system-ui, sans-serif;
+}
+
+html[dir="rtl"] body {
+  font-family: 'Cairo', system-ui, sans-serif;
+}
+
+html[dir="rtl"] .font-nexa,
+html[dir="rtl"] .font-display-xl,
+html[dir="rtl"] .font-headline-lg,
+html[dir="rtl"] .font-headline-md,
+html[dir="rtl"] .font-headline-sm {
+  font-family: 'Cairo', system-ui, sans-serif;
+  letter-spacing: normal;
+}
+
+/* Flip directional icons in RTL mode */
+html[dir="rtl"] .rtl-flip {
+  transform: scaleX(-1);
+  display: inline-block;
+}
+

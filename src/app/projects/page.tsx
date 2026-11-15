@@ -8,15 +8,25 @@ import { ProjectCard } from '@/components/projects/ProjectCard';
 import { ArchitectureModal } from '@/components/projects/ArchitectureModal';
 import { TiltCard } from '@/components/ui/TiltCard';
 import { useProjects } from '@/lib/hooks';
+import { useLanguage } from '@/context/LanguageContext';
 import { ProjectItem } from '@/data/seedProjects';
 
 const CATEGORIES = ['All Projects', 'Distributed Systems', 'Lakehouse & BI', 'AI & Machine Learning', 'Cloud Native'];
 
 export default function ProjectsPage() {
   const { projects, loaded } = useProjects();
+  const { t, language } = useLanguage();
   const [selectedCategory, setSelectedCategory] = useState('All Projects');
   const [searchQuery, setSearchQuery] = useState('');
   const [activeBlueprint, setActiveBlueprint] = useState<ProjectItem | null>(null);
+
+  const CATEGORY_MAP: { [key: string]: string } = {
+    'All Projects': language === 'ar' ? 'كافة المشاريع' : 'All Projects',
+    'Distributed Systems': language === 'ar' ? 'النظم الموزعة' : 'Distributed Systems',
+    'Lakehouse & BI': language === 'ar' ? 'مستودعات البيانات وBI' : 'Lakehouse & BI',
+    'AI & Machine Learning': language === 'ar' ? 'الذكاء الاصطناعي وتعلم الآلة' : 'AI & Machine Learning',
+    'Cloud Native': language === 'ar' ? 'الحوسبة السحابية' : 'Cloud Native',
+  };
 
   const filteredProjects = projects.filter((p) => {
     const matchesCategory = selectedCategory === 'All Projects' || p.category === selectedCategory;
@@ -44,15 +54,15 @@ export default function ProjectsPage() {
             <div className="inline-flex items-center gap-space-xs px-4 py-1.5 rounded-full bg-white/40 dark:bg-white/[0.06] border border-secondary/40 shadow-[0_0_24px_rgba(123,208,255,0.3)] mb-4 backdrop-blur-xl">
               <span className="w-2 h-2 rounded-full bg-secondary animate-pulse shadow-[0_0_8px_#7bd0ff]"></span>
               <span className="font-label-sm text-xs uppercase tracking-wider text-secondary font-bold">
-                Production Case Studies &bull; Verified Client Delivery
+                {language === 'ar' ? 'دراسات حالة بيئات الإنتاج • تسليم معتمد للعملاء' : 'Production Case Studies • Verified Client Delivery'}
               </span>
             </div>
 
             <h1 className="font-nexa text-3xl sm:text-5xl font-extrabold tracking-tight text-on-surface leading-tight">
-              Enterprise Engineering &amp; Data Projects
+              {t('pages.projectsTitle', 'Enterprise Engineering & Data Projects')}
             </h1>
             <p className="font-body-lg text-sm sm:text-base text-on-surface-variant mt-4 leading-relaxed">
-              Showcase of production-tested systems featuring verified company logos, architecture blueprints, and real-time telemetry metrics built over 6 years of technical leadership.
+              {t('pages.projectsSubtitle', 'Showcase of production-tested systems featuring verified company logos, architecture blueprints, and real-time telemetry metrics built over 6 years of technical leadership.')}
             </p>
           </motion.div>
 
@@ -75,7 +85,7 @@ export default function ProjectsPage() {
                       : 'text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high'
                   }`}
                 >
-                  {cat}
+                  {CATEGORY_MAP[cat] || cat}
                 </button>
               ))}
             </div>
@@ -87,7 +97,7 @@ export default function ProjectsPage() {
               </span>
               <input
                 type="text"
-                placeholder="Search client, title, stack..."
+                placeholder={t('pages.projectsSearchPlaceholder', 'Search client, title, stack...')}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full pl-9 pr-4 py-2 rounded-xl bg-surface-container-lowest border border-outline-variant/30 text-xs text-on-surface placeholder:text-on-surface-variant/40 focus:outline-none focus:ring-2 focus:ring-primary shadow-inner"

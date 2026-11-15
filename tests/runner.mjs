@@ -18,6 +18,8 @@ import { fileURLToPath } from 'node:url';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const testFiles = [
+  resolve(__dirname, 'i18n.test.mjs'),
+  resolve(__dirname, 'i18n-comprehensive.test.mjs'),
   resolve(__dirname, 'tier1-feature-coverage.test.mjs'),
   resolve(__dirname, 'tier2-boundary-corner.test.mjs'),
   resolve(__dirname, 'tier3-cross-feature.test.mjs'),

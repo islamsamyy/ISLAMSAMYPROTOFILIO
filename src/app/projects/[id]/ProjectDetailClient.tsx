@@ -30,6 +30,7 @@ import {
 } from 'lucide-react';
 
 import { ProjectItem, initialProjects } from '@/data/seedProjects';
+import { useLanguage } from '@/context/LanguageContext';
 
 interface ProjectDetailClientProps {
   projectId: string;
@@ -37,6 +38,7 @@ interface ProjectDetailClientProps {
 }
 
 export function ProjectDetailClient({ projectId, initialProject }: ProjectDetailClientProps) {
+  const { language, t } = useLanguage();
   const { projects, loaded } = useProjects();
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
@@ -126,15 +128,15 @@ export function ProjectDetailClient({ projectId, initialProject }: ProjectDetail
         <main className="w-full pt-32 pb-24 flex-1 flex items-center justify-center">
           <div className="p-8 sm:p-12 rounded-3xl bg-surface-container-low/60 backdrop-blur-2xl border border-white/20 dark:border-white/[0.08] text-center max-w-lg mx-auto flex flex-col items-center gap-4">
             <AlertCircle className="w-12 h-12 text-primary" />
-            <h1 className="font-nexa text-2xl font-bold text-on-surface">Case Study Not Found</h1>
+            <h1 className="font-nexa text-2xl font-bold text-on-surface">{t('projectDetail.notFoundTitle')}</h1>
             <p className="text-xs text-on-surface-variant">
-              The requested architecture blueprint could not be located in our production registry.
+              {t('projectDetail.notFoundDesc')}
             </p>
             <Link
               href="/projects"
               className="mt-4 px-6 py-2.5 rounded-xl bg-primary text-on-primary font-nexa text-xs font-bold uppercase tracking-wider"
             >
-              Back to All Projects
+              {t('projectDetail.backToAll')}
             </Link>
           </div>
         </main>
@@ -152,13 +154,13 @@ export function ProjectDetailClient({ projectId, initialProject }: ProjectDetail
           {/* Breadcrumb Navigation */}
           <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs font-mono text-on-surface-variant">
             <Link href="/" className="hover:text-primary transition-colors">
-              Home
+              {t('nav.home')}
             </Link>
-            <ChevronRight className="w-3.5 h-3.5 opacity-50" />
+            <ChevronRight className="w-3.5 h-3.5 opacity-50 rtl-flip" />
             <Link href="/projects" className="hover:text-primary transition-colors">
-              Projects &amp; Case Studies
+              {t('footer.projectsLink')}
             </Link>
-            <ChevronRight className="w-3.5 h-3.5 opacity-50" />
+            <ChevronRight className="w-3.5 h-3.5 opacity-50 rtl-flip" />
             <span className="text-primary font-semibold truncate max-w-[240px] sm:max-w-none">
               {project.title}
             </span>
@@ -203,7 +205,7 @@ export function ProjectDetailClient({ projectId, initialProject }: ProjectDetail
                   </div>
                   <div className="flex flex-col">
                     <span className="text-[10px] font-mono uppercase tracking-widest text-on-surface-variant">
-                      Client Organization
+                      {t('projectDetail.clientOrg')}
                     </span>
                     <span className="text-sm font-nexa font-bold text-on-surface">{project.client}</span>
                   </div>
@@ -221,7 +223,7 @@ export function ProjectDetailClient({ projectId, initialProject }: ProjectDetail
                     className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-primary text-on-primary font-nexa text-xs font-bold uppercase tracking-wider shadow-[0_0_24px_rgba(160,120,255,0.45)] hover:shadow-[0_0_36px_rgba(160,120,255,0.7)] transition-all hover:scale-105 active:scale-95"
                   >
                     <Calendar className="w-4 h-4" />
-                    <span>Book Advisory for this Stack</span>
+                    <span>{t('projectDetail.bookAdvisory')}</span>
                   </Link>
 
                   {project.liveDemoUrl && (
@@ -232,7 +234,7 @@ export function ProjectDetailClient({ projectId, initialProject }: ProjectDetail
                       className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-surface-container-high/80 hover:bg-surface-container-highest text-on-surface font-nexa text-xs font-bold uppercase tracking-wider border border-white/20 dark:border-white/[0.08] transition-all hover:scale-105"
                     >
                       <FolderGit2 className="w-4 h-4 text-secondary" />
-                      <span>Codebase / Spec</span>
+                      <span>{t('projectDetail.codebaseSpec')}</span>
                       <ExternalLink className="w-3.5 h-3.5 opacity-60" />
                     </a>
                   )}
@@ -241,8 +243,8 @@ export function ProjectDetailClient({ projectId, initialProject }: ProjectDetail
                     href="/projects"
                     className="inline-flex items-center gap-2 px-4 py-3 rounded-xl text-on-surface-variant hover:text-on-surface font-mono text-xs transition-colors"
                   >
-                    <ArrowLeft className="w-4 h-4" />
-                    <span>All Projects</span>
+                    <ArrowLeft className="w-4 h-4 rtl-flip" />
+                    <span>{t('projectDetail.backToAll')}</span>
                   </Link>
                 </div>
               </div>
@@ -250,15 +252,15 @@ export function ProjectDetailClient({ projectId, initialProject }: ProjectDetail
               {/* 3D Telemetry Canvas Visualizer Card */}
               <div className="lg:w-80 w-full flex flex-col gap-3 p-5 rounded-2xl bg-surface-container-lowest/80 border border-white/10 shadow-inner backdrop-blur-xl shrink-0">
                 <div className="flex items-center justify-between">
-                  <span className="font-mono text-xs text-primary font-bold"># Real-Time Telemetry Node</span>
+                  <span className="font-mono text-xs text-primary font-bold">{t('projectDetail.realtimeNode')}</span>
                   <span className="w-2 h-2 rounded-full bg-secondary animate-ping"></span>
                 </div>
                 <div className="w-full h-32 relative overflow-hidden rounded-xl bg-black/40 flex items-center justify-center">
                   <canvas ref={canvasRef} className="w-full h-full" />
                 </div>
                 <div className="flex items-center justify-between text-[11px] font-mono text-on-surface-variant border-t border-surface-container-high/60 pt-2">
-                  <span>Architecture Verified</span>
-                  <span className="text-secondary font-bold">Production SLA</span>
+                  <span>{t('projectDetail.archVerified')}</span>
+                  <span className="text-secondary font-bold">{t('projectDetail.productionSla')}</span>
                 </div>
               </div>
             </div>
@@ -293,10 +295,10 @@ export function ProjectDetailClient({ projectId, initialProject }: ProjectDetail
                 <div className="flex items-center justify-between">
                   <div className="flex flex-col gap-1">
                     <span className="font-mono text-xs text-secondary uppercase tracking-widest font-semibold">
-                      Visual Showcase
+                      {t('projectDetail.visualShowcase')}
                     </span>
                     <h2 className="font-nexa text-2xl sm:text-3xl font-bold text-on-surface">
-                      Project Gallery
+                      {t('projectDetail.galleryTitle')}
                     </h2>
                   </div>
                 </div>
@@ -336,10 +338,10 @@ export function ProjectDetailClient({ projectId, initialProject }: ProjectDetail
               <section className="flex flex-col gap-5">
                 <div className="flex flex-col gap-1">
                   <span className="font-mono text-xs text-primary uppercase tracking-widest font-semibold">
-                    Execution Blueprint
+                    {t('projectDetail.executionBlueprint')}
                   </span>
                   <h2 className="font-nexa text-2xl sm:text-3xl font-bold text-on-surface">
-                    Project Steps &amp; Architecture Flow
+                    {t('projectDetail.stepsTitle')}
                   </h2>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
@@ -372,9 +374,9 @@ export function ProjectDetailClient({ projectId, initialProject }: ProjectDetail
             <div className="p-8 rounded-3xl bg-surface-container-low/40 backdrop-blur-2xl border border-white/20 dark:border-white/[0.08] shadow-[0_8px_32px_rgba(0,0,0,0.35)] flex flex-col gap-4">
               <div className="flex items-center gap-2 text-error">
                 <AlertCircle className="w-5 h-5 text-error" />
-                <span className="font-mono text-xs uppercase tracking-wider font-bold">The Technical Bottleneck</span>
+                <span className="font-mono text-xs uppercase tracking-wider font-bold">{t('projectDetail.bottleneckBadge')}</span>
               </div>
-              <h2 className="font-nexa text-2xl font-bold text-on-surface">System Challenge &amp; Constraints</h2>
+              <h2 className="font-nexa text-2xl font-bold text-on-surface">{t('projectDetail.challengeTitle')}</h2>
               <p className="font-body-md text-sm sm:text-base text-on-surface-variant leading-relaxed">
                 {project.challenge ||
                   `The existing architecture struggled with high ingestion latency, data fragmentation across disparate operational siloes, and escalating cloud maintenance costs under peak traffic spikes.`}
@@ -385,9 +387,9 @@ export function ProjectDetailClient({ projectId, initialProject }: ProjectDetail
             <div className="p-8 rounded-3xl bg-surface-container-low/40 backdrop-blur-2xl border border-white/20 dark:border-white/[0.08] shadow-[0_8px_32px_rgba(0,0,0,0.35)] flex flex-col gap-4">
               <div className="flex items-center gap-2 text-secondary">
                 <Cpu className="w-5 h-5 text-secondary" />
-                <span className="font-mono text-xs uppercase tracking-wider font-bold">The Architecture Strategy</span>
+                <span className="font-mono text-xs uppercase tracking-wider font-bold">{t('projectDetail.strategyBadge')}</span>
               </div>
-              <h2 className="font-nexa text-2xl font-bold text-on-surface">Engineered Solution &amp; Delivery</h2>
+              <h2 className="font-nexa text-2xl font-bold text-on-surface">{t('projectDetail.solutionTitle')}</h2>
               <p className="font-body-md text-sm sm:text-base text-on-surface-variant leading-relaxed">
                 {project.solution ||
                   `Engineered a high-performance, fault-tolerant distributed streaming lakehouse utilizing Kafka message buffering, columnar store compression, and automated edge synchronization daemons.`}
@@ -402,13 +404,13 @@ export function ProjectDetailClient({ projectId, initialProject }: ProjectDetail
                 <div className="flex items-center gap-2 text-primary">
                   <GitBranch className="w-5 h-5 text-primary" />
                   <span className="font-mono text-xs uppercase tracking-wider font-bold">
-                    End-to-End Ingestion Pipeline
+                    {t('projectDetail.pipelineBadge')}
                   </span>
                 </div>
-                <span className="text-xs font-mono text-on-surface-variant">Sequential Event Lifecycle</span>
+                <span className="text-xs font-mono text-on-surface-variant">{t('projectDetail.pipelineSub')}</span>
               </div>
 
-              <h2 className="font-nexa text-2xl font-bold text-on-surface">System Architecture Data Flow</h2>
+              <h2 className="font-nexa text-2xl font-bold text-on-surface">{t('projectDetail.pipelineTitle')}</h2>
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 pt-2">
                 {project.systemFlow.map((stage, idx) => {
@@ -422,7 +424,9 @@ export function ProjectDetailClient({ projectId, initialProject }: ProjectDetail
                         <span className="w-6 h-6 rounded-full bg-primary/20 text-primary flex items-center justify-center font-mono text-xs font-bold">
                           {idx + 1}
                         </span>
-                        <span className="text-[10px] font-mono text-secondary uppercase font-semibold">Stage {idx + 1}</span>
+                        <span className="text-[10px] font-mono text-secondary uppercase font-semibold">
+                          {language === 'ar' ? `المرحلة ${idx + 1}` : `Stage ${idx + 1}`}
+                        </span>
                       </div>
                       <h3 className="font-nexa font-bold text-sm text-on-surface">{stageTitle}</h3>
                       <p className="text-xs text-on-surface-variant leading-relaxed">
@@ -440,10 +444,10 @@ export function ProjectDetailClient({ projectId, initialProject }: ProjectDetail
             <div className="flex items-center gap-2 text-secondary">
               <ShieldCheck className="w-5 h-5 text-secondary" />
               <span className="font-mono text-xs uppercase tracking-wider font-bold">
-                Production-Validated Innovations
+                {t('projectDetail.innovationsBadge')}
               </span>
             </div>
-            <h2 className="font-nexa text-2xl font-bold text-on-surface">Key Architectural Highlights</h2>
+            <h2 className="font-nexa text-2xl font-bold text-on-surface">{t('projectDetail.highlightsTitle')}</h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {project.architectureHighlights.map((highlight, idx) => (
@@ -464,10 +468,10 @@ export function ProjectDetailClient({ projectId, initialProject }: ProjectDetail
               <div className="flex items-center gap-2 text-primary">
                 <Database className="w-5 h-5 text-primary" />
                 <span className="font-mono text-xs uppercase tracking-wider font-bold">
-                  Senior Engineering Analysis
+                  {t('projectDetail.analysisBadge')}
                 </span>
               </div>
-              <h2 className="font-nexa text-2xl font-bold text-on-surface">Architectural Trade-offs &amp; Decisions</h2>
+              <h2 className="font-nexa text-2xl font-bold text-on-surface">{t('projectDetail.tradeoffsTitle')}</h2>
 
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {project.keyDecisions.map((decision, idx) => (
@@ -477,17 +481,17 @@ export function ProjectDetailClient({ projectId, initialProject }: ProjectDetail
                   >
                     <div className="flex flex-col gap-2">
                       <span className="text-[10px] font-mono uppercase tracking-wider text-secondary font-bold">
-                        Decision #{idx + 1}
+                        {t('projectDetail.decisionNum')}{idx + 1}
                       </span>
                       <h3 className="font-nexa font-bold text-base text-on-surface">{decision.title}</h3>
                       <div className="mt-2 text-xs text-on-surface leading-relaxed bg-surface-container-low/70 p-3 rounded-xl border border-outline-variant/20">
-                        <strong className="text-secondary block mb-1">✓ Rationale:</strong>
+                        <strong className="text-secondary block mb-1">✓ {t('projectDetail.rationale')}</strong>
                         {decision.rationale}
                       </div>
                     </div>
 
                     <div className="text-xs text-on-surface-variant leading-relaxed bg-surface-container-lowest/60 p-3 rounded-xl border border-outline-variant/20">
-                      <strong className="text-error block mb-1">⚠ Evaluated Trade-Off:</strong>
+                      <strong className="text-error block mb-1">⚠ {t('projectDetail.evaluatedTradeOff')}</strong>
                       {decision.tradeOff}
                     </div>
                   </div>
@@ -500,7 +504,7 @@ export function ProjectDetailClient({ projectId, initialProject }: ProjectDetail
           <section className="p-8 rounded-3xl bg-surface-container-low/40 backdrop-blur-2xl border border-white/20 dark:border-white/[0.08] shadow-[0_8px_32px_rgba(0,0,0,0.35)] flex flex-col gap-4">
             <h2 className="font-nexa text-xl font-bold text-on-surface flex items-center gap-2">
               <Terminal className="w-5 h-5 text-primary" />
-              <span>Technology Arsenal Deployed</span>
+              <span>{t('projectDetail.techArsenal')}</span>
             </h2>
 
             <div className="flex flex-wrap gap-2 pt-2">
@@ -525,9 +529,9 @@ export function ProjectDetailClient({ projectId, initialProject }: ProjectDetail
                 href={`/projects/${prevProject.id}`}
                 className="group p-5 rounded-2xl bg-surface-container-low/40 hover:bg-surface-container-low/70 backdrop-blur-xl border border-white/20 dark:border-white/[0.08] transition-all flex items-center gap-3"
               >
-                <ArrowLeft className="w-5 h-5 text-primary group-hover:-translate-x-1 transition-transform" />
+                <ArrowLeft className="w-5 h-5 text-primary group-hover:-translate-x-1 transition-transform rtl-flip" />
                 <div className="flex flex-col text-left">
-                  <span className="text-[10px] font-mono uppercase text-on-surface-variant">Previous Case Study</span>
+                  <span className="text-[10px] font-mono uppercase text-on-surface-variant">{t('projectDetail.prevCase')}</span>
                   <span className="font-nexa font-bold text-sm text-on-surface group-hover:text-primary transition-colors truncate max-w-[240px]">
                     {prevProject.title}
                   </span>
@@ -543,12 +547,12 @@ export function ProjectDetailClient({ projectId, initialProject }: ProjectDetail
                 className="group p-5 rounded-2xl bg-surface-container-low/40 hover:bg-surface-container-low/70 backdrop-blur-xl border border-white/20 dark:border-white/[0.08] transition-all flex items-center justify-end text-right gap-3 ml-auto w-full sm:w-auto sm:col-start-2"
               >
                 <div className="flex flex-col text-right">
-                  <span className="text-[10px] font-mono uppercase text-on-surface-variant">Next Case Study</span>
+                  <span className="text-[10px] font-mono uppercase text-on-surface-variant">{t('projectDetail.nextCase')}</span>
                   <span className="font-nexa font-bold text-sm text-on-surface group-hover:text-primary transition-colors truncate max-w-[240px]">
                     {nextProject.title}
                   </span>
                 </div>
-                <ArrowRight className="w-5 h-5 text-primary group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="w-5 h-5 text-primary group-hover:translate-x-1 transition-transform rtl-flip" />
               </Link>
             )}
           </nav>

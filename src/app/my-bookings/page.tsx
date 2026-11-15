@@ -7,8 +7,10 @@ import { SiteFooter } from '@/components/navigation/SiteFooter';
 import { useReservations } from '@/lib/hooks';
 import { updateReservationStatus, saveReservation } from '@/lib/data-store';
 import { BookingReservation } from '@/data/seedReservations';
+import { useLanguage } from '@/context/LanguageContext';
 
 export default function MyBookingsPage() {
+  const { language, t } = useLanguage();
   const { reservations, loaded } = useReservations();
   const [searchId, setSearchId] = useState('');
   const [rescheduleTarget, setRescheduleTarget] = useState<BookingReservation | null>(null);
@@ -35,7 +37,11 @@ export default function MyBookingsPage() {
       scheduledDate: newDate,
       scheduledTime: newTime,
     });
-    setActionNotice(`Reschedule successfully recorded for ${rescheduleTarget.id} to ${newDate} @ ${newTime}. Synced with Supabase.`);
+    setActionNotice(
+      language === 'ar'
+        ? `تم تسجيل إعادة الجدولة بنجاح للحجز ${rescheduleTarget.id} إلى ${newDate} @ ${newTime}. تم التزامن مع Supabase.`
+        : `Reschedule successfully recorded for ${rescheduleTarget.id} to ${newDate} @ ${newTime}. Synced with Supabase.`
+    );
     setRescheduleTarget(null);
   };
 
@@ -56,15 +62,15 @@ export default function MyBookingsPage() {
             <div className="inline-flex items-center gap-space-xs px-4 py-1.5 rounded-full bg-white/40 dark:bg-white/[0.06] border border-secondary/30 shadow-[0_0_24px_rgba(123,208,255,0.25)] mb-4 backdrop-blur-xl">
               <span className="w-2 h-2 rounded-full bg-secondary animate-pulse shadow-[0_0_8px_#7bd0ff]"></span>
               <span className="font-label-sm text-xs uppercase tracking-wider text-secondary font-bold">
-                Client Reservation Hub &bull; Live Telemetry
+                {t('portal.badge')}
               </span>
             </div>
 
             <h1 className="font-nexa text-3xl sm:text-5xl font-extrabold tracking-tight text-on-surface leading-tight">
-              My Bookings &amp; Consultation Dossier
+              {t('portal.title')}
             </h1>
             <p className="font-body-lg text-sm sm:text-base text-on-surface-variant mt-4 leading-relaxed">
-              Track your scheduled advisory meetings, download `.ics` calendar credentials, launch encrypted Google Meet rooms, and manage agenda files.
+              {t('portal.subtitle')}
             </p>
           </motion.div>
 
@@ -80,7 +86,7 @@ export default function MyBookingsPage() {
             </span>
             <input
               type="text"
-              placeholder="Search by Booking ID (e.g. RES-8941) or email..."
+              placeholder={t('portal.searchPlaceholder')}
               value={searchId}
               onChange={(e) => setSearchId(e.target.value)}
               className="w-full pl-10 pr-4 py-3 rounded-2xl bg-surface-container-low/40 backdrop-blur-2xl border border-white/20 dark:border-white/[0.08] text-xs text-on-surface placeholder:text-on-surface-variant/40 focus:outline-none focus:ring-2 focus:ring-primary shadow-inner"
@@ -101,7 +107,7 @@ export default function MyBookingsPage() {
           <div className="flex flex-col gap-6">
             <h2 className="font-nexa text-lg sm:text-xl font-bold text-on-surface flex items-center gap-2">
               <span className="material-symbols-outlined text-primary text-xl">event_available</span>
-              <span>Active Consultations &amp; Packages</span>
+              <span>{t('portal.activeTitle')}</span>
             </h2>
 
             {activeReservations.length > 0 ? (
@@ -138,7 +144,7 @@ export default function MyBookingsPage() {
                           {res.itemName}
                         </h3>
                         <p className="text-xs text-on-surface-variant font-mono mt-1">
-                          Client: <strong className="text-on-surface">{res.clientName}</strong> ({res.company})
+                          {t('portal.clientLabel')} <strong className="text-on-surface">{res.clientName}</strong> ({res.company})
                         </p>
                       </div>
 
@@ -148,11 +154,11 @@ export default function MyBookingsPage() {
                           {res.scheduledDate} @ {res.scheduledTime}
                         </div>
                         <div className="text-on-surface-variant">
-                          Zone: {res.timezone} &bull; Amount: {res.amount}
+                          {t('portal.zoneLabel')} {res.timezone} &bull; {t('portal.amountLabel')} {res.amount}
                         </div>
                         {res.notes && (
                           <div className="text-on-surface-variant text-[11px] mt-1 pt-1 border-t border-surface-container-high">
-                            Agenda: &ldquo;{res.notes}&rdquo;
+                            {t('portal.agendaLabel')} &ldquo;{res.notes}&rdquo;
                           </div>
                         )}
                       </div>
@@ -167,14 +173,14 @@ export default function MyBookingsPage() {
                         className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-primary-container text-on-primary-container font-semibold text-xs hover:bg-primary hover:text-on-primary shadow-[0_0_16px_rgba(160,120,255,0.4)] transition-all"
                       >
                         <span className="material-symbols-outlined text-base">video_call</span>
-                        <span>Launch Google Meet</span>
+                        <span>{t('portal.launchMeet')}</span>
                       </a>
 
                       <button
                         onClick={() => setRescheduleTarget(res)}
                         className="px-3.5 py-2.5 rounded-xl bg-surface-container-high hover:bg-surface-container-highest text-on-surface text-xs font-semibold transition-all"
                       >
-                        Reschedule
+                        {t('portal.reschedule')}
                       </button>
                     </div>
                   </motion.div>
@@ -185,15 +191,15 @@ export default function MyBookingsPage() {
                 <span className="material-symbols-outlined text-3xl text-on-surface-variant mb-2">
                   calendar_today
                 </span>
-                <p className="text-sm font-semibold text-on-surface">No active bookings found</p>
+                <p className="text-sm font-semibold text-on-surface">{t('portal.noBookingsTitle')}</p>
                 <p className="text-xs text-on-surface-variant mt-1">
-                  Ready to schedule an advisory session or reserve a project milestone?
+                  {t('portal.noBookingsSubtitle')}
                 </p>
                 <a
                   href="/book"
                   className="mt-4 inline-block px-4 py-2 rounded-xl bg-primary-container text-on-primary text-xs font-semibold"
                 >
-                  Book New Session
+                  {t('portal.bookNew')}
                 </a>
               </div>
             )}
@@ -203,17 +209,17 @@ export default function MyBookingsPage() {
           {pastReservations.length > 0 && (
             <div className="flex flex-col gap-4 pt-6">
               <h3 className="font-headline-sm text-base font-bold text-on-surface-variant">
-                Session History &amp; Archived Engagements
+                {language === 'ar' ? 'سجل الجلسات والتعاقدات المؤرشفة' : 'Session History & Archived Engagements'}
               </h3>
               <div className="rounded-2xl bg-surface-container-low/60 border border-outline-variant/20 overflow-x-auto">
                 <table className="w-full text-left text-xs font-mono">
                   <thead className="bg-surface-container-high/60 text-on-surface-variant uppercase text-[10px]">
                     <tr>
-                      <th className="p-3.5">ID</th>
-                      <th className="p-3.5">Track / Item</th>
-                      <th className="p-3.5">Date</th>
-                      <th className="p-3.5">Fee</th>
-                      <th className="p-3.5">Status</th>
+                      <th className="p-3.5">{language === 'ar' ? 'المعرف' : 'ID'}</th>
+                      <th className="p-3.5">{language === 'ar' ? 'البند / المسار' : 'Track / Item'}</th>
+                      <th className="p-3.5">{language === 'ar' ? 'التاريخ' : 'Date'}</th>
+                      <th className="p-3.5">{language === 'ar' ? 'المبلغ' : 'Fee'}</th>
+                      <th className="p-3.5">{language === 'ar' ? 'الحالة' : 'Status'}</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-surface-container-high/40">
@@ -254,15 +260,19 @@ export default function MyBookingsPage() {
               className="relative w-full max-w-md rounded-3xl bg-surface-container-low/95 border border-primary/40 p-6 sm:p-8 shadow-2xl z-10 flex flex-col gap-4"
             >
               <h3 className="font-display-xl text-lg font-bold text-on-surface">
-                Reschedule Session {rescheduleTarget.id}
+                {language === 'ar' ? `إعادة جدولة الجلسة ${rescheduleTarget.id}` : `Reschedule Session ${rescheduleTarget.id}`}
               </h3>
               <p className="text-xs text-on-surface-variant">
-                Select a revised date and time slot. Our automated calendar dispatcher will verify availability.
+                {language === 'ar'
+                  ? 'اختر تاريخاً ووقتاً بديلاً، وسيقوم نظام التقويم بالتحقق من التوفر آلياً.'
+                  : 'Select a revised date and time slot. Our automated calendar dispatcher will verify availability.'}
               </p>
 
               <div className="flex flex-col gap-3 pt-2">
                 <div className="flex flex-col gap-1">
-                  <label className="text-xs font-semibold text-on-surface">Target Date</label>
+                  <label className="text-xs font-semibold text-on-surface">
+                    {language === 'ar' ? 'التاريخ المطلوب' : 'Target Date'}
+                  </label>
                   <input
                     type="text"
                     value={newDate}
@@ -271,7 +281,9 @@ export default function MyBookingsPage() {
                   />
                 </div>
                 <div className="flex flex-col gap-1">
-                  <label className="text-xs font-semibold text-on-surface">Target Time Slot</label>
+                  <label className="text-xs font-semibold text-on-surface">
+                    {language === 'ar' ? 'الوقت المطلوب' : 'Target Time Slot'}
+                  </label>
                   <input
                     type="text"
                     value={newTime}
@@ -286,13 +298,13 @@ export default function MyBookingsPage() {
                   onClick={handleReschedule}
                   className="flex-1 py-2.5 rounded-xl bg-primary-container text-on-primary-container font-semibold text-xs hover:bg-primary hover:text-on-primary shadow-md"
                 >
-                  Submit Reschedule
+                  {language === 'ar' ? 'تأكيد إعادة الجدولة' : 'Submit Reschedule'}
                 </button>
                 <button
                   onClick={() => setRescheduleTarget(null)}
                   className="px-4 py-2.5 rounded-xl bg-surface-container-high text-xs text-on-surface-variant"
                 >
-                  Cancel
+                  {t('reviewsPage.cancel')}
                 </button>
               </div>
             </motion.div>

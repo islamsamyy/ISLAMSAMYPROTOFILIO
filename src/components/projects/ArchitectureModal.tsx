@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useLanguage } from '@/context/LanguageContext';
 import { ProjectItem } from '@/data/seedProjects';
 
 interface ArchitectureModalProps {
@@ -11,6 +12,7 @@ interface ArchitectureModalProps {
 }
 
 export function ArchitectureModal({ project, isOpen, onClose }: ArchitectureModalProps) {
+  const { t, language } = useLanguage();
   if (!isOpen || !project) return null;
 
   return (
@@ -86,7 +88,7 @@ export function ArchitectureModal({ project, isOpen, onClose }: ArchitectureModa
           {/* Architecture Highlights */}
           <div className="flex flex-col gap-3">
             <h4 className="font-label-md text-xs uppercase tracking-wider text-primary font-bold">
-              Engineering Architecture Highlights
+              {language === 'ar' ? 'أبرز الملامح الهندسية والمعمارية' : 'Engineering Architecture Highlights'}
             </h4>
             <ul className="space-y-2.5">
               {project.architectureHighlights.map((point, idx) => (
@@ -103,7 +105,7 @@ export function ArchitectureModal({ project, isOpen, onClose }: ArchitectureModa
           {/* Tech Stack Badges */}
           <div className="flex flex-col gap-2.5">
             <h4 className="font-label-md text-xs uppercase tracking-wider text-on-surface-variant font-semibold">
-              Technologies &amp; Protocols
+              {language === 'ar' ? 'التقنيات والبروتوكولات' : 'Technologies & Protocols'}
             </h4>
             <div className="flex flex-wrap gap-2">
               {project.techStack.map((tech, idx) => (
@@ -120,20 +122,20 @@ export function ArchitectureModal({ project, isOpen, onClose }: ArchitectureModa
           {/* Actions */}
           <div className="pt-4 border-t border-surface-container-high/60 flex items-center justify-between gap-4">
             <span className="font-label-sm text-xs text-on-surface-variant">
-              Role: <strong className="text-secondary">{project.role}</strong>
+              {language === 'ar' ? 'الدور:' : 'Role:'} <strong className="text-secondary">{project.role}</strong>
             </span>
             <div className="flex items-center gap-3">
               <button
                 onClick={onClose}
                 className="px-4 py-2 rounded-xl bg-surface-container-high hover:bg-surface-container-highest text-on-surface text-xs font-semibold transition-all"
               >
-                Close Blueprint
+                {t('certifications.close', 'Close Blueprint')}
               </button>
               <a
                 href="/book"
                 className="px-4 py-2 rounded-xl bg-primary-container text-on-primary text-xs font-semibold hover:bg-primary shadow-[0_0_16px_rgba(160,120,255,0.4)] transition-all"
               >
-                Consult on Similar Architecture
+                {language === 'ar' ? 'استشارة حول معمارية مشابهة' : 'Consult on Similar Architecture'}
               </a>
             </div>
           </div>
