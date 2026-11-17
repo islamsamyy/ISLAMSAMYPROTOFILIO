@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#070b14"/>
+  <rect x="32" y="32" width="1136" height="566" rx="24" fill="rgba(15,23,42,0.8)" stroke="rgba(255,255,255,0.12)"/>
+  <text x="64" y="88" font-family="monospace" font-size="14" fill="#6366f1">ARCHITECTURE &amp; KEY HIGHLIGHTS</text>
+  <text x="64" y="132" font-family="Inter,Segoe UI,sans-serif" font-size="32" font-weight="700" fill="#f8fafc">Spider Marketingagencyplateform</text>
+  <rect x="64" y="175" width="1072" height="44" rx="10" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.08)"/>
+      <circle cx="88" cy="197" r="5" fill="#6366f1"/>
+      <text x="108" y="202" font-family="Inter,Segoe UI,sans-serif" font-size="14" fill="#cbd5e1">Implemented with TypeScript for reliability, performance, and maintainability.</text>
+<rect x="64" y="233" width="1072" height="44" rx="10" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.08)"/>
+      <circle cx="88" cy="255" r="5" fill="#6366f1"/>
+      <text x="108" y="260" font-family="Inter,Segoe UI,sans-serif" font-size="14" fill="#cbd5e1">Modular architecture separating presentation, business logic, and data persistence layers.</text>
+<rect x="64" y="291" width="1072" height="44" rx="10" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.08)"/>
+      <circle cx="88" cy="313" r="5" fill="#6366f1"/>
+      <text x="108" y="318" font-family="Inter,Segoe UI,sans-serif" font-size="14" fill="#cbd5e1">Full source code, configuration, and documentation published on GitHub (islamsamyy/spider-marketingagency...</text>
+  <text x="64" y="560" font-family="monospace" font-size="14" fill="#64748b">Source: https://github.com/islamsamyy/spider-marketingagencyplateform</text>
+</svg>

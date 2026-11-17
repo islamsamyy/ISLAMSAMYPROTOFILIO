@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#070b14"/>
+  <rect x="32" y="32" width="1136" height="566" rx="24" fill="rgba(15,23,42,0.8)" stroke="rgba(255,255,255,0.12)"/>
+  <text x="64" y="88" font-family="monospace" font-size="14" fill="#a855f7">ARCHITECTURE &amp; KEY HIGHLIGHTS</text>
+  <text x="64" y="132" font-family="Inter,Segoe UI,sans-serif" font-size="32" font-weight="700" fill="#f8fafc">Multi Class Prediction Of Obesity Risk</text>
+  <rect x="64" y="175" width="1072" height="44" rx="10" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.08)"/>
+      <circle cx="88" cy="197" r="5" fill="#a855f7"/>
+      <text x="108" y="202" font-family="Inter,Segoe UI,sans-serif" font-size="14" fill="#cbd5e1">Executive Summary &amp; Business Utility</text>
+<rect x="64" y="233" width="1072" height="44" rx="10" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.08)"/>
+      <circle cx="88" cy="255" r="5" fill="#a855f7"/>
+      <text x="108" y="260" font-family="Inter,Segoe UI,sans-serif" font-size="14" fill="#cbd5e1">System Architecture &amp; Layers</text>
+<rect x="64" y="291" width="1072" height="44" rx="10" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.08)"/>
+      <circle cx="88" cy="313" r="5" fill="#a855f7"/>
+      <text x="108" y="318" font-family="Inter,Segoe UI,sans-serif" font-size="14" fill="#cbd5e1">Data Model &amp; Feature Schema</text>
+<rect x="64" y="349" width="1072" height="44" rx="10" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.08)"/>
+      <circle cx="88" cy="371" r="5" fill="#a855f7"/>
+      <text x="108" y="376" font-family="Inter,Segoe UI,sans-serif" font-size="14" fill="#cbd5e1">Model Pipeline &amp; Hyperparameter Tuning</text>
+  <text x="64" y="560" font-family="monospace" font-size="14" fill="#64748b">Source: https://github.com/islamsamyy/Multi-Class-Prediction-of-Obesity-Risk</text>
+</svg>

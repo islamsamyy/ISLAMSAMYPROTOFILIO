@@ -9,7 +9,7 @@ import Link from 'next/link';
 export default function AdminLoginPage() {
   const router = useRouter();
   const { signIn, demoLogin } = useAdminAuth();
-  const [identifier, setIdentifier] = useState('islamsamydev@gmail.com');
+  const [identifier, setIdentifier] = useState('');
   const [password, setPassword] = useState('');
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -91,14 +91,16 @@ export default function AdminLoginPage() {
         </div>
 
         {/* Auth Form */}
-        <form onSubmit={handleAuth} className="flex flex-col gap-4">
+        <form onSubmit={handleAuth} autoComplete="off" className="flex flex-col gap-4">
           <div className="flex flex-col gap-1.5">
             <label className="text-xs font-semibold text-on-surface">Admin Username / Email</label>
             <input
               type="text"
+              name="admin-identifier"
+              autoComplete="off"
               value={identifier}
               onChange={(e) => setIdentifier(e.target.value)}
-              placeholder="islam or islamsamydev@gmail.com"
+              placeholder="Enter admin username or email"
               className="w-full px-4 py-2.5 rounded-xl bg-surface-container-lowest border border-outline-variant/30 text-xs font-mono text-on-surface focus:outline-none focus:ring-2 focus:ring-primary shadow-inner"
               required
             />
@@ -108,6 +110,8 @@ export default function AdminLoginPage() {
             <label className="text-xs font-semibold text-on-surface">Master Password or Admin PIN</label>
             <input
               type="password"
+              name="admin-secret"
+              autoComplete="new-password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter admin PIN or password"

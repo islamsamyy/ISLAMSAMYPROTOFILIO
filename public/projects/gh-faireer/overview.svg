@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#090d16"/>
+      <stop offset="55%" stop-color="#111827"/>
+      <stop offset="100%" stop-color="#0b1120"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="80%" cy="20%" r="55%">
+      <stop offset="0%" stop-color="#22d3ee" stop-opacity="0.28"/>
+      <stop offset="100%" stop-color="#22d3ee" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+  <rect x="32" y="32" width="1136" height="566" rx="24" fill="rgba(15,23,42,0.72)" stroke="rgba(255,255,255,0.12)"/>
+  <rect x="64" y="68" width="210" height="32" rx="16" fill="#22d3ee" fill-opacity="0.16" stroke="#22d3ee" stroke-opacity="0.5"/>
+  <text x="169" y="89" font-family="monospace" font-size="13" font-weight="bold" fill="#22d3ee" text-anchor="middle">CLOUD NATIVE</text>
+  <text x="64" y="155" font-family="Inter,Segoe UI,sans-serif" font-size="44" font-weight="800" fill="#f8fafc">Faireer</text>
+  <text x="64" y="200" font-family="monospace" font-size="18" fill="#94a3b8">github.com/islamsamyy/faireer</text>
+  <rect x="64" y="310" width="150" height="36" rx="18" fill="rgba(255,255,255,0.06)" stroke="#22d3ee" stroke-opacity="0.45"/>
+      <text x="139" y="333" font-family="Inter,Segoe UI,sans-serif" font-size="13" fill="#e2e8f0" text-anchor="middle">TypeScript</text>
+  <rect x="64" y="385" width="1072" height="170" rx="16" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.08)"/>
+  <text x="90" y="422" font-family="monospace" font-size="13" fill="#22d3ee">PROJECT OVERVIEW &amp; CAPABILITIES</text>
+  <text x="90" y="458" font-family="Inter,Segoe UI,sans-serif" font-size="16" fill="#cbd5e1">Implemented with TypeScript for reliability, performance, and maintainability.</text>
+  <text x="90" y="492" font-family="Inter,Segoe UI,sans-serif" font-size="16" fill="#94a3b8">Modular architecture separating presentation, business logic, and data persistence layers.</text>
+  <text x="90" y="526" font-family="Inter,Segoe UI,sans-serif" font-size="16" fill="#94a3b8">Full source code, configuration, and documentation published on GitHub (islamsamyy/faireer).</text>
+</svg>

@@ -12,21 +12,23 @@ const tablesWithoutUpdatedAt = new Set([
 
 function sanitizeDataForTable(table: string, payload: any): any {
   if (!payload) return payload;
-  if (tablesWithoutUpdatedAt.has(table)) {
-    if (Array.isArray(payload)) {
-      return payload.map(item => {
-        if (item && typeof item === 'object') {
-          const { updated_at, ...rest } = item;
-          return rest;
-        }
-        return item;
-      });
-    } else if (typeof payload === 'object') {
-      const { updated_at, ...rest } = payload;
-      return rest;
+  const stripFields = (item: any) => {
+    if (!item || typeof item !== 'object') return item;
+    let cleaned = { ...item };
+    if (tablesWithoutUpdatedAt.has(table)) {
+      const { updated_at, ...rest } = cleaned;
+      cleaned = rest;
     }
+    if (table === 'projects') {
+      const { gallery_images, steps, ...rest } = cleaned;
+      cleaned = rest;
+    }
+    return cleaned;
+  };
+  if (Array.isArray(payload)) {
+    return payload.map(stripFields);
   }
-  return payload;
+  return stripFields(payload);
 }
 
 export async function GET(req: NextRequest) {

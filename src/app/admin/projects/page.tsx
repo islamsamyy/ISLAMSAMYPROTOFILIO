@@ -15,6 +15,31 @@ const SAMPLE_LOGOS = [
   { name: 'Nexa Health', url: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=120&q=80' }
 ];
 
+function ProjectLogo({ src, alt, fallback }: { src?: string; alt: string; fallback: string }) {
+  const [failed, setFailed] = useState(false);
+
+  React.useEffect(() => {
+    setFailed(false);
+  }, [src]);
+
+  if (!src || failed) {
+    return (
+      <div className="w-9 h-9 rounded-lg bg-surface-container-high flex items-center justify-center font-bold text-primary border border-outline-variant/30">
+        {fallback}
+      </div>
+    );
+  }
+
+  return (
+    <img
+      src={src}
+      alt={alt}
+      onError={() => setFailed(true)}
+      className="w-9 h-9 rounded-lg object-cover border border-outline-variant/30"
+    />
+  );
+}
+
 export default function AdminProjectsPage() {
   const { projects } = useProjects();
   const [editingProject, setEditingProject] = useState<ProjectItem | null>(null);
@@ -36,6 +61,75 @@ export default function AdminProjectsPage() {
   const [galleryImagesStr, setGalleryImagesStr] = useState('');
   const [stepsStr, setStepsStr] = useState('');
   const [featured, setFeatured] = useState(true);
+  const [uploadingLogo, setUploadingLogo] = useState(false);
+  const [uploadingGallery, setUploadingGallery] = useState(false);
+  const [newPhotoUrl, setNewPhotoUrl] = useState('');
+
+  const uploadImageFile = async (file: File): Promise<string | null> => {
+    const fd = new FormData();
+    fd.append('file', file);
+    fd.append('projectId', editingProject?.id || 'custom');
+    const res = await fetch('/api/admin/upload', { method: 'POST', body: fd });
+    const data = await res.json();
+    if (!res.ok || !data.url) {
+      alert(data.error || 'Image upload failed');
+      return null;
+    }
+    return data.url;
+  };
+
+  const handleLogoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploadingLogo(true);
+    try {
+      const url = await uploadImageFile(file);
+      if (url) setCompanyLogo(url);
+    } finally {
+      setUploadingLogo(false);
+      e.target.value = '';
+    }
+  };
+
+  const handleGalleryUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || []);
+    if (files.length === 0) return;
+    setUploadingGallery(true);
+    try {
+      const uploaded: string[] = [];
+      for (const f of files) {
+        const url = await uploadImageFile(f);
+        if (url) uploaded.push(url);
+      }
+      if (uploaded.length > 0) {
+        const existing = galleryImagesStr.split('\n').map((s) => s.trim()).filter(Boolean);
+        setGalleryImagesStr([...existing, ...uploaded].join('\n'));
+      }
+    } finally {
+      setUploadingGallery(false);
+      e.target.value = '';
+    }
+  };
+
+  const galleryList = galleryImagesStr.split('\n').map((s) => s.trim()).filter(Boolean);
+
+  const removeGalleryImage = (idx: number) => {
+    setGalleryImagesStr(galleryList.filter((_, i) => i !== idx).join('\n'));
+  };
+
+  const setAsCoverImage = (idx: number) => {
+    if (idx === 0) return;
+    const target = galleryList[idx];
+    const rest = galleryList.filter((_, i) => i !== idx);
+    setGalleryImagesStr([target, ...rest].join('\n'));
+  };
+
+  const addPhotoByUrl = () => {
+    const trimmed = newPhotoUrl.trim();
+    if (!trimmed) return;
+    setGalleryImagesStr([...galleryList, trimmed].join('\n'));
+    setNewPhotoUrl('');
+  };
 
   const startCreate = () => {
     setTitle('');
@@ -48,6 +142,8 @@ export default function AdminProjectsPage() {
     setTechStackStr('Kafka, ClickHouse, Go, Docker');
     setHighlightsStr('Engineered distributed stream pipeline\nReduced cloud compute cost by 60%');
     setLiveDemoUrl('');
+    setGalleryImagesStr('');
+    setStepsStr('');
     setFeatured(true);
     setEditingProject(null);
     setIsCreating(true);
@@ -127,6 +223,8 @@ export default function AdminProjectsPage() {
         outcomeMetrics: editingProject?.outcomeMetrics || [],
         galleryImages,
         steps,
+        readmeContent: editingProject?.readmeContent,
+        githubUrl: editingProject?.githubUrl,
       };
 
       await saveProject(updated);
@@ -210,13 +308,14 @@ export default function AdminProjectsPage() {
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.95 }}
-                  className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-3xl bg-surface-container-low/95 border border-primary/40 p-6 sm:p-8 shadow-2xl z-10 flex flex-col gap-6"
+                  className="relative w-full max-w-2xl max-h-[90vh] overflow-hidden rounded-3xl bg-surface-container-low/95 border border-primary/40 p-6 sm:p-8 shadow-2xl z-10 flex flex-col gap-4"
                 >
-                  <div className="flex items-center justify-between pb-4 border-b border-surface-container-high">
+                  <div className="flex items-center justify-between pb-4 border-b border-surface-container-high shrink-0">
                     <h3 className="font-display-xl text-xl font-bold text-on-surface">
                       {editingProject ? 'Edit Enterprise Project' : 'Create Enterprise Project'}
                     </h3>
                     <button
+                      type="button"
                       onClick={() => setIsCreating(false)}
                       className="p-1 rounded-lg text-on-surface-variant hover:text-on-surface"
                     >
@@ -224,7 +323,7 @@ export default function AdminProjectsPage() {
                     </button>
                   </div>
 
-                  <form onSubmit={handleSave} className="flex flex-col gap-4">
+                  <form id="project-editor-form" onSubmit={handleSave} className="flex flex-col gap-4 overflow-y-auto flex-1 pr-1">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div className="flex flex-col gap-1">
                         <label className="text-xs font-semibold text-on-surface">Project Title *</label>
@@ -251,19 +350,40 @@ export default function AdminProjectsPage() {
                       </div>
                     </div>
 
-                    {/* Company Logo Selector / URL */}
-                    <div className="flex flex-col gap-2 p-3.5 rounded-2xl bg-surface-container-lowest border border-outline-variant/20">
-                      <label className="text-xs font-semibold text-on-surface flex items-center gap-1.5">
-                        <span className="material-symbols-outlined text-sm text-secondary">image</span>
-                        <span>Company Logo (URL or Preset)</span>
-                      </label>
-                      <input
-                        type="url"
-                        value={companyLogo}
-                        onChange={(e) => setCompanyLogo(e.target.value)}
-                        placeholder="https://... image url"
-                        className="w-full px-3.5 py-2 rounded-xl bg-surface-container-low border border-outline-variant/30 text-xs text-on-surface focus:outline-none focus:ring-2 focus:ring-primary"
-                      />
+                    {/* Company Logo Selector / Upload / URL */}
+                    <div className="flex flex-col gap-2.5 p-3.5 rounded-2xl bg-surface-container-lowest border border-outline-variant/20">
+                      <div className="flex items-center justify-between gap-2">
+                        <label className="text-xs font-semibold text-on-surface flex items-center gap-1.5">
+                          <span className="material-symbols-outlined text-sm text-secondary">image</span>
+                          <span>Company Logo (Upload, URL, or Preset)</span>
+                        </label>
+                        <label className="cursor-pointer px-3 py-1.5 rounded-xl bg-primary/20 hover:bg-primary/30 text-primary text-[11px] font-semibold border border-primary/30 transition-colors">
+                          {uploadingLogo ? 'Uploading...' : 'Upload Logo'}
+                          <input
+                            type="file"
+                            accept="image/*"
+                            onChange={handleLogoUpload}
+                            disabled={uploadingLogo}
+                            className="hidden"
+                          />
+                        </label>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        {companyLogo && (
+                          <img
+                            src={companyLogo}
+                            alt="Logo preview"
+                            className="w-10 h-10 rounded-xl object-contain bg-white/90 p-1 border border-outline-variant/30 shrink-0"
+                          />
+                        )}
+                        <input
+                          type="text"
+                          value={companyLogo}
+                          onChange={(e) => setCompanyLogo(e.target.value)}
+                          placeholder="https://... or /uploads/..."
+                          className="w-full px-3.5 py-2 rounded-xl bg-surface-container-low border border-outline-variant/30 text-xs text-on-surface focus:outline-none focus:ring-2 focus:ring-primary"
+                        />
+                      </div>
                       <div className="flex flex-wrap items-center gap-2 pt-1">
                         <span className="text-[11px] text-on-surface-variant">Presets:</span>
                         {SAMPLE_LOGOS.map((sample) => (
@@ -378,15 +498,84 @@ export default function AdminProjectsPage() {
                       />
                     </div>
 
-                    <div className="flex flex-col gap-1">
-                      <label className="text-xs font-semibold text-on-surface">Project Gallery Image URLs (one per line)</label>
-                      <textarea
-                        rows={2}
-                        value={galleryImagesStr}
-                        onChange={(e) => setGalleryImagesStr(e.target.value)}
-                        placeholder="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200"
-                        className="px-3.5 py-2 rounded-xl bg-surface-container-lowest border border-outline-variant/30 text-xs text-on-surface focus:outline-none focus:ring-2 focus:ring-primary"
-                      />
+                    {/* Visual Project Gallery Manager */}
+                    <div className="flex flex-col gap-3 p-3.5 rounded-2xl bg-surface-container-lowest border border-outline-variant/20">
+                      <div className="flex flex-wrap items-center justify-between gap-2">
+                        <label className="text-xs font-semibold text-on-surface flex items-center gap-1.5">
+                          <span className="material-symbols-outlined text-sm text-primary">photo_library</span>
+                          <span>Project Photos &amp; Screenshots ({galleryList.length})</span>
+                        </label>
+                        <label className="cursor-pointer px-3.5 py-1.5 rounded-xl bg-primary-container hover:opacity-90 text-on-primary text-[11px] font-bold shadow-sm transition-opacity">
+                          {uploadingGallery ? 'Uploading Photos...' : '+ Upload Photos'}
+                          <input
+                            type="file"
+                            accept="image/*"
+                            multiple
+                            onChange={handleGalleryUpload}
+                            disabled={uploadingGallery}
+                            className="hidden"
+                          />
+                        </label>
+                      </div>
+
+                      {galleryList.length > 0 && (
+                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
+                          {galleryList.map((imgUrl, idx) => (
+                            <div
+                              key={`${imgUrl}-${idx}`}
+                              className="group relative aspect-video rounded-xl overflow-hidden border border-white/15 bg-black/40"
+                            >
+                              <img
+                                src={imgUrl}
+                                alt={`Gallery ${idx + 1}`}
+                                className="w-full h-full object-cover object-top"
+                              />
+                              {idx === 0 && (
+                                <span className="absolute top-1.5 left-1.5 px-2 py-0.5 rounded-md bg-primary text-on-primary text-[10px] font-bold">
+                                  Cover
+                                </span>
+                              )}
+                              <div className="absolute inset-x-0 bottom-0 p-1.5 bg-black/75 flex items-center justify-between gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                                {idx > 0 ? (
+                                  <button
+                                    type="button"
+                                    onClick={() => setAsCoverImage(idx)}
+                                    className="px-2 py-0.5 rounded bg-secondary/20 text-secondary text-[10px] font-semibold hover:bg-secondary/30"
+                                  >
+                                    Set Cover
+                                  </button>
+                                ) : (
+                                  <span className="text-[10px] text-zinc-400 px-1">Main</span>
+                                )}
+                                <button
+                                  type="button"
+                                  onClick={() => removeGalleryImage(idx)}
+                                  className="px-2 py-0.5 rounded bg-error/20 text-error text-[10px] font-semibold hover:bg-error/30"
+                                >
+                                  Remove
+                                </button>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+
+                      <div className="flex items-center gap-2">
+                        <input
+                          type="text"
+                          value={newPhotoUrl}
+                          onChange={(e) => setNewPhotoUrl(e.target.value)}
+                          placeholder="Or paste image URL (https://...) and click Add"
+                          className="flex-1 px-3 py-1.5 rounded-xl bg-surface-container-low border border-outline-variant/30 text-xs text-on-surface focus:outline-none focus:ring-2 focus:ring-primary"
+                        />
+                        <button
+                          type="button"
+                          onClick={addPhotoByUrl}
+                          className="px-3 py-1.5 rounded-xl bg-surface-container-high hover:bg-surface-container-highest text-xs font-semibold text-secondary border border-secondary/30"
+                        >
+                          Add URL
+                        </button>
+                      </div>
                     </div>
 
                     <div className="flex flex-col gap-1">
@@ -400,23 +589,25 @@ export default function AdminProjectsPage() {
                       />
                     </div>
 
-                    <div className="flex items-center gap-3 pt-4 border-t border-surface-container-high">
-                      <button
-                        type="submit"
-                        disabled={isSaving}
-                        className="flex-1 py-3 rounded-xl bg-primary text-on-primary font-semibold text-xs uppercase hover:bg-primary/90 shadow-md transition-all disabled:opacity-50"
-                      >
-                        {isSaving ? 'Saving to Database...' : editingProject ? 'Save Changes' : 'Publish Project'}
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => setIsCreating(false)}
-                        className="px-5 py-3 rounded-xl bg-surface-container-high text-xs text-on-surface-variant hover:text-on-surface"
-                      >
-                        Cancel
-                      </button>
-                    </div>
                   </form>
+
+                  <div className="flex items-center gap-3 pt-4 border-t border-surface-container-high shrink-0">
+                    <button
+                      type="submit"
+                      form="project-editor-form"
+                      disabled={isSaving}
+                      className="flex-1 py-3 rounded-xl bg-primary text-on-primary font-semibold text-xs uppercase hover:bg-primary/90 shadow-md transition-all disabled:opacity-50"
+                    >
+                      {isSaving ? 'Saving to Database...' : editingProject ? 'Save Changes' : 'Publish Project'}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setIsCreating(false)}
+                      className="px-5 py-3 rounded-xl bg-surface-container-high text-xs text-on-surface-variant hover:text-on-surface"
+                    >
+                      Cancel
+                    </button>
+                  </div>
                 </motion.div>
               </div>
             )}
@@ -439,17 +630,11 @@ export default function AdminProjectsPage() {
                 {projects.map((p) => (
                   <tr key={p.id} className="hover:bg-surface-container-high/20 transition-colors">
                     <td className="p-4">
-                      {p.companyLogo ? (
-                        <img
-                          src={p.companyLogo}
-                          alt={p.client}
-                          className="w-9 h-9 rounded-lg object-cover border border-outline-variant/30"
-                        />
-                      ) : (
-                        <div className="w-9 h-9 rounded-lg bg-surface-container-high flex items-center justify-center font-bold text-primary">
-                          {p.client[0]}
-                        </div>
-                      )}
+                      <ProjectLogo
+                        src={p.companyLogo}
+                        alt={p.client}
+                        fallback={(p.title?.[0] || p.client?.[0] || 'P').toUpperCase()}
+                      />
                     </td>
                     <td className="p-4 font-semibold text-on-surface">{p.client}</td>
                     <td className="p-4 text-on-surface">{p.title}</td>

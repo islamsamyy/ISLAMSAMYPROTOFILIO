@@ -9,7 +9,7 @@ import { initialExperiences, ExperienceItem } from '@/data/seedExperience';
 import { initialCrmLeads, CrmLead, CrmStage, CrmActivityLog } from '@/data/seedCrm';
 
 const STORAGE_KEYS = {
-  PROJECTS: 'islam_data_projects_v1',
+  PROJECTS: 'islam_data_projects_v4',
   PACKAGES: 'islam_data_packages_v1',
   CONSULTATION: 'islam_data_consultation_v1',
   ARTICLES: 'islam_data_articles_v1',
@@ -124,27 +124,39 @@ async function apiMutate(table: string, action: 'upsert' | 'delete' | 'update', 
 
 // ---------------- PROJECTS ----------------
 export function mapProjectRowToItem(row: any): ProjectItem {
+  const seed = initialProjects.find((p) => p.id === row.id);
+  const rowGallery = Array.isArray(row.gallery_images) && row.gallery_images.length > 0 ? row.gallery_images : undefined;
+  const rowSteps = Array.isArray(row.steps) && row.steps.length > 0 ? row.steps : undefined;
+  const rowKeyDecisions = Array.isArray(row.key_decisions) && row.key_decisions.length > 0 ? row.key_decisions : undefined;
+  const rowOutcomeMetrics = Array.isArray(row.outcome_metrics) && row.outcome_metrics.length > 0 ? row.outcome_metrics : undefined;
+  const rowSystemFlow = Array.isArray(row.system_flow) && row.system_flow.length > 0 ? row.system_flow : undefined;
+
   return {
     id: row.id,
-    title: row.title,
-    client: row.client,
-    companyLogo: row.company_logo || '',
-    category: row.category,
-    role: row.role,
-    impactMetric: row.impact_metric,
-    metrics: row.metrics || [],
-    techStack: row.tech_stack || [],
-    summary: row.summary,
-    architectureHighlights: row.architecture_highlights || [],
-    liveDemoUrl: row.live_demo_url || undefined,
-    featured: Boolean(row.featured),
-    challenge: row.challenge || undefined,
-    solution: row.solution || undefined,
-    keyDecisions: row.key_decisions || [],
-    systemFlow: row.system_flow || [],
-    outcomeMetrics: row.outcome_metrics || [],
-    galleryImages: row.gallery_images || [],
-    steps: row.steps || [],
+    title: row.title || seed?.title || '',
+    client: row.client || seed?.client || '',
+    companyLogo: row.company_logo || seed?.companyLogo || '',
+    category: row.category || seed?.category || 'Cloud Native',
+    role: row.role || seed?.role || 'Creator & Lead Engineer',
+    impactMetric: row.impact_metric || seed?.impactMetric || '',
+    metrics: Array.isArray(row.metrics) && row.metrics.length > 0 ? row.metrics : (seed?.metrics || []),
+    techStack: Array.isArray(row.tech_stack) && row.tech_stack.length > 0 ? row.tech_stack : (seed?.techStack || []),
+    summary: row.summary || seed?.summary || '',
+    architectureHighlights:
+      Array.isArray(row.architecture_highlights) && row.architecture_highlights.length > 0
+        ? row.architecture_highlights
+        : (seed?.architectureHighlights || []),
+    liveDemoUrl: row.live_demo_url || seed?.liveDemoUrl || undefined,
+    featured: typeof row.featured === 'boolean' ? row.featured : Boolean(seed?.featured),
+    challenge: row.challenge || seed?.challenge || undefined,
+    solution: row.solution || seed?.solution || undefined,
+    keyDecisions: rowKeyDecisions || seed?.keyDecisions || [],
+    systemFlow: rowSystemFlow || seed?.systemFlow || [],
+    outcomeMetrics: rowOutcomeMetrics || seed?.outcomeMetrics || [],
+    galleryImages: rowGallery || seed?.galleryImages || [],
+    steps: rowSteps || seed?.steps || [],
+    readmeContent: row.readme_content || seed?.readmeContent || undefined,
+    githubUrl: row.github_url || seed?.githubUrl || undefined,
   };
 }
 
@@ -199,7 +211,20 @@ export async function fetchProjectsFromSupabase(): Promise<ProjectItem[]> {
   if (error || !data || data.length === 0) {
     return getStoredProjects();
   }
-  const mapped = data.map(mapProjectRowToItem);
+  const localById = new Map(getStoredProjects().map((p) => [p.id, p]));
+  const mapped = data.map((row: any) => {
+    const item = mapProjectRowToItem(row);
+    const local = localById.get(item.id);
+    if (local) {
+      if ((!row.gallery_images || row.gallery_images.length === 0) && local.galleryImages?.length) {
+        item.galleryImages = local.galleryImages;
+      }
+      if ((!row.steps || row.steps.length === 0) && local.steps?.length) {
+        item.steps = local.steps;
+      }
+    }
+    return item;
+  });
   cacheLocally(STORAGE_KEYS.PROJECTS, mapped);
   return mapped;
 }

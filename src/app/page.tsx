@@ -29,6 +29,10 @@ const CertificationsSection = dynamic(
   () => import('@/components/home/CertificationsSection').then((m) => m.CertificationsSection),
   { ssr: false, loading: () => <div className="py-12 max-w-7xl mx-auto px-4"><div className="h-48 rounded-2xl bg-surface-container/30 animate-pulse" /></div> }
 );
+const ProjectsSlideshowSection = dynamic(
+  () => import('@/components/home/ProjectsSlideshowSection').then((m) => m.ProjectsSlideshowSection),
+  { ssr: false, loading: () => <div className="py-12 max-w-7xl mx-auto px-4"><div className="h-96 rounded-2xl bg-surface-container/30 animate-pulse" /></div> }
+);
 const TechArsenalSection = dynamic(
   () => import('@/components/home/TechArsenalSection').then((m) => m.TechArsenalSection),
   { ssr: false, loading: () => <div className="py-12 max-w-7xl mx-auto px-4"><div className="h-48 rounded-2xl bg-surface-container/30 animate-pulse" /></div> }
@@ -730,9 +734,6 @@ try {
 </div>
 </section>
 
-{/* CERTIFICATIONS & VERIFIED CREDENTIALS (Featured Immediately After Hero) */}
-<CertificationsSection />
-
 {/*  SECTION 2: CREDIBILITY STRIP  */}
 <ScrollRevealSection className="w-full relative z-10 bg-surface-container-lowest/40 backdrop-blur-md py-6 border-y border-white/[0.06]">
 <div className="max-w-[1280px] mx-auto px-gutter grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -766,19 +767,26 @@ try {
 </div>
 </div>
 </ScrollRevealSection>
+
+{/* CERTIFICATIONS & VERIFIED CREDENTIALS */}
+<CertificationsSection />
+
+{/* PROJECTS SHOWCASE SLIDESHOW */}
+<ProjectsSlideshowSection />
+
 {/*  SECTION 3: TECHNICAL ARSENAL (Single-Row Horizontal Showcase Gliding to Right)  */}
       <TechArsenalSection />
-      {/* SECTION 4: PROFESSIONAL EXPERIENCE TIMELINE */}
+      {/* SECTION 4: PROFESSIONAL EXPERIENCE (Compact 2-Column Grid) */}
       <ExperienceTimelineSection />
 {/*  SECTION 5: FEATURED REAL PROJECTS  */}
-<ScrollRevealSection className="w-full max-w-[1280px] mx-auto px-gutter py-12 relative z-10 content-auto" id="projects" suppressHydrationWarning>
-<div className="text-center max-w-3xl mx-auto mb-10">
+<ScrollRevealSection className="w-full max-w-[1280px] mx-auto px-gutter py-8 relative z-10 content-auto" id="projects" suppressHydrationWarning>
+<div className="text-center max-w-3xl mx-auto mb-6">
 <span className="font-label-sm text-label-sm uppercase tracking-widest text-primary font-semibold">{t('projects.badge', 'Flagship Production Systems')}</span>
-<h2 className="font-headline-lg text-headline-lg text-on-surface mt-2 mb-4">{t('projects.title', 'Enterprise ERP, Autonomous AI Agents & Data Lakehouses')}</h2>
+<h2 className="font-headline-lg text-headline-lg text-on-surface mt-1.5 mb-2">{t('projects.title', 'Enterprise ERP, Autonomous AI Agents & Data Lakehouses')}</h2>
 <p className="font-body-md text-body-md text-on-surface-variant">{t('projects.subtitle', 'Real-world production architectures delivering tangible business revenue, zero-overhead automation, and sub-second analytics.')}</p>
 </div>
-<div className="grid grid-cols-1 lg:grid-cols-2 gap-8" suppressHydrationWarning>
-  {projects.map((proj, idx) => {
+<div className="grid grid-cols-1 lg:grid-cols-2 gap-5" suppressHydrationWarning>
+  {projects.slice(0, 2).map((proj, idx) => {
     const canvasId =
       proj.id === 'safir-hotels-bi' || proj.id === 'proj-1' || idx === 0
         ? 'project-3d-safir'
@@ -802,48 +810,48 @@ try {
 
     return (
       <TiltCard key={proj.id} maxTilt={5} depth={8} glare={true} className="rounded-2xl h-full">
-        <div className={`p-space-lg rounded-2xl bg-surface-container-low/90 dark:bg-[#14161f]/95 border ${borderColor} shadow-[0_12px_36px_rgba(0,0,0,0.5)] flex flex-col justify-between transition-all h-full`}>
+        <div className={`p-5 rounded-2xl bg-surface-container-low/90 dark:bg-[#14161f]/95 border ${borderColor} shadow-[0_12px_36px_rgba(0,0,0,0.5)] flex flex-col justify-between transition-all h-full`}>
           <div>
-            <div className="flex items-center justify-between mb-4">
-              <span className={`px-3 py-1 rounded-full ${tagColor} font-label-sm text-label-sm uppercase font-semibold`}>
+            <div className="flex items-center justify-between mb-3">
+              <span className={`px-2.5 py-0.5 rounded-full ${tagColor} font-label-sm text-[11px] uppercase font-semibold`}>
                 {proj.category}
               </span>
               <span className="font-label-sm text-label-sm text-on-surface-variant">
                 {proj.client} • Production
               </span>
             </div>
-            <div className="w-full h-36 rounded-xl bg-surface-container-lowest/80 border border-primary/20 relative overflow-hidden mb-3 group/viewport">
+            <div className="w-full h-24 rounded-xl bg-surface-container-lowest/80 border border-primary/20 relative overflow-hidden mb-3 group/viewport">
               <canvas id={canvasId} className="w-full h-full block"></canvas>
               <div className="absolute bottom-2 left-2 px-2 py-0.5 rounded bg-surface-container-high/80 backdrop-blur-sm border border-primary/30 text-[10px] font-label-sm text-primary flex items-center gap-1.5">
                 <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
                 {proj.impactMetric || 'Production Telemetry'}
               </div>
             </div>
-            <h3 suppressHydrationWarning className="font-headline-sm text-headline-sm text-on-surface mb-2">{proj.title}</h3>
-            <p suppressHydrationWarning className="font-body-md text-body-md text-on-surface-variant mb-6">
+            <h3 suppressHydrationWarning className="font-headline-sm text-headline-sm text-on-surface mb-1.5">{proj.title}</h3>
+            <p suppressHydrationWarning className="font-body-sm text-body-sm text-on-surface-variant mb-3 line-clamp-2">
               {proj.summary}
             </p>
             {proj.metrics && proj.metrics.length > 0 && (
-              <div className="space-y-3 mb-6" suppressHydrationWarning>
+              <div className="grid grid-cols-2 gap-2 mb-3" suppressHydrationWarning>
                 {proj.metrics.slice(0, 2).map((m, mIdx) => (
-                  <div key={mIdx} className="p-3 rounded-xl bg-surface-container-high/60 flex items-center justify-between">
-                    <span className="font-body-sm text-body-sm text-on-surface font-medium">{m.label}</span>
-                    <span suppressHydrationWarning className="font-label-sm text-label-sm text-secondary font-bold">{m.value}</span>
+                  <div key={mIdx} className="px-3 py-2 rounded-xl bg-surface-container-high/60 flex items-center justify-between gap-2">
+                    <span className="font-body-sm text-xs text-on-surface font-medium truncate">{m.label}</span>
+                    <span suppressHydrationWarning className="font-label-sm text-xs text-secondary font-bold shrink-0">{m.value}</span>
                   </div>
                 ))}
               </div>
             )}
           </div>
           <div>
-            <div className="flex flex-wrap gap-2 pt-4 border-t border-surface-container-high/60 items-center justify-between">
-              <div className="flex flex-wrap gap-2">
-                {proj.techStack.map((tech, tIdx) => (
-                  <span key={tIdx} className="px-2.5 py-1 rounded-md bg-surface-container-highest text-on-surface font-label-sm text-[11px]">
+            <div className="flex flex-wrap gap-2 pt-3 border-t border-surface-container-high/60 items-center justify-between">
+              <div className="flex flex-wrap gap-1.5">
+                {proj.techStack.slice(0, 5).map((tech, tIdx) => (
+                  <span key={tIdx} className="px-2 py-0.5 rounded-md bg-surface-container-highest text-on-surface font-label-sm text-[10px]">
                     {tech}
                   </span>
                 ))}
               </div>
-              <Link href={`/projects/${proj.id}`} className="inline-flex items-center gap-1 text-xs text-primary hover:text-primary/80 font-semibold uppercase tracking-wider">
+              <Link href={`/projects/${proj.id}`} className="inline-flex items-center gap-1 text-xs text-primary hover:text-primary/80 font-semibold uppercase tracking-wider shrink-0">
                 {t('projects.caseStudy', 'Case Study')} <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
               </Link>
             </div>
@@ -852,6 +860,15 @@ try {
       </TiltCard>
     );
   })}
+</div>
+<div className="mt-6 text-center">
+  <Link
+    href="/projects"
+    className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-surface-container-high/70 hover:bg-surface-container-highest text-primary text-xs font-semibold uppercase tracking-wider border border-primary/30 transition-all hover:scale-105"
+  >
+    <span>{t('projects.viewAll', 'View All Production Projects')}</span>
+    <span className="material-symbols-outlined text-sm">arrow_forward</span>
+  </Link>
 </div>
 </ScrollRevealSection>
       {/* SECTION 6: EDUCATION & PROFESSIONAL CREDENTIALS */}

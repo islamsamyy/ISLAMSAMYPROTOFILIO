@@ -500,6 +500,145 @@ export function ProjectDetailClient({ projectId, initialProject }: ProjectDetail
             </section>
           )}
 
+          {/* GITHUB REPOSITORY DOCUMENTATION (EXACT README) */}
+          {project.readmeContent && (
+            <section className="p-8 rounded-3xl bg-surface-container-low/40 backdrop-blur-2xl border border-white/20 dark:border-white/[0.08] shadow-[0_8px_32px_rgba(0,0,0,0.35)] flex flex-col gap-5">
+              <div className="flex flex-wrap items-center justify-between gap-3 border-b border-outline-variant/20 pb-4">
+                <div className="flex flex-col gap-1">
+                  <span className="font-mono text-xs text-secondary uppercase tracking-widest font-semibold">
+                    README.md • Synchronized from GitHub
+                  </span>
+                  <h2 className="font-nexa text-xl sm:text-2xl font-bold text-on-surface flex items-center gap-2">
+                    <FolderGit2 className="w-5 h-5 text-primary" />
+                    <span>Repository Documentation</span>
+                  </h2>
+                </div>
+                {project.githubUrl && (
+                  <a
+                    href={project.githubUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-surface-container-high border border-outline-variant/30 text-xs font-mono text-secondary hover:text-on-surface hover:border-primary/40 transition-colors"
+                  >
+                    <span>View on GitHub</span>
+                    <ExternalLink className="w-3.5 h-3.5" />
+                  </a>
+                )}
+              </div>
+
+              <div className="flex flex-col gap-3 text-sm text-on-surface-variant leading-relaxed">
+                {(() => {
+                  const lines = project.readmeContent.split(/\r?\n/);
+                  const elements: React.ReactNode[] = [];
+                  let inCode = false;
+                  let codeLines: string[] = [];
+                  let listItems: string[] = [];
+                  let key = 0;
+
+                  const flushList = () => {
+                    if (listItems.length > 0) {
+                      elements.push(
+                        <ul key={`list-${key++}`} className="list-disc pl-5 space-y-1.5 text-xs sm:text-sm text-on-surface-variant">
+                          {listItems.map((item, idx) => (
+                            <li key={idx}>{item}</li>
+                          ))}
+                        </ul>
+                      );
+                      listItems = [];
+                    }
+                  };
+
+                  const cleanInline = (s: string) =>
+                    s
+                      .replace(/!\[[^\]]*\]\([^)]+\)/g, '')
+                      .replace(/<[^>]+>/g, ' ')
+                      .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+                      .replace(/\*\*([^*]+)\*\*/g, '$1')
+                      .replace(/`([^`]+)`/g, '$1')
+                      .replace(/\s+/g, ' ')
+                      .trim();
+
+                  for (const rawLine of lines) {
+                    const line = rawLine.trim();
+                    if (line.startsWith('```')) {
+                      flushList();
+                      if (!inCode) {
+                        inCode = true;
+                        codeLines = [];
+                      } else {
+                        inCode = false;
+                        elements.push(
+                          <pre
+                            key={`code-${key++}`}
+                            className="p-4 rounded-2xl bg-surface-container-lowest/90 border border-outline-variant/25 overflow-x-auto text-xs font-mono text-zinc-200"
+                          >
+                            <code>{codeLines.join('\n')}</code>
+                          </pre>
+                        );
+                      }
+                      continue;
+                    }
+                    if (inCode) {
+                      codeLines.push(rawLine);
+                      continue;
+                    }
+                    if (!line || /^<p\b|^<\/p>|^<div\b|^<\/div>|^<img\b|^---+$/.test(line)) {
+                      flushList();
+                      continue;
+                    }
+                    const hMatch = line.match(/^(#{1,3})\s+(.+)$/);
+                    if (hMatch) {
+                      flushList();
+                      const text = cleanInline(hMatch[2]);
+                      if (!text) continue;
+                      const level = hMatch[1].length;
+                      elements.push(
+                        <h3
+                          key={`h-${key++}`}
+                          className={`font-nexa font-bold text-on-surface pt-2 ${
+                            level === 1 ? 'text-lg sm:text-xl' : level === 2 ? 'text-base sm:text-lg text-primary' : 'text-sm sm:text-base text-secondary'
+                          }`}
+                        >
+                          {text}
+                        </h3>
+                      );
+                      continue;
+                    }
+                    const liMatch = line.match(/^(?:[-*+]|\d+\.)\s+(.+)$/);
+                    if (liMatch) {
+                      const cleaned = cleanInline(liMatch[1]);
+                      if (cleaned) listItems.push(cleaned);
+                      continue;
+                    }
+                    flushList();
+                    if (line.startsWith('|')) {
+                      if (/^\|[\s:-]+\|/.test(line)) continue;
+                      const cells = line.split('|').map((c) => cleanInline(c)).filter(Boolean);
+                      if (cells.length > 0) {
+                        elements.push(
+                          <div key={`row-${key++}`} className="px-3 py-1.5 rounded-lg bg-surface-container-lowest/60 border border-outline-variant/20 text-xs font-mono text-on-surface">
+                            {cells.join('  •  ')}
+                          </div>
+                        );
+                      }
+                      continue;
+                    }
+                    const para = cleanInline(line);
+                    if (para) {
+                      elements.push(
+                        <p key={`p-${key++}`} className="text-xs sm:text-sm text-on-surface-variant leading-relaxed">
+                          {para}
+                        </p>
+                      );
+                    }
+                  }
+                  flushList();
+                  return elements;
+                })()}
+              </div>
+            </section>
+          )}
+
           {/* TECHNOLOGY ARSENAL */}
           <section className="p-8 rounded-3xl bg-surface-container-low/40 backdrop-blur-2xl border border-white/20 dark:border-white/[0.08] shadow-[0_8px_32px_rgba(0,0,0,0.35)] flex flex-col gap-4">
             <h2 className="font-nexa text-xl font-bold text-on-surface flex items-center gap-2">

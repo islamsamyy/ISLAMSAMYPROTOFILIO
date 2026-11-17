@@ -91,6 +91,7 @@ export function ProjectCard({ project, onSelectBlueprint }: ProjectCardProps) {
 
   const coverSrc =
     (project as ProjectItem & { coverImage?: string }).coverImage ||
+    (project.galleryImages && project.galleryImages.length > 0 ? project.galleryImages[0] : '') ||
     (project.companyLogo ? project.companyLogo.replace('w=120', 'w=800') : '');
 
   return (
@@ -99,43 +100,60 @@ export function ProjectCard({ project, onSelectBlueprint }: ProjectCardProps) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.3 }}
-      className="relative flex flex-col justify-between rounded-3xl bg-surface-container-low/50 backdrop-blur-2xl border border-white/20 dark:border-white/[0.08] shadow-[0_8px_32px_rgba(0,0,0,0.35)] overflow-hidden"
+      className="group relative flex flex-col justify-between h-full rounded-3xl bg-surface-container-low/55 backdrop-blur-2xl border border-white/20 dark:border-white/[0.08] hover:border-primary/40 shadow-[0_8px_32px_rgba(0,0,0,0.35)] hover:shadow-[0_16px_48px_rgba(160,120,255,0.18)] transition-all duration-300 overflow-hidden"
     >
       {/* Top Specular Rim Light */}
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/30 dark:via-primary/30 to-transparent pointer-events-none rounded-t-3xl z-10" />
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/30 dark:via-primary/40 to-transparent pointer-events-none rounded-t-3xl z-10" />
 
-      {/* Project Cover Image */}
+      {/* Project Cover Image Showcase */}
       {coverSrc && (
-        <Link href={`/projects/${project.id}`} className="relative w-full h-44 overflow-hidden bg-surface-container-lowest/80 border-b border-white/[0.06] block">
+        <Link href={`/projects/${project.id}`} className="relative w-full h-60 sm:h-64 overflow-hidden bg-surface-container-lowest/90 border-b border-white/[0.08] block">
           <img
             src={coverSrc}
             alt={project.title}
             loading="lazy"
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover object-top group-hover:scale-[1.04] transition-transform duration-500 ease-out"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-surface-container-low/90 via-surface-container-low/20 to-transparent" />
-          <span className="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-black/50 backdrop-blur-md border border-white/15 text-[10px] font-mono uppercase tracking-wider text-zinc-200">
+          <div className="absolute inset-0 bg-gradient-to-t from-surface-container-low via-surface-container-low/20 to-black/25 pointer-events-none" />
+          <span className="absolute top-4 left-4 px-3 py-1 rounded-full bg-black/65 backdrop-blur-md border border-white/15 text-[11px] font-mono uppercase tracking-wider text-zinc-100 shadow-sm">
             {project.category}
           </span>
           {project.galleryImages && project.galleryImages.length > 1 && (
-            <span className="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-black/50 backdrop-blur-md border border-white/15 text-[10px] font-mono text-zinc-200">
+            <span className="absolute top-4 right-4 px-3 py-1 rounded-full bg-black/65 backdrop-blur-md border border-white/15 text-[11px] font-mono text-secondary shadow-sm">
               {project.galleryImages.length} Photos
             </span>
+          )}
+          {project.galleryImages && project.galleryImages.length > 1 && (
+            <div className="absolute bottom-3.5 right-4 flex items-center gap-2 z-10">
+              {project.galleryImages.slice(1, 4).map((thumb, idx) => (
+                <div
+                  key={idx}
+                  className="w-12 h-8 rounded-lg overflow-hidden border border-white/30 bg-black/60 shadow-md"
+                >
+                  <img
+                    src={thumb}
+                    alt={`${project.title} preview ${idx + 2}`}
+                    loading="lazy"
+                    className="w-full h-full object-cover object-top"
+                  />
+                </div>
+              ))}
+            </div>
           )}
         </Link>
       )}
 
       {/* Top Section */}
-      <div className="p-6 sm:p-7 flex flex-col gap-4">
+      <div className="p-7 sm:p-8 flex flex-col gap-5 flex-1">
         {/* Company Header with Company Logo */}
-        <div className="flex items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
+        <div className="flex items-center justify-between gap-3">
+          <div className="flex items-center gap-3.5 min-w-0">
             {project.companyLogo ? (
-              <div className="w-12 h-12 rounded-xl bg-white/90 dark:bg-surface-container-high border border-outline-variant/30 overflow-hidden p-1 flex items-center justify-center shrink-0 shadow-sm group-hover:border-primary/40 transition-colors">
+              <div className="w-12 h-12 rounded-xl bg-white/95 dark:bg-surface-container-high border border-outline-variant/30 overflow-hidden p-1.5 flex items-center justify-center shrink-0 shadow-sm group-hover:border-primary/40 transition-colors">
                 <img
                   src={project.companyLogo}
                   alt={project.client}
-                  className="w-full h-full object-cover rounded-lg filter brightness-105"
+                  className="w-full h-full object-contain rounded-lg"
                 />
               </div>
             ) : (
@@ -143,44 +161,68 @@ export function ProjectCard({ project, onSelectBlueprint }: ProjectCardProps) {
                 {project.client.substring(0, 2).toUpperCase()}
               </div>
             )}
-            <div className="flex flex-col">
-              <span className="font-label-sm text-xs text-secondary font-semibold uppercase tracking-wider">
+            <div className="flex flex-col min-w-0">
+              <span className="font-label-sm text-xs text-secondary font-semibold uppercase tracking-wider truncate">
                 {project.client}
               </span>
-              <span className="font-body-sm text-xs text-on-surface-variant">
+              <span className="font-body-sm text-xs text-on-surface-variant truncate">
                 {project.role}
               </span>
             </div>
           </div>
 
           {/* Impact Metric Badge */}
-          <span className="px-3 py-1 rounded-full bg-white/40 dark:bg-surface-container-high border border-primary/30 text-primary text-xs font-label-md font-bold tracking-tight shadow-sm">
+          <span className="px-3.5 py-1.5 rounded-full bg-white/40 dark:bg-surface-container-high border border-primary/30 text-primary text-xs font-label-md font-bold tracking-tight shadow-sm shrink-0">
             {project.impactMetric}
           </span>
         </div>
 
         {/* Title & Summary */}
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2.5">
           <Link href={`/projects/${project.id}`}>
-            <h3 className="font-nexa text-lg sm:text-xl font-bold text-on-surface leading-snug cursor-pointer">
+            <h3 className="font-nexa text-xl sm:text-2xl font-bold text-on-surface group-hover:text-primary transition-colors leading-snug cursor-pointer">
               {project.title}
             </h3>
           </Link>
-          <p className="font-body-sm text-xs sm:text-sm text-on-surface-variant leading-relaxed line-clamp-3">
+          <p className="font-body-sm text-sm text-on-surface-variant leading-relaxed line-clamp-4">
             {project.summary}
           </p>
         </div>
 
+        {/* Key Metrics Mini Strip */}
+        {project.metrics && project.metrics.length > 0 && (
+          <div className="grid grid-cols-2 gap-2.5 pt-1">
+            {project.metrics.slice(0, 2).map((m, idx) => (
+              <div
+                key={idx}
+                className="px-3.5 py-2.5 rounded-xl bg-surface-container-lowest/70 border border-white/[0.07] flex flex-col gap-0.5"
+              >
+                <span className="text-[10px] font-mono uppercase tracking-wider text-on-surface-variant">
+                  {m.label}
+                </span>
+                <span className="text-xs sm:text-sm font-nexa font-bold text-on-surface truncate">
+                  {m.value}
+                </span>
+              </div>
+            ))}
+          </div>
+        )}
+
         {/* Tech Stack Pills */}
-        <div className="flex flex-wrap gap-1.5 pt-1">
-          {project.techStack.map((tech, idx) => (
+        <div className="flex flex-wrap gap-1.5 pt-1 mt-auto">
+          {project.techStack.slice(0, 6).map((tech, idx) => (
             <span
               key={idx}
-              className="px-2 py-0.5 rounded-md bg-white/40 dark:bg-surface-container-high text-[11px] font-mono text-on-surface-variant border border-outline-variant/20"
+              className="px-2.5 py-1 rounded-md bg-white/40 dark:bg-surface-container-high text-[11px] font-mono text-on-surface-variant border border-outline-variant/20"
             >
               {tech}
             </span>
           ))}
+          {project.techStack.length > 6 && (
+            <span className="px-2.5 py-1 rounded-md bg-primary/10 text-[11px] font-mono text-primary border border-primary/20">
+              +{project.techStack.length - 6}
+            </span>
+          )}
         </div>
       </div>
 

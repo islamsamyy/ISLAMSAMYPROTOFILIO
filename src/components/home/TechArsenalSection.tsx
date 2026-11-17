@@ -260,7 +260,7 @@ export const techArsenalData: TechArsenalItem[] = [
 export function TechArsenalSection() {
   const { t, language } = useLanguage();
   const [filter, setFilter] = useState<string>('all');
-  const [isPaused, setIsPaused] = useState<boolean>(false);
+  const [isPaused, setIsPaused] = useState<boolean>(true);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const filtered = techArsenalData.filter((t) => {
@@ -414,12 +414,8 @@ export function TechArsenalSection() {
         </div>
       </div>
 
-      {/* CONTINUOUS SINGLE ROW SLIDESHOW (Auto-gliding to Right) */}
-      <div
-        className="relative w-full overflow-hidden py-4 -mx-4 px-4 group/techslider"
-        onMouseEnter={() => setIsPaused(true)}
-        onMouseLeave={() => setIsPaused(false)}
-      >
+      {/* CONTINUOUS SINGLE ROW SLIDESHOW (Paused by default; toggle with Play/Pause) */}
+      <div className="relative w-full overflow-hidden py-4 -mx-4 px-4 group/techslider">
         {/* Left & Right Edge Vignette / Gradient Shadows */}
         <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-12 sm:w-28 bg-gradient-to-r from-background via-background/80 to-transparent z-20" />
         <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-12 sm:w-28 bg-gradient-to-l from-background via-background/80 to-transparent z-20" />

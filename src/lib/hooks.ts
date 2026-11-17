@@ -50,6 +50,39 @@ import { initialCertifications, CertificationItem } from '@/data/seedCertificati
 import { initialExperiences, ExperienceItem } from '@/data/seedExperience';
 import { initialCrmLeads, CrmLead, CrmStage } from '@/data/seedCrm';
 
+function subscribeRealtime(
+  prefix: string,
+  configs: { table: string; event?: string }[],
+  onChange: () => void
+) {
+  try {
+    const channelName = `${prefix}-${Math.random().toString(36).slice(2, 9)}-${Date.now().toString(36)}`;
+    let ch = supabase.channel(channelName);
+    for (const cfg of configs) {
+      ch = ch.on(
+        'postgres_changes',
+        { event: (cfg.event || '*') as any, schema: 'public', table: cfg.table },
+        () => {
+          onChange();
+        }
+      );
+    }
+    return ch.subscribe();
+  } catch (err) {
+    console.warn(`[Realtime] Failed to subscribe for ${prefix}:`, err);
+    return null;
+  }
+}
+
+function safeRemoveChannel(channel: any) {
+  if (!channel) return;
+  try {
+    supabase.removeChannel(channel);
+  } catch (e) {
+    // ignore
+  }
+}
+
 // ---------------- PROJECTS HOOK ----------------
 export function useProjects() {
   // Initialize with seed data on SSR & initial hydration to prevent mismatch
@@ -86,20 +119,18 @@ export function useProjects() {
     }
 
     let channel: any = null;
+    let isMounted = true;
     const subTimer = setTimeout(() => {
-      channel = supabase
-        .channel('rt-projects')
-        .on('postgres_changes', { event: '*', schema: 'public', table: 'projects' }, () => {
-          load();
-        })
-        .subscribe();
+      if (!isMounted) return;
+      channel = subscribeRealtime('rt-projects', [{ table: 'projects' }], load);
     }, 1000);
 
     return () => {
+      isMounted = false;
       clearTimeout(subTimer);
       window.removeEventListener('islam_store_sync', onSync);
       try { bus?.close(); } catch (e) {}
-      if (channel) supabase.removeChannel(channel);
+      safeRemoveChannel(channel);
     };
   }, [load]);
 
@@ -170,23 +201,21 @@ export function usePricing() {
     }
 
     let channel: any = null;
+    let isMounted = true;
     const subTimer = setTimeout(() => {
-      channel = supabase
-        .channel('rt-packages')
-        .on('postgres_changes', { event: '*', schema: 'public', table: 'packages' }, () => {
-          load();
-        })
-        .on('postgres_changes', { event: '*', schema: 'public', table: 'consultation_rates' }, () => {
-          load();
-        })
-        .subscribe();
+      if (!isMounted) return;
+      channel = subscribeRealtime('rt-packages', [
+        { table: 'packages' },
+        { table: 'consultation_rates' }
+      ], load);
     }, 1000);
 
     return () => {
+      isMounted = false;
       clearTimeout(subTimer);
       window.removeEventListener('islam_store_sync', onSync);
       try { bus?.close(); } catch (e) {}
-      if (channel) supabase.removeChannel(channel);
+      safeRemoveChannel(channel);
     };
   }, [load]);
 
@@ -258,20 +287,18 @@ export function useArticles() {
     }
 
     let channel: any = null;
+    let isMounted = true;
     const subTimer = setTimeout(() => {
-      channel = supabase
-        .channel('rt-articles')
-        .on('postgres_changes', { event: '*', schema: 'public', table: 'articles' }, () => {
-          load();
-        })
-        .subscribe();
+      if (!isMounted) return;
+      channel = subscribeRealtime('rt-articles', [{ table: 'articles' }], load);
     }, 1000);
 
     return () => {
+      isMounted = false;
       clearTimeout(subTimer);
       window.removeEventListener('islam_store_sync', onSync);
       try { bus?.close(); } catch (e) {}
-      if (channel) supabase.removeChannel(channel);
+      safeRemoveChannel(channel);
     };
   }, [load]);
 
@@ -331,20 +358,18 @@ export function useReviews() {
     }
 
     let channel: any = null;
+    let isMounted = true;
     const subTimer = setTimeout(() => {
-      channel = supabase
-        .channel('rt-reviews')
-        .on('postgres_changes', { event: '*', schema: 'public', table: 'reviews' }, () => {
-          load();
-        })
-        .subscribe();
+      if (!isMounted) return;
+      channel = subscribeRealtime('rt-reviews', [{ table: 'reviews' }], load);
     }, 1000);
 
     return () => {
+      isMounted = false;
       clearTimeout(subTimer);
       window.removeEventListener('islam_store_sync', onSync);
       try { bus?.close(); } catch (e) {}
-      if (channel) supabase.removeChannel(channel);
+      safeRemoveChannel(channel);
     };
   }, [load]);
 
@@ -404,20 +429,18 @@ export function useReservations() {
     }
 
     let channel: any = null;
+    let isMounted = true;
     const subTimer = setTimeout(() => {
-      channel = supabase
-        .channel('rt-reservations')
-        .on('postgres_changes', { event: '*', schema: 'public', table: 'reservations' }, () => {
-          load();
-        })
-        .subscribe();
+      if (!isMounted) return;
+      channel = subscribeRealtime('rt-reservations', [{ table: 'reservations' }], load);
     }, 1000);
 
     return () => {
+      isMounted = false;
       clearTimeout(subTimer);
       window.removeEventListener('islam_store_sync', onSync);
       try { bus?.close(); } catch (e) {}
-      if (channel) supabase.removeChannel(channel);
+      safeRemoveChannel(channel);
     };
   }, [load]);
 
@@ -482,20 +505,18 @@ export function useCertifications() {
     }
 
     let channel: any = null;
+    let isMounted = true;
     const subTimer = setTimeout(() => {
-      channel = supabase
-        .channel('rt-certifications')
-        .on('postgres_changes', { event: '*', schema: 'public', table: 'certifications' }, () => {
-          load();
-        })
-        .subscribe();
+      if (!isMounted) return;
+      channel = subscribeRealtime('rt-certifications', [{ table: 'certifications' }], load);
     }, 1000);
 
     return () => {
+      isMounted = false;
       clearTimeout(subTimer);
       window.removeEventListener('islam_store_sync', onSync);
       try { bus?.close(); } catch (e) {}
-      if (channel) supabase.removeChannel(channel);
+      safeRemoveChannel(channel);
     };
   }, [load]);
 
@@ -555,20 +576,18 @@ export function useExperiences() {
     }
 
     let channel: any = null;
+    let isMounted = true;
     const subTimer = setTimeout(() => {
-      channel = supabase
-        .channel('rt-experiences')
-        .on('postgres_changes', { event: '*', schema: 'public', table: 'experiences' }, () => {
-          load();
-        })
-        .subscribe();
+      if (!isMounted) return;
+      channel = subscribeRealtime('rt-experiences', [{ table: 'experiences' }], load);
     }, 1000);
 
     return () => {
+      isMounted = false;
       clearTimeout(subTimer);
       window.removeEventListener('islam_store_sync', onSync);
       try { bus?.close(); } catch (e) {}
-      if (channel) supabase.removeChannel(channel);
+      safeRemoveChannel(channel);
     };
   }, [load]);
 
@@ -628,23 +647,21 @@ export function useCrmLeads() {
     }
 
     let channel: any = null;
+    let isMounted = true;
     const subTimer = setTimeout(() => {
-      channel = supabase
-        .channel('rt-crm')
-        .on('postgres_changes', { event: '*', schema: 'public', table: 'crm_leads' }, () => {
-          load();
-        })
-        .on('postgres_changes', { event: '*', schema: 'public', table: 'crm_activities' }, () => {
-          load();
-        })
-        .subscribe();
+      if (!isMounted) return;
+      channel = subscribeRealtime('rt-crm', [
+        { table: 'crm_leads' },
+        { table: 'crm_activities' }
+      ], load);
     }, 1000);
 
     return () => {
+      isMounted = false;
       clearTimeout(subTimer);
       window.removeEventListener('islam_store_sync', onSync);
       try { bus?.close(); } catch (e) {}
-      if (channel) supabase.removeChannel(channel);
+      safeRemoveChannel(channel);
     };
   }, [load]);
 
