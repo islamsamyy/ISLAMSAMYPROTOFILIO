@@ -274,6 +274,113 @@ export const initialProjects: ProjectItem[] = [
     liveDemoUrl: 'https://github.com/islam-samy',
     featured: true
   },
+  {
+    id: 'safir-hospitality-bi',
+    title: 'Safir Hotels — Hospitality KPI & Competitive BI Suite',
+    client: 'Safir Hotels & Resorts (Dahab)',
+    companyLogo: '/projects/safir-hospitality-bi/safir-kpi-dashboard.jpg',
+    category: 'Lakehouse & BI',
+    role: 'Lead BI & Hospitality Data Engineer',
+    impactMetric: '308 Rooms • $7,070 Weekly Food Cost',
+    metrics: [
+      { label: 'Weekly Food Cost', value: '$7,070' },
+      { label: 'Rooms Sold', value: '308' },
+      { label: 'Avg Room Rate', value: '13,569' },
+      { label: 'Guest Calls', value: '144' },
+    ],
+    techStack: ['Power BI', 'DAX', 'SQL', 'Excel / Power Query', 'Hospitality KPIs', 'Competitive Intelligence'],
+    summary: 'Comprehensive 6-screen Power BI hospitality intelligence suite for Safir Hotels & Resorts covering executive KPIs, Guest Relations (41 housekeeping, 29 room, and 15 food complaints), Food Cost control ($7,070 weekly per person), Front Desk arrivals/departures (289/99), Guest Meal Plans (BB/Hal/HB/SAL), and Competitive Market Share analysis across 6 rival resorts.',
+    architectureHighlights: [
+      'Guest Relations & Complaints: Tracked 144 total guest calls (60 satisfied), pinpointing 41 housekeeping complaints, 29 room condition complaints, and 15 food complaints for immediate service recovery.',
+      'Food Cost & Budget Control: Monitored $7,070 weekly food cost per person across Buffet ($280.97 avg), Cafeteria ($352.03 avg), and Beverage ($264.30 avg) with 0–400 daily cost distribution and over-budget tracking.',
+      'Competitive Market Share by Hotel: Benchmarked Safir Dahab Resort (15.77%) against Jaz Dahabaya (22.45%), Ecotel (20.96%), Dahab Lagoon (18.58%), SwissInn (11.22%), and Retac (11.02%).',
+      'Average Room Rate & Rooms Sold: Analyzed 308 rooms sold and 13,569.15 average room rate across properties to enable dynamic pricing and targeted occupancy campaigns.',
+      'Meal Plan & Front Desk Telemetry: Tracked 289 expected arrivals, 99 expected departures, and daily GIH BB (509), HB (175), Dinner (357), and Lunch (201) meal-plan volumes.',
+    ],
+    liveDemoUrl: 'https://github.com/islamsamyy',
+    featured: true,
+    challenge: 'Hotel operations lacked unified visibility across guest satisfaction, F&B cost overruns, front-desk occupancy, and regional competitor market share, making it difficult to prioritize housekeeping improvements or optimize dynamic room pricing.',
+    solution: 'Engineered a 6-dashboard Power BI executive suite integrating Front Desk PMS, Guest Relations call logs, F&B cost ledgers, Meal Plan forecasts, and STR-style competitive market-share benchmarks into a single interactive decision cockpit.',
+    keyDecisions: [
+      {
+        title: 'Unified 6-Dashboard Executive Cockpit',
+        rationale: 'Separated operational views (Front Desk, Meal Plan, Food Cost, Guest Relations) from executive strategy (Safir KPI & Competitive Analysis) so department heads and general managers each have tailored KPIs.',
+        tradeOff: 'Requires standardized daily exports from PMS and F&B cost systems.',
+      },
+      {
+        title: 'Complaint Root-Cause Decomposition Trees',
+        rationale: 'Used Power BI decomposition trees by Room Number and Complaint Category (Housekeeping: 41, Rooms: 29, Food: 15) to isolate recurring room-level maintenance issues.',
+        tradeOff: 'Depends on consistent front-desk call logging by guest relations staff.',
+      },
+    ],
+    systemFlow: [
+      '1. Guest Relations Tracking: 144 total calls, 60 satisfied guests, 41 housekeeping complaints, 29 room complaints, and 15 food complaints.',
+      '2. Food Cost Monitoring: $7,070 weekly food cost per person with 0–400 cost distribution across Cafeteria, Buffet, and Beverage.',
+      '3. Competitive Market Share: Pie chart benchmarking across 6 hotels (11.02%–22.45% / 11.24%–23.95%).',
+      '4. Revenue & Occupancy: Average Room Rate (13,569.15) and Rooms Sold (308) with dynamic pricing insights.',
+      '5. Daily Meal Plan Operations: GIH BB, GIH Hal, GIH HB, and GIH SAL tracked by day of week (509 breakfast, 201 lunch, 357 dinner).',
+    ],
+    outcomeMetrics: [
+      { label: 'Housekeeping Complaints', value: '41', description: 'Top priority service-recovery area identified via Guest Relations decomposition.' },
+      { label: 'Room Complaints', value: '29', description: 'Second-largest complaint category isolated down to specific room numbers.' },
+      { label: 'Weekly Food Cost', value: '$7,070', description: 'Total food cost this week per person with daily over-budget tracking.' },
+      { label: 'Rooms Sold', value: '308', description: 'Tracked alongside Average Room Rate (13,569.15) and 289 weekly arrivals.' },
+    ],
+    galleryImages: [
+      '/projects/safir-hospitality-bi/safir-kpi-dashboard.jpg',
+      '/projects/safir-hospitality-bi/guest-relation-dashboard.jpg',
+      '/projects/safir-hospitality-bi/food-cost-dashboard.jpg',
+      '/projects/safir-hospitality-bi/front-desk-dashboard.jpg',
+      '/projects/safir-hospitality-bi/guest-meal-plan-dashboard.jpg',
+      '/projects/safir-hospitality-bi/competitive-analysis-dashboard.jpg',
+    ],
+    steps: [
+      { title: '1. Guest Relations & Service Recovery', description: 'Prioritize the 41 housekeeping complaints and 29 room complaints to boost guest satisfaction and retention.' },
+      { title: '2. F&B Cost & Distribution Control', description: 'Monitor the $7,070 weekly food cost per person and 0–400 cost distribution to curb daily over-budget spending.' },
+      { title: '3. Market Share & Dynamic Pricing', description: 'Leverage hotel market share (11.24%–23.95%), Average Room Rate, and Rooms Sold (308) for targeted campaigns.' },
+      { title: '4. Daily Meal Plan & Front Desk Sync', description: 'Track GHI BB, GHI Hal, GHI HB, and GHI SAL by day alongside 289 expected arrivals and 99 departures.' },
+    ],
+    readmeContent: `# Safir Hotels & Resorts — Hospitality KPI & Competitive BI Suite
+
+## Executive Summary
+A 6-dashboard Power BI hospitality analytics suite built for **Safir Hotels & Resorts**, unifying **Guest Relations**, **Food Cost Control**, **Front Desk Operations**, **Guest Meal Plans**, **Executive KPIs**, and **Competitive Market Share Analysis**.
+
+---
+
+## Key Analytical Insights & Recommendations
+
+### 1. Guest Relations & Complaint Analysis
+- **Complaints about Housekeeping Services:** \`41\`
+- **Complaints about Rooms:** \`29\`
+- **Complaints about Food:** \`15\`
+- **Total Calls:** \`144\` (**Satisfied Guests:** \`60\`)
+- **Insights:** Housekeeping services are the most significant concern, followed by room conditions and food quality. Addressing these complaints should be a top priority to enhance guest satisfaction and retention.
+
+### 2. Total Food Cost
+- **Total Food Cost This Week Per Person:** \`$7,070\`
+- **Average Daily Costs:** Buffet \`$280.97\` | Cafeteria \`$352.03\` | Beverage \`$264.30\`
+- **Insights:** Monitoring food costs helps in budget management and maintaining profitability. High food costs per person may indicate inefficiencies or the need for menu adjustments.
+
+### 3. Cost Distribution
+- **Metrics:** Bar chart showing cost distribution across Cafeteria, Buffet, and Beverage categories, with values ranging from \`0\` to \`400\`.
+- **Insights:** Analyzing cost distribution reveals areas with excessive spending, offering opportunities for targeted cost-saving measures.
+
+### 4. Market Share by Hotel
+- **Pie Chart Distribution:** \`11.24%\` | \`11.72%\` | \`15.77%\` | \`14.88%\` | \`22.44%\` | \`23.95%\`
+- **Insights:** Market share varies significantly among competing hotels. Focused marketing and promotional strategies can help boost the market share of underperforming properties.
+
+### 5. Average Room Rate
+- **Insights:** Competitive room rates are essential for attracting guests. Ensure that room rates reflect the value offered and consider dynamic pricing strategies to maximize revenue.
+
+### 6. Rooms Sold
+- **Rooms Sold:** \`308\` | **Arrivals Expected This Week:** \`289\` | **Departures Expected:** \`99\`
+- **Insights:** Tracking room sales helps in understanding occupancy rates and revenue generation. Develop targeted campaigns to boost room sales, especially for hotels with lower occupancy rates.
+
+### 7. GHI BB, GHI Hal, GHI HB, and GHI SAL by Day
+- **Weekly Meal Plan Volume:** \`509\` Breakfast (BB) | \`201\` Lunch | \`357\` Dinner | \`175\` Half Board (HB)
+- **Insights:** Daily tracking of these metrics reveals trends and patterns, helping optimize F&B operations and guest experiences on specific days of the week.
+`,
+  },
   // --- IMPORTED GITHUB PROJECTS ---
   {
     "id": "gh-nexa",
