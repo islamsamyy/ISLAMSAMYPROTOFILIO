@@ -25,6 +25,118 @@ export interface ProjectItem {
 
 export const initialProjects: ProjectItem[] = [
   {
+    id: 'nexalytix-company-brain',
+    title: 'Nexalytix Company Brain — RAG AI Agent & Growth Hacking Pipeline',
+    client: 'Nexalytix',
+    companyLogo: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=120&q=80',
+    category: 'AI & Machine Learning',
+    role: 'Founder & AI Automation Architect',
+    impactMetric: 'Real-Time RAG + Auto-Sync',
+    metrics: [
+      { label: 'Architecture', value: 'Dual-Pipeline RAG' },
+      { label: 'Vector Store', value: 'Supabase pgvector' },
+      { label: 'Memory', value: 'Postgres Chat' },
+      { label: 'Knowledge Sync', value: 'Google Drive Auto' }
+    ],
+    techStack: ['n8n', 'OpenAI', 'Ollama', 'Supabase Vector Store', 'PostgreSQL', 'Google Drive', 'RAG'],
+    summary: 'What happens when Data Science meets Growth Hacking and n8n? Built Nexalytix Company Brain: an end-to-end Retrieval-Augmented Generation (RAG) AI Agent with persistent PostgreSQL chat memory, hybrid OpenAI + Ollama embeddings, and an automated Google Drive-to-Supabase vector ingestion pipeline.',
+    architectureHighlights: [
+      'Dual-pipeline n8n architecture separating real-time conversational RAG from automated document ingestion.',
+      'Google Drive triggers (File Created & File Updated) automatically sync new or modified company docs.',
+      'Deduplication step deletes stale vector rows in Supabase before re-indexing updated files.',
+      'Recursive Character Text Splitter and Ollama Embeddings chunk and vectorize documents into Supabase.',
+      'PostgreSQL Chat Memory persists multi-turn conversation context per session.'
+    ],
+    challenge: 'Growing data & automation teams struggle with fragmented knowledge across documents, making it hard to deliver instant, accurate answers about services, pricing, and operations without manual prompt updates.',
+    solution: 'Engineered an autonomous RAG AI Agent in n8n that watches Google Drive for document changes, keeps Supabase Vector Store continuously synchronized, and grounds OpenAI/Ollama responses with persistent PostgreSQL memory.',
+    systemFlow: [
+      'Google Drive Triggers: Detect File Created or File Updated events in the nexaRag folder.',
+      'Deduplication & Extraction: Delete old Supabase rows by File ID, download the file, and extract text.',
+      'Chunking & Vectorization: Split text recursively, generate Ollama embeddings, and insert into Supabase Vector Store.',
+      'RAG Chat Agent: Receive chat messages, load PostgreSQL Chat Memory, retrieve relevant vector chunks, and generate grounded responses.'
+    ],
+    outcomeMetrics: [
+      { label: 'Knowledge Freshness', value: 'Real-Time', description: 'Auto-reindexes whenever Google Drive files change' },
+      { label: 'Context Retention', value: 'Multi-Turn', description: 'Backed by PostgreSQL Chat Memory per session' },
+      { label: 'Hybrid AI Stack', value: 'OpenAI + Ollama', description: 'Combines cloud reasoning with local embeddings' }
+    ],
+    featured: true,
+    githubUrl: 'https://github.com/islamsamyy/nexalytix-company-brain-rag',
+    steps: [
+      {
+        title: 'Nexalytix Company Brain — Full RAG Workflow',
+        description: 'Complete n8n orchestration showing both the real-time RAG AI Agent and the automated Google Drive-to-Supabase ingestion pipeline.'
+      },
+      {
+        title: 'Grounded Knowledge Retrieval',
+        description: 'Live chat demonstrating accurate, document-grounded answers about Nexalytix mission and founder.'
+      },
+      {
+        title: 'Service & Pricing Retrieval + Memory Logs',
+        description: 'Detailed service breakdown retrieved from vector store alongside live PostgreSQL Chat Memory execution logs.'
+      }
+    ],
+    galleryImages: [
+      '/projects/nexalytix-company-brain/rag-agent-chat.jpg',
+      '/projects/nexalytix-company-brain/rag-founder-query.jpg',
+      '/projects/nexalytix-company-brain/rag-services-query.jpg'
+    ]
+  },
+  {
+    id: 'n8n-lead-generation',
+    title: 'Automated B2B Lead Generation & Supplier Discovery Pipeline',
+    client: 'Egyptian Garment Export Factory',
+    companyLogo: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=120&q=80',
+    category: 'Cloud Native',
+    role: 'Automation & Data Pipeline Architect',
+    impactMetric: '1,000+ Verified Leads < 2h',
+    metrics: [
+      { label: 'Leads Extracted', value: '1,000+ Verified' },
+      { label: 'Execution Time', value: '< 2 Hours' },
+      { label: 'Manual Effort', value: 'Zero' },
+      { label: 'Reusability', value: 'Any Domain' }
+    ],
+    techStack: ['n8n', 'Apify API', 'Google Maps Scraper', 'Google Sheets', 'Telegram Bot API', 'JSON'],
+    summary: 'End-to-end low-code automation workflow built with n8n, Apify API, Google Sheets, and Telegram to automate B2B supplier discovery from Google Maps. Replaced slow, error-prone manual searches with a repeatable pipeline that extracts, cleans, and structures 1,000+ verified leads in under 2 hours.',
+    architectureHighlights: [
+      'Telegram Trigger initiates the workflow on-demand from a simple bot command.',
+      'Google Sheets Input dynamically supplies the target search query (e.g., textile suppliers Dubai).',
+      'HTTP Request via Apify API scrapes Google Maps business data (Name, Category, Country Code, Rating, Phone, Website).',
+      'Data Cleaning & Structuring node transforms raw JSON payloads into normalized, analysis-ready records.',
+      'Google Sheets Append writes verified leads directly to the sheet and triggers an instant Telegram notification.'
+    ],
+    challenge: 'An Egyptian garment factory exporting in large quantities needed to quickly reach reliable textile suppliers in Dubai, but manual searching on Google Maps was extremely time-consuming, prone to human error, and non-repeatable.',
+    solution: 'Built an end-to-end n8n low-code automation pipeline integrating Telegram, Google Sheets, and the Apify Google Maps Scraper API to extract, clean, structure, and deliver verified supplier leads automatically.',
+    systemFlow: [
+      'Telegram Trigger: Client sends a command (e.g., start) to the Nexalytix Lead Generation bot.',
+      'Google Sheets Input: Reads the search domain and query parameters.',
+      'Apify HTTP Request: Scrapes Google Maps listings with active website filtering.',
+      'Edit Fields: Normalizes raw JSON into clean, structured columns.',
+      'Google Sheets Append & Telegram Notification: Appends leads to the sheet and sends an instant update.'
+    ],
+    outcomeMetrics: [
+      { label: 'Verified Leads', value: '1,000+', description: 'Extracted and structured in under 2 hours' },
+      { label: 'Manual Effort', value: '0%', description: 'Fully automated end-to-end execution' },
+      { label: 'Domain Flexibility', value: '100%', description: 'Reusable across any industry or location' }
+    ],
+    featured: true,
+    githubUrl: 'https://github.com/islamsamyy/n8n-lead-generation-automation',
+    steps: [
+      {
+        title: 'End-to-End n8n Workflow & Live Output',
+        description: 'Complete n8n orchestration connecting Telegram Trigger, Google Sheets, Apify HTTP Request, Edit Fields, and Telegram Notification alongside live Google Sheets output.'
+      },
+      {
+        title: 'Apify HTTP Request Configuration',
+        description: 'JSON payload configuration for the Apify Google Maps Scraper API with skipClosedPlaces and withWebsite filters.'
+      }
+    ],
+    galleryImages: [
+      '/projects/n8n-lead-generation/workflow-overview.jpg',
+      '/projects/n8n-lead-generation/http-request-config.jpg'
+    ]
+  },
+  {
     id: 'wirecut-os',
     title: 'WireCut OS — Industrial Operations & Costing Analytics Platform',
     client: 'Maadi Marble',
@@ -595,6 +707,109 @@ An interactive **Power BI People Analytics** suite analyzing **1,470 employees**
 ### 4. Count of Employee by Age
 - **Range:** \`18\` to \`60\` years
 - **Key Insight:** High concentration in the \`30–40\` age range, peaking around **age 35**, indicating a predominantly mid-career workforce.
+`,
+  },
+  {
+    id: 'nexa-whatsapp-connector',
+    title: 'NexaWhatsApp Connector — n8n Growth Hacking & AI Sales Agent',
+    client: 'Nexalytix Growth Hacking Tools (Series 2–7)',
+    companyLogo: '/projects/nexa-whatsapp-connector/n8n-workflow-architecture.jpg',
+    category: 'AI & Machine Learning',
+    role: 'Growth Automation & AI Systems Architect',
+    impactMetric: '500+ Leads • Zero Manual Effort',
+    metrics: [
+      { label: 'Leads Processed', value: '500+' },
+      { label: 'Automation', value: 'n8n + AI' },
+      { label: 'Messaging API', value: 'WA Cloud' },
+      { label: 'Memory', value: 'Postgres' },
+    ],
+    techStack: ['n8n', 'WhatsApp Cloud API', 'Google Sheets', 'Groq LLM', 'PostgreSQL', 'Supabase'],
+    summary: 'Smart growth-hacking automation system built with n8n for Nexalytix. Automatically reads 500+ campaign leads from Google Sheets, generates personalized Icebreaker messages based on column data, dispatches them via WhatsApp Business Cloud API, tracks Sent/Failed status back in the sheet, and routes incoming replies to an AI Sales Agent (Groq + Postgres Chat Memory + Supabase).',
+    architectureHighlights: [
+      'Automated Google Sheets Lead Ingestion: Connects directly to campaign spreadsheets (Name, Category, Rating, Website, Phone, Address, Query, Status) with zero manual CSV uploads.',
+      'Dynamic Personalized Icebreaker Engine: Uses n8n Loop Over Items & Edit Fields to craft tailored outreach messages per lead category and business context.',
+      'WhatsApp Business Cloud API Dispatch: Sends messages at scale with rate-limit-safe Wait nodes and automatic Sent/Failed status write-back to Google Sheets.',
+      'NexaSalesAgent (AI Reply Handler): Routes incoming WhatsApp text/voice replies through a Switch node to an AI Tools Agent powered by Groq Chat Model, Postgres Chat Memory, and Supabase.',
+      'Zero SaaS Bottlenecks: Eliminates monthly per-seat fees, strict message caps, and buggy third-party outreach tools.',
+    ],
+    liveDemoUrl: 'https://github.com/islamsamyy',
+    featured: true,
+    challenge: 'After collecting 500+ leads from multiple campaigns in Google Sheets, reaching out to each lead with a personalized Icebreaker without manual work or errors became a major bottleneck. Off-the-shelf tools had strict message limits, high monthly fees, manual CSV uploads, and slow/buggy execution.',
+    solution: 'Engineered NexaWhatsApp Connector in n8n: a dual-branch automation combining scheduled/real-time Google Sheets outreach via WhatsApp Cloud API with an intelligent Groq-powered NexaSalesAgent backed by Postgres Chat Memory and Supabase.',
+    keyDecisions: [
+      {
+        title: 'n8n Self-Hosted Orchestration over SaaS Outreach Tools',
+        rationale: 'Eliminated monthly SaaS fees, message caps, and manual CSV exports while gaining full control over rate-limiting (Wait nodes) and status write-backs.',
+        tradeOff: 'Requires maintaining an n8n instance and Meta WhatsApp Cloud API webhook credentials.',
+      },
+      {
+        title: 'Stateful AI Sales Agent (Groq + Postgres + Supabase)',
+        rationale: 'Connected incoming WhatsApp replies to NexaSalesAgent with Postgres Chat Memory and Supabase pricing/client tools so leads receive instant, context-aware responses.',
+        tradeOff: 'Requires structured Supabase tables (nexalytixpricinglist, client details) for accurate tool calling.',
+      },
+    ],
+    systemFlow: [
+      '1. Lead Ingestion: Google Sheets node reads 500+ campaign leads (Name, Category, Rating, Website, Phone, Address, Status).',
+      '2. Batch Loop & Personalization: Loop Over Items + Edit Fields generate a custom Icebreaker per lead.',
+      '3. WhatsApp Cloud Dispatch & Tracking: Sends via WhatsApp Business Cloud API, updates Sent/Failed status in Google Sheets, and pauses via Wait node.',
+      '4. AI Sales Agent Reply Loop: Incoming WhatsApp replies hit WhatsApp Trigger1 -> Switch (text/voice) -> NexaSalesAgent (Groq + Postgres Memory + Supabase) -> WhatsApp reply.',
+    ],
+    outcomeMetrics: [
+      { label: 'Campaign Leads', value: '500+', description: 'Automated personalized Icebreaker outreach from Google Sheets.' },
+      { label: 'SaaS Cost', value: '$0 / mo', description: 'Replaced expensive, rate-limited third-party WhatsApp tools.' },
+      { label: 'Status Tracking', value: 'Real-Time', description: 'Automatic Sent/Failed status write-back to the source Google Sheet.' },
+      { label: 'AI Reply Agent', value: '24/7', description: 'Groq-powered NexaSalesAgent with Postgres memory & Supabase tools.' },
+    ],
+    galleryImages: [
+      '/projects/nexa-whatsapp-connector/n8n-workflow-architecture.jpg',
+      '/projects/nexa-whatsapp-connector/google-sheets-leads.jpg',
+    ],
+    steps: [
+      { title: '1. Google Sheets Connection', description: 'Automatically reads 500+ leads and column metadata with zero manual CSV uploads.' },
+      { title: '2. Personalized Icebreaker', description: 'Generates tailored outreach messages per lead category, rating, and business profile.' },
+      { title: '3. WhatsApp Cloud API & Tracking', description: 'Sends messages reliably and writes Sent/Failed status back to the same Google Sheet.' },
+      { title: '4. NexaSalesAgent AI Follow-Up', description: 'Handles incoming replies autonomously using Groq LLM, Postgres Chat Memory, and Supabase.' },
+    ],
+    readmeContent: `# NexaWhatsApp Connector — What Happens When Data Science Meets Growth Hacking and n8n?
+*My Journey to Develop Nexalytix Growth Hacking Tools (2–7)*
+
+## The Bottleneck
+بعد ما جمعت **+500 lead** من حملات مختلفة، وصلت لأول نقطة bottleneck:
+إزاي أبدأ التواصل مع كل lead برسالة ذكية مخصصة (**Icebreaker**).
+
+كنت محتاج **Smart Automation System**:
+- يقرأ الـ **Google Sheet**
+- يختار لكل lead الرسالة المناسبة
+- ويبعتهاله على **WhatsApp** من غير تدخل يدوي أو أخطاء
+
+جربت tools جاهزة، لكن كلهم عندهم limitations:
+- Message limits
+- Monthly fees
+- Manual CSV uploads
+- Slow or buggy execution
+
+هنا كان لازم يكون في حل لـ **Nexalytix**.
+
+---
+
+## The Solution: NexaWhatsApp Connector (Built with n8n)
+
+### Core Capabilities
+1. **Automatically connects to your Google Sheet** — Reads lead rows (\`Name\`, \`Category\`, \`countryCode\`, \`Rating\`, \`website\`, \`phone\`, \`address\`, \`query\`, \`status\`).
+2. **Personalized Icebreaker Generation** — Uses column-driven logic to craft a tailored message for each lead.
+3. **WhatsApp Cloud API Dispatch** — Sends messages reliably through the official WhatsApp Business Cloud API with controlled batching (\`Loop Over Items\` + \`Wait\`).
+4. **Real-Time Status Tracking** — Tracks \`Sent\` / \`Failed\` status and updates it directly in the same Google Sheet.
+5. **Fully Automated** — Runs daily on schedule or in real time.
+
+---
+
+## AI Reply & Sales Agent Architecture (\`NexaSalesAgent\`)
+When a lead replies on WhatsApp:
+- **WhatsApp Trigger** -> **Switch** (Text / Voice) -> **Merge** -> **NexaSalesAgent (Tools Agent)**
+- **LLM:** Groq Chat Model
+- **Memory:** Postgres Chat Memory
+- **Tools:** \`nexalytixpricinglist\`, \`addclientdetails\`, \`Supabase\`, \`Google Sheets\`, and \`Think\`
+- **Response:** Dispatched back automatically via WhatsApp Business Cloud API.
 `,
   },
   // --- IMPORTED GITHUB PROJECTS ---
