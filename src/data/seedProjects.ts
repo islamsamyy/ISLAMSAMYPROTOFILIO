@@ -503,6 +503,100 @@ An end-to-end **Saudi Vision 2030** recruitment web platform and **Power BI Exec
 - \`Date_Table\`, \`العملاء\` (Clients), \`الباقات\` (Packages), \`اشتراك الباقات\` (Subscriptions), \`استهلاك الباقة\` (Package Consumption), \`التقديمات\` (Submissions), \`المدفوعات\` (Payments), \`المقابلات\` (Interviews), \`التوظيف النهائي\` (Final Employment), \`السير الذاتية\` (CVs), \`الموظفين\` (Employees), and \`MEASURES\`.
 `,
   },
+  {
+    id: 'hr-attrition-bi',
+    title: 'Human Resource Analytics — Workforce Attrition & Compensation BI',
+    client: 'Enterprise HR Intelligence (Power BI)',
+    companyLogo: '/projects/hr-attrition-bi/hr-dashboard-overview.jpg',
+    category: 'Lakehouse & BI',
+    role: 'Lead BI & People Analytics Engineer',
+    impactMetric: '1,470 Employees • 3.31x Attrition Driver',
+    metrics: [
+      { label: 'Total Employees', value: '1,470' },
+      { label: 'Retained Staff', value: '1,233' },
+      { label: 'Attrition Count', value: '237' },
+      { label: 'Top Driver', value: '3.31x OT' },
+    ],
+    techStack: ['Power BI', 'DAX', 'Key Influencers AI', 'People Analytics', 'SQL', 'Data Storytelling'],
+    summary: 'Interactive Power BI People Analytics & Attrition Intelligence dashboard evaluating 1,470 employees (1,233 retained vs 237 attrition). Uses Power BI AI Key Influencers to quantify attrition multipliers (OverTime 3.31x, Tenure <= 1 yr 2.74x, Low Job Satisfaction 1.79x), department payroll distribution (R&D 12.7M, Sales 6.5M, HR 3.8M), and age demographics (peak at age 35).',
+    architectureHighlights: [
+      'AI Key Influencers for Attrition: Identified OverTime = Yes as the #1 attrition driver (3.31x higher likelihood), followed by YearsAtCompany <= 1 (2.74x) and JobSatisfaction <= 1 (1.79x).',
+      'Workforce Composition & Gender Split: Tracked 1,470 total employees (1,233 retained, 237 attrition) with a 60% Male (882) / 40% Female (588) gender breakdown.',
+      'Monthly Income by Department: Visualized payroll allocation across Research & Development (~12.7M), Sales (~6.5M), and Human Resources (~3.8M) to align budgets with innovation priorities.',
+      'Employee Age Distribution: Histogram spanning ages 18–60 showing a strong mid-career concentration in the 30–40 range, peaking around age 35.',
+      'Tenure & Attrition Correlation: Analyzed attrition percentages across YearsAtCompany (0–40 years) to pinpoint early-career retention risks.',
+    ],
+    liveDemoUrl: 'https://github.com/islamsamyy',
+    featured: true,
+    challenge: 'HR leadership lacked visibility into why employees were leaving, how overtime and job satisfaction impacted turnover, and whether departmental payroll aligned with strategic R&D priorities.',
+    solution: 'Built an executive Power BI People Analytics dashboard combining demographic histograms, departmental compensation breakdowns, and Power BI AI Key Influencers to surface actionable retention strategies.',
+    keyDecisions: [
+      {
+        title: 'Power BI AI Key Influencers Integration',
+        rationale: 'Embedded native Key Influencers visuals to automatically rank statistical attrition multipliers (3.31x OverTime, 2.74x Tenure, 1.79x Satisfaction) instead of relying on static correlations.',
+        tradeOff: 'Requires clean categorical encoding of survey and HRIS attributes.',
+      },
+      {
+        title: 'Departmental Payroll & Age Histograms',
+        rationale: 'Paired departmental monthly income bars with an 18–60 age distribution histogram to connect compensation planning with workforce lifecycle stages.',
+        tradeOff: 'Focused on monthly base income rather than variable bonus structures.',
+      },
+    ],
+    systemFlow: [
+      '1. HRIS Data Ingestion: Loaded 1,470 employee records covering demographics, tenure, overtime, job satisfaction, and monthly income.',
+      '2. KPI & Demographic Modeling: Computed retention (1,233), attrition (237), gender split (882M / 588F), and age histogram (peak age 35).',
+      '3. Departmental Payroll Analysis: Aggregated Sum of MonthlyIncome across R&D (12.7M), Sales (6.5M), and HR (3.8M).',
+      '4. AI Key Influencers: Ranked attrition multipliers (OverTime 3.31x, Tenure <= 1 yr 2.74x, JobSatisfaction <= 1 1.79x) for targeted retention.',
+    ],
+    outcomeMetrics: [
+      { label: 'Workforce Analyzed', value: '1,470', description: '1,233 retained employees and 237 attrition cases.' },
+      { label: 'OverTime Multiplier', value: '3.31x', description: 'Employees working overtime are 3.31x more likely to leave.' },
+      { label: 'R&D Monthly Payroll', value: '12.7M', description: 'Highest departmental investment, followed by Sales (6.5M) and HR (3.8M).' },
+      { label: 'Peak Workforce Age', value: '35 yrs', description: 'Core mid-career concentration in the 30–40 age bracket.' },
+    ],
+    galleryImages: [
+      '/projects/hr-attrition-bi/hr-dashboard-overview.jpg',
+      '/projects/hr-attrition-bi/key-influencers-attrition.jpg',
+      '/projects/hr-attrition-bi/monthly-income-department.jpg',
+      '/projects/hr-attrition-bi/employee-age-distribution.jpg',
+      '/projects/hr-attrition-bi/hr-analysis-cover.jpg',
+    ],
+    steps: [
+      { title: '1. Workforce & Attrition Overview', description: '1,470 total employees (1,233 retained, 237 attrition) with 60% Male / 40% Female split.' },
+      { title: '2. AI Key Influencers', description: 'OverTime (3.31x), Tenure <= 1 yr (2.74x), and Low Job Satisfaction (1.79x) identified as top drivers.' },
+      { title: '3. Departmental Income Analysis', description: 'Monthly income distributed across R&D (12.7M), Sales (6.5M), and Human Resources (3.8M).' },
+      { title: '4. Age & Tenure Distribution', description: '18–60 age histogram peaking at age 35, guiding mid-career retention and resource allocation.' },
+    ],
+    readmeContent: `# Human Resource Dashboard Analysis — Workforce Attrition & Compensation BI
+
+## Executive Summary
+An interactive **Power BI People Analytics** suite analyzing **1,470 employees** (\`1,233\` retained vs \`237\` attrition) to uncover the root causes of employee turnover, departmental compensation allocation, and workforce age dynamics.
+
+---
+
+## Key Analytical Findings
+
+### 1. Key Influencers (Employee Attrition Drivers)
+- **OverTime = Yes:** \`3.31x\` more likely to result in attrition.
+- **YearsAtCompany <= 1:** \`2.74x\` more likely to result in attrition.
+- **JobSatisfaction <= 1:** \`1.79x\` more likely to result in attrition.
+- **Conclusion:** Addressing overtime, early-tenure onboarding, job satisfaction, and work-life balance can significantly reduce attrition and foster a more engaged workforce.
+
+### 2. Workforce Overview & Gender Split
+- **Total Employees:** \`1,470\`
+- **Retained Employees:** \`1,233\` | **Attrition:** \`237\`
+- **Gender Distribution:** \`882 Male (60%)\` | \`588 Female (40%)\`
+
+### 3. Sum of Monthly Income by Department
+- **Research & Development:** \`~12.7M\` (highest investment, reflecting innovation & product focus)
+- **Sales:** \`~6.5M\`
+- **Human Resources:** \`~3.8M\`
+
+### 4. Count of Employee by Age
+- **Range:** \`18\` to \`60\` years
+- **Key Insight:** High concentration in the \`30–40\` age range, peaking around **age 35**, indicating a predominantly mid-career workforce.
+`,
+  },
   // --- IMPORTED GITHUB PROJECTS ---
   {
     "id": "gh-nexa",
