@@ -137,6 +137,59 @@ export const initialProjects: ProjectItem[] = [
     ]
   },
   {
+    id: 'nexawriter',
+    title: 'NexaWriter — AI Growth Hacking & Multi-Platform Content Automation',
+    client: 'Nexalytix (Internal Growth System)',
+    companyLogo: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=120&q=80',
+    category: 'Cloud Native',
+    role: 'Growth & AI Automation Architect',
+    impactMetric: '100% Automated Publishing',
+    metrics: [
+      { label: 'Trigger', value: 'Google Sheets (Row Added)' },
+      { label: 'AI Agent', value: 'HumanizeIt + Groq LLM' },
+      { label: 'Channels', value: 'LinkedIn, X, Blog, FB' },
+      { label: 'Manual Effort', value: 'Zero' }
+    ],
+    techStack: ['n8n', 'Google Sheets API', 'Groq Chat Model', 'AI Tools Agent', 'LinkedIn API', 'X (Twitter) API', 'Tavily Search'],
+    summary: 'An intelligent growth-hacking and content automation system built with n8n that combines Data Science content planning with AI Agents. Every new record added to Google Sheets automatically triggers an AI refinement pipeline (HumanizeIt) that rewrites, enhances clarity and engagement, and publishes or schedules content across LinkedIn and X.',
+    architectureHighlights: [
+      'Google Sheets Trigger (rowAdded) monitors content calendars and fires immediately when a new record is added.',
+      'Edit Fields (manual) normalizes raw sheet columns into structured prompts for downstream AI Agents.',
+      'HumanizeIt (Tools Agent) powered by Groq Chat Model and Think reasoning tool refines tone, clarity, and hook strength.',
+      'Automated multi-platform publishing nodes post directly to LinkedIn Company Pages and X (Twitter).',
+      'Extensible research-to-drafting pipeline using Tavily Search, Split Out, Aggregate, and platform-specific AI writers (NexaLinkedInWriter, NexaFBWriter, NexaXwriteR, NexaBlogWriter).'
+    ],
+    challenge: 'Maintaining a consistent, high-quality brand presence across multiple social platforms while scaling content production manually is time-consuming and unsustainable.',
+    solution: 'Built NexaWriter in n8n to connect structured Google Sheets content plans directly to Groq-powered AI Agents (HumanizeIt) for automated humanization, formatting, and multi-channel publishing.',
+    systemFlow: [
+      'Google Sheets Trigger (rowAdded): Detects new content records in real time.',
+      'Edit Fields: Extracts and structures raw text, topic, and metadata.',
+      'HumanizeIt AI Agent (Groq Chat Model + Think): Reviews, rewrites, and optimizes the message for clarity and engagement.',
+      'Platform Publishers (LinkedIn / X): Automatically publishes or schedules the finalized post.'
+    ],
+    outcomeMetrics: [
+      { label: 'Publishing Cadence', value: '100%', description: 'Consistent monthly content delivery without manual posting' },
+      { label: 'AI Quality Gate', value: 'Every Post', description: 'Reviewed and humanized by AI Agent before going live' },
+      { label: 'Channel Coverage', value: 'Multi-Platform', description: 'Supports LinkedIn, X, Facebook, Blog, and Video/Reels expansion' }
+    ],
+    featured: true,
+    githubUrl: 'https://github.com/islamsamyy',
+    steps: [
+      {
+        title: 'NexaWriter Workflow Execution & Live LinkedIn Output',
+        description: 'Full n8n workflow canvas showing Google Sheets triggers, Edit Fields, HumanizeIt AI Agents, and live published output on the Nexalytix LinkedIn Company Page.'
+      },
+      {
+        title: 'Active LinkedIn Automation Pipeline',
+        description: 'Highlighted LinkedIn publishing branch executing Google Sheets Trigger -> Edit Fields1 -> HumanizeIt (Groq Chat Model3) -> LinkedIn create:post.'
+      }
+    ],
+    galleryImages: [
+      '/projects/nexawriter/workflow-execution-success.jpg',
+      '/projects/nexawriter/linkedin-pipeline-active.jpg'
+    ]
+  },
+  {
     id: 'wirecut-os',
     title: 'WireCut OS — Industrial Operations & Costing Analytics Platform',
     client: 'Maadi Marble',
