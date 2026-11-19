@@ -25,6 +25,70 @@ export interface ProjectItem {
 
 export const initialProjects: ProjectItem[] = [
   {
+    id: 'india-unemployment-eda',
+    title: 'India Unemployment Rate Analysis — Interactive Data Science & EDA',
+    client: 'Data Science & Economic Analytics',
+    companyLogo: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=120&q=80',
+    category: 'Lakehouse & BI',
+    role: 'Data Scientist & BI Analyst',
+    impactMetric: '5 Regions · 27+ States Analyzed',
+    metrics: [
+      { label: 'Timeframe', value: 'Jan–Oct 2020' },
+      { label: 'Visualizations', value: '6 Interactive' },
+      { label: 'Stack', value: 'Python + Plotly' },
+      { label: 'Output', value: 'final.csv + Notebook' }
+    ],
+    techStack: ['Python', 'Pandas', 'Plotly Express', 'Seaborn', 'Matplotlib', 'Jupyter Notebook'],
+    summary: 'Comprehensive Exploratory Data Analysis (EDA) of India’s 2020 unemployment trends across 5 regions and 27+ states. Built animated Plotly histograms, hierarchical sunburst charts, state-level box plots, scatter matrices, and Seaborn correlation heatmaps.',
+    architectureHighlights: [
+      'Animated regional histogram tracking unemployment rate shifts across North, South, East, West, and Northeast India.',
+      'Hierarchical Sunburst chart mapping regional-to-state unemployment distribution.',
+      'Interactive state-level box plots exposing medians, IQRs, and pandemic-era outliers.',
+      'Multi-dimensional scatter matrix & Seaborn correlation heatmap quantifying employment vs. labour participation.'
+    ],
+    challenge: 'Raw labour and unemployment datasets across Indian states contained temporal gaps, regional hierarchies, and multi-variable interactions that were difficult to interpret in static spreadsheets.',
+    solution: 'Cleaned and exported the structured dataset (final.csv) in Pandas and built an interactive visual analytics suite using Plotly Express and Seaborn in Jupyter Notebook.',
+    systemFlow: [
+      'Data Ingestion & Cleaning: Load raw CSVs in Pandas, normalize dates/regions, and export final.csv.',
+      'Temporal & Regional EDA: Build animated Plotly histograms and hierarchical Sunburst charts.',
+      'Distribution & Outlier Analysis: Generate sorted state-level box plots.',
+      'Multivariate Correlation: Compute scatter matrices and Seaborn correlation heatmaps.'
+    ],
+    outcomeMetrics: [
+      { label: 'Regional Coverage', value: '5 Regions', description: 'North, South, East, West, and Northeast India' },
+      { label: 'Interactive Charts', value: '6+', description: 'Animated histograms, sunburst, box plots, and heatmaps' },
+      { label: 'Clean Dataset', value: 'final.csv', description: 'Analysis-ready output exported for downstream BI' }
+    ],
+    featured: true,
+    githubUrl: 'https://github.com/islamsamyy/india-unemployment-eda-plotly',
+    steps: [
+      {
+        title: 'Animated Regional Histogram',
+        description: 'Plotly Express histogram with date animation frame tracking unemployment across India’s 5 regions.'
+      },
+      {
+        title: 'Region-to-State Sunburst Chart',
+        description: 'Hierarchical breakdown of unemployment rates from macro regions down to individual states.'
+      },
+      {
+        title: 'State-Level Box Plots & Outliers',
+        description: 'Sorted box plots revealing state medians, interquartile ranges, and extreme pandemic spikes.'
+      },
+      {
+        title: 'Scatter Matrix & Correlation Heatmap',
+        description: 'Multivariate relationships and Pearson correlation matrix across employment, labour participation, and geography.'
+      }
+    ],
+    galleryImages: [
+      '/projects/india-unemployment-eda/animated-region-histogram.jpg',
+      '/projects/india-unemployment-eda/sunburst-region-state.jpg',
+      '/projects/india-unemployment-eda/boxplot-state-sikkim.jpg',
+      '/projects/india-unemployment-eda/boxplot-state-punjab.jpg',
+      '/projects/india-unemployment-eda/state-bar-scatter-matrix.jpg',
+      '/projects/india-unemployment-eda/pairplot-correlation-heatmap.jpg'
+    ]
+  },
+  {
     id: 'nexalytix-company-brain',
     title: 'Nexalytix Company Brain — RAG AI Agent & Growth Hacking Pipeline',
     client: 'Nexalytix',
@@ -187,6 +251,53 @@ export const initialProjects: ProjectItem[] = [
     galleryImages: [
       '/projects/nexawriter/workflow-execution-success.jpg',
       '/projects/nexawriter/linkedin-pipeline-active.jpg'
+    ]
+  },
+  {
+    id: 'global-sales-analysis',
+    title: 'Global Sales Analysis — Power BI Executive & Territorial Intelligence Dashboard',
+    client: 'Global Retail & E-Commerce Analytics',
+    companyLogo: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=120&q=80',
+    category: 'Lakehouse & BI',
+    role: 'BI & Data Analytics Developer',
+    impactMetric: '$1.26M+ Total Sales Tracked',
+    metrics: [
+      { label: 'Cities Covered', value: '1,268' },
+      { label: 'Total Sales', value: '$1.26M+' },
+      { label: 'Total Profit', value: '$144.7K' },
+      { label: 'Top Category', value: 'Technology' }
+    ],
+    techStack: ['Power BI', 'DAX', 'Data Modeling', 'Decomposition Tree', 'Geo-Spatial Maps', 'KPI Cards'],
+    summary: 'Interactive Power BI executive dashboard analyzing global sales performance, profit margins, and territorial distribution across 1,268 cities. Combines trend analysis, category breakdowns, decomposition trees, and product-level tables to uncover sales drop-offs and guide market expansion.',
+    architectureHighlights: [
+      'Globally Integrated Sales: Line chart tracks regional sales and profit trends, surfacing declining trajectories that require root-cause investigation.',
+      'Category & Sub-Category Analysis: Donut and bar charts compare Technology, Furniture, and Office Supplies, identifying Technology as the top-performing category.',
+      'Territorial Intelligence: Geo-spatial map and Decomposition Tree (Country -> State) highlight strongholds in the US and Europe while pinpointing under-penetrated regions.',
+      'Product & Order-Level Insights: Granular table tracks Order ID, Order Date, Category, Sales, and Shipping Cost ($136.7K total shipping) for portfolio optimization.'
+    ],
+    challenge: 'Decision-makers needed a unified view of global sales, profit, and shipping costs to understand why overall sales were trending downward in key regions and which product categories warranted targeted investment.',
+    solution: 'Built a dark-themed Power BI executive report featuring real-time KPI cards, monthly sales vs. profit bar charts, a Country-to-State Decomposition Tree, and interactive city/category filters.',
+    systemFlow: [
+      'KPI Summary Layer: Displays 1,268 Cities, 1.97K Shipping (Last Week), $16.71K (Last 7 Days Sales), $19.4K (Last Day), and $797.04 (Last Week Profit).',
+      'Trend & Seasonality Analysis: Monthly bar chart and regional line chart track Sum of Sales vs. Sum of Profit.',
+      'Hierarchical Drill-Down: Decomposition Tree breaks down $144,749.86 Sum of Profit by Country and State.',
+      'Granular Order Table: Exposes order-level sales and shipping cost metrics for SKU and logistics optimization.'
+    ],
+    outcomeMetrics: [
+      { label: 'Root-Cause Visibility', value: '100%', description: 'Identified declining regional trends for targeted intervention' },
+      { label: 'Category Focus', value: 'Technology', description: 'Top-performing segment prioritized for marketing & supply chain spend' },
+      { label: 'Expansion Strategy', value: 'Global', description: 'Mapped US & Europe dominance to guide entry into emerging markets' }
+    ],
+    featured: true,
+    githubUrl: 'https://github.com/islamsamyy',
+    steps: [
+      {
+        title: 'Global Sales Analysis Power BI Dashboard',
+        description: 'Complete dark-mode Power BI report featuring KPI cards, monthly sales vs. profit bars, category donut chart, Country-to-State decomposition tree, geo map, and order-level table.'
+      }
+    ],
+    galleryImages: [
+      '/projects/global-sales-analysis/dashboard-overview.jpg'
     ]
   },
   {
@@ -863,6 +974,98 @@ When a lead replies on WhatsApp:
 - **Memory:** Postgres Chat Memory
 - **Tools:** \`nexalytixpricinglist\`, \`addclientdetails\`, \`Supabase\`, \`Google Sheets\`, and \`Think\`
 - **Response:** Dispatched back automatically via WhatsApp Business Cloud API.
+`,
+  },
+  {
+    id: 'adventureworks-sales-bi',
+    title: 'AdventureWorksDW2019 — Enterprise Sales, Product & Customer BI Suite',
+    client: 'AdventureWorks Enterprise Analytics (SQL Server & Power BI)',
+    companyLogo: '/projects/adventureworks-sales-bi/01-dashboards-overview.jpg',
+    category: 'Lakehouse & BI',
+    role: 'Lead BI & SQL Data Warehouse Engineer',
+    impactMetric: '$22.24M Sales • 105.46% Budget Ratio',
+    metrics: [
+      { label: 'Actual Sales', value: '$22.24M' },
+      { label: 'Budget Target', value: '$21.10M' },
+      { label: 'Sales Variance', value: '+$1.14M' },
+      { label: 'Budget Ratio', value: '105.46%' },
+    ],
+    techStack: ['SQL Server (SSMS)', 'T-SQL', 'Power BI', 'DAX', 'Star Schema', 'AdventureWorksDW2019'],
+    summary: 'End-to-end SQL Server (AdventureWorksDW2019) to Power BI enterprise sales intelligence suite. Tracks $22,239,730 in actual sales against a $21,100,000 budget (+$1,139,730 variance / 105.46% budget utilization) across 3 interactive dashboards: Sales Overview, Product Overview, and Customer Overview.',
+    architectureHighlights: [
+      'Dynamic T-SQL Data Cleaning (SSMS): Cleaned FactInternetSales using LEFT(OrderDateKey, 4) >= YEAR(GETDATE()) - 2 for rolling 2-year automatic refreshes.',
+      'Star Schema Data Modeling: Connected DIM_CUSTOMER (CustomerKey) and DIM_PRODUCT (ProductKey) to FactInternetSales and FactBudget.',
+      'Sales vs Budget KPIs: $22,239,730 Actual Sales vs $21,100,000 Budget (+$1,139,730 positive variance, 105.46% Sales-to-Budget Ratio).',
+      'Product Category & Top Sellers: Bikes (95.32%), Accessories (3.15%), Clothing (1.5%), led by Mountain-200 series.',
+      'Customer & Geographic Insights: Ranked Top Ten Customers (Jordan Turner, Jessica Shaw) with gender split, monthly trends, and interactive 2019–2022 slicers.',
+    ],
+    liveDemoUrl: 'https://github.com/islamsamyy',
+    featured: true,
+    challenge: 'Leadership lacked clarity on actual-vs-budget performance, monthly sales variance, top-performing products and customers, and regional/category revenue distribution across multi-year AdventureWorksDW2019 data.',
+    solution: 'Built a 7-stage SQL-to-Power BI pipeline: cleaning FactInternetSales in SSMS, modeling a clean star schema (DIM_CUSTOMER, DIM_PRODUCT, FactInternetSales, FactBudget), writing DAX variance measures, and delivering 3 executive dashboards.',
+    keyDecisions: [
+      {
+        title: 'Dynamic Rolling 2-Year SQL Filter',
+        rationale: 'Used LEFT(OrderDateKey, 4) >= YEAR(GETDATE()) - 2 in T-SQL instead of hardcoded years so the warehouse query stays automatically up to date.',
+        tradeOff: 'Assumes OrderDateKey follows YYYYMMDD integer formatting.',
+      },
+      {
+        title: '3-Dashboard Modular Cockpit',
+        rationale: 'Split Sales Overview, Product Overview, and Customer Overview with synchronized Year (2019–2022), Month, City, and Category slicers.',
+        tradeOff: 'Requires consistent cross-filtering rules across FactInternetSales and FactBudget.',
+      },
+    ],
+    systemFlow: [
+      '1. SQL Cleaning (SSMS): Filtered FactInternetSales for rolling 2-year window and removed unused columns.',
+      '2. Data Transformation & Integration: Standardized DIM_CUSTOMER, DIM_PRODUCT, and FactBudget tables.',
+      '3. Power BI Star Schema: Linked CustomerKey and ProductKey relationships to FactInternetSales.',
+      '4. DAX Measures & Visuals: Computed Sales ($22.24M), Budget ($21.10M), Variance (+$1.14M), and 105.46% Ratio.',
+    ],
+    outcomeMetrics: [
+      { label: 'Actual Sales', value: '$22.24M', description: 'Total internet sales ($22,239,730) across Bikes, Accessories, and Clothing.' },
+      { label: 'Sales Variance', value: '+$1.14M', description: 'Exceeded the $21.10M budget by $1,139,730 (105.46% ratio).' },
+      { label: 'Bikes Share', value: '95.32%', description: 'Dominant product category, followed by Accessories (3.15%) and Clothing (1.5%).' },
+      { label: 'Pipeline Stages', value: '7 Stages', description: 'SQL Cleaning -> Transformation -> Integration -> Prep -> Power BI -> Model -> DAX.' },
+    ],
+    galleryImages: [
+      '/projects/adventureworks-sales-bi/01-dashboards-overview.jpg',
+      '/projects/adventureworks-sales-bi/07-sales-overview-kpis.jpg',
+      '/projects/adventureworks-sales-bi/08-category-breakdown.jpg',
+      '/projects/adventureworks-sales-bi/09-top-products-customers.jpg',
+      '/projects/adventureworks-sales-bi/10-sales-vs-budget-trend.jpg',
+      '/projects/adventureworks-sales-bi/04-sql-cleaning.jpg',
+      '/projects/adventureworks-sales-bi/05-dim-customer.jpg',
+      '/projects/adventureworks-sales-bi/06-dim-product.jpg',
+    ],
+    steps: [
+      { title: '1. SQL Cleaning & Integration', description: 'Cleaned AdventureWorksDW2019.dbo.FactInternetSales in SSMS with dynamic rolling-year T-SQL.' },
+      { title: '2. Star Schema Modeling', description: 'Connected DIM_CUSTOMER, DIM_PRODUCT, FactInternetSales, and FactBudget in Power BI.' },
+      { title: '3. Sales vs Budget Variance', description: 'Tracked $22.24M Actual Sales vs $21.10M Budget (+$1.14M variance / 105.46% ratio).' },
+      { title: '4. Product & Customer Drilldown', description: 'Identified Mountain-200 series, Bikes (95.32%), and Top 10 Customers (Jordan Turner, Jessica Shaw).' },
+    ],
+    readmeContent: `# AdventureWorksDW2019 — Enterprise Sales, Product & Customer BI Suite
+
+## Executive Summary
+An end-to-end **SQL Server (SSMS)** and **Power BI** analytics suite built on \`AdventureWorksDW2019\`, tracking **$22,239,730 in actual sales** against a **$21,100,000 budget** (**+$1,139,730 variance** / **105.46% Sales-to-Budget Ratio**).
+
+---
+
+## 7-Stage Data Engineering & BI Pipeline
+1. **Data Cleaning in SQL:** Cleaned \`FactInternetSales\` using \`LEFT(OrderDateKey, 4) >= YEAR(GETDATE()) - 2\` for automatic rolling-year updates.
+2. **Data Transformation:** Structured and standardized raw tables into analysis-ready formats.
+3. **Data Integration:** Combined multiple sales, product, customer, and budget sources.
+4. **Data Preparation:** Finalized datasets for Power BI ingestion.
+5. **Inserting Data into Power BI:** Loaded cleaned SQL views into Power BI Desktop.
+6. **Creating Model Tables:** Built star-schema relationships (\`DIM_CUSTOMER\` via \`CustomerKey\`, \`DIM_PRODUCT\` via \`ProductKey\`).
+7. **DAX Formulas:** Authored calculated measures for Sales, Budget, Variance, and Sales-to-Budget Ratio.
+
+---
+
+## Key Business Insights
+- **Sales KPI:** \`$22,239,730\` Actual vs \`$21,100,000\` Budget (**105.46%**)
+- **Category Breakdown:** Bikes (\`95.32%\`), Accessories (\`3.15%\`), Clothing (\`1.5%\`)
+- **Top Products:** \`Mountain-200\` series leads unit and revenue volume
+- **Top Customers:** Jordan Turner, Jessica Shaw, and top 10 high-value accounts
 `,
   },
   // --- IMPORTED GITHUB PROJECTS ---
