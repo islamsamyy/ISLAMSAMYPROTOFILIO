@@ -25,6 +25,116 @@ export interface ProjectItem {
 
 export const initialProjects: ProjectItem[] = [
   {
+    id: 'telco-churn-analysis',
+    title: 'Telco Customer Churn Analysis — Python & Power BI',
+    client: 'Telecommunications Retention Analytics',
+    companyLogo: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=120&q=80',
+    category: 'AI & Machine Learning',
+    role: 'Data Scientist & BI Developer',
+    impactMetric: '7,043 Customers · Churn Drivers',
+    metrics: [
+      { label: 'Total Customers', value: '7,043' },
+      { label: 'Gender Split', value: '50.5% M / 49.5% F' },
+      { label: 'Dashboard Pages', value: '3 Interactive' },
+      { label: 'Stack', value: 'Python + Power BI' }
+    ],
+    techStack: ['Python', 'Pandas', 'Scikit-learn', 'Power BI', 'DAX', 'Power Query'],
+    summary: 'In-depth customer churn analysis for a telecom company combining Python (data preprocessing, feature engineering, predictive modeling) with a 3-page interactive Power BI dashboard to uncover attrition drivers and enable targeted retention strategies.',
+    architectureHighlights: [
+      'Python preprocessing pipeline handling missing values, categorical encoding, and Tenure Category engineering.',
+      'Predictive modeling to identify high-risk churn segments across contract types and service tiers.',
+      'Multi-page Power BI report: All Customer Profile, Churned Customer Profile, and Churned Customer Details.',
+      'Customer ID drill-through view surfacing personal, service, and contract attributes for individual churned accounts.'
+    ],
+    challenge: 'The telecom operator lacked visibility into how contract structure, tenure, payment methods, and add-on services (OnlineSecurity, TechSupport, DeviceProtection) contributed to customer attrition.',
+    solution: 'Built a Python-to-Power BI analytics pipeline that engineered customer tenure segments, modeled churn risk, and delivered an interactive 3-page retention dashboard.',
+    systemFlow: [
+      'Data Preprocessing (Python): Clean raw telecom records and engineer Tenure Categories.',
+      'Predictive Modeling: Identify key churn drivers across contracts, services, and demographics.',
+      'Power BI Modeling: Build DAX measures and multi-page navigation.',
+      'Customer Drill-Through: Inspect individual churned customer profiles by Customer ID.'
+    ],
+    outcomeMetrics: [
+      { label: 'Customer Base', value: '7,043', description: '3,555 Male and 3,488 Female customers analyzed' },
+      { label: 'Contract Insights', value: '3.88K', description: 'Month-to-month contracts identified as primary churn risk' },
+      { label: 'Drill-Through', value: '100%', description: 'Granular Customer ID inspection for retention teams' }
+    ],
+    featured: true,
+    githubUrl: 'https://github.com/islamsamyy/telco-customer-churn-analysis',
+    steps: [
+      {
+        title: 'All Customer Profile (7,043 Customers)',
+        description: 'Comprehensive overview of demographics, phone/internet services, tenure categories, contracts, and payment methods.'
+      },
+      {
+        title: 'Churned Customer Details (Drill-Through)',
+        description: 'Granular Customer ID inspection (e.g., 0004-TLHLJ) displaying personal details, subscribed services, and contract metadata.'
+      }
+    ],
+    galleryImages: [
+      '/projects/telco-churn-analysis/all-customer-profile.jpg',
+      '/projects/telco-churn-analysis/churned-customer-details.jpg'
+    ]
+  },
+  {
+    id: 'call-center-powerbi',
+    title: 'Call Center Analysis Dashboard — Power BI & SLA Intelligence',
+    client: 'Customer Operations & Support Analytics',
+    companyLogo: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=120&q=80',
+    category: 'Lakehouse & BI',
+    role: 'BI Developer & Data Analyst',
+    impactMetric: '33K Calls · 75.3% SLA Response',
+    metrics: [
+      { label: 'Total Calls', value: '33,000' },
+      { label: 'Avg Call Duration', value: '25.02 min' },
+      { label: 'Response Time', value: '75.3% SLA' },
+      { label: 'Total Duration', value: '13.74K Hrs' }
+    ],
+    techStack: ['Power BI', 'DAX', 'Power Query', 'Bing Maps', 'Data Modeling'],
+    summary: 'Multidimensional Power BI Call Center Analysis Dashboard providing comprehensive visibility into 33,000+ support calls, average handle time (25.02 min), SLA response rate (75.3%), caller sentiment, support channels, call reasons, and geographic state-level distribution.',
+    architectureHighlights: [
+      'Tracks 33K total calls and 824.2K minutes (13.74K hours) of cumulative support volume.',
+      'Sentiment analysis breakdown from Very Negative to Very Positive across both call count and duration.',
+      'Channel distribution donut chart comparing Call-Center, Chatbot, Email, and Web volumes.',
+      'Interactive US State Map and slicer enabling instant drill-down into state-level KPIs.'
+    ],
+    challenge: 'Call center managers lacked a unified view of SLA response rates, handle times, and customer sentiment across multiple support channels and US states.',
+    solution: 'Designed an interactive dark-themed Power BI dashboard with DAX-driven KPIs, sentiment & reason breakdowns, channel analytics, and state-level geographic filtering.',
+    systemFlow: [
+      'Data Ingestion & Modeling: Clean and model 33K call records in Power Query.',
+      'DAX KPI Engine: Compute Total Calls, Avg Call Duration, Response Time %, and Total Duration.',
+      'Visual Analytics: Build Sentiment, Reason, Channel, and State Map visuals.',
+      'Interactive Slicing: Enable state-level filtering with real-time KPI recalculation.'
+    ],
+    outcomeMetrics: [
+      { label: 'Call Volume', value: '33K', description: 'Total support interactions analyzed' },
+      { label: 'SLA Response', value: '75.3%', description: 'Calls answered within target response time' },
+      { label: 'Total Handle Time', value: '824.2K min', description: '13.74K hours of tracked call duration' }
+    ],
+    featured: true,
+    githubUrl: 'https://github.com/islamsamyy/call-center-analysis-powerbi',
+    steps: [
+      {
+        title: 'Full Dashboard Overview (33K Calls)',
+        description: 'Executive view of Total Calls, Avg Call Duration, SLA Response %, Sentiment, Channel, Reason, and US State Map.'
+      },
+      {
+        title: 'State Hover Tooltip (Texas)',
+        description: 'Interactive tooltip displaying state-level call volume (Texas: 3,572 calls).'
+      },
+      {
+        title: 'Dynamic State Slicer — Arkansas & Idaho',
+        description: 'Real-time KPI recalculation when filtering by individual states such as Arkansas (204 calls) and Idaho (174 calls).'
+      }
+    ],
+    galleryImages: [
+      '/projects/call-center-powerbi/dashboard-overview.jpg',
+      '/projects/call-center-powerbi/state-tooltip-texas.jpg',
+      '/projects/call-center-powerbi/state-filter-arkansas.jpg',
+      '/projects/call-center-powerbi/state-filter-idaho.jpg'
+    ]
+  },
+  {
     id: 'india-unemployment-eda',
     title: 'India Unemployment Rate Analysis — Interactive Data Science & EDA',
     client: 'Data Science & Economic Analytics',
@@ -298,6 +408,57 @@ export const initialProjects: ProjectItem[] = [
     ],
     galleryImages: [
       '/projects/global-sales-analysis/dashboard-overview.jpg'
+    ]
+  },
+  {
+    id: 'telco-customer-churn',
+    title: 'Telco Customer Churn Analysis — Python Predictive Modeling & Power BI',
+    client: 'Telecommunications Analytics',
+    companyLogo: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=120&q=80',
+    category: 'Lakehouse & BI',
+    role: 'Data Scientist & BI Developer',
+    impactMetric: '7,043 Customers Analyzed',
+    metrics: [
+      { label: 'Total Customers', value: '7,043' },
+      { label: 'Gender Split', value: '50.5% M / 49.5% F' },
+      { label: 'Modeling', value: 'Python + ML' },
+      { label: 'Visualization', value: 'Power BI' }
+    ],
+    techStack: ['Python', 'Pandas', 'Scikit-Learn', 'Power BI', 'DAX', 'Feature Engineering'],
+    summary: 'In-depth customer churn analysis for a telecom company combining Python (data preprocessing, feature engineering, and predictive modeling) with interactive Power BI dashboards to uncover churn drivers and support retention strategies.',
+    architectureHighlights: [
+      'Python Data Pipeline: Performed data cleaning, missing-value handling, and feature engineering (e.g., tenure categorization into short, long, and very long).',
+      'Predictive Modeling: Trained classification models in Python to identify high-risk churn segments and key attrition predictors.',
+      'All Customer Profile Dashboard: Visualizes 7,043 customers across Demographics (Gender, SeniorCitizen, Partner, Dependents), Phone Services (InternetService, OnlineSecurity, TechSupport, DeviceProtection, OnlineBackup), and Contracts.',
+      'Churned Customer Details Drill-Through: Enables granular inspection of individual churned customer profiles by Customer ID, including contract type, tenure, and payment method.'
+    ],
+    challenge: 'The telecom provider needed to understand why customers were leaving and which service, contract, or demographic factors most strongly correlated with attrition.',
+    solution: 'Combined Python-based preprocessing and predictive modeling with a multi-page Power BI report featuring All Customer Profile, Churned Customer Profile, and Churned Customer Details views.',
+    systemFlow: [
+      'Data Preprocessing & Feature Engineering (Python): Cleaned raw telecom records and engineered tenure and service-adoption features.',
+      'Predictive Churn Modeling (Python): Evaluated key churn drivers such as month-to-month contracts, electronic check payments, and lack of tech support.',
+      'Interactive Power BI Reporting: Built multi-page navigation (All Customer Profile, Churned Customer Profile, Churned Customer Details) for executive and operational drill-down.'
+    ],
+    outcomeMetrics: [
+      { label: 'Customer Base', value: '7,043', description: 'Full telecom customer portfolio analyzed across demographics and services' },
+      { label: 'Key Churn Drivers', value: 'Identified', description: 'Month-to-month contracts, electronic check, and missing tech support/security' },
+      { label: 'Retention Strategy', value: 'Actionable', description: 'Enabled targeted retention offers for high-risk customer segments' }
+    ],
+    featured: true,
+    githubUrl: 'https://github.com/islamsamyy',
+    steps: [
+      {
+        title: 'All Customer Profile Overview',
+        description: 'Power BI dashboard showing 7,043 total customers (3,555 Male / 3,488 Female) segmented by demographics, phone & internet services, and contract/payment methods.'
+      },
+      {
+        title: 'Churned Customer Details Drill-Through',
+        description: 'Interactive customer-level lookup view displaying Personal Details, Phone Services, Other Details, and Contract attributes for individual churned accounts.'
+      }
+    ],
+    galleryImages: [
+      '/projects/telco-customer-churn/all-customer-profile.jpg',
+      '/projects/telco-customer-churn/churned-customer-details.jpg'
     ]
   },
   {
