@@ -27,7 +27,7 @@ export const initialProjects: ProjectItem[] = [
   {
     id: 'wirecut-os',
     title: 'WireCut OS — Industrial Operations & Costing Analytics Platform',
-    client: 'Maadi Marble (GitHub • islamsamyy/wirecut-)',
+    client: 'Maadi Marble',
     companyLogo: 'https://raw.githubusercontent.com/islamsamyy/wirecut-/main/public/maadi-logo.png',
     category: 'Lakehouse & BI',
     role: 'Creator & Lead Solutions Architect',
@@ -35,21 +35,46 @@ export const initialProjects: ProjectItem[] = [
     metrics: [
       { label: 'Dashboard Modules', value: '19 Pages' },
       { label: 'PLC Telemetry', value: '28 Channels' },
-      { label: 'Costing Views', value: 'SQL Views' },
-      { label: 'Stack', value: 'Next.js 16 + Supabase' }
+      { label: 'Costing Engine', value: 'Real-Time' },
+      { label: 'Stack', value: 'Next.js + PostgreSQL' }
     ],
-    techStack: ['Next.js 16', 'React 19', 'TypeScript', 'Supabase', 'PostgreSQL', 'Tailwind CSS 4', 'Recharts 3', 'Vitest'],
-    summary: 'Operations, PLC telemetry, and production costing platform for Marbelila / Maadi Marble multi-wire diamond saw operations (MWS-01). Consolidates PLC exports (log.CSV) and operator spreadsheets into a Postgres-backed system with real-time utilization, wire wear, energy analytics, and unit costing.',
+    techStack: ['Next.js', 'React', 'TypeScript', 'PostgreSQL', 'Tailwind CSS', 'Recharts'],
+    summary: 'Operations, PLC telemetry, and production costing platform for Maadi Marble multi-wire diamond saw operations. Consolidates machine exports and operator logs into a unified analytics system with real-time utilization, wire wear tracking, energy analytics, and unit costing.',
     architectureHighlights: [
-      'Tracks wire consumption (m/m²) across First use and Second use spools and logs roller groove sets 1..6.',
-      'Calculates downtime gaps between consecutive cuts using SQL window functions (downtime_gaps) and tags causes.',
-      'Joins PLC planned time, max slices, and planned wire cost with actual operator logs and 28-channel sensor data.',
+      'Tracks diamond wire consumption (m/m²) across first-use and second-use spools alongside roller groove wear.',
+      'Calculates real machine utilization and downtime gaps between consecutive cuts with categorized cause tracking.',
+      'Correlates planned cut schedules and wire budgets against actual operator logs and 28-channel sensor telemetry.',
       'Computes actual cost per m² and cost per slab per block tied directly to customer orders.',
-      'Archives uploaded CSVs in private Supabase Storage (raw-logs) with anomaly logging and audit trails.'
+      'Validates and archives uploaded machine logs with automated anomaly detection and full audit history.'
     ],
     liveDemoUrl: 'https://wirecut.vercel.app',
-    githubUrl: 'https://github.com/islamsamyy/wirecut-',
     featured: true,
+    steps: [
+      {
+        title: 'Production Dashboard',
+        description: 'Executive overview of daily production output, machine utilization rates, and real-time operational KPIs across shifts.'
+      },
+      {
+        title: 'Operations & Cut Tracking',
+        description: 'Detailed tracking of individual marble block cuts, slab yields, cycle times, and operator shift logs.'
+      },
+      {
+        title: 'Wires & Diamond Wear',
+        description: 'Monitors diamond wire consumption per square meter across first-use and second-use spools alongside roller groove wear.'
+      },
+      {
+        title: 'Machine Health & Telemetry',
+        description: 'Live 28-channel PLC sensor telemetry, feed speed, and wire tension monitoring to detect anomalies before a wire snaps.'
+      },
+      {
+        title: 'Energy Analytics',
+        description: 'Tracks electrical power consumption per cut and per shift to optimize energy efficiency and accurate unit costing.'
+      },
+      {
+        title: 'Upload Log & CSV Ingestor',
+        description: 'Automated ingestion and validation pipeline for machine logs with anomaly flagging and complete audit history.'
+      }
+    ],
     galleryImages: [
       'https://raw.githubusercontent.com/islamsamyy/wirecut-/main/public/stitch/screenshots/ffdbc38d3a544bc6972fcccd0f8d2100.png',
       'https://raw.githubusercontent.com/islamsamyy/wirecut-/main/public/stitch/screenshots/c285f87d7aff46aabd93547175640b28.png',
@@ -379,6 +404,103 @@ A 6-dashboard Power BI hospitality analytics suite built for **Safir Hotels & Re
 ### 7. GHI BB, GHI Hal, GHI HB, and GHI SAL by Day
 - **Weekly Meal Plan Volume:** \`509\` Breakfast (BB) | \`201\` Lunch | \`357\` Dinner | \`175\` Half Board (HB)
 - **Insights:** Daily tracking of these metrics reveals trends and patterns, helping optimize F&B operations and guest experiences on specific days of the week.
+`,
+  },
+  {
+    id: 'north-hejaz-hr-bi',
+    title: 'North Hejaz HR — Recruitment Platform & Power BI Analytics Suite',
+    client: 'North Hejaz HR Co. (شركة شمال الحجاز للتوظيف)',
+    companyLogo: '/projects/north-hejaz-hr-bi/web-platform-hero.jpg',
+    category: 'Lakehouse & BI',
+    role: 'Lead Full-Stack & BI Architect',
+    impactMetric: '2.0M SAR Revenue • 288 Clients',
+    metrics: [
+      { label: 'Total Revenue', value: '2.0M SAR' },
+      { label: 'Total Clients', value: '288' },
+      { label: 'Submissions', value: '940 Done' },
+      { label: 'Avg Client Rev', value: '5.46K' },
+    ],
+    techStack: ['React', 'TypeScript', 'Tailwind CSS', 'Power BI', 'DAX', '12-Table Star Schema'],
+    summary: 'End-to-end Saudi Vision 2030 recruitment web platform and 4-screen Power BI executive intelligence suite for North Hejaz HR Co. (شركة شمال الحجاز للتوظيف). Unifies Silver/Gold/Diamond subscription tiers, Mada & bank-transfer revenue tracking (2.0M SAR), 288 candidate/client profiles, and 940+ job submissions across Riyadh, Jeddah, Madinah, Dammam, and Tabuk.',
+    architectureHighlights: [
+      'Full-Stack Recruitment Portal (React / TypeScript): Built an RTL Arabic web application featuring Silver, Gold, and Diamond package selection, interactive upgrade modals, comparison tables, and testimonials.',
+      'Revenue & Payments BI (2.0M SAR): Tracked 96 Gold, 98 Silver, and 94 Diamond packages with 85.34% Mada card vs bank-transfer breakdown and regional revenue (Riyadh 930K, Madinah 324K, Jeddah 4K).',
+      'Client & Candidate Demographics: Analyzed 288 clients (261 Saudi, 26 Non-Saudi), active/inactive ratios, academic specializations (Business Admin, Marketing, Accounting, Law), and CV approval rates.',
+      'Submissions & Employment Funnel: Monitored 940 completed submissions and 760 remaining client quota across Riyadh, Dammam, and Jeddah with employee-level performance slicing.',
+      '12-Table Power BI Star Schema: Modeled Date_Table, Package Consumption, Subscriptions, Packages, Submissions, Final Employment, CVs, Clients, Payments, Interviews, and Employees.',
+    ],
+    liveDemoUrl: 'https://github.com/islamsamyy/SHMAL-ELHEJAZ',
+    featured: true,
+    challenge: 'North Hejaz HR Co. needed both a modern Arabic-first recruitment web portal for Saudi job seekers and an executive BI cockpit to track package consumption, Mada payment flows, CV approvals, and city-level placement performance.',
+    solution: 'Delivered a React/TypeScript recruitment storefront paired with a 12-table Power BI star-schema analytics suite covering Overview, Revenue & Payments, Client Demographics, and Submissions & Interviews.',
+    keyDecisions: [
+      {
+        title: '12-Table Normalized Power BI Star Schema',
+        rationale: 'Separated transactional tables (Payments, Submissions, Interviews, Package Consumption) from dimension tables (Clients, Packages, Employees, Date_Table) for fast DAX aggregation.',
+        tradeOff: 'Requires scheduled refresh synchronization between the web portal database and Power BI.',
+      },
+      {
+        title: 'RTL-First Arabic Web Experience',
+        rationale: 'Engineered the recruitment portal with native Arabic typography, Saudi Vision 2030 branding, and instant package-upgrade modals.',
+        tradeOff: 'Custom modal and toast state management maintained in React.',
+      },
+    ],
+    systemFlow: [
+      '1. Candidate Onboarding: Candidates browse Silver, Gold, and Diamond packages on the North Hejaz React/TypeScript web platform.',
+      '2. Payment & Subscription Ingestion: Mada (85.34%) and bank-transfer payments are recorded into the Payments & Subscriptions tables.',
+      '3. CV Review & Submissions: 940 completed submissions and 760 remaining quota tracked by city (Riyadh, Jeddah, Madinah, Dammam, Tabuk).',
+      '4. Executive Power BI Cockpit: 4 interactive dashboards (Overview, Payments, Clients, Submissions) surface 2.0M SAR revenue and 5.46K avg client revenue.',
+    ],
+    outcomeMetrics: [
+      { label: 'Total Revenue', value: '2.0M SAR', description: 'Tracked across 288 clients with 85.34% Mada payment adoption.' },
+      { label: 'Completed Submissions', value: '940', description: 'Alongside 760 remaining client package submissions.' },
+      { label: 'Packages Sold', value: '288', description: '96 Gold, 98 Silver, and 94 Diamond recruitment packages.' },
+      { label: 'Data Model', value: '12 Tables', description: 'Full Power BI star schema with custom DAX measures.' },
+    ],
+    galleryImages: [
+      '/projects/north-hejaz-hr-bi/web-platform-hero.jpg',
+      '/projects/north-hejaz-hr-bi/revenue-payments-dashboard.jpg',
+      '/projects/north-hejaz-hr-bi/client-analytics-dashboard.jpg',
+      '/projects/north-hejaz-hr-bi/submissions-tracking-dashboard.jpg',
+      '/projects/north-hejaz-hr-bi/powerbi-data-model.jpg',
+    ],
+    steps: [
+      { title: '1. Recruitment Web Portal', description: 'Saudi Vision 2030 RTL React/TypeScript platform with Silver, Gold, and Diamond career packages.' },
+      { title: '2. Revenue & Mada Payments BI', description: '2.0M SAR revenue tracking across Riyadh (930K), Madinah (324K), and Jeddah with 85.34% Mada share.' },
+      { title: '3. Client & CV Analytics', description: '288 clients segmented by Saudi/Non-Saudi nationality, degree major, and CV acceptance status.' },
+      { title: '4. Submissions & Star Schema', description: '940 completed submissions and 760 remaining quota modeled across a 12-table Power BI schema.' },
+    ],
+    readmeContent: `# North Hejaz HR Co. (شركة شمال الحجاز للتوظيف) — Recruitment Platform & Power BI Analytics Suite
+
+## Executive Summary
+An end-to-end **Saudi Vision 2030** recruitment web platform and **Power BI Executive Analytics Suite** built for **North Hejaz HR Co. (شركة شمال الحجاز للتوظيف)**. The solution combines a React/TypeScript Arabic-first web portal with a **12-table Power BI star-schema** cockpit tracking **2.0M SAR in revenue**, **288 clients**, and **940+ job submissions**.
+
+---
+
+## Platform & Dashboard Showcase
+
+### 1. North Hejaz Recruitment Web Platform (React / TypeScript)
+- Arabic RTL landing experience aligned with **Saudi Vision 2030**.
+- Interactive **Silver**, **Gold**, and **Diamond** career package cards, comparison tables, and instant upgrade modals.
+
+### 2. Revenue & Payments Dashboard
+- **Total Revenue:** \`2.0M SAR\` | **Avg Revenue per Client:** \`5.46K\`
+- **Package Breakdown:** \`96 Gold\` | \`98 Silver\` | \`94 Diamond\`
+- **Payment Methods:** \`85.34% Mada\` vs Bank Transfer
+- **Regional Revenue:** Riyadh (\`930K\`), Madinah (\`324K\`), Jeddah (\`4K\`)
+
+### 3. Client & Candidate Demographics Dashboard
+- **Total Clients:** \`288\` (\`242\` Inactive, \`41\` Active) | **Avg Package Price:** \`1.63K\`
+- **Nationality Split:** \`261 Saudi\` vs \`26 Non-Saudi\`
+- **Top Cities:** Riyadh (\`78\`), Jeddah (\`19\`), Tabuk (\`9\`)
+- **Education & CV Status:** Business Administration, Marketing, Accounting, and Law degree distributions with CV acceptance/rejection tracking.
+
+### 4. Submissions & Operations Dashboard
+- **Completed Submissions:** \`940\` | **Remaining Client Quota:** \`760\`
+- City-level submission velocity across Riyadh, Dammam, and Jeddah with employee-level filtering.
+
+### 5. Power BI 12-Table Star Schema
+- \`Date_Table\`, \`العملاء\` (Clients), \`الباقات\` (Packages), \`اشتراك الباقات\` (Subscriptions), \`استهلاك الباقة\` (Package Consumption), \`التقديمات\` (Submissions), \`المدفوعات\` (Payments), \`المقابلات\` (Interviews), \`التوظيف النهائي\` (Final Employment), \`السير الذاتية\` (CVs), \`الموظفين\` (Employees), and \`MEASURES\`.
 `,
   },
   // --- IMPORTED GITHUB PROJECTS ---

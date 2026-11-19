@@ -9,7 +9,7 @@ import { initialExperiences, ExperienceItem } from '@/data/seedExperience';
 import { initialCrmLeads, CrmLead, CrmStage, CrmActivityLog } from '@/data/seedCrm';
 
 const STORAGE_KEYS = {
-  PROJECTS: 'islam_data_projects_v5',
+  PROJECTS: 'islam_data_projects_v6',
   PACKAGES: 'islam_data_packages_v1',
   CONSULTATION: 'islam_data_consultation_v1',
   ARTICLES: 'islam_data_articles_v1',
