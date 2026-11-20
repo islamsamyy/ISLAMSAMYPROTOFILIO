@@ -315,3 +315,28 @@ html[dir="rtl"] .rtl-flip {
   display: inline-block;
 }
 
+/* UI/UX Pro Max: Smooth scrolling, reduced-motion respect, focus-visible & overflow-x protection */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  overflow-x: clip;
+}
+
+:focus-visible {
+  outline: 2px solid rgb(var(--primary));
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .animate-slide-right-slow,
+  .animate-slide-right-medium {
+    animation: none !important;
+  }
+}
+

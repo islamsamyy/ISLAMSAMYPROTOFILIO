@@ -135,6 +135,12 @@ export default function RootLayout({
       >
         <ThemeProvider defaultTheme="dark">
           <LanguageProvider defaultLanguage="en">
+            <a
+              href="#main-content"
+              className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2.5 focus:rounded-xl focus:bg-primary focus:text-on-primary focus:font-semibold focus:shadow-lg"
+            >
+              Skip to main content
+            </a>
             {/* Global Animated Three.js Cybernetic Constellation & Grid Background across all pages */}
             <ThreeBackgroundCanvas className="fixed inset-0 pointer-events-none z-0 overflow-hidden" />
             <ScrollProgress />

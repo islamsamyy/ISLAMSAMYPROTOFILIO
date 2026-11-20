@@ -1,12 +1,15 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { SiteHeader } from '@/components/navigation/SiteHeader';
 import { SiteFooter } from '@/components/navigation/SiteFooter';
 import { TiltCard } from '@/components/ui/TiltCard';
+import { ProjectCard } from '@/components/projects/ProjectCard';
+import { ArchitectureModal } from '@/components/projects/ArchitectureModal';
 import { useProjects } from '@/lib/hooks';
+import { cleanProjectText, isDiagramAsset } from '@/lib/utils';
 import {
   ArrowLeft,
   ArrowRight,
@@ -27,6 +30,11 @@ import {
   ChevronRight,
   AlertCircle,
   FolderGit2,
+  Share2,
+  Check,
+  X,
+  ChevronLeft,
+  Maximize2,
 } from 'lucide-react';
 
 import { ProjectItem, initialProjects } from '@/data/seedProjects';
@@ -41,6 +49,10 @@ export function ProjectDetailClient({ projectId, initialProject }: ProjectDetail
   const { language, t } = useLanguage();
   const { projects, loaded } = useProjects();
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const [copiedLink, setCopiedLink] = useState(false);
+  const [readmeExpanded, setReadmeExpanded] = useState(false);
+  const [activeBlueprint, setActiveBlueprint] = useState<ProjectItem | null>(null);
 
   const activeProjects = projects.length > 0 ? projects : initialProjects;
   const project =
@@ -48,6 +60,38 @@ export function ProjectDetailClient({ projectId, initialProject }: ProjectDetail
     initialProject ||
     initialProjects.find((p) => p.id === projectId) ||
     initialProjects[0];
+
+  const relatedProjects = activeProjects
+    .filter((p) => p.id !== project?.id && p.category === project?.category)
+    .slice(0, 3);
+
+  const gallery =
+    project?.galleryImages && project.galleryImages.length > 0
+      ? project.galleryImages
+      : project?.companyLogo
+      ? [project.companyLogo.replace('w=120', 'w=1200')]
+      : [];
+
+  useEffect(() => {
+    if (lightboxIndex === null || gallery.length === 0) return;
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setLightboxIndex(null);
+      else if (e.key === 'ArrowRight') setLightboxIndex((prev) => (prev === null ? 0 : (prev + 1) % gallery.length));
+      else if (e.key === 'ArrowLeft') setLightboxIndex((prev) => (prev === null ? 0 : (prev - 1 + gallery.length) % gallery.length));
+    };
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, [lightboxIndex, gallery.length]);
+
+  const handleCopyShareLink = async () => {
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      setCopiedLink(true);
+      setTimeout(() => setCopiedLink(false), 2000);
+    } catch {
+      // Ignore clipboard errors in restricted contexts
+    }
+  };
 
   const currentIndex = activeProjects.findIndex((p) => p.id === project?.id);
   const prevProject = currentIndex > 0 ? activeProjects[currentIndex - 1] : null;
@@ -59,6 +103,10 @@ export function ProjectDetailClient({ projectId, initialProject }: ProjectDetail
     if (!canvas || !project) return;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
+
+    const prefersReducedMotion =
+      typeof window !== 'undefined' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     let animId: number;
     let width = (canvas.width = canvas.parentElement?.offsetWidth || 600);
@@ -114,11 +162,15 @@ export function ProjectDetailClient({ projectId, initialProject }: ProjectDetail
         }
       }
 
-      animId = requestAnimationFrame(render);
+      if (!prefersReducedMotion) {
+        animId = requestAnimationFrame(render);
+      }
     };
 
     render();
-    return () => cancelAnimationFrame(animId);
+    return () => {
+      if (animId) cancelAnimationFrame(animId);
+    };
   }, [project?.category]);
 
   if (!project && loaded) {
@@ -213,7 +265,7 @@ export function ProjectDetailClient({ projectId, initialProject }: ProjectDetail
 
                 {/* Summary */}
                 <p className="font-body-lg text-sm sm:text-base text-on-surface-variant leading-relaxed">
-                  {project.summary}
+                  {cleanProjectText(project.summary)}
                 </p>
 
                 {/* CTA Action Bar */}
@@ -239,6 +291,15 @@ export function ProjectDetailClient({ projectId, initialProject }: ProjectDetail
                     </a>
                   )}
 
+                  <button
+                    type="button"
+                    onClick={handleCopyShareLink}
+                    className="inline-flex items-center gap-1.5 px-4 py-3 rounded-xl bg-surface-container-high/70 hover:bg-surface-container-highest text-on-surface-variant hover:text-on-surface font-mono text-xs border border-outline-variant/25 transition-all"
+                  >
+                    {copiedLink ? <Check className="w-3.5 h-3.5 text-secondary" /> : <Share2 className="w-3.5 h-3.5" />}
+                    <span>{copiedLink ? (language === 'ar' ? 'تم النسخ!' : 'Link Copied!') : (language === 'ar' ? 'مشاركة' : 'Share')}</span>
+                  </button>
+
                   <Link
                     href="/projects"
                     className="inline-flex items-center gap-2 px-4 py-3 rounded-xl text-on-surface-variant hover:text-on-surface font-mono text-xs transition-colors"
@@ -249,50 +310,115 @@ export function ProjectDetailClient({ projectId, initialProject }: ProjectDetail
                 </div>
               </div>
 
-              {/* 3D Telemetry Canvas Visualizer Card */}
-              <div className="lg:w-80 w-full flex flex-col gap-3 p-5 rounded-2xl bg-surface-container-lowest/80 border border-white/10 shadow-inner backdrop-blur-xl shrink-0">
-                <div className="flex items-center justify-between">
-                  <span className="font-mono text-xs text-primary font-bold">{t('projectDetail.realtimeNode')}</span>
-                  <span className="w-2 h-2 rounded-full bg-secondary animate-ping"></span>
-                </div>
-                <div className="w-full h-32 relative overflow-hidden rounded-xl bg-black/40 flex items-center justify-center">
-                  <canvas ref={canvasRef} className="w-full h-full" />
-                </div>
-                <div className="flex items-center justify-between text-[11px] font-mono text-on-surface-variant border-t border-surface-container-high/60 pt-2">
-                  <span>{t('projectDetail.archVerified')}</span>
-                  <span className="text-secondary font-bold">{t('projectDetail.productionSla')}</span>
+              {/* Right Column: Primary Screenshot Preview + 3D Telemetry Node */}
+              <div className="lg:w-88 w-full flex flex-col gap-4 shrink-0">
+                {gallery.length > 0 && (
+                  <button
+                    type="button"
+                    onClick={() => setLightboxIndex(0)}
+                    className="group relative aspect-video w-full rounded-2xl overflow-hidden bg-surface-container-lowest border border-outline-variant/25 dark:border-white/15 shadow-lg text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                    title="Inspect visual showcase"
+                  >
+                    <img
+                      src={gallery[0]}
+                      alt={`${project.title} preview`}
+                      className={`w-full h-full ${isDiagramAsset(gallery[0]) ? 'object-contain p-3' : 'object-cover object-top'} group-hover:scale-[1.03] transition-transform duration-300`}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent" />
+                    <div className="absolute bottom-2.5 left-3 right-3 flex items-center justify-between text-[11px] font-mono text-zinc-100">
+                      <span className="flex items-center gap-1.5">
+                        <Maximize2 className="w-3.5 h-3.5 text-secondary" />
+                        <span>{language === 'ar' ? 'فتح المعرض' : `Inspect Gallery (${gallery.length})`}</span>
+                      </span>
+                    </div>
+                  </button>
+                )}
+
+                <div className="w-full flex flex-col gap-3 p-4 rounded-2xl bg-surface-container-lowest/80 border border-outline-variant/20 dark:border-white/10 shadow-inner backdrop-blur-xl">
+                  <div className="flex items-center justify-between">
+                    <span className="font-mono text-xs text-primary font-bold">{t('projectDetail.realtimeNode')}</span>
+                    <span className="w-2 h-2 rounded-full bg-secondary animate-ping"></span>
+                  </div>
+                  <div className="w-full h-24 relative overflow-hidden rounded-xl bg-black/40 flex items-center justify-center">
+                    <canvas ref={canvasRef} className="w-full h-full" />
+                  </div>
+                  <div className="flex items-center justify-between text-[11px] font-mono text-on-surface-variant border-t border-surface-container-high/60 pt-2">
+                    <span>{t('projectDetail.archVerified')}</span>
+                    <span className="text-secondary font-bold">{t('projectDetail.productionSla')}</span>
+                  </div>
                 </div>
               </div>
             </div>
           </section>
 
-          {/* METRICS TELEMETRY GRID */}
-          <section className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-            {project.metrics.map((metric, idx) => (
-              <div
-                key={idx}
-                className="relative p-5 sm:p-6 rounded-3xl bg-surface-container-low/40 backdrop-blur-2xl border border-white/20 dark:border-white/[0.08] shadow-[0_8px_32px_rgba(0,0,0,0.25)] flex flex-col justify-between"
+          {/* QUICK SECTION JUMP BAR */}
+          <nav
+            aria-label="Case Study Sections"
+            className="flex items-center gap-2 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          >
+            {[
+              { href: '#metrics-section', label: language === 'ar' ? 'المقاييس والنتائج' : 'Metrics & Outcomes' },
+              ...(gallery.length > 0 ? [{ href: '#gallery-section', label: language === 'ar' ? 'المعرض' : `Gallery (${gallery.length})` }] : []),
+              { href: '#challenge-section', label: language === 'ar' ? 'التحدي والحل' : 'Challenge & Solution' },
+              { href: '#highlights-section', label: language === 'ar' ? 'المميزات' : 'Highlights' },
+              ...(project.readmeContent ? [{ href: '#readme-section', label: 'README.md' }] : []),
+              { href: '#tech-section', label: language === 'ar' ? 'التقنيات' : 'Tech Stack' },
+              ...(relatedProjects.length > 0 ? [{ href: '#related-section', label: language === 'ar' ? 'مشاريع ذات صلة' : 'Related Work' }] : []),
+            ].map((item) => (
+              <a
+                key={item.href}
+                href={item.href}
+                className="px-3.5 py-1.5 rounded-full bg-surface-container-low/75 hover:bg-primary-container hover:text-on-primary-container border border-outline-variant/25 text-xs font-mono text-on-surface-variant whitespace-nowrap transition-colors"
               >
-                <div className="text-xs font-mono text-secondary uppercase font-semibold">{metric.label}</div>
-                <div className="font-nexa text-2xl sm:text-3xl font-extrabold text-on-surface mt-2 text-primary">
-                  {metric.value}
-                </div>
-              </div>
+                {item.label}
+              </a>
             ))}
+          </nav>
+
+          {/* METRICS TELEMETRY + BUSINESS OUTCOMES */}
+          <section id="metrics-section" className="flex flex-col gap-5 scroll-mt-24">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+              {project.metrics.map((metric, idx) => (
+                <div
+                  key={idx}
+                  className="relative p-5 sm:p-6 rounded-3xl bg-surface-container-low/65 dark:bg-surface-container-low/45 backdrop-blur-2xl border border-outline-variant/25 dark:border-white/[0.08] shadow-[0_8px_32px_rgba(0,0,0,0.14)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.25)] flex flex-col justify-between"
+                >
+                  <div className="text-xs font-mono text-secondary uppercase font-semibold">{metric.label}</div>
+                  <div className="font-nexa text-2xl sm:text-3xl font-extrabold mt-2 text-primary">
+                    {metric.value}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {project.outcomeMetrics && project.outcomeMetrics.length > 0 && (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {project.outcomeMetrics.map((outcome, idx) => (
+                  <div
+                    key={idx}
+                    className="p-5 rounded-2xl bg-gradient-to-br from-surface-container-low/80 to-surface-container/60 border border-primary/20 flex flex-col gap-1.5 shadow-sm"
+                  >
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="font-mono text-[11px] uppercase tracking-wider text-on-surface-variant font-semibold">
+                        {outcome.label}
+                      </span>
+                      <span className="px-2.5 py-0.5 rounded-full bg-secondary/15 text-secondary font-nexa text-xs font-extrabold">
+                        {outcome.value}
+                      </span>
+                    </div>
+                    <p className="text-xs text-on-surface-variant leading-relaxed">
+                      {outcome.description}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            )}
           </section>
 
-          {/* PROJECT GALLERY PHOTOS */}
-          {(() => {
-            const gallery =
-              project.galleryImages && project.galleryImages.length > 0
-                ? project.galleryImages
-                : project.companyLogo
-                ? [project.companyLogo.replace('w=120', 'w=1200')]
-                : [];
-            if (gallery.length === 0) return null;
-            return (
-              <section className="flex flex-col gap-5">
-                <div className="flex items-center justify-between">
+          {/* PROJECT GALLERY PHOTOS (Editorial Stage + Interactive Lightbox) */}
+          {gallery.length > 0 && (
+              <section id="gallery-section" className="flex flex-col gap-5 scroll-mt-24">
+                <div className="flex flex-wrap items-end justify-between gap-3">
                   <div className="flex flex-col gap-1">
                     <span className="font-mono text-xs text-secondary uppercase tracking-widest font-semibold">
                       {t('projectDetail.visualShowcase')}
@@ -301,28 +427,50 @@ export function ProjectDetailClient({ projectId, initialProject }: ProjectDetail
                       {t('projectDetail.galleryTitle')}
                     </h2>
                   </div>
+                  <span className="text-xs font-mono text-on-surface-variant">
+                    {language === 'ar' ? 'انقر على أي صورة للتكبير' : `${gallery.length} ${gallery.length === 1 ? 'Artifact' : 'Artifacts'} • Click any visual to expand`}
+                  </span>
                 </div>
                 <div className={`grid grid-cols-1 ${gallery.length > 1 ? 'md:grid-cols-2 lg:grid-cols-3' : ''} gap-5`}>
-                  {gallery.map((imgUrl, idx) => (
-                    <a
-                      key={idx}
-                      href={imgUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="relative aspect-video rounded-3xl overflow-hidden bg-surface-container-low/50 border border-white/15 shadow-[0_8px_32px_rgba(0,0,0,0.3)] block"
-                    >
-                      <img
-                        src={imgUrl}
-                        alt={`${project.title} — Gallery ${idx + 1}`}
-                        loading="lazy"
-                        className="w-full h-full object-cover"
-                      />
-                    </a>
-                  ))}
+                  {gallery.map((imgUrl, idx) => {
+                    const isLead = idx === 0 && gallery.length > 1;
+                    const isDiag = isDiagramAsset(imgUrl);
+                    const caption = project.steps?.[idx]?.title;
+                    return (
+                      <button
+                        key={idx}
+                        type="button"
+                        onClick={() => setLightboxIndex(idx)}
+                        className={`group relative rounded-3xl overflow-hidden bg-surface-container-low/75 dark:bg-surface-container-low/50 border border-outline-variant/25 dark:border-white/15 shadow-[0_8px_32px_rgba(0,0,0,0.16)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.3)] flex flex-col text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary transition-all hover:border-primary/50 ${
+                          isLead ? 'md:col-span-2 lg:col-span-2' : ''
+                        }`}
+                      >
+                        <div className={`relative w-full ${isLead ? 'aspect-[16/9]' : 'aspect-video'} bg-surface-container-lowest overflow-hidden`}>
+                          <img
+                            src={imgUrl}
+                            alt={caption || `${project.title} — Gallery ${idx + 1}`}
+                            loading="lazy"
+                            className={`w-full h-full ${isDiag ? 'object-contain p-4' : 'object-cover object-top'} group-hover:scale-[1.03] transition-transform duration-300`}
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-black/15 pointer-events-none" />
+                          <span className="absolute top-3.5 right-3.5 opacity-85 group-hover:opacity-100 transition-opacity px-2.5 py-1 rounded-full bg-black/75 text-white text-[11px] font-mono flex items-center gap-1.5 backdrop-blur-md border border-white/20">
+                            <Maximize2 className="w-3 h-3 text-secondary" />
+                            <span>{idx + 1} / {gallery.length}</span>
+                          </span>
+                          {caption && (
+                            <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between gap-2">
+                              <span className="text-xs sm:text-sm font-nexa font-bold text-white drop-shadow-sm line-clamp-1">
+                                {caption}
+                              </span>
+                            </div>
+                          )}
+                        </div>
+                      </button>
+                    );
+                  })}
                 </div>
               </section>
-            );
-          })()}
+          )}
 
           {/* IMPLEMENTATION STEPS */}
           {(() => {
@@ -369,7 +517,7 @@ export function ProjectDetailClient({ projectId, initialProject }: ProjectDetail
           })()}
 
           {/* TWO-COLUMN CASE STUDY DEEP DIVE: CHALLENGE & SOLUTION */}
-          <section className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
+          <section id="challenge-section" className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch scroll-mt-24">
             {/* The Technical Challenge */}
             <div className="p-8 rounded-3xl bg-surface-container-low/40 backdrop-blur-2xl border border-white/20 dark:border-white/[0.08] shadow-[0_8px_32px_rgba(0,0,0,0.35)] flex flex-col gap-4">
               <div className="flex items-center gap-2 text-error">
@@ -378,7 +526,7 @@ export function ProjectDetailClient({ projectId, initialProject }: ProjectDetail
               </div>
               <h2 className="font-nexa text-2xl font-bold text-on-surface">{t('projectDetail.challengeTitle')}</h2>
               <p className="font-body-md text-sm sm:text-base text-on-surface-variant leading-relaxed">
-                {project.challenge ||
+                {cleanProjectText(project.challenge) ||
                   `The existing architecture struggled with high ingestion latency, data fragmentation across disparate operational siloes, and escalating cloud maintenance costs under peak traffic spikes.`}
               </p>
             </div>
@@ -391,7 +539,7 @@ export function ProjectDetailClient({ projectId, initialProject }: ProjectDetail
               </div>
               <h2 className="font-nexa text-2xl font-bold text-on-surface">{t('projectDetail.solutionTitle')}</h2>
               <p className="font-body-md text-sm sm:text-base text-on-surface-variant leading-relaxed">
-                {project.solution ||
+                {cleanProjectText(project.solution) ||
                   `Engineered a high-performance, fault-tolerant distributed streaming lakehouse utilizing Kafka message buffering, columnar store compression, and automated edge synchronization daemons.`}
               </p>
             </div>
@@ -440,7 +588,7 @@ export function ProjectDetailClient({ projectId, initialProject }: ProjectDetail
           )}
 
           {/* ARCHITECTURAL HIGHLIGHTS */}
-          <section className="p-8 sm:p-10 rounded-3xl bg-surface-container-low/40 backdrop-blur-2xl border border-white/20 dark:border-white/[0.08] shadow-[0_8px_32px_rgba(0,0,0,0.35)] flex flex-col gap-6">
+          <section id="highlights-section" className="p-8 sm:p-10 rounded-3xl bg-surface-container-low/40 backdrop-blur-2xl border border-white/20 dark:border-white/[0.08] shadow-[0_8px_32px_rgba(0,0,0,0.35)] flex flex-col gap-6 scroll-mt-24">
             <div className="flex items-center gap-2 text-secondary">
               <ShieldCheck className="w-5 h-5 text-secondary" />
               <span className="font-mono text-xs uppercase tracking-wider font-bold">
@@ -502,7 +650,7 @@ export function ProjectDetailClient({ projectId, initialProject }: ProjectDetail
 
           {/* GITHUB REPOSITORY DOCUMENTATION (EXACT README) */}
           {project.readmeContent && (
-            <section className="p-8 rounded-3xl bg-surface-container-low/40 backdrop-blur-2xl border border-white/20 dark:border-white/[0.08] shadow-[0_8px_32px_rgba(0,0,0,0.35)] flex flex-col gap-5">
+            <section id="readme-section" className="p-8 rounded-3xl bg-surface-container-low/40 backdrop-blur-2xl border border-white/20 dark:border-white/[0.08] shadow-[0_8px_32px_rgba(0,0,0,0.35)] flex flex-col gap-5 scroll-mt-24">
               <div className="flex flex-wrap items-center justify-between gap-3 border-b border-outline-variant/20 pb-4">
                 <div className="flex flex-col gap-1">
                   <span className="font-mono text-xs text-secondary uppercase tracking-widest font-semibold">
@@ -526,7 +674,12 @@ export function ProjectDetailClient({ projectId, initialProject }: ProjectDetail
                 )}
               </div>
 
-              <div className="flex flex-col gap-3 text-sm text-on-surface-variant leading-relaxed">
+              <div className="relative">
+                <div
+                  className={`flex flex-col gap-3 text-sm text-on-surface-variant leading-relaxed ${
+                    !readmeExpanded ? 'max-h-[420px] overflow-hidden' : ''
+                  }`}
+                >
                 {(() => {
                   const lines = project.readmeContent.split(/\r?\n/);
                   const elements: React.ReactNode[] = [];
@@ -635,12 +788,31 @@ export function ProjectDetailClient({ projectId, initialProject }: ProjectDetail
                   flushList();
                   return elements;
                 })()}
+                </div>
+                {!readmeExpanded && (
+                  <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-surface-container-low via-surface-container-low/80 to-transparent" />
+                )}
+              </div>
+              <div className="flex justify-center pt-1">
+                <button
+                  type="button"
+                  onClick={() => setReadmeExpanded((prev) => !prev)}
+                  className="px-4 py-2 rounded-xl bg-surface-container-high hover:bg-primary-container hover:text-on-primary-container text-xs font-mono font-semibold text-primary border border-outline-variant/25 transition-colors"
+                >
+                  {readmeExpanded
+                    ? language === 'ar'
+                      ? 'طي التوثيق'
+                      : 'Collapse Documentation ↑'
+                    : language === 'ar'
+                    ? 'عرض التوثيق بالكامل'
+                    : 'Expand Full README.md ↓'}
+                </button>
               </div>
             </section>
           )}
 
           {/* TECHNOLOGY ARSENAL */}
-          <section className="p-8 rounded-3xl bg-surface-container-low/40 backdrop-blur-2xl border border-white/20 dark:border-white/[0.08] shadow-[0_8px_32px_rgba(0,0,0,0.35)] flex flex-col gap-4">
+          <section id="tech-section" className="p-8 rounded-3xl bg-surface-container-low/40 backdrop-blur-2xl border border-white/20 dark:border-white/[0.08] shadow-[0_8px_32px_rgba(0,0,0,0.35)] flex flex-col gap-4 scroll-mt-24">
             <h2 className="font-nexa text-xl font-bold text-on-surface flex items-center gap-2">
               <Terminal className="w-5 h-5 text-primary" />
               <span>{t('projectDetail.techArsenal')}</span>
@@ -657,6 +829,39 @@ export function ProjectDetailClient({ projectId, initialProject }: ProjectDetail
               ))}
             </div>
           </section>
+
+          {/* RELATED CASE STUDIES IN SAME DOMAIN */}
+          {relatedProjects.length > 0 && (
+            <section id="related-section" className="flex flex-col gap-6 scroll-mt-24 pt-4">
+              <div className="flex flex-wrap items-end justify-between gap-3 border-b border-outline-variant/20 pb-3">
+                <div className="flex flex-col gap-1">
+                  <span className="font-mono text-xs text-secondary uppercase tracking-widest font-semibold">
+                    {language === 'ar' ? 'المزيد في نفس المجال' : `More in ${project.category}`}
+                  </span>
+                  <h2 className="font-nexa text-2xl font-extrabold text-on-surface">
+                    {language === 'ar' ? 'مشاريع ودراسات حالة ذات صلة' : 'Related Case Studies'}
+                  </h2>
+                </div>
+                <Link
+                  href="/projects"
+                  className="text-xs font-mono text-primary hover:underline flex items-center gap-1"
+                >
+                  <span>{language === 'ar' ? 'كافة المشاريع' : 'View All Projects'}</span>
+                  <ArrowRight className="w-3.5 h-3.5 rtl-flip" />
+                </Link>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {relatedProjects.map((rel) => (
+                  <ProjectCard
+                    key={rel.id}
+                    project={rel}
+                    language={language}
+                    onSelectBlueprint={(p) => setActiveBlueprint(p)}
+                  />
+                ))}
+              </div>
+            </section>
+          )}
 
           {/* NEXT / PREVIOUS PROJECT NAVIGATION */}
           <nav
@@ -697,6 +902,114 @@ export function ProjectDetailClient({ projectId, initialProject }: ProjectDetail
           </nav>
         </div>
       </main>
+
+      {/* Interactive Gallery Lightbox Modal */}
+      <AnimatePresence>
+        {lightboxIndex !== null && gallery[lightboxIndex] && (
+          <div className="fixed inset-0 z-[70] flex items-center justify-center p-4 sm:p-8">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setLightboxIndex(null)}
+              className="fixed inset-0 bg-black/90 backdrop-blur-md"
+              aria-hidden="true"
+            />
+            <motion.div
+              role="dialog"
+              aria-modal="true"
+              aria-label={`${project.title} gallery photo ${lightboxIndex + 1} of ${gallery.length}`}
+              initial={{ opacity: 0, scale: 0.96 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.96 }}
+              className="relative z-10 w-full max-w-5xl flex flex-col gap-3"
+            >
+              <div className="flex items-center justify-between text-xs font-mono text-zinc-300 gap-3">
+                <div className="flex flex-col min-w-0">
+                  <span className="truncate font-semibold text-white">
+                    {project.steps?.[lightboxIndex]?.title || project.title}
+                  </span>
+                  <span className="text-[11px] text-zinc-400">
+                    {project.title} &bull; {lightboxIndex + 1} / {gallery.length}
+                  </span>
+                </div>
+                <div className="flex items-center gap-2 shrink-0">
+                  <a
+                    href={gallery[lightboxIndex]}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-zinc-100 transition-colors"
+                  >
+                    <ExternalLink className="w-3.5 h-3.5" />
+                    <span>Open Original</span>
+                  </a>
+                  <button
+                    type="button"
+                    onClick={() => setLightboxIndex(null)}
+                    aria-label="Close gallery lightbox"
+                    className="p-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-zinc-100 transition-colors"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+
+              <div className="relative rounded-2xl overflow-hidden bg-black/70 border border-white/15 shadow-2xl flex items-center justify-center max-h-[72vh]">
+                <img
+                  src={gallery[lightboxIndex]}
+                  alt={project.steps?.[lightboxIndex]?.title || `${project.title} — Gallery ${lightboxIndex + 1}`}
+                  className="max-h-[72vh] w-auto object-contain"
+                />
+                {gallery.length > 1 && (
+                  <>
+                    <button
+                      type="button"
+                      onClick={() => setLightboxIndex((lightboxIndex - 1 + gallery.length) % gallery.length)}
+                      aria-label="Previous gallery image"
+                      className="absolute left-3 top-1/2 -translate-y-1/2 p-2.5 rounded-full bg-black/70 hover:bg-black/90 text-white border border-white/20 transition-colors"
+                    >
+                      <ChevronLeft className="w-5 h-5" />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setLightboxIndex((lightboxIndex + 1) % gallery.length)}
+                      aria-label="Next gallery image"
+                      className="absolute right-3 top-1/2 -translate-y-1/2 p-2.5 rounded-full bg-black/70 hover:bg-black/90 text-white border border-white/20 transition-colors"
+                    >
+                      <ChevronRight className="w-5 h-5" />
+                    </button>
+                  </>
+                )}
+              </div>
+
+              {gallery.length > 1 && (
+                <div className="flex items-center justify-center gap-2 overflow-x-auto py-1">
+                  {gallery.map((thumb, idx) => (
+                    <button
+                      key={idx}
+                      type="button"
+                      onClick={() => setLightboxIndex(idx)}
+                      className={`w-16 h-10 rounded-lg overflow-hidden border transition-all shrink-0 ${
+                        idx === lightboxIndex
+                          ? 'border-secondary ring-2 ring-secondary/60 scale-105'
+                          : 'border-white/20 opacity-50 hover:opacity-100'
+                      }`}
+                    >
+                      <img src={thumb} alt="" className="w-full h-full object-cover object-top" />
+                    </button>
+                  ))}
+                </div>
+              )}
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      <ArchitectureModal
+        project={activeBlueprint}
+        isOpen={!!activeBlueprint}
+        onClose={() => setActiveBlueprint(null)}
+      />
 
       <SiteFooter />
     </div>

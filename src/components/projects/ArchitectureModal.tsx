@@ -1,6 +1,7 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
+import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '@/context/LanguageContext';
 import { ProjectItem } from '@/data/seedProjects';
@@ -13,6 +14,16 @@ interface ArchitectureModalProps {
 
 export function ArchitectureModal({ project, isOpen, onClose }: ArchitectureModalProps) {
   const { t, language } = useLanguage();
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [isOpen, onClose]);
+
   if (!isOpen || !project) return null;
 
   return (
@@ -29,6 +40,9 @@ export function ArchitectureModal({ project, isOpen, onClose }: ArchitectureModa
 
         {/* Modal Window */}
         <motion.div
+          role="dialog"
+          aria-modal="true"
+          aria-label={`${project.title} Architecture Blueprint`}
           initial={{ opacity: 0, scale: 0.95, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
@@ -120,23 +134,32 @@ export function ArchitectureModal({ project, isOpen, onClose }: ArchitectureModa
           </div>
 
           {/* Actions */}
-          <div className="pt-4 border-t border-surface-container-high/60 flex items-center justify-between gap-4">
+          <div className="pt-4 border-t border-surface-container-high/60 flex flex-wrap items-center justify-between gap-4">
             <span className="font-label-sm text-xs text-on-surface-variant">
               {language === 'ar' ? 'الدور:' : 'Role:'} <strong className="text-secondary">{project.role}</strong>
             </span>
-            <div className="flex items-center gap-3">
+            <div className="flex flex-wrap items-center gap-2.5">
               <button
+                type="button"
                 onClick={onClose}
                 className="px-4 py-2 rounded-xl bg-surface-container-high hover:bg-surface-container-highest text-on-surface text-xs font-semibold transition-all"
               >
                 {t('certifications.close', 'Close Blueprint')}
               </button>
-              <a
+              <Link
+                href={`/projects/${project.id}`}
+                onClick={onClose}
+                className="px-4 py-2 rounded-xl bg-secondary/15 hover:bg-secondary/25 text-secondary border border-secondary/30 text-xs font-semibold transition-all"
+              >
+                {language === 'ar' ? 'دراسة الحالة الكاملة ←' : 'Full Case Study →'}
+              </Link>
+              <Link
                 href="/book"
+                onClick={onClose}
                 className="px-4 py-2 rounded-xl bg-primary-container text-on-primary text-xs font-semibold hover:bg-primary shadow-[0_0_16px_rgba(160,120,255,0.4)] transition-all"
               >
                 {language === 'ar' ? 'استشارة حول معمارية مشابهة' : 'Consult on Similar Architecture'}
-              </a>
+              </Link>
             </div>
           </div>
         </motion.div>

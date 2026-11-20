@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight, ExternalLink, Sparkles, ArrowRight } from 'lucide-react';
 import { useProjects } from '@/lib/hooks';
 import { useLanguage } from '@/context/LanguageContext';
+import { cleanProjectText, isDiagramAsset } from '@/lib/utils';
 
 export function ProjectsSlideshowSection() {
   const { projects } = useProjects();
@@ -111,7 +112,7 @@ export function ProjectsSlideshowSection() {
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.45 }}
-                  className="w-full h-full object-cover object-top"
+                  className={`w-full h-full ${isDiagramAsset(current.image) ? 'object-contain p-4' : 'object-cover object-top'}`}
                 />
               </AnimatePresence>
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20 pointer-events-none" />
@@ -133,7 +134,7 @@ export function ProjectsSlideshowSection() {
                   {current.project.title}
                 </h3>
                 <p className="text-sm text-on-surface-variant leading-relaxed line-clamp-4">
-                  {current.project.summary}
+                  {cleanProjectText(current.project.summary)}
                 </p>
 
                 <div className="flex flex-wrap gap-1.5 pt-2">

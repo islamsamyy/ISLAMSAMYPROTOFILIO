@@ -535,7 +535,7 @@ try {
   return (
     <div className="bg-transparent font-body-md text-on-surface antialiased min-h-screen flex flex-col">
       <SiteHeader />
-      <main className="w-full pt-20 bg-transparent flex-1">
+      <main id="main-content" className="w-full pt-20 bg-transparent flex-1">
         <div className="flex flex-col w-full relative overflow-hidden bg-transparent text-on-surface">
 {/*  Ambient Background Glows Layer (Hardware Accelerated Radial Gradients with 0px blur cost)  */}
 <div className="absolute inset-0 pointer-events-none select-none z-0 overflow-hidden">
