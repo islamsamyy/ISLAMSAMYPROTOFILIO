@@ -713,10 +713,8 @@ export function useAdminAuth() {
         const verifiedAdmin = Boolean(adminRecord || session.user.email === 'islamsamydev@gmail.com');
         setIsAdmin(verifiedAdmin);
       } else {
-        // Also check if admin bypass was stored locally for development
-        const localAdmin = typeof window !== 'undefined' && localStorage.getItem('islam_admin_authenticated') === 'true';
-        setUser(localAdmin ? { email: 'islamsamydev@gmail.com', user_metadata: { username: 'islam' } } : null);
-        setIsAdmin(localAdmin);
+        setUser(null);
+        setIsAdmin(false);
       }
     } catch (e) {
       console.error('Error checking admin auth:', e);
@@ -730,15 +728,10 @@ export function useAdminAuth() {
     checkUser();
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       if (session?.user) {
-        setUser(session.user);
-        setIsAdmin(true);
-        if (typeof window !== 'undefined') {
-          localStorage.setItem('islam_admin_authenticated', 'true');
-        }
+        checkUser();
       } else {
-        const localAdmin = typeof window !== 'undefined' && localStorage.getItem('islam_admin_authenticated') === 'true';
-        setIsAdmin(localAdmin);
-        if (!localAdmin) setUser(null);
+        setUser(null);
+        setIsAdmin(false);
       }
     });
 
@@ -751,33 +744,30 @@ export function useAdminAuth() {
     setLoading(true);
     try {
       const email = identifier.includes('@') ? identifier.trim() : 'islamsamydev@gmail.com';
-      
-      // Direct PIN / admin master credential verification
-      if (password === '7749' || password === '1234' || password === 'IslamAdmin2026!') {
-        setUser({ email: 'islamsamydev@gmail.com', user_metadata: { username: 'islam' } });
-        setIsAdmin(true);
-        if (typeof window !== 'undefined') localStorage.setItem('islam_admin_authenticated', 'true');
-        // Background sync with Supabase
-        supabase.auth.signInWithPassword({
-          email: 'islamsamydev@gmail.com',
-          password: 'IslamAdmin2026!',
-        }).catch(() => {});
-        return { success: true };
-      }
 
-      // Supabase authentication with user-provided credentials
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
 
-      if (error) {
+      if (error || !data.user) {
         return { success: false, error: 'Access denied. Invalid admin credentials.' };
+      }
+
+      const { data: adminRecord } = await supabase
+        .from('admin_users')
+        .select('id, role')
+        .eq('id', data.user.id)
+        .maybeSingle();
+
+      const verifiedAdmin = Boolean(adminRecord || data.user.email === 'islamsamydev@gmail.com');
+      if (!verifiedAdmin) {
+        await supabase.auth.signOut();
+        return { success: false, error: 'Access denied. Account is not an administrator.' };
       }
 
       setUser(data.user);
       setIsAdmin(true);
-      if (typeof window !== 'undefined') localStorage.setItem('islam_admin_authenticated', 'true');
       return { success: true };
     } catch (err: any) {
       return { success: false, error: err.message || 'Authentication failed' };
@@ -787,34 +777,11 @@ export function useAdminAuth() {
   };
 
   const demoLogin = async () => {
-    setLoading(true);
-    try {
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email: 'islamsamydev@gmail.com',
-        password: 'IslamAdmin2026!',
-      });
-      if (!error && data.user) {
-        setUser(data.user);
-        setIsAdmin(true);
-        if (typeof window !== 'undefined') localStorage.setItem('islam_admin_authenticated', 'true');
-        return { success: true };
-      }
-
-      // Local fallback
-      setIsAdmin(true);
-      setUser({ email: 'islamsamydev@gmail.com', user_metadata: { username: 'islam' } });
-      if (typeof window !== 'undefined') localStorage.setItem('islam_admin_authenticated', 'true');
-      return { success: true };
-    } finally {
-      setLoading(false);
-    }
+    return { success: false, error: 'Demo bypass disabled in production.' };
   };
 
   const signOut = async () => {
     await supabase.auth.signOut();
-    if (typeof window !== 'undefined') {
-      localStorage.removeItem('islam_admin_authenticated');
-    }
     setUser(null);
     setIsAdmin(false);
   };

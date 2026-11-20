@@ -152,7 +152,7 @@ export function ProjectsSlideshowSection() {
               <div className="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-white/[0.08]">
                 <Link
                   href={`/projects/${current.project.id}`}
-                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-primary-container text-on-primary text-xs font-nexa font-bold uppercase tracking-wider shadow-[0_0_20px_rgba(160,120,255,0.35)] hover:opacity-90 transition-opacity"
+                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-primary text-on-primary text-xs font-nexa font-bold uppercase tracking-wider shadow-[0_0_20px_rgba(160,120,255,0.35)] hover:opacity-90 transition-opacity"
                 >
                   <span>{language === 'ar' ? 'عرض التفاصيل' : 'Explore Project'}</span>
                   <ArrowRight className="w-3.5 h-3.5" />

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { SiteHeader } from '@/components/navigation/SiteHeader';
 import { SiteFooter } from '@/components/navigation/SiteFooter';
@@ -18,6 +18,15 @@ export default function ReviewsPage() {
   const [selectedRating, setSelectedRating] = useState<number | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [submittedToast, setSubmittedToast] = useState(false);
+
+  useEffect(() => {
+    if (!modalOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setModalOpen(false);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [modalOpen]);
 
   // Form State for Leaving a Review
   const [name, setName] = useState('');
@@ -83,7 +92,7 @@ export default function ReviewsPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col gap-12">
           
           {/* Header & Scoreboard Banner */}
-          <section className="relative overflow-hidden rounded-3xl bg-surface-container-low/40 backdrop-blur-2xl border border-white/20 dark:border-white/[0.08] p-8 sm:p-12 shadow-[0_16px_50px_rgba(0,0,0,0.35)]">
+          <section className="relative overflow-hidden rounded-3xl bg-surface-container-low/75 dark:bg-surface-container-low/45 backdrop-blur-2xl border border-outline-variant/25 dark:border-white/[0.08] p-8 sm:p-12 shadow-[0_16px_50px_rgba(0,0,0,0.16)] dark:shadow-[0_16px_50px_rgba(0,0,0,0.35)]">
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8">
               
               <div className="max-w-2xl">

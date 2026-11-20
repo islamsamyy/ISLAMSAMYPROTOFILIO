@@ -3,7 +3,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
 import { LanguageProvider } from "@/context/LanguageContext";
 import { ScrollProgress } from "@/components/navigation/ScrollProgress";
-import { ThreeBackgroundCanvas } from "@/components/canvas/ThreeBackgroundCanvas";
+import { GlobalBackgroundClient } from "@/components/canvas/GlobalBackgroundClient";
 
 export const metadata: Metadata = {
   title: "Islam Samy — Lead Data Engineer | Custom ERP Systems, AI Agents, Automations & Full-Stack Web Development",
@@ -141,8 +141,8 @@ export default function RootLayout({
             >
               Skip to main content
             </a>
-            {/* Global Animated Three.js Cybernetic Constellation & Grid Background across all pages */}
-            <ThreeBackgroundCanvas className="fixed inset-0 pointer-events-none z-0 overflow-hidden" />
+            {/* Global Animated Three.js Cybernetic Constellation & Grid Background (Code-split) */}
+            <GlobalBackgroundClient />
             <ScrollProgress />
             <div className="relative z-10 flex flex-col min-h-screen bg-transparent">
               {children}

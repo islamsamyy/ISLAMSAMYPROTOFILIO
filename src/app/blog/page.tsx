@@ -1,7 +1,9 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
+import { X, ArrowRight, Calendar } from 'lucide-react';
 import { SiteHeader } from '@/components/navigation/SiteHeader';
 import { SiteFooter } from '@/components/navigation/SiteFooter';
 import { ArticleCard } from '@/components/blog/ArticleCard';
@@ -18,6 +20,15 @@ export default function BlogPage() {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [readingArticle, setReadingArticle] = useState<ArticleItem | null>(null);
+
+  useEffect(() => {
+    if (!readingArticle) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setReadingArticle(null);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [readingArticle]);
 
   const CATEGORY_MAP: { [key: string]: string } = {
     'All': language === 'ar' ? 'الكل' : 'All',
@@ -130,48 +141,139 @@ export default function BlogPage() {
           )}
 
           {/* Search & Category Filter Controls */}
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4 p-4 rounded-3xl bg-surface-container-low/40 backdrop-blur-2xl border border-white/20 dark:border-white/[0.08] shadow-[0_8px_32px_rgba(0,0,0,0.35)]">
-            <div className="flex flex-wrap items-center gap-1.5 w-full md:w-auto">
-              {CATEGORIES.map((cat) => (
-                <button
-                  key={cat}
-                  onClick={() => setSelectedCategory(cat)}
-                  className={`px-3.5 py-1.5 rounded-full font-label-md text-xs transition-all ${
-                    selectedCategory === cat
-                      ? 'bg-primary text-white font-bold shadow-[0_0_16px_rgba(160,120,255,0.5)]'
-                      : 'text-on-surface-variant hover:text-on-surface hover:bg-white/40 dark:hover:bg-white/[0.06]'
-                  }`}
-                >
-                  {CATEGORY_MAP[cat] || cat}
-                </button>
-              ))}
+          <div className="flex flex-col gap-3 p-4 sm:p-5 rounded-3xl bg-surface-container-low/75 dark:bg-surface-container-low/45 backdrop-blur-2xl border border-outline-variant/25 dark:border-white/[0.08] shadow-[0_8px_32px_rgba(0,0,0,0.14)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.35)]">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+              <div className="flex flex-wrap items-center gap-1.5 w-full md:w-auto">
+                {CATEGORIES.map((cat) => {
+                  const count =
+                    cat === 'All'
+                      ? articles.length
+                      : articles.filter((a) => a.category === cat).length;
+                  return (
+                    <button
+                      key={cat}
+                      onClick={() => setSelectedCategory(cat)}
+                      className={`px-3.5 py-1.5 rounded-full font-label-md text-xs transition-all flex items-center gap-1.5 ${
+                        selectedCategory === cat
+                          ? 'bg-primary text-on-primary font-bold shadow-[0_0_16px_rgba(160,120,255,0.45)]'
+                          : 'text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high/70'
+                      }`}
+                    >
+                      <span>{CATEGORY_MAP[cat] || cat}</span>
+                      <span className="text-[10px] font-mono opacity-80">({count})</span>
+                    </button>
+                  );
+                })}
+              </div>
+
+              <div className="relative w-full md:w-72">
+                <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-lg">
+                  search
+                </span>
+                <input
+                  type="text"
+                  placeholder={t('pages.blogSearchPlaceholder', 'Search articles, keywords...')}
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full pl-9 pr-8 py-2.5 rounded-2xl bg-surface-container-lowest border border-outline-variant/30 text-xs text-on-surface placeholder:text-on-surface-variant/45 focus:outline-none focus:ring-2 focus:ring-primary shadow-inner"
+                />
+                {searchQuery && (
+                  <button
+                    type="button"
+                    onClick={() => setSearchQuery('')}
+                    aria-label="Clear article search"
+                    className="absolute right-2.5 top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-on-surface p-0.5"
+                  >
+                    <X className="w-3.5 h-3.5" />
+                  </button>
+                )}
+              </div>
             </div>
 
-            <div className="relative w-full md:w-72">
-              <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-lg">
-                search
+            <div className="flex items-center justify-between pt-2 border-t border-outline-variant/15 text-[11px] font-mono text-on-surface-variant">
+              <span>
+                {language === 'ar'
+                  ? `عرض ${filteredArticles.length} من ${articles.length} مقال`
+                  : `Showing ${filteredArticles.length} of ${articles.length} publications`}
               </span>
-              <input
-                type="text"
-                placeholder={t('pages.blogSearchPlaceholder', 'Search articles, keywords...')}
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-9 pr-4 py-2.5 rounded-2xl bg-white/40 dark:bg-surface-container-lowest/80 border border-white/20 dark:border-white/[0.08] text-xs text-on-surface placeholder:text-on-surface-variant/40 focus:outline-none focus:ring-2 focus:ring-primary shadow-inner"
-              />
+              {(selectedCategory !== 'All' || searchQuery) && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSelectedCategory('All');
+                    setSearchQuery('');
+                  }}
+                  className="text-primary hover:underline font-semibold"
+                >
+                  {language === 'ar' ? 'إعادة ضبط' : 'Reset filters'}
+                </button>
+              )}
             </div>
           </div>
 
           {/* Articles Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredArticles.map((article) => (
-              <TiltCard key={article.id} maxTilt={6} depth={10} glare={true} className="h-full">
-                <ArticleCard
-                  article={article}
-                  onRead={(a) => setReadingArticle(a)}
-                />
-              </TiltCard>
-            ))}
-          </div>
+          {filteredArticles.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredArticles.map((article) => (
+                <TiltCard key={article.id} maxTilt={5} depth={10} glare={true} className="h-full">
+                  <ArticleCard
+                    article={article}
+                    onRead={(a) => setReadingArticle(a)}
+                  />
+                </TiltCard>
+              ))}
+            </div>
+          ) : (
+            <div className="p-14 rounded-3xl bg-surface-container-low/70 border border-outline-variant/25 text-center flex flex-col items-center gap-3">
+              <span className="material-symbols-outlined text-4xl text-on-surface-variant">article</span>
+              <p className="font-headline-sm text-lg font-bold text-on-surface">
+                {language === 'ar' ? 'لا توجد مقالات مطابقة' : 'No matching articles found'}
+              </p>
+              <button
+                type="button"
+                onClick={() => {
+                  setSelectedCategory('All');
+                  setSearchQuery('');
+                }}
+                className="px-5 py-2 rounded-xl bg-primary text-on-primary text-xs font-nexa font-bold uppercase tracking-wider"
+              >
+                {language === 'ar' ? 'إعادة ضبط البحث' : 'Reset Search'}
+              </button>
+            </div>
+          )}
+
+          {/* Engineering Advisory CTA */}
+          <section className="p-8 rounded-3xl bg-gradient-to-br from-surface-container-low via-surface-container to-surface-container-high border border-primary/25 shadow-lg flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+            <div className="flex flex-col gap-1.5 max-w-2xl">
+              <span className="font-mono text-xs uppercase tracking-widest text-secondary font-bold">
+                {language === 'ar' ? 'استشارات معمارية مباشرة' : 'Architecture & Data Advisory'}
+              </span>
+              <h2 className="font-nexa text-2xl font-extrabold text-on-surface">
+                {language === 'ar' ? 'هل تواجه تحدياً في توسعة منصة البيانات؟' : 'Scaling a Distributed Data or AI Architecture?'}
+              </h2>
+              <p className="text-sm text-on-surface-variant">
+                {language === 'ar'
+                  ? 'احجز جلسة مراجعة تقنية لمناقشة التصميم المعماري وأفضل الممارسات.'
+                  : 'Book a 1-on-1 architecture review to turn these production patterns into your team’s roadmap.'}
+              </p>
+            </div>
+            <div className="flex flex-wrap items-center gap-3 shrink-0">
+              <Link
+                href="/book"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary text-on-primary font-nexa text-xs font-bold uppercase tracking-wider shadow-md"
+              >
+                <Calendar className="w-4 h-4" />
+                <span>{language === 'ar' ? 'احجز استشارة' : 'Book Review'}</span>
+              </Link>
+              <Link
+                href="/projects"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-surface-container-lowest/80 hover:bg-surface-container-high border border-outline-variant/30 font-nexa text-xs font-bold uppercase tracking-wider text-on-surface"
+              >
+                <span>{language === 'ar' ? 'استكشف المشاريع' : 'View Case Studies'}</span>
+                <ArrowRight className="w-3.5 h-3.5 rtl-flip" />
+              </Link>
+            </div>
+          </section>
 
         </div>
       </main>

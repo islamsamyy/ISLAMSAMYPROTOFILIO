@@ -124,13 +124,15 @@ export function ThreeBackgroundCanvas({
       particleGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
       particleGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
+      const initialDark = isDark();
       const particleMaterial = new THREE.PointsMaterial({
-        size: 14.0,
+        size: initialDark ? 14.0 : 12.0,
         map: particleTexture,
+        color: new THREE.Color(initialDark ? 0xffffff : 0x5b21b6),
         vertexColors: true,
         transparent: true,
-        opacity: isDark() ? 0.92 : 0.65,
-        blending: THREE.AdditiveBlending,
+        opacity: initialDark ? 0.92 : 0.72,
+        blending: initialDark ? THREE.AdditiveBlending : THREE.NormalBlending,
         depthWrite: false,
       });
 
@@ -179,10 +181,11 @@ export function ThreeBackgroundCanvas({
       );
 
       const lineMaterial = new THREE.LineBasicMaterial({
+        color: new THREE.Color(initialDark ? 0xffffff : 0x4c1d95),
         vertexColors: true,
         transparent: true,
-        opacity: isDark() ? 0.35 : 0.2,
-        blending: THREE.AdditiveBlending,
+        opacity: initialDark ? 0.35 : 0.28,
+        blending: initialDark ? THREE.AdditiveBlending : THREE.NormalBlending,
         depthWrite: false,
       });
 
@@ -226,10 +229,10 @@ export function ThreeBackgroundCanvas({
       gridGeometry.setIndex(gridIndices);
 
       const gridMaterial = new THREE.LineBasicMaterial({
-        color: new THREE.Color(0x7bd0ff),
+        color: new THREE.Color(initialDark ? 0x7bd0ff : 0x0284c7),
         transparent: true,
-        opacity: isDark() ? 0.25 : 0.14,
-        blending: THREE.AdditiveBlending,
+        opacity: initialDark ? 0.25 : 0.22,
+        blending: initialDark ? THREE.AdditiveBlending : THREE.NormalBlending,
         depthWrite: false,
       });
 
@@ -253,10 +256,10 @@ export function ThreeBackgroundCanvas({
         }
         ringGeom.setAttribute('position', new THREE.Float32BufferAttribute(pts, 3));
         const rMat = new THREE.LineBasicMaterial({
-          color: ringColors[idx],
+          color: initialDark ? ringColors[idx] : idx === 0 ? 0x6626e2 : 0x00658b,
           transparent: true,
-          opacity: isDark() ? 0.2 : 0.1,
-          blending: THREE.AdditiveBlending,
+          opacity: initialDark ? 0.2 : 0.24,
+          blending: initialDark ? THREE.AdditiveBlending : THREE.NormalBlending,
           depthWrite: false,
         });
         ringMaterials.push(rMat);
@@ -307,13 +310,33 @@ export function ThreeBackgroundCanvas({
         const color = getBgColor();
         scene.fog = new THREE.FogExp2(new THREE.Color(color), 0.0008);
         renderer?.setClearColor(color, 1.0);
-        if (isFrozen) requestAnimationFrame(() => renderer?.render(scene, camera));
-        particleMaterial.opacity = dark ? 0.92 : 0.65;
-        lineMaterial.opacity = dark ? 0.35 : 0.2;
-        gridMaterial.opacity = dark ? 0.25 : 0.14;
-        ringMaterials.forEach((m) => {
-          m.opacity = dark ? 0.2 : 0.1;
+
+        const blend = dark ? THREE.AdditiveBlending : THREE.NormalBlending;
+
+        particleMaterial.size = dark ? 14.0 : 12.0;
+        particleMaterial.color.setHex(dark ? 0xffffff : 0x5b21b6);
+        particleMaterial.opacity = dark ? 0.92 : 0.72;
+        particleMaterial.blending = blend;
+        particleMaterial.needsUpdate = true;
+
+        lineMaterial.color.setHex(dark ? 0xffffff : 0x4c1d95);
+        lineMaterial.opacity = dark ? 0.35 : 0.28;
+        lineMaterial.blending = blend;
+        lineMaterial.needsUpdate = true;
+
+        gridMaterial.color.setHex(dark ? 0x7bd0ff : 0x0284c7);
+        gridMaterial.opacity = dark ? 0.25 : 0.22;
+        gridMaterial.blending = blend;
+        gridMaterial.needsUpdate = true;
+
+        ringMaterials.forEach((m, idx) => {
+          m.color.setHex(dark ? ringColors[idx] : idx === 0 ? 0x6626e2 : 0x00658b);
+          m.opacity = dark ? 0.2 : 0.24;
+          m.blending = blend;
+          m.needsUpdate = true;
         });
+
+        if (isFrozen) requestAnimationFrame(() => renderer?.render(scene, camera));
       };
 
       window.addEventListener('mousemove', handleMouseMove, { passive: true });

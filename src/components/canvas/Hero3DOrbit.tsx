@@ -58,6 +58,28 @@ export const Hero3DOrbit = React.forwardRef<HTMLDivElement, Hero3DOrbitProps>(
         typeof window !== 'undefined' &&
         window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+      let darkMode =
+        typeof document !== 'undefined'
+          ? document.documentElement.classList.contains('dark')
+          : true;
+
+      const handleThemeSync = () => {
+        darkMode =
+          typeof document !== 'undefined'
+            ? document.documentElement.classList.contains('dark')
+            : true;
+      };
+
+      const themeObserver =
+        typeof MutationObserver !== 'undefined'
+          ? new MutationObserver(handleThemeSync)
+          : null;
+      themeObserver?.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['class'],
+      });
+      window.addEventListener('islam_theme_change', handleThemeSync);
+
       // HiDPI Scaling (Capped at 1.2 to eliminate high-DPI GPU pixel pipeline load)
       const dpr = Math.min(typeof window !== 'undefined' ? window.devicePixelRatio || 1 : 1, 1.2);
       canvas.width = Math.floor(size * dpr);
@@ -70,20 +92,19 @@ export const Hero3DOrbit = React.forwardRef<HTMLDivElement, Hero3DOrbitProps>(
       const cy = size / 2;
       const fov = 650; // Camera perspective distance
 
-      // Define Orbital Rings (matching cybernetic theme tokens)
-      const allRings: RingConfig[] = [
+      const getRings = (isDark: boolean): RingConfig[] => [
         {
           radius: size * 0.38,
           tiltX: (62 * Math.PI) / 180,
           tiltY: (20 * Math.PI) / 180,
           speed: 0.008 * speed,
-          color: 'rgba(208, 188, 255, 0.45)', // Primary violet
-          glowColor: 'rgba(160, 120, 255, 0.6)',
+          color: isDark ? 'rgba(208, 188, 255, 0.45)' : 'rgba(102, 38, 226, 0.42)',
+          glowColor: isDark ? 'rgba(160, 120, 255, 0.6)' : 'rgba(102, 38, 226, 0.45)',
           dash: [6, 8],
           lineWidth: 1.5,
           satellites: [
-            { phase: 0, speed: 0.012 * speed, radius: 4, color: '#d0bcff', glow: '#a078ff' },
-            { phase: Math.PI, speed: 0.012 * speed, radius: 3, color: '#e9ddff', glow: '#d0bcff' },
+            { phase: 0, speed: 0.012 * speed, radius: 4, color: isDark ? '#d0bcff' : '#6626e2', glow: isDark ? '#a078ff' : '#6626e2' },
+            { phase: Math.PI, speed: 0.012 * speed, radius: 3, color: isDark ? '#e9ddff' : '#7c3aed', glow: isDark ? '#d0bcff' : '#7c3aed' },
           ],
         },
         {
@@ -91,12 +112,12 @@ export const Hero3DOrbit = React.forwardRef<HTMLDivElement, Hero3DOrbitProps>(
           tiltX: (46 * Math.PI) / 180,
           tiltY: (-32 * Math.PI) / 180,
           speed: -0.011 * speed,
-          color: 'rgba(123, 208, 255, 0.40)', // Secondary cyan
-          glowColor: 'rgba(0, 166, 224, 0.6)',
+          color: isDark ? 'rgba(123, 208, 255, 0.40)' : 'rgba(2, 132, 199, 0.42)',
+          glowColor: isDark ? 'rgba(0, 166, 224, 0.6)' : 'rgba(2, 132, 199, 0.45)',
           dash: [4, 6],
           lineWidth: 1.25,
           satellites: [
-            { phase: Math.PI * 0.5, speed: -0.015 * speed, radius: 3.5, color: '#7bd0ff', glow: '#00a6e0' },
+            { phase: Math.PI * 0.5, speed: -0.015 * speed, radius: 3.5, color: isDark ? '#7bd0ff' : '#0284c7', glow: isDark ? '#00a6e0' : '#0284c7' },
           ],
         },
         {
@@ -104,12 +125,12 @@ export const Hero3DOrbit = React.forwardRef<HTMLDivElement, Hero3DOrbitProps>(
           tiltX: (74 * Math.PI) / 180,
           tiltY: (40 * Math.PI) / 180,
           speed: 0.005 * speed,
-          color: 'rgba(255, 182, 144, 0.35)', // Tertiary coral/amber
-          glowColor: 'rgba(236, 106, 6, 0.5)',
+          color: isDark ? 'rgba(255, 182, 144, 0.35)' : 'rgba(217, 119, 6, 0.38)',
+          glowColor: isDark ? 'rgba(236, 106, 6, 0.5)' : 'rgba(217, 119, 6, 0.4)',
           dash: [8, 10],
           lineWidth: 1.2,
           satellites: [
-            { phase: Math.PI * 1.3, speed: 0.007 * speed, radius: 3, color: '#ffb690', glow: '#ec6a06' },
+            { phase: Math.PI * 1.3, speed: 0.007 * speed, radius: 3, color: isDark ? '#ffb690' : '#d97706', glow: isDark ? '#ec6a06' : '#d97706' },
           ],
         },
         {
@@ -117,17 +138,17 @@ export const Hero3DOrbit = React.forwardRef<HTMLDivElement, Hero3DOrbitProps>(
           tiltX: (30 * Math.PI) / 180,
           tiltY: (-55 * Math.PI) / 180,
           speed: -0.004 * speed,
-          color: 'rgba(160, 120, 255, 0.22)',
-          glowColor: 'rgba(102, 38, 226, 0.4)',
+          color: isDark ? 'rgba(160, 120, 255, 0.22)' : 'rgba(102, 38, 226, 0.24)',
+          glowColor: isDark ? 'rgba(102, 38, 226, 0.4)' : 'rgba(102, 38, 226, 0.3)',
           dash: [2, 10],
           lineWidth: 1.0,
           satellites: [
-            { phase: Math.PI * 0.2, speed: -0.006 * speed, radius: 2.5, color: '#d0bcff', glow: '#a078ff' },
+            { phase: Math.PI * 0.2, speed: -0.006 * speed, radius: 2.5, color: isDark ? '#d0bcff' : '#6626e2', glow: isDark ? '#a078ff' : '#6626e2' },
           ],
         },
       ];
 
-      const rings = allRings.slice(0, Math.min(ringCount, allRings.length));
+      const maxRings = Math.min(ringCount, 4);
 
       // Cursor Parallax State
       let targetTiltX = 0;
@@ -230,6 +251,7 @@ export const Hero3DOrbit = React.forwardRef<HTMLDivElement, Hero3DOrbitProps>(
         ctx.fillRect(0, 0, size, size);
 
         // Render each 3D ring
+        const rings = getRings(darkMode).slice(0, maxRings);
         rings.forEach((ring) => {
           const effectiveTiltX = ring.tiltX + smoothTiltX;
           const effectiveTiltY = ring.tiltY + smoothTiltY;
@@ -322,6 +344,8 @@ export const Hero3DOrbit = React.forwardRef<HTMLDivElement, Hero3DOrbitProps>(
         if (animId) cancelAnimationFrame(animId);
         if (scrollTimer) clearTimeout(scrollTimer);
         window.removeEventListener('scroll', handleScroll);
+        window.removeEventListener('islam_theme_change', handleThemeSync);
+        themeObserver?.disconnect();
         observer?.disconnect();
         if (interactive) {
           window.removeEventListener('mousemove', handleMouseMove);

@@ -1,5 +1,19 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabase/admin';
+import { verifyAdminRequest } from '@/lib/supabase/server-auth';
+
+const PRIVATE_GET_TABLES = new Set([
+  'crm_leads',
+  'crm_activities',
+  'reservations',
+  'contact_inquiries',
+]);
+
+const PUBLIC_INTAKE_TABLES = new Set([
+  'contact_inquiries',
+  'reservations',
+  'reviews',
+]);
 
 const tablesWithoutUpdatedAt = new Set([
   'reviews',
@@ -54,6 +68,13 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ error: `Invalid table: ${table}` }, { status: 400 });
     }
 
+    if (PRIVATE_GET_TABLES.has(table)) {
+      const auth = await verifyAdminRequest(req);
+      if (!auth.authorized) {
+        return NextResponse.json({ error: auth.error || 'Unauthorized' }, { status: 401 });
+      }
+    }
+
     if (table === 'crm_leads') {
       const { data, error } = await (supabaseAdmin.from('crm_leads') as any)
         .select('*, crm_activities(*)')
@@ -101,6 +122,14 @@ export async function POST(req: NextRequest) {
 
     if (!allowedTables.includes(table)) {
       return NextResponse.json({ error: `Invalid table: ${table}` }, { status: 400 });
+    }
+
+    const isPublicIntake = action === 'upsert' && PUBLIC_INTAKE_TABLES.has(table);
+    if (!isPublicIntake) {
+      const auth = await verifyAdminRequest(req);
+      if (!auth.authorized) {
+        return NextResponse.json({ error: auth.error || 'Unauthorized' }, { status: 401 });
+      }
     }
 
     const sanitizedData = sanitizeDataForTable(table, data);

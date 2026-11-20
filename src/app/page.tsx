@@ -577,7 +577,7 @@ try {
     <span>{t('hero.ctaCollaborate', "Let's Collaborate")}</span>
   </a>
   <a
-    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-400 hover:text-white border border-emerald-500/40 shadow-[0_0_20px_rgba(160,120,255,0.25)] font-headline-sm text-xs uppercase tracking-wider transition-all duration-300 hover:scale-105 active:scale-95"
+    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-emerald-500/15 hover:bg-emerald-600 text-emerald-700 dark:text-emerald-400 hover:text-white border border-emerald-600/40 dark:border-emerald-500/40 shadow-[0_0_20px_rgba(160,120,255,0.2)] font-headline-sm text-xs uppercase tracking-wider transition-all duration-300 hover:scale-105 active:scale-95"
     href={WHATSAPP_URL}
     target="_blank"
     rel="noopener noreferrer"
@@ -768,22 +768,66 @@ try {
 </div>
 </ScrollRevealSection>
 
-{/* CERTIFICATIONS & VERIFIED CREDENTIALS */}
-<CertificationsSection />
+{/* EXECUTIVE QUICK-JUMP NAVIGATION STRIP */}
+<nav
+  aria-label="Homepage sections"
+  className="relative z-10 w-full max-w-[1280px] mx-auto px-gutter pt-2 pb-4 flex items-center justify-center"
+>
+  <div className="flex items-center gap-1.5 p-1.5 rounded-full bg-surface-container-low/80 dark:bg-surface-container-low/55 backdrop-blur-xl border border-outline-variant/25 dark:border-white/[0.08] overflow-x-auto max-w-full [scrollbar-width:none] [&::-webkit-scrollbar]:hidden shadow-sm">
+    {[
+      { href: '#projects', label: language === 'ar' ? 'المشاريع المميزة' : 'Flagship Work' },
+      { href: '/projects', label: language === 'ar' ? `معرض المشاريع (${projects.length})` : `Project Gallery (${projects.length})`, isLink: true },
+      { href: '#pricing', label: language === 'ar' ? 'الباقات والأسعار' : 'Advisory Packages' },
+      { href: '/reviews', label: language === 'ar' ? 'آراء العملاء' : 'Client Reviews', isLink: true },
+      { href: '#contact', label: language === 'ar' ? 'تواصل مباشر' : 'Direct Contact' },
+    ].map((item) =>
+      item.isLink ? (
+        <Link
+          key={item.href}
+          href={item.href}
+          className="px-3.5 py-1.5 rounded-full text-[11px] font-mono font-semibold text-on-surface-variant hover:text-on-primary-container hover:bg-primary-container/80 whitespace-nowrap transition-colors"
+        >
+          {item.label}
+        </Link>
+      ) : (
+        <a
+          key={item.href}
+          href={item.href}
+          className="px-3.5 py-1.5 rounded-full text-[11px] font-mono font-semibold text-on-surface-variant hover:text-on-primary-container hover:bg-primary-container/80 whitespace-nowrap transition-colors"
+        >
+          {item.label}
+        </a>
+      )
+    )}
+  </div>
+</nav>
 
-{/* PROJECTS SHOWCASE SLIDESHOW */}
+{/* PROJECTS SHOWCASE SLIDESHOW (Immediate Visual Proof of Work) */}
 <ProjectsSlideshowSection />
 
-{/*  SECTION 3: TECHNICAL ARSENAL (Single-Row Horizontal Showcase Gliding to Right)  */}
+{/* SECTION 3: TECHNICAL ARSENAL (Single-Row Horizontal Showcase Gliding to Right) */}
       <TechArsenalSection />
       {/* SECTION 4: PROFESSIONAL EXPERIENCE (Compact 2-Column Grid) */}
       <ExperienceTimelineSection />
-{/*  SECTION 5: FEATURED REAL PROJECTS  */}
-<ScrollRevealSection className="w-full max-w-[1280px] mx-auto px-gutter py-8 relative z-10 content-auto" id="projects" suppressHydrationWarning>
-<div className="text-center max-w-3xl mx-auto mb-6">
-<span className="font-label-sm text-label-sm uppercase tracking-widest text-primary font-semibold">{t('projects.badge', 'Flagship Production Systems')}</span>
-<h2 className="font-headline-lg text-headline-lg text-on-surface mt-1.5 mb-2">{t('projects.title', 'Enterprise ERP, Autonomous AI Agents & Data Lakehouses')}</h2>
-<p className="font-body-md text-body-md text-on-surface-variant">{t('projects.subtitle', 'Real-world production architectures delivering tangible business revenue, zero-overhead automation, and sub-second analytics.')}</p>
+
+{/* CERTIFICATIONS & VERIFIED CREDENTIALS */}
+<CertificationsSection />
+
+{/* SECTION 5: FEATURED REAL PROJECTS */}
+<ScrollRevealSection className="w-full max-w-[1280px] mx-auto px-gutter py-10 relative z-10 content-auto" id="projects" suppressHydrationWarning>
+<div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8 border-b border-outline-variant/20 pb-5">
+  <div className="max-w-2xl">
+    <span className="font-label-sm text-label-sm uppercase tracking-widest text-primary font-semibold">{t('projects.badge', 'Flagship Production Systems')}</span>
+    <h2 className="font-headline-lg text-headline-lg text-on-surface mt-1.5 mb-2">{t('projects.title', 'Enterprise ERP, Autonomous AI Agents & Data Lakehouses')}</h2>
+    <p className="font-body-md text-body-md text-on-surface-variant">{t('projects.subtitle', 'Real-world production architectures delivering tangible business revenue, zero-overhead automation, and sub-second analytics.')}</p>
+  </div>
+  <Link
+    href="/projects"
+    className="shrink-0 inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary-container text-on-primary-container hover:bg-primary hover:text-on-primary font-nexa text-xs font-bold uppercase tracking-wider shadow-sm transition-all"
+  >
+    <span>{language === 'ar' ? `استعرض كافة الـ ${projects.length} مشروع` : `Explore All ${projects.length} Projects`}</span>
+    <span className="material-symbols-outlined text-sm">arrow_forward</span>
+  </Link>
 </div>
 <div className="grid grid-cols-1 lg:grid-cols-2 gap-5" suppressHydrationWarning>
   {projects.slice(0, 2).map((proj, idx) => {

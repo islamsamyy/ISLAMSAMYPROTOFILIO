@@ -80,13 +80,26 @@ export function notifyUpdate(table?: string) {
  * Universal backend mutation helper that uses /api/admin/mutate (service role)
  * with graceful fallback to client-side Supabase if offline or during unit tests.
  */
+async function getAdminAuthHeaders(): Promise<Record<string, string>> {
+  try {
+    const { data: { session } } = await supabase.auth.getSession();
+    if (session?.access_token) {
+      return { Authorization: `Bearer ${session.access_token}` };
+    }
+  } catch {
+    // Ignore session retrieval errors
+  }
+  return {};
+}
+
 async function apiMutate(table: string, action: 'upsert' | 'delete' | 'update', data?: any, id?: string) {
   let lastError: any = null;
   if (isClient()) {
     try {
+      const authHeaders = await getAdminAuthHeaders();
       const res = await fetch('/api/admin/mutate', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', ...authHeaders },
         body: JSON.stringify({ table, action, data, id })
       });
       const json = await res.json().catch(() => ({}));
@@ -953,7 +966,10 @@ export function setStoredCrmLeads(leads: CrmLead[]) {
 export async function fetchCrmLeadsFromSupabase(): Promise<CrmLead[]> {
   if (isClient()) {
     try {
-      const res = await fetch('/api/admin/mutate?table=crm_leads');
+      const authHeaders = await getAdminAuthHeaders();
+      const res = await fetch('/api/admin/mutate?table=crm_leads', {
+        headers: authHeaders,
+      });
       if (res.ok) {
         const json = await res.json();
         if (json.data && Array.isArray(json.data) && json.data.length > 0) {

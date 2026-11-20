@@ -93,13 +93,13 @@ export default function PricingPage() {
             </p>
 
             {/* Interactive Billing Mode Toggle */}
-            <div className="mt-8 inline-flex items-center p-1 rounded-full bg-surface-container-low/60 backdrop-blur-xl border border-white/20 dark:border-white/[0.08] shadow-[inset_0_1px_2px_rgba(0,0,0,0.4)]">
+            <div className="mt-8 inline-flex items-center p-1 rounded-full bg-surface-container-low/85 dark:bg-surface-container-low/60 backdrop-blur-xl border border-outline-variant/30 dark:border-white/[0.08] shadow-sm">
               <button
                 type="button"
                 onClick={() => setBillingCycle('milestone')}
                 className={`px-5 py-2.5 rounded-full font-label-md text-xs sm:text-sm font-semibold transition-all duration-300 ${
                   billingCycle === 'milestone'
-                    ? 'bg-primary text-white shadow-[0_0_20px_rgba(160,120,255,0.5)] font-bold'
+                    ? 'bg-primary text-on-primary shadow-[0_0_20px_rgba(160,120,255,0.45)] font-bold'
                     : 'text-on-surface-variant hover:text-on-surface'
                 }`}
               >
@@ -110,17 +110,43 @@ export default function PricingPage() {
                 onClick={() => setBillingCycle('retainer')}
                 className={`px-5 py-2.5 rounded-full font-label-md text-xs sm:text-sm font-semibold transition-all duration-300 flex items-center gap-1.5 ${
                   billingCycle === 'retainer'
-                    ? 'bg-secondary text-on-secondary shadow-[0_0_20px_rgba(123,208,255,0.5)] font-bold'
+                    ? 'bg-secondary text-on-secondary shadow-[0_0_20px_rgba(123,208,255,0.45)] font-bold'
                     : 'text-on-surface-variant hover:text-on-surface'
                 }`}
               >
                 <span>{t('pricing.tabRetainer', 'Monthly Dedicated Retainer')}</span>
-                <span className="px-1.5 py-0.5 rounded text-[10px] bg-secondary/20 text-secondary border border-secondary/30 uppercase font-bold">
-                  SLA Gated
+                <span className="px-1.5 py-0.5 rounded text-[10px] bg-black/15 dark:bg-secondary/20 uppercase font-bold">
+                  -10% SLA
                 </span>
               </button>
             </div>
           </motion.div>
+
+          {/* ENTERPRISE GUARANTEE & TRUST STRIP */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3.5">
+            {[
+              { icon: ShieldCheck, label: language === 'ar' ? 'ملكية فكرية 100%' : '100% IP Ownership', sub: language === 'ar' ? 'الكود بالكامل في مستودعك الخاص' : 'Direct commits under NDA' },
+              { icon: CheckCircle2, label: language === 'ar' ? 'دفعات مرتبطة بالإنجاز' : 'Milestone-Gated', sub: language === 'ar' ? 'لا تدفع إلا بعد التحقق' : 'Verified acceptance criteria' },
+              { icon: Zap, label: language === 'ar' ? 'ضمان 30 يوماً' : '30-Day Launch SLA', sub: language === 'ar' ? 'مراقبة وأداء بعد الإطلاق' : 'Post-deployment warranty' },
+              { icon: Clock, label: language === 'ar' ? 'استشارة قابلة للخصم' : 'Creditable Triage', sub: language === 'ar' ? 'تُخصم عند بدء المشروع' : '$150 call credited to sprint' },
+            ].map((item, idx) => {
+              const Icon = item.icon;
+              return (
+                <div
+                  key={idx}
+                  className="p-4 rounded-2xl bg-surface-container-low/75 dark:bg-surface-container-low/45 border border-outline-variant/25 dark:border-white/[0.08] flex items-center gap-3 shadow-sm"
+                >
+                  <div className="w-9 h-9 rounded-xl bg-primary/10 border border-primary/25 flex items-center justify-center shrink-0">
+                    <Icon className="w-4 h-4 text-primary" />
+                  </div>
+                  <div className="flex flex-col min-w-0">
+                    <span className="font-nexa text-xs font-bold text-on-surface truncate">{item.label}</span>
+                    <span className="text-[11px] text-on-surface-variant truncate">{item.sub}</span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
 
           {/* SECTION 1: PACKAGES CARDS GRID */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">

@@ -8,6 +8,7 @@ import { AdminNav } from '@/components/navigation/AdminNav';
 import { AdminFooter } from '@/components/navigation/AdminFooter';
 import { useProjects } from '@/lib/hooks';
 import { saveProject, deleteProject } from '@/lib/data-store';
+import { supabase } from '@/lib/supabase/client';
 import { ProjectItem } from '@/data/seedProjects';
 
 const SAMPLE_LOGOS = [
@@ -104,7 +105,11 @@ export default function AdminProjectsPage() {
     const fd = new FormData();
     fd.append('file', file);
     fd.append('projectId', editingProject?.id || 'custom');
-    const res = await fetch('/api/admin/upload', { method: 'POST', body: fd });
+    const { data: { session } } = await supabase.auth.getSession();
+    const headers: Record<string, string> = session?.access_token
+      ? { Authorization: `Bearer ${session.access_token}` }
+      : {};
+    const res = await fetch('/api/admin/upload', { method: 'POST', headers, body: fd });
     const data = await res.json();
     if (!res.ok || !data.url) {
       alert(data.error || 'Image upload failed');

@@ -364,7 +364,7 @@ export function TechArsenalSection() {
               onClick={() => setFilter(tab.id)}
               className={`tech-filter-tab px-3.5 py-1.5 rounded-full text-xs font-label-md transition-all duration-300 ${
                 filter === tab.id
-                  ? 'bg-primary-container text-on-primary font-bold shadow-[0_0_16px_rgba(160,120,255,0.4)] border border-primary/40 scale-105'
+                  ? 'bg-primary text-on-primary font-bold shadow-[0_0_16px_rgba(160,120,255,0.4)] border border-primary/40 scale-105'
                   : 'bg-surface-container-high/60 text-on-surface-variant hover:text-on-surface hover:border-primary/40 hover:bg-surface-container-highest border border-outline-variant/30 backdrop-blur-md'
               }`}
               data-filter={tab.id}

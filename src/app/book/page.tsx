@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { SiteHeader } from '@/components/navigation/SiteHeader';
 import { SiteFooter } from '@/components/navigation/SiteFooter';
@@ -23,9 +23,28 @@ export default function BookPage() {
   const [pkgCompany, setPkgCompany] = useState('');
   const [pkgNotes, setPkgNotes] = useState('');
 
+  const dates = useMemo(() => {
+    const result: { day: string; num: string; full: string }[] = [];
+    const base = new Date();
+    const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    let offset = 1;
+    while (result.length < 5) {
+      const d = new Date(base.getFullYear(), base.getMonth(), base.getDate() + offset);
+      offset++;
+      if (d.getDay() === 5) continue; // Skip Friday
+      result.push({
+        day: dayNames[d.getDay()],
+        num: String(d.getDate()),
+        full: `${monthNames[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`,
+      });
+    }
+    return result;
+  }, []);
+
   // Consultation Form State
   const [consultDuration, setConsultDuration] = useState<'30' | '60'>('60');
-  const [selectedDate, setSelectedDate] = useState('Nov 18, 2024');
+  const [selectedDate, setSelectedDate] = useState(() => dates[0]?.full || 'Next Available Slot');
   const [selectedTime, setSelectedTime] = useState('11:00 AM');
   const [selectedTz, setSelectedTz] = useState('Cairo EET (UTC+2)');
   const [consultName, setConsultName] = useState('');
@@ -43,14 +62,6 @@ export default function BookPage() {
     email: string;
     meetLink: string;
   } | null>(null);
-
-  const dates = [
-    { day: 'Mon', num: '18', full: 'Nov 18, 2024' },
-    { day: 'Tue', num: '19', full: 'Nov 19, 2024' },
-    { day: 'Wed', num: '20', full: 'Nov 20, 2024' },
-    { day: 'Thu', num: '21', full: 'Nov 21, 2024' },
-    { day: 'Sat', num: '23', full: 'Nov 23, 2024' },
-  ];
 
   const handlePackageSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -147,7 +158,7 @@ export default function BookPage() {
             </p>
 
             {/* Mode Switcher Toggle */}
-            <div className="mt-8 inline-flex items-center p-1.5 rounded-full bg-surface-container-low/40 backdrop-blur-2xl border border-white/20 dark:border-white/[0.08] shadow-[0_8px_32px_rgba(0,0,0,0.35)]">
+            <div className="mt-8 inline-flex items-center p-1.5 rounded-full bg-surface-container-low/80 dark:bg-surface-container-low/45 backdrop-blur-2xl border border-outline-variant/30 dark:border-white/[0.08] shadow-[0_8px_32px_rgba(0,0,0,0.14)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.35)]">
               <button
                 onClick={() => setBookingMode('packages')}
                 className={`relative px-6 py-2.5 rounded-full font-label-md text-xs sm:text-sm font-semibold transition-all ${
@@ -502,7 +513,7 @@ export default function BookPage() {
 
                   <button
                     type="submit"
-                    className="w-full mt-2 py-3.5 rounded-xl bg-primary-container text-on-primary font-semibold text-xs uppercase tracking-wider hover:bg-primary shadow-[0_0_24px_rgba(160,120,255,0.4)] transition-all"
+                    className="w-full mt-2 py-3.5 rounded-xl bg-primary text-on-primary font-semibold text-xs uppercase tracking-wider hover:bg-primary/90 shadow-[0_0_24px_rgba(160,120,255,0.4)] transition-all"
                   >
                     {t('book.confirmConsult')}
                   </button>
@@ -569,7 +580,7 @@ export default function BookPage() {
               <div className="flex flex-col gap-2 pt-2">
                 <a
                   href="/my-bookings"
-                  className="py-3 rounded-xl bg-primary-container text-on-primary text-xs font-semibold hover:bg-primary shadow-md transition-all"
+                  className="py-3 rounded-xl bg-primary text-on-primary text-xs font-semibold hover:bg-primary/90 shadow-md transition-all"
                 >
                   {t('book.viewPortal')}
                 </a>

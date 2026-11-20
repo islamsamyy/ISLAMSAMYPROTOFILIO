@@ -197,7 +197,7 @@ export default function MyBookingsPage() {
                 </p>
                 <a
                   href="/book"
-                  className="mt-4 inline-block px-4 py-2 rounded-xl bg-primary-container text-on-primary text-xs font-semibold"
+                  className="mt-4 inline-block px-4 py-2 rounded-xl bg-primary text-on-primary text-xs font-semibold"
                 >
                   {t('portal.bookNew')}
                 </a>

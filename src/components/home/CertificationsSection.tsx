@@ -99,7 +99,7 @@ export function CertificationsSection() {
                 onClick={() => setFilter(tab.id)}
                 className={`px-3.5 py-1.5 rounded-full text-xs font-label-md transition-all duration-300 ${
                   filter === tab.id
-                    ? 'bg-gradient-to-r from-primary to-primary-container text-white font-bold shadow-[0_0_20px_rgba(160,120,255,0.5)] scale-105'
+                    ? 'bg-primary text-on-primary font-bold shadow-[0_0_20px_rgba(160,120,255,0.45)] scale-105'
                     : 'bg-white/40 dark:bg-white/[0.04] text-on-surface-variant hover:text-on-surface hover:bg-white/70 dark:hover:bg-white/[0.08] border border-black/[0.05] dark:border-white/[0.08] backdrop-blur-md'
                 }`}
               >

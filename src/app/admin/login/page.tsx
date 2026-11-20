@@ -8,7 +8,7 @@ import Link from 'next/link';
 
 export default function AdminLoginPage() {
   const router = useRouter();
-  const { signIn, demoLogin } = useAdminAuth();
+  const { signIn } = useAdminAuth();
   const [identifier, setIdentifier] = useState('');
   const [password, setPassword] = useState('');
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
@@ -20,7 +20,7 @@ export default function AdminLoginPage() {
 
     const trimmedPwd = password.trim();
     if (!trimmedPwd) {
-      setErrorMsg('Please enter your admin PIN or password.');
+      setErrorMsg('Please enter your admin password.');
       return;
     }
 
@@ -38,23 +38,6 @@ export default function AdminLoginPage() {
       }
     } catch (err: any) {
       setErrorMsg(err.message || 'Authentication error.');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleQuickUnlock = async () => {
-    setLoading(true);
-    setErrorMsg(null);
-    try {
-      const res = await demoLogin();
-      if (res.success) {
-        router.push('/admin');
-      } else {
-        router.push('/admin');
-      }
-    } catch {
-      router.push('/admin');
     } finally {
       setLoading(false);
     }

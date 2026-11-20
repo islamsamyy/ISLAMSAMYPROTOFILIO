@@ -9,7 +9,7 @@ export const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-primary-container text-on-primary font-semibold shadow-md hover:bg-primary-fixed-dim active:scale-[0.98]",
+          "bg-primary text-on-primary font-semibold shadow-md hover:bg-primary/90 active:scale-[0.98]",
         primary:
           "bg-gradient-to-r from-primary-container to-secondary-container text-white font-semibold shadow-lg hover:opacity-95 active:scale-[0.98]",
         secondary:
