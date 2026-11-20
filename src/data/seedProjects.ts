@@ -3,7 +3,12 @@ export interface ProjectItem {
   title: string;
   client: string;
   companyLogo: string;
-  category: 'Distributed Systems' | 'Lakehouse & BI' | 'AI & Machine Learning' | 'Cloud Native';
+  category:
+    | 'ERP Systems'
+    | 'Data Engineering'
+    | 'Software Engineering & Online Systems'
+    | 'Data Analysis & Power BI'
+    | 'AI & Machine Learning';
   role: string;
   impactMetric: string;
   metrics: { label: string; value: string }[];
@@ -81,7 +86,7 @@ export const initialProjects: ProjectItem[] = [
     title: 'Call Center Analysis Dashboard — Power BI & SLA Intelligence',
     client: 'Customer Operations & Support Analytics',
     companyLogo: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=120&q=80',
-    category: 'Lakehouse & BI',
+    category: 'Data Analysis & Power BI',
     role: 'BI Developer & Data Analyst',
     impactMetric: '33K Calls · 75.3% SLA Response',
     metrics: [
@@ -139,7 +144,7 @@ export const initialProjects: ProjectItem[] = [
     title: 'India Unemployment Rate Analysis — Interactive Data Science & EDA',
     client: 'Data Science & Economic Analytics',
     companyLogo: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=120&q=80',
-    category: 'Lakehouse & BI',
+    category: 'Data Analysis & Power BI',
     role: 'Data Scientist & BI Analyst',
     impactMetric: '5 Regions · 27+ States Analyzed',
     metrics: [
@@ -261,7 +266,7 @@ export const initialProjects: ProjectItem[] = [
     title: 'Automated B2B Lead Generation & Supplier Discovery Pipeline',
     client: 'Egyptian Garment Export Factory',
     companyLogo: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=120&q=80',
-    category: 'Cloud Native',
+    category: 'Data Engineering',
     role: 'Automation & Data Pipeline Architect',
     impactMetric: '1,000+ Verified Leads < 2h',
     metrics: [
@@ -315,7 +320,7 @@ export const initialProjects: ProjectItem[] = [
     title: 'NexaWriter — AI Growth Hacking & Multi-Platform Content Automation',
     client: 'Nexalytix (Internal Growth System)',
     companyLogo: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=120&q=80',
-    category: 'Cloud Native',
+    category: 'AI & Machine Learning',
     role: 'Growth & AI Automation Architect',
     impactMetric: '100% Automated Publishing',
     metrics: [
@@ -368,7 +373,7 @@ export const initialProjects: ProjectItem[] = [
     title: 'Global Sales Analysis — Power BI Executive & Territorial Intelligence Dashboard',
     client: 'Global Retail & E-Commerce Analytics',
     companyLogo: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=120&q=80',
-    category: 'Lakehouse & BI',
+    category: 'Data Analysis & Power BI',
     role: 'BI & Data Analytics Developer',
     impactMetric: '$1.26M+ Total Sales Tracked',
     metrics: [
@@ -415,7 +420,7 @@ export const initialProjects: ProjectItem[] = [
     title: 'Telco Customer Churn Analysis — Python Predictive Modeling & Power BI',
     client: 'Telecommunications Analytics',
     companyLogo: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=120&q=80',
-    category: 'Lakehouse & BI',
+    category: 'Data Analysis & Power BI',
     role: 'Data Scientist & BI Developer',
     impactMetric: '7,043 Customers Analyzed',
     metrics: [
@@ -466,7 +471,7 @@ export const initialProjects: ProjectItem[] = [
     title: 'WireCut OS — Industrial Operations & Costing Analytics Platform',
     client: 'Maadi Marble',
     companyLogo: 'https://raw.githubusercontent.com/islamsamyy/wirecut-/main/public/maadi-logo.png',
-    category: 'Lakehouse & BI',
+    category: 'ERP Systems',
     role: 'Creator & Lead Solutions Architect',
     impactMetric: '28-Channel PLC Telemetry',
     metrics: [
@@ -526,7 +531,7 @@ export const initialProjects: ProjectItem[] = [
     title: 'Hospitality Multi-Property ERP & Real-Time Lakehouse',
     client: 'Safir Hotels & Resorts',
     companyLogo: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=120&q=80',
-    category: 'Lakehouse & BI',
+    category: 'Data Engineering',
     role: 'Lead Data & Solutions Architect',
     impactMetric: '1.4M msg/sec',
     metrics: [
@@ -639,7 +644,7 @@ export const initialProjects: ProjectItem[] = [
     title: 'Industrial Manufacturing ERP & Real-Time Telemetry System',
     client: 'Sotex Factory & Industrial Group',
     companyLogo: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=120&q=80',
-    category: 'Distributed Systems',
+    category: 'ERP Systems',
     role: 'Principal ERP & Data Architect',
     impactMetric: '75% Discrepancy Cut',
     metrics: [
@@ -690,7 +695,7 @@ export const initialProjects: ProjectItem[] = [
     title: 'Real-Time Fraud & Anomaly Prediction Web Gateway',
     client: 'FinTech Cloud International',
     companyLogo: 'https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&w=120&q=80',
-    category: 'Cloud Native',
+    category: 'Data Engineering',
     role: 'Lead ML & Full-Stack Engineer',
     impactMetric: '95% Accuracy',
     metrics: [
@@ -741,7 +746,7 @@ export const initialProjects: ProjectItem[] = [
     title: 'Safir Hotels — Hospitality KPI & Competitive BI Suite',
     client: 'Safir Hotels & Resorts (Dahab)',
     companyLogo: '/projects/safir-hospitality-bi/safir-kpi-dashboard.jpg',
-    category: 'Lakehouse & BI',
+    category: 'Data Analysis & Power BI',
     role: 'Lead BI & Hospitality Data Engineer',
     impactMetric: '308 Rooms • $7,070 Weekly Food Cost',
     metrics: [
@@ -848,7 +853,7 @@ A 6-dashboard Power BI hospitality analytics suite built for **Safir Hotels & Re
     title: 'North Hejaz HR — Recruitment Platform & Power BI Analytics Suite',
     client: 'North Hejaz HR Co. (شركة شمال الحجاز للتوظيف)',
     companyLogo: '/projects/north-hejaz-hr-bi/web-platform-hero.jpg',
-    category: 'Lakehouse & BI',
+    category: 'Data Analysis & Power BI',
     role: 'Lead Full-Stack & BI Architect',
     impactMetric: '2.0M SAR Revenue • 288 Clients',
     metrics: [
@@ -945,7 +950,7 @@ An end-to-end **Saudi Vision 2030** recruitment web platform and **Power BI Exec
     title: 'Human Resource Analytics — Workforce Attrition & Compensation BI',
     client: 'Enterprise HR Intelligence (Power BI)',
     companyLogo: '/projects/hr-attrition-bi/hr-dashboard-overview.jpg',
-    category: 'Lakehouse & BI',
+    category: 'Data Analysis & Power BI',
     role: 'Lead BI & People Analytics Engineer',
     impactMetric: '1,470 Employees • 3.31x Attrition Driver',
     metrics: [
@@ -1142,7 +1147,7 @@ When a lead replies on WhatsApp:
     title: 'AdventureWorksDW2019 — Enterprise Sales, Product & Customer BI Suite',
     client: 'AdventureWorks Enterprise Analytics (SQL Server & Power BI)',
     companyLogo: '/projects/adventureworks-sales-bi/01-dashboards-overview.jpg',
-    category: 'Lakehouse & BI',
+    category: 'Data Analysis & Power BI',
     role: 'Lead BI & SQL Data Warehouse Engineer',
     impactMetric: '$22.24M Sales • 105.46% Budget Ratio',
     metrics: [
@@ -1235,7 +1240,7 @@ An end-to-end **SQL Server (SSMS)** and **Power BI** analytics suite built on \`
     "title": "Nexa",
     "client": "GitHub • islamsamyy/nexa",
     "companyLogo": "/projects/gh-nexa/overview.svg",
-    "category": "AI & Machine Learning",
+    "category": "Software Engineering & Online Systems",
     "role": "Creator & Lead Engineer",
     "impactMetric": "HTML",
     "metrics": [
@@ -1339,7 +1344,7 @@ An end-to-end **SQL Server (SSMS)** and **Power BI** analytics suite built on \`
     "title": "Nexaa",
     "client": "GitHub • islamsamyy/nexaa",
     "companyLogo": "/projects/gh-nexaa/overview.svg",
-    "category": "AI & Machine Learning",
+    "category": "Software Engineering & Online Systems",
     "role": "Creator & Lead Engineer",
     "impactMetric": "HTML",
     "metrics": [
@@ -1443,7 +1448,7 @@ An end-to-end **SQL Server (SSMS)** and **Power BI** analytics suite built on \`
     "title": "SHMAL ELHEJAZ",
     "client": "GitHub • islamsamyy/SHMAL-ELHEJAZ",
     "companyLogo": "/projects/gh-shmal-elhejaz/overview.svg",
-    "category": "Lakehouse & BI",
+    "category": "Software Engineering & Online Systems",
     "role": "Creator & Lead Engineer",
     "impactMetric": "CSS",
     "metrics": [
@@ -1556,7 +1561,7 @@ An end-to-end **SQL Server (SSMS)** and **Power BI** analytics suite built on \`
     "title": "Sotexerp",
     "client": "GitHub • islamsamyy/sotexerp",
     "companyLogo": "/projects/gh-sotexerp/logo.png",
-    "category": "Lakehouse & BI",
+    "category": "ERP Systems",
     "role": "Creator & Lead Engineer",
     "impactMetric": "TypeScript",
     "metrics": [
@@ -1672,7 +1677,7 @@ An end-to-end **SQL Server (SSMS)** and **Power BI** analytics suite built on \`
     "title": "Shamalelhejaz",
     "client": "GitHub • islamsamyy/shamalelhejaz",
     "companyLogo": "/projects/gh-shamalelhejaz/logo.png",
-    "category": "Lakehouse & BI",
+    "category": "Software Engineering & Online Systems",
     "role": "Creator & Lead Engineer",
     "impactMetric": "HTML",
     "metrics": [
@@ -1795,7 +1800,7 @@ An end-to-end **SQL Server (SSMS)** and **Power BI** analytics suite built on \`
     "title": "Naafs",
     "client": "GitHub • islamsamyy/naafs",
     "companyLogo": "/projects/gh-naafs/logo.svg",
-    "category": "Lakehouse & BI",
+    "category": "Software Engineering & Online Systems",
     "role": "Creator & Lead Engineer",
     "impactMetric": "TypeScript",
     "metrics": [
@@ -2043,7 +2048,7 @@ An end-to-end **SQL Server (SSMS)** and **Power BI** analytics suite built on \`
     "title": "Customer Churn Analysis",
     "client": "GitHub • islamsamyy/customer-Churn-analysis",
     "companyLogo": "/projects/gh-customer-churn-analysis/overview.svg",
-    "category": "AI & Machine Learning",
+    "category": "Data Analysis & Power BI",
     "role": "Creator & Lead Engineer",
     "impactMetric": "Open Source",
     "metrics": [
@@ -2383,7 +2388,7 @@ An end-to-end **SQL Server (SSMS)** and **Power BI** analytics suite built on \`
     "title": "Startup Expansion & Market ROI Intelligence",
     "client": "GitHub • islamsamyy/Startup-Expansion-Analysis-",
     "companyLogo": "/projects/gh-startup-expansion-analysis/dashboard-overview.jpg",
-    "category": "Lakehouse & BI",
+    "category": "Data Analysis & Power BI",
     "role": "Creator & Lead Engineer",
     "impactMetric": "$5.0M Profit • 150 Stores",
     "metrics": [
@@ -2513,7 +2518,7 @@ An end-to-end **SQL Server (SSMS)** and **Power BI** analytics suite built on \`
     "title": "Supply Chain",
     "client": "GitHub • islamsamyy/supply-chain-",
     "companyLogo": "/projects/gh-supply-chain/overview.svg",
-    "category": "Lakehouse & BI",
+    "category": "Data Analysis & Power BI",
     "role": "Creator & Lead Engineer",
     "impactMetric": "Open Source",
     "metrics": [
@@ -2750,7 +2755,7 @@ An end-to-end **SQL Server (SSMS)** and **Power BI** analytics suite built on \`
     "title": "Unemployment Data In India",
     "client": "GitHub • islamsamyy/Unemployment-Data-in-India",
     "companyLogo": "/projects/gh-unemployment-data-in-india/overview.svg",
-    "category": "AI & Machine Learning",
+    "category": "Data Analysis & Power BI",
     "role": "Creator & Lead Engineer",
     "impactMetric": "Jupyter Notebook",
     "metrics": [
@@ -2870,7 +2875,7 @@ An end-to-end **SQL Server (SSMS)** and **Power BI** analytics suite built on \`
     "title": "Faireer",
     "client": "GitHub • islamsamyy/faireer",
     "companyLogo": "/projects/gh-faireer/logo.png",
-    "category": "Lakehouse & BI",
+    "category": "Software Engineering & Online Systems",
     "role": "Creator & Lead Engineer",
     "impactMetric": "1 ★ GitHub",
     "metrics": [
@@ -2981,7 +2986,7 @@ An end-to-end **SQL Server (SSMS)** and **Power BI** analytics suite built on \`
     "title": "Fakret Mashrou Final",
     "client": "GitHub • islamsamyy/fakret-mashrou-final-",
     "companyLogo": "/projects/gh-fakret-mashrou-final/overview.svg",
-    "category": "Lakehouse & BI",
+    "category": "Software Engineering & Online Systems",
     "role": "Creator & Lead Engineer",
     "impactMetric": "TypeScript",
     "metrics": [
@@ -3102,7 +3107,7 @@ An end-to-end **SQL Server (SSMS)** and **Power BI** analytics suite built on \`
     "title": "Bidjobsup",
     "client": "GitHub • islamsamyy/bidjobsup",
     "companyLogo": "/projects/gh-bidjobsup/logo.png",
-    "category": "Lakehouse & BI",
+    "category": "Software Engineering & Online Systems",
     "role": "Creator & Lead Engineer",
     "impactMetric": "TypeScript",
     "metrics": [
@@ -3224,7 +3229,7 @@ An end-to-end **SQL Server (SSMS)** and **Power BI** analytics suite built on \`
     "title": "Idea Business",
     "client": "GitHub • islamsamyy/idea-business",
     "companyLogo": "/projects/gh-idea-business/overview.svg",
-    "category": "Lakehouse & BI",
+    "category": "Software Engineering & Online Systems",
     "role": "Creator & Lead Engineer",
     "impactMetric": "TypeScript",
     "metrics": [
@@ -3343,7 +3348,7 @@ An end-to-end **SQL Server (SSMS)** and **Power BI** analytics suite built on \`
     "title": "Maadi Website",
     "client": "GitHub • islamsamyy/maadi-website",
     "companyLogo": "/projects/gh-maadi-website/logo.png",
-    "category": "Lakehouse & BI",
+    "category": "Software Engineering & Online Systems",
     "role": "Creator & Lead Engineer",
     "impactMetric": "TypeScript",
     "metrics": [
@@ -3468,7 +3473,7 @@ An end-to-end **SQL Server (SSMS)** and **Power BI** analytics suite built on \`
     "title": "Spider Marketingagencyplateform",
     "client": "GitHub • islamsamyy/spider-marketingagencyplateform",
     "companyLogo": "/projects/gh-spider-marketingagencyplateform/logo.png",
-    "category": "Lakehouse & BI",
+    "category": "Software Engineering & Online Systems",
     "role": "Creator & Lead Engineer",
     "impactMetric": "TypeScript",
     "metrics": [
@@ -3594,7 +3599,7 @@ An end-to-end **SQL Server (SSMS)** and **Power BI** analytics suite built on \`
     "title": "Amani KhalIi",
     "client": "GitHub • islamsamyy/Amani-KhalIi",
     "companyLogo": "/projects/gh-amani-khalii/logo.png",
-    "category": "Lakehouse & BI",
+    "category": "Software Engineering & Online Systems",
     "role": "Creator & Lead Engineer",
     "impactMetric": "TypeScript",
     "metrics": [
@@ -3719,7 +3724,7 @@ An end-to-end **SQL Server (SSMS)** and **Power BI** analytics suite built on \`
     "title": "Wirecut",
     "client": "GitHub • islamsamyy/wirecut-",
     "companyLogo": "/projects/gh-wirecut/logo.png",
-    "category": "Lakehouse & BI",
+    "category": "ERP Systems",
     "role": "Creator & Lead Engineer",
     "impactMetric": "TypeScript",
     "metrics": [
@@ -3844,7 +3849,7 @@ An end-to-end **SQL Server (SSMS)** and **Power BI** analytics suite built on \`
     "title": "ISLAMSAMYPROTOFILIO",
     "client": "GitHub • islamsamyy/ISLAMSAMYPROTOFILIO",
     "companyLogo": "/projects/gh-islamsamyprotofilio/logo.png",
-    "category": "Lakehouse & BI",
+    "category": "Software Engineering & Online Systems",
     "role": "Creator & Lead Engineer",
     "impactMetric": "TypeScript",
     "metrics": [

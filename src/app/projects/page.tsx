@@ -16,8 +16,9 @@ import {
   Layers,
   Cpu,
   Database,
-  Cloud,
-  Network,
+  Code2,
+  BarChart3,
+  Building2,
   ArrowRight,
   Calendar,
   FolderGit2,
@@ -36,10 +37,11 @@ import { cleanProjectText, isDiagramAsset } from '@/lib/utils';
 
 const CATEGORIES = [
   'All Projects',
-  'Lakehouse & BI',
+  'ERP Systems',
+  'Data Engineering',
+  'Software Engineering & Online Systems',
+  'Data Analysis & Power BI',
   'AI & Machine Learning',
-  'Distributed Systems',
-  'Cloud Native',
 ] as const;
 
 type ScopeFilter = 'all' | 'featured' | 'repo';
@@ -68,40 +70,48 @@ export default function ProjectsPage() {
 
   const CATEGORY_MAP: Record<string, string> = {
     'All Projects': isArabic ? 'كافة المشاريع' : 'All Domains',
-    'Distributed Systems': isArabic ? 'النظم الموزعة' : 'Distributed Systems',
-    'Lakehouse & BI': isArabic ? 'مستودعات البيانات وBI' : 'Lakehouse & BI',
+    'ERP Systems': isArabic ? 'أنظمة تخطيط الموارد (ERP)' : 'ERP Systems',
+    'Data Engineering': isArabic ? 'هندسة البيانات' : 'Data Engineering',
+    'Software Engineering & Online Systems': isArabic ? 'هندسة البرمجيات والأنظمة والمواقع' : 'Software Eng & Online Systems',
+    'Data Analysis & Power BI': isArabic ? 'تحليل البيانات وPower BI' : 'Data Analysis & Power BI',
     'AI & Machine Learning': isArabic ? 'الذكاء الاصطناعي وتعلم الآلة' : 'AI & Machine Learning',
-    'Cloud Native': isArabic ? 'الحوسبة السحابية' : 'Cloud Native',
   };
 
   const DOMAIN_PILLARS = [
     {
-      id: 'Lakehouse & BI',
-      title: CATEGORY_MAP['Lakehouse & BI'],
-      desc: isArabic ? 'Power BI، نمذجة النجوم، ClickHouse وتحليلات المؤسسات' : 'Power BI, Star Schemas, ClickHouse & Executive BI',
+      id: 'ERP Systems',
+      title: CATEGORY_MAP['ERP Systems'],
+      desc: isArabic ? 'أنظمة إدارة المصانع والعمليات والتكاليف الصناعية' : 'Enterprise & Industrial ERP Platforms, OEE & Costing',
+      icon: Building2,
+      accent: 'text-primary border-primary/30 bg-primary/10',
+    },
+    {
+      id: 'Data Engineering',
+      title: CATEGORY_MAP['Data Engineering'],
+      desc: isArabic ? 'مستودعات البيانات، Kafka CDC، وتدفقات ETL' : 'Kafka CDC, ClickHouse Lakehouses & Real-Time Pipelines',
       icon: Database,
+      accent: 'text-secondary border-secondary/30 bg-secondary/10',
+    },
+    {
+      id: 'Software Engineering & Online Systems',
+      title: CATEGORY_MAP['Software Engineering & Online Systems'],
+      desc: isArabic ? 'منصات ويب متكاملة، متاجر إلكترونية ومواقع' : 'Full-Stack Web Platforms, Marketplaces & Online Portals',
+      icon: Code2,
+      accent: 'text-tertiary border-tertiary/30 bg-tertiary/10',
+    },
+    {
+      id: 'Data Analysis & Power BI',
+      title: CATEGORY_MAP['Data Analysis & Power BI'],
+      desc: isArabic ? 'لوحات معلومات Power BI، DAX والتحليل الاستكشافي' : 'Power BI Executive Dashboards, DAX & EDA Suites',
+      icon: BarChart3,
       accent: 'text-secondary border-secondary/30 bg-secondary/10',
     },
     {
       id: 'AI & Machine Learning',
       title: CATEGORY_MAP['AI & Machine Learning'],
-      desc: isArabic ? 'وكلاء RAG، نماذج التنبؤ، والتحليل الاستكشافي' : 'RAG AI Agents, Predictive Churn ML & EDA Suites',
+      desc: isArabic ? 'وكلاء الذكاء الاصطناعي RAG ونماذج التنبؤ' : 'RAG AI Agents, Predictive ML Models & Automations',
       icon: Cpu,
       accent: 'text-primary border-primary/30 bg-primary/10',
-    },
-    {
-      id: 'Distributed Systems',
-      title: CATEGORY_MAP['Distributed Systems'],
-      desc: isArabic ? 'أنظمة ERP الصناعية، Kafka CDC، ومعالجة التدفقات' : 'Industrial ERP, Kafka CDC & High-Throughput Pipelines',
-      icon: Network,
-      accent: 'text-tertiary border-tertiary/30 bg-tertiary/10',
-    },
-    {
-      id: 'Cloud Native',
-      title: CATEGORY_MAP['Cloud Native'],
-      desc: isArabic ? 'أتمتة n8n، بوابات FastAPI، والبنية السحابية' : 'n8n Growth Pipelines, Cloud Gateways & Microservices',
-      icon: Cloud,
-      accent: 'text-secondary border-secondary/30 bg-secondary/10',
     },
   ];
 
@@ -302,7 +312,7 @@ export default function ProjectsPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.45, delay: 0.05 }}
             aria-label="Engineering Domains"
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4"
           >
             {DOMAIN_PILLARS.map((pillar) => {
               const Icon = pillar.icon;
@@ -895,7 +905,14 @@ export default function ProjectsPage() {
 
                     {/* Domain Sub-Tabs inside Repo Vault */}
                     <div className="flex flex-wrap items-center gap-1.5">
-                      {['All', 'AI & Machine Learning', 'Lakehouse & BI', 'Distributed Systems', 'Cloud Native'].map((sub) => {
+                      {[
+                        'All',
+                        'ERP Systems',
+                        'Data Engineering',
+                        'Software Engineering & Online Systems',
+                        'Data Analysis & Power BI',
+                        'AI & Machine Learning',
+                      ].map((sub) => {
                         const subCount =
                           sub === 'All' ? repoList.length : repoList.filter((r) => r.category === sub).length;
                         if (sub !== 'All' && subCount === 0) return null;

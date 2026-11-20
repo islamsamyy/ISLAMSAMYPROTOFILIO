@@ -136,6 +136,22 @@ async function apiMutate(table: string, action: 'upsert' | 'delete' | 'update', 
 }
 
 // ---------------- PROJECTS ----------------
+export function normalizeProjectCategory(raw?: string): ProjectItem['category'] {
+  if (
+    raw === 'ERP Systems' ||
+    raw === 'Data Engineering' ||
+    raw === 'Software Engineering & Online Systems' ||
+    raw === 'Data Analysis & Power BI' ||
+    raw === 'AI & Machine Learning'
+  ) {
+    return raw;
+  }
+  if (raw === 'Distributed Systems') return 'ERP Systems';
+  if (raw === 'Lakehouse & BI') return 'Data Analysis & Power BI';
+  if (raw === 'Cloud Native') return 'Software Engineering & Online Systems';
+  return 'Software Engineering & Online Systems';
+}
+
 export function mapProjectRowToItem(row: any): ProjectItem {
   const seed = initialProjects.find((p) => p.id === row.id);
   const rowGallery = Array.isArray(row.gallery_images) && row.gallery_images.length > 0 ? row.gallery_images : undefined;
@@ -149,7 +165,7 @@ export function mapProjectRowToItem(row: any): ProjectItem {
     title: row.title || seed?.title || '',
     client: row.client || seed?.client || '',
     companyLogo: row.company_logo || seed?.companyLogo || '',
-    category: row.category || seed?.category || 'Cloud Native',
+    category: seed?.category || normalizeProjectCategory(row.category),
     role: row.role || seed?.role || 'Creator & Lead Engineer',
     impactMetric: row.impact_metric || seed?.impactMetric || '',
     metrics: Array.isArray(row.metrics) && row.metrics.length > 0 ? row.metrics : (seed?.metrics || []),

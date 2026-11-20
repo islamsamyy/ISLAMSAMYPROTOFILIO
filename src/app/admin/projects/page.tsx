@@ -62,7 +62,7 @@ export default function AdminProjectsPage() {
   const [title, setTitle] = useState('');
   const [client, setClient] = useState('');
   const [companyLogo, setCompanyLogo] = useState('');
-  const [category, setCategory] = useState<ProjectItem['category']>('Distributed Systems');
+  const [category, setCategory] = useState<ProjectItem['category']>('ERP Systems');
   const [role, setRole] = useState('Lead Solutions Architect');
   const [impactMetric, setImpactMetric] = useState('1.4M msg/sec');
   const [summary, setSummary] = useState('');
@@ -175,7 +175,7 @@ export default function AdminProjectsPage() {
     setTitle('');
     setClient('');
     setCompanyLogo(SAMPLE_LOGOS[0].url);
-    setCategory('Distributed Systems');
+    setCategory('ERP Systems');
     setRole('Lead Solutions Architect');
     setImpactMetric('95% Accuracy');
     setSummary('');
@@ -498,10 +498,11 @@ export default function AdminProjectsPage() {
                           onChange={(e) => setCategory(e.target.value as any)}
                           className="px-3.5 py-2 rounded-xl bg-surface-container-lowest border border-outline-variant/30 text-xs text-on-surface focus:outline-none focus:ring-2 focus:ring-primary"
                         >
-                          <option value="Distributed Systems">Distributed Systems</option>
-                          <option value="Lakehouse & BI">Lakehouse &amp; BI</option>
+                          <option value="ERP Systems">ERP Systems</option>
+                          <option value="Data Engineering">Data Engineering</option>
+                          <option value="Software Engineering & Online Systems">Software Engineering &amp; Online Systems</option>
+                          <option value="Data Analysis & Power BI">Data Analysis &amp; Power BI</option>
                           <option value="AI & Machine Learning">AI &amp; Machine Learning</option>
-                          <option value="Cloud Native">Cloud Native</option>
                         </select>
                       </div>
 
@@ -764,10 +765,11 @@ export default function AdminProjectsPage() {
                 className="px-3 py-1.5 rounded-xl bg-surface-container-lowest border border-outline-variant/30 text-xs text-on-surface focus:outline-none focus:ring-2 focus:ring-primary"
               >
                 <option value="All">All Categories</option>
-                <option value="Distributed Systems">Distributed Systems</option>
-                <option value="Lakehouse & BI">Lakehouse &amp; BI</option>
+                <option value="ERP Systems">ERP Systems</option>
+                <option value="Data Engineering">Data Engineering</option>
+                <option value="Software Engineering & Online Systems">Software Engineering &amp; Online Systems</option>
+                <option value="Data Analysis & Power BI">Data Analysis &amp; Power BI</option>
                 <option value="AI & Machine Learning">AI &amp; Machine Learning</option>
-                <option value="Cloud Native">Cloud Native</option>
               </select>
             </div>
 

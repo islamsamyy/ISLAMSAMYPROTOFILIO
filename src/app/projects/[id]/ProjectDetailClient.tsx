@@ -119,7 +119,7 @@ export function ProjectDetailClient({ projectId, initialProject }: ProjectDetail
       const cx = width / 2;
       const cy = height / 2;
 
-      if (project.category === 'Lakehouse & BI') {
+      if (project.category === 'Data Analysis & Power BI') {
         for (let r = 20; r <= 80; r += 20) {
           ctx.beginPath();
           ctx.ellipse(cx, cy, r, r * 0.4, 0, 0, Math.PI * 2);

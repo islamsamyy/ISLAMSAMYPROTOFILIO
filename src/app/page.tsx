@@ -15,6 +15,7 @@ import { ScrollRevealSection } from '@/components/animation/ScrollRevealSection'
 import { submitContactInquiry } from '@/lib/data-store';
 import { useProjects, usePricing } from '@/lib/hooks';
 import { useLanguage } from '@/context/LanguageContext';
+import { cleanProjectText, getProjectCover, isDiagramAsset } from '@/lib/utils';
 import { WhatsAppFloatingButton, WHATSAPP_NUMBER, WHATSAPP_INTERNATIONAL, WHATSAPP_URL, WhatsAppIcon } from '@/components/ui/WhatsAppButton';
 
 const ClientReviewsSection = dynamic(
@@ -37,6 +38,10 @@ const TechArsenalSection = dynamic(
   () => import('@/components/home/TechArsenalSection').then((m) => m.TechArsenalSection),
   { ssr: false, loading: () => <div className="py-12 max-w-7xl mx-auto px-4"><div className="h-48 rounded-2xl bg-surface-container/30 animate-pulse" /></div> }
 );
+const IndustrySolutionsSection = dynamic(
+  () => import('@/components/home/IndustrySolutionsSection').then((m) => m.IndustrySolutionsSection),
+  { ssr: false, loading: () => <div className="py-12 max-w-7xl mx-auto px-4"><div className="h-72 rounded-2xl bg-surface-container/30 animate-pulse" /></div> }
+);
 
 export default function PortfolioHomePage() {
   const { t, language } = useLanguage();
@@ -49,6 +54,23 @@ export default function PortfolioHomePage() {
   const [inqMessage, setInqMessage] = useState('');
   const [inqSending, setInqSending] = useState(false);
   const [inqSent, setInqSent] = useState(false);
+  const [featuredSlide, setFeaturedSlide] = useState(0);
+  const [featuredPaused, setFeaturedPaused] = useState(false);
+
+  const featuredProjects = React.useMemo(() => {
+    const list = projects.filter((p) => p.featured);
+    return list.length > 0 ? list : projects;
+  }, [projects]);
+
+  const featuredPageCount = Math.max(1, Math.ceil(featuredProjects.length / 2));
+
+  useEffect(() => {
+    if (featuredPageCount <= 1 || featuredPaused) return;
+    const timer = setInterval(() => {
+      setFeaturedSlide((prev) => (prev + 1) % featuredPageCount);
+    }, 6500);
+    return () => clearInterval(timer);
+  }, [featuredPageCount, featuredPaused]);
 
   const handleInquirySubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -775,6 +797,7 @@ try {
 >
   <div className="flex items-center gap-1.5 p-1.5 rounded-full bg-surface-container-low/80 dark:bg-surface-container-low/55 backdrop-blur-xl border border-outline-variant/25 dark:border-white/[0.08] overflow-x-auto max-w-full [scrollbar-width:none] [&::-webkit-scrollbar]:hidden shadow-sm">
     {[
+      { href: '#solutions', label: language === 'ar' ? 'الحلول والقطاعات' : 'Industry Solutions' },
       { href: '#projects', label: language === 'ar' ? 'المشاريع المميزة' : 'Flagship Work' },
       { href: '/projects', label: language === 'ar' ? `معرض المشاريع (${projects.length})` : `Project Gallery (${projects.length})`, isLink: true },
       { href: '#pricing', label: language === 'ar' ? 'الباقات والأسعار' : 'Advisory Packages' },
@@ -805,6 +828,9 @@ try {
 {/* PROJECTS SHOWCASE SLIDESHOW (Immediate Visual Proof of Work) */}
 <ProjectsSlideshowSection />
 
+{/* WHY MY SOLUTIONS WORK & CUSTOMIZED FOR ALL INDUSTRIES */}
+<IndustrySolutionsSection />
+
 {/* SECTION 3: TECHNICAL ARSENAL (Single-Row Horizontal Showcase Gliding to Right) */}
       <TechArsenalSection />
       {/* SECTION 4: PROFESSIONAL EXPERIENCE (Compact 2-Column Grid) */}
@@ -813,102 +839,159 @@ try {
 {/* CERTIFICATIONS & VERIFIED CREDENTIALS */}
 <CertificationsSection />
 
-{/* SECTION 5: FEATURED REAL PROJECTS */}
+{/* SECTION 5: FEATURED REAL PROJECTS SLIDESHOW */}
 <ScrollRevealSection className="w-full max-w-[1280px] mx-auto px-gutter py-10 relative z-10 content-auto" id="projects" suppressHydrationWarning>
-<div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8 border-b border-outline-variant/20 pb-5">
+<div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-6 border-b border-outline-variant/20 pb-5">
   <div className="max-w-2xl">
     <span className="font-label-sm text-label-sm uppercase tracking-widest text-primary font-semibold">{t('projects.badge', 'Flagship Production Systems')}</span>
     <h2 className="font-headline-lg text-headline-lg text-on-surface mt-1.5 mb-2">{t('projects.title', 'Enterprise ERP, Autonomous AI Agents & Data Lakehouses')}</h2>
     <p className="font-body-md text-body-md text-on-surface-variant">{t('projects.subtitle', 'Real-world production architectures delivering tangible business revenue, zero-overhead automation, and sub-second analytics.')}</p>
   </div>
-  <Link
-    href="/projects"
-    className="shrink-0 inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary-container text-on-primary-container hover:bg-primary hover:text-on-primary font-nexa text-xs font-bold uppercase tracking-wider shadow-sm transition-all"
-  >
-    <span>{language === 'ar' ? `استعرض كافة الـ ${projects.length} مشروع` : `Explore All ${projects.length} Projects`}</span>
-    <span className="material-symbols-outlined text-sm">arrow_forward</span>
-  </Link>
+  <div className="flex items-center gap-2.5 shrink-0">
+    {featuredPageCount > 1 && (
+      <div className="flex items-center gap-1.5 mr-1">
+        <span className="text-xs font-mono text-on-surface-variant mr-1">
+          {(featuredSlide % featuredPageCount) + 1} / {featuredPageCount}
+        </span>
+        <button
+          type="button"
+          onClick={() => setFeaturedSlide((prev) => (prev - 1 + featuredPageCount) % featuredPageCount)}
+          aria-label="Previous featured projects slide"
+          className="w-9 h-9 rounded-xl bg-surface-container-high hover:bg-primary-container hover:text-on-primary-container border border-outline-variant/30 flex items-center justify-center text-on-surface transition-colors"
+        >
+          <span className="material-symbols-outlined text-lg">chevron_left</span>
+        </button>
+        <button
+          type="button"
+          onClick={() => setFeaturedSlide((prev) => (prev + 1) % featuredPageCount)}
+          aria-label="Next featured projects slide"
+          className="w-9 h-9 rounded-xl bg-surface-container-high hover:bg-primary-container hover:text-on-primary-container border border-outline-variant/30 flex items-center justify-center text-on-surface transition-colors"
+        >
+          <span className="material-symbols-outlined text-lg">chevron_right</span>
+        </button>
+      </div>
+    )}
+    <Link
+      href="/projects"
+      className="shrink-0 inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary-container text-on-primary-container hover:bg-primary hover:text-on-primary font-nexa text-xs font-bold uppercase tracking-wider shadow-sm transition-all"
+    >
+      <span>{language === 'ar' ? `استعرض كافة الـ ${projects.length} مشروع` : `Explore All ${projects.length} Projects`}</span>
+      <span className="material-symbols-outlined text-sm">arrow_forward</span>
+    </Link>
+  </div>
 </div>
-<div className="grid grid-cols-1 lg:grid-cols-2 gap-5" suppressHydrationWarning>
-  {projects.slice(0, 2).map((proj, idx) => {
-    const canvasId =
-      proj.id === 'safir-hotels-bi' || proj.id === 'proj-1' || idx === 0
-        ? 'project-3d-safir'
-        : proj.id === 'sotex-operations-bi' || proj.id === 'proj-2' || idx === 1
-        ? 'project-3d-sotex'
-        : proj.id === 'sales-prediction-ml' || proj.id === 'proj-3' || idx === 2
-        ? 'project-3d-sales'
-        : proj.id === 'breast-cancer-classifier' || proj.id === 'proj-4' || idx === 3
-        ? 'project-3d-cancer'
-        : `project-3d-custom-${idx}`;
 
-    const borderColor =
-      idx % 3 === 0 ? 'border-primary/20 hover:border-primary/40' :
-      idx % 3 === 1 ? 'border-secondary/20 hover:border-secondary/40' :
-      'border-tertiary/20 hover:border-tertiary/40';
+<div
+  onMouseEnter={() => setFeaturedPaused(true)}
+  onMouseLeave={() => setFeaturedPaused(false)}
+  className="grid grid-cols-1 lg:grid-cols-2 gap-6"
+  suppressHydrationWarning
+>
+  {(() => {
+    const start = (featuredSlide % featuredPageCount) * 2;
+    const visiblePair = featuredProjects.slice(start, start + 2);
+    return visiblePair.map((proj, idx) => {
+      const coverSrc = getProjectCover(proj as any);
+      const isDiag = isDiagramAsset(coverSrc);
+      const borderColor =
+        idx % 2 === 0 ? 'border-primary/25 hover:border-primary/50' : 'border-secondary/25 hover:border-secondary/50';
+      const tagColor =
+        idx % 2 === 0 ? 'bg-primary-container/30 text-primary' : 'bg-secondary-container/30 text-secondary';
 
-    const tagColor =
-      idx % 3 === 0 ? 'bg-primary-container/20 text-primary' :
-      idx % 3 === 1 ? 'bg-secondary-container/20 text-secondary' :
-      'bg-tertiary/15 text-tertiary';
-
-    return (
-      <TiltCard key={proj.id} maxTilt={5} depth={8} glare={true} className="rounded-2xl h-full">
-        <div className={`p-5 rounded-2xl bg-surface-container-low/90 dark:bg-[#14161f]/95 border ${borderColor} shadow-[0_12px_36px_rgba(0,0,0,0.5)] flex flex-col justify-between transition-all h-full`}>
-          <div>
-            <div className="flex items-center justify-between mb-3">
-              <span className={`px-2.5 py-0.5 rounded-full ${tagColor} font-label-sm text-[11px] uppercase font-semibold`}>
-                {proj.category}
-              </span>
-              <span className="font-label-sm text-label-sm text-on-surface-variant">
-                {proj.client} • Production
-              </span>
-            </div>
-            <div className="w-full h-24 rounded-xl bg-surface-container-lowest/80 border border-primary/20 relative overflow-hidden mb-3 group/viewport">
-              <canvas id={canvasId} className="w-full h-full block"></canvas>
-              <div className="absolute bottom-2 left-2 px-2 py-0.5 rounded bg-surface-container-high/80 backdrop-blur-sm border border-primary/30 text-[10px] font-label-sm text-primary flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
-                {proj.impactMetric || 'Production Telemetry'}
+      return (
+        <TiltCard key={proj.id} maxTilt={4} depth={8} glare={true} className="rounded-3xl h-full">
+          <div className={`p-5 sm:p-6 rounded-3xl bg-surface-container-low/90 dark:bg-[#14161f]/95 border ${borderColor} shadow-[0_12px_36px_rgba(0,0,0,0.16)] dark:shadow-[0_12px_36px_rgba(0,0,0,0.5)] flex flex-col justify-between transition-all h-full`}>
+            <div>
+              <div className="flex items-center justify-between gap-2 mb-3">
+                <span className={`px-2.5 py-0.5 rounded-full ${tagColor} font-label-sm text-[11px] uppercase font-semibold`}>
+                  {proj.category}
+                </span>
+                <span className="font-label-sm text-label-sm text-on-surface-variant truncate">
+                  {proj.client} &bull; Featured
+                </span>
               </div>
-            </div>
-            <h3 suppressHydrationWarning className="font-headline-sm text-headline-sm text-on-surface mb-1.5">{proj.title}</h3>
-            <p suppressHydrationWarning className="font-body-sm text-body-sm text-on-surface-variant mb-3 line-clamp-2">
-              {proj.summary}
-            </p>
-            {proj.metrics && proj.metrics.length > 0 && (
-              <div className="grid grid-cols-2 gap-2 mb-3" suppressHydrationWarning>
-                {proj.metrics.slice(0, 2).map((m, mIdx) => (
-                  <div key={mIdx} className="px-3 py-2 rounded-xl bg-surface-container-high/60 flex items-center justify-between gap-2">
-                    <span className="font-body-sm text-xs text-on-surface font-medium truncate">{m.label}</span>
-                    <span suppressHydrationWarning className="font-label-sm text-xs text-secondary font-bold shrink-0">{m.value}</span>
+
+              {coverSrc && (
+                <Link
+                  href={`/projects/${proj.id}`}
+                  className="block w-full aspect-[16/9] rounded-2xl bg-surface-container-lowest border border-outline-variant/25 dark:border-primary/20 relative overflow-hidden mb-4 group/viewport"
+                >
+                  <img
+                    src={coverSrc}
+                    alt={proj.title}
+                    loading="lazy"
+                    className={`w-full h-full ${isDiag ? 'object-contain p-3' : 'object-cover object-top'} group-hover/viewport:scale-[1.03] transition-transform duration-300`}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent pointer-events-none" />
+                  <div className="absolute bottom-2.5 left-3 px-2.5 py-1 rounded-lg bg-black/75 backdrop-blur-sm border border-primary/35 text-[11px] font-mono text-secondary flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse" />
+                    <span>{proj.impactMetric || 'Production Telemetry'}</span>
                   </div>
-                ))}
-              </div>
-            )}
-          </div>
-          <div>
-            <div className="flex flex-wrap gap-2 pt-3 border-t border-surface-container-high/60 items-center justify-between">
+                </Link>
+              )}
+
+              <Link href={`/projects/${proj.id}`}>
+                <h3 suppressHydrationWarning className="font-headline-sm text-lg sm:text-xl font-bold text-on-surface hover:text-primary transition-colors mb-1.5 line-clamp-2">
+                  {proj.title}
+                </h3>
+              </Link>
+              <p suppressHydrationWarning className="font-body-sm text-xs sm:text-sm text-on-surface-variant mb-4 line-clamp-2 leading-relaxed">
+                {cleanProjectText(proj.summary)}
+              </p>
+
+              {proj.metrics && proj.metrics.length > 0 && (
+                <div className="grid grid-cols-2 gap-2 mb-4" suppressHydrationWarning>
+                  {proj.metrics.slice(0, 2).map((m, mIdx) => (
+                    <div key={mIdx} className="px-3 py-2 rounded-xl bg-surface-container-high/60 border border-outline-variant/15 flex items-center justify-between gap-2">
+                      <span className="font-body-sm text-xs text-on-surface-variant font-medium truncate">{m.label}</span>
+                      <span suppressHydrationWarning className="font-label-sm text-xs text-secondary font-bold shrink-0">{m.value}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            <div className="flex flex-wrap gap-2 pt-3 border-t border-outline-variant/20 dark:border-surface-container-high/60 items-center justify-between">
               <div className="flex flex-wrap gap-1.5">
-                {proj.techStack.slice(0, 5).map((tech, tIdx) => (
+                {proj.techStack.slice(0, 4).map((tech, tIdx) => (
                   <span key={tIdx} className="px-2 py-0.5 rounded-md bg-surface-container-highest text-on-surface font-label-sm text-[10px]">
                     {tech}
                   </span>
                 ))}
               </div>
-              <Link href={`/projects/${proj.id}`} className="inline-flex items-center gap-1 text-xs text-primary hover:text-primary/80 font-semibold uppercase tracking-wider shrink-0">
+              <Link href={`/projects/${proj.id}`} className="inline-flex items-center gap-1 text-xs text-primary hover:text-secondary font-semibold uppercase tracking-wider shrink-0">
                 {t('projects.caseStudy', 'Case Study')} <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
               </Link>
             </div>
           </div>
-        </div>
-      </TiltCard>
-    );
-  })}
+        </TiltCard>
+      );
+    });
+  })()}
 </div>
+
+{featuredPageCount > 1 && (
+  <div className="mt-6 flex items-center justify-center gap-2">
+    {Array.from({ length: featuredPageCount }).map((_, idx) => (
+      <button
+        key={idx}
+        type="button"
+        onClick={() => setFeaturedSlide(idx)}
+        aria-label={`Go to featured slide ${idx + 1}`}
+        className={`h-2 rounded-full transition-all ${
+          idx === featuredSlide % featuredPageCount
+            ? 'w-7 bg-primary shadow-[0_0_10px_rgba(160,120,255,0.6)]'
+            : 'w-2 bg-outline-variant/40 hover:bg-primary/50'
+        }`}
+      />
+    ))}
+  </div>
+)}
+
 <div className="mt-6 text-center">
   <Link
     href="/projects"
-    className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-surface-container-high/70 hover:bg-surface-container-highest text-primary text-xs font-semibold uppercase tracking-wider border border-primary/30 transition-all hover:scale-105"
+    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-surface-container-high/80 hover:bg-surface-container-highest text-primary text-xs font-semibold uppercase tracking-wider border border-primary/30 transition-all hover:scale-105"
   >
     <span>{t('projects.viewAll', 'View All Production Projects')}</span>
     <span className="material-symbols-outlined text-sm">arrow_forward</span>
@@ -927,7 +1010,7 @@ try {
     <p className="font-body-md text-body-md text-on-surface-variant leading-relaxed">{t('pricing.subtitle', 'Turnkey architecture sprints and dedicated advisory engagements tailored for scaling enterprises, hospitality brands, and modern platforms.')}</p>
     <div className="mt-8 flex flex-col items-center gap-4">
       <div className="inline-flex items-center p-1 rounded-full bg-surface-container-low/50 border border-surface-container-high/60 backdrop-blur-md shadow-[inset_0_1px_2px_rgba(0,0,0,0.4)]">
-        <button type="button" id="pricing-tab-milestone" className="px-5 py-2 rounded-full font-label-md text-label-md bg-primary-container text-on-primary shadow-[0_0_16px_rgba(160,120,255,0.4)] transition-all duration-300 font-semibold">{t('pricing.tabMilestone', 'Project-Based / Milestones')}</button>
+        <button type="button" id="pricing-tab-milestone" className="px-5 py-2 rounded-full font-label-md text-label-md bg-primary text-on-primary shadow-[0_0_16px_rgba(160,120,255,0.4)] transition-all duration-300 font-semibold">{t('pricing.tabMilestone', 'Project-Based / Milestones')}</button>
         <button type="button" id="pricing-tab-retainer" className="px-5 py-2 rounded-full font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-all duration-300 font-medium">{t('pricing.tabRetainer', 'Dedicated Advisory / Monthly Retainer')}</button>
       </div>
       <Link

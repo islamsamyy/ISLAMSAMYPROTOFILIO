@@ -5,45 +5,90 @@ import { LanguageProvider } from "@/context/LanguageContext";
 import { ScrollProgress } from "@/components/navigation/ScrollProgress";
 import { GlobalBackgroundClient } from "@/components/canvas/GlobalBackgroundClient";
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://islamsamy.dev";
+
 export const metadata: Metadata = {
-  title: "Islam Samy — Lead Data Engineer | Custom ERP Systems, AI Agents, Automations & Full-Stack Web Development",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: "Islam Samy — ERP Systems, Data Engineering, Software & Online Systems, Power BI & AI/ML Solutions",
+    template: "%s | Islam Samy — Enterprise Solutions Architect",
+  },
   description:
-    "Senior Data Engineer & Enterprise Solutions Architect with 10+ years of technical rigor. Specialist in custom ERP system development, autonomous AI agents, n8n workflow automations, real-time data analysis, and scalable Next.js web applications.",
+    "Custom ERP Systems, Data Engineering & Real-Time Lakehouses, Software Engineering & Online Web Systems, Power BI Data Analysis Dashboards, and AI & Machine Learning solutions tailored for all industries. حلول مخصصة لأنظمة ERP، هندسة البيانات، تطوير المواقع والأنظمة الإلكترونية، تحليل البيانات وPower BI، والذكاء الاصطناعي لجميع القطاعات.",
   keywords: [
+    // English — Core 5 Solution Fields
     "Islam Samy",
-    "Data Engineer",
-    "Custom ERP System Developer",
-    "ERP Architecture",
-    "Autonomous AI Agents",
-    "Workflow Automation Specialist",
-    "n8n Automation",
-    "Executive Data Analysis",
-    "Power BI Specialist",
+    "Custom ERP Systems",
+    "Enterprise ERP Architecture",
+    "Manufacturing ERP",
+    "Hospitality ERP",
+    "Data Engineering",
+    "Real-Time Data Lakehouse",
+    "ETL & CDC Pipelines",
+    "ClickHouse & Apache Kafka",
+    "Software Engineering",
+    "Online Systems Development",
     "Full-Stack Web Development",
-    "Next.js Solutions Architect",
-    "Real-Time Lakehouse",
-    "OPERA PMS ERP Integration",
-    "ETL Pipeline Engineering",
-    "Enterprise Software Solutions"
+    "Next.js & Supabase Platforms",
+    "E-Commerce & Booking Systems",
+    "Data Analysis & Power BI",
+    "Executive Power BI Dashboards",
+    "Business Intelligence & DAX",
+    "AI & Machine Learning",
+    "Autonomous AI Agents",
+    "RAG AI Pipelines",
+    "Workflow Automation & n8n",
+    // Arabic — Core 5 Solution Fields & Multi-Industry SEO
+    "إسلام سامي",
+    "أنظمة تخطيط موارد المؤسسات ERP",
+    "تطوير أنظمة ERP مخصصة للمصانع والشركات",
+    "هندسة البيانات ومستودعات البيانات",
+    "هندسة البرمجيات وتطوير الأنظمة الإلكترونية",
+    "تصميم وتطوير المواقع والمنصات الإلكترونية",
+    "تحليل البيانات ولوحات معلومات Power BI",
+    "الذكاء الاصطناعي وتعلم الآلة",
+    "وكلاء الذكاء الاصطناعي وأتمتة الأعمال n8n",
+    "حلول برمجية وبيانات مخصصة لجميع القطاعات",
   ],
-  authors: [{ name: "Islam Samy" }],
+  authors: [{ name: "Islam Samy", url: SITE_URL }],
+  creator: "Islam Samy",
+  alternates: {
+    canonical: SITE_URL,
+    languages: {
+      "en-US": SITE_URL,
+      "ar-EG": SITE_URL,
+      "ar-SA": SITE_URL,
+    },
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
   icons: {
     icon: "/images/250LOGO.png",
     apple: "/images/250LOGO.png",
   },
   openGraph: {
-    title: "Islam Samy — Lead Data Engineer | ERP Systems, AI Agents & Web Architecture",
+    title: "Islam Samy — Custom ERP, Data Engineering, Software & Web Systems, Power BI & AI/ML",
     description:
-      "Enterprise portfolio of Islam Samy: Custom ERP engineering, autonomous multi-agent systems, zero-overhead workflow automations, real-time data lakehouses, and full-stack web platforms.",
+      "Tailored ERP Systems, Data Engineering pipelines, Full-Stack Online Systems, Power BI Dashboards, and AI/ML Agents customized for Hospitality, Manufacturing, E-Commerce, FinTech, Healthcare & B2B. حلول تقنية وبيانات مخصصة لجميع القطاعات.",
+    url: SITE_URL,
     type: "website",
     locale: "en_US",
-    siteName: "Islam Samy - Data Engineering & Enterprise Solutions",
+    alternateLocale: ["ar_EG", "ar_SA"],
+    siteName: "Islam Samy — Enterprise Solutions & Data Engineering",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Islam Samy — Lead Data Engineer | ERP Systems, AI Agents & Web Architecture",
+    title: "Islam Samy — ERP Systems, Data Engineering, Software & Web, Power BI & AI/ML",
     description:
-      "Enterprise portfolio of Islam Samy: Custom ERP engineering, autonomous multi-agent systems, zero-overhead workflow automations, real-time data lakehouses, and full-stack web platforms.",
+      "Production-grade ERP, Data Engineering, Full-Stack Online Systems, Power BI Dashboards, and AI/ML solutions customized for every industry.",
   },
 };
 
@@ -109,13 +154,26 @@ export default function RootLayout({
                   "provider": {
                     "@id": "https://islamsamy.com/#person"
                   },
-                  "serviceType": [
-                    "Custom ERP System Engineering",
-                    "Workflow Automation & Process Optimization",
-                    "Autonomous AI Agent Implementation",
-                    "Executive Business Intelligence & Data Analysis",
-                    "Full-Stack Web Platform Development"
-                  ]
+                    "serviceType": [
+                      "ERP Systems Engineering (أنظمة تخطيط موارد المؤسسات)",
+                      "Data Engineering & Real-Time Lakehouses (هندسة البيانات)",
+                      "Software Engineering & Online Web Systems (هندسة البرمجيات والأنظمة الإلكترونية)",
+                      "Data Analysis & Power BI Dashboards (تحليل البيانات ولوحات Power BI)",
+                      "AI, Machine Learning & Autonomous Agents (الذكاء الاصطناعي وتعلم الآلة)"
+                    ],
+                    "areaServed": ["Egypt", "Saudi Arabia", "UAE", "MENA", "Europe", "Global"],
+                    "availableLanguage": ["English", "Arabic"],
+                    "hasOfferCatalog": {
+                      "@type": "OfferCatalog",
+                      "name": "Custom Enterprise Technology Solutions for All Industries",
+                      "itemListElement": [
+                        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "ERP Systems — Manufacturing, Hospitality & Multi-Branch Operations" } },
+                        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Data Engineering — Kafka CDC, ClickHouse Lakehouses & Automated ETL" } },
+                        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Software Engineering & Online Systems — Full-Stack Web Apps, E-Commerce & Portals" } },
+                        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Data Analysis & Power BI — Executive KPI Dashboards, DAX & Predictive EDA" } },
+                        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "AI & Machine Learning — RAG Agents, Churn/Fraud Models & n8n Automation" } }
+                      ]
+                    }
                 }
               ]
             })
