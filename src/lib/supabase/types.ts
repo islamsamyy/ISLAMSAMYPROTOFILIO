@@ -41,7 +41,15 @@ export interface Database {
           title: string;
           client: string;
           company_logo: string;
-          category: 'Distributed Systems' | 'Lakehouse & BI' | 'AI & Machine Learning' | 'Cloud Native';
+          category:
+            | 'ERP Systems'
+            | 'Data Engineering'
+            | 'Software Engineering & Online Systems'
+            | 'Data Analysis & Power BI'
+            | 'AI & Machine Learning'
+            | 'Distributed Systems'
+            | 'Lakehouse & BI'
+            | 'Cloud Native';
           role: string;
           impact_metric: string;
           metrics: { label: string; value: string }[];
@@ -55,6 +63,10 @@ export interface Database {
           key_decisions: { title: string; rationale: string; tradeOff: string }[];
           system_flow: string[];
           outcome_metrics: { label: string; value: string; description: string }[];
+          gallery_images: string[] | null;
+          steps: { title: string; description: string }[] | null;
+          github_url: string | null;
+          readme_content: string | null;
           display_order: number;
           created_at: string;
           updated_at: string;
@@ -64,7 +76,15 @@ export interface Database {
           title: string;
           client: string;
           company_logo?: string;
-          category: 'Distributed Systems' | 'Lakehouse & BI' | 'AI & Machine Learning' | 'Cloud Native';
+          category:
+            | 'ERP Systems'
+            | 'Data Engineering'
+            | 'Software Engineering & Online Systems'
+            | 'Data Analysis & Power BI'
+            | 'AI & Machine Learning'
+            | 'Distributed Systems'
+            | 'Lakehouse & BI'
+            | 'Cloud Native';
           role: string;
           impact_metric: string;
           metrics?: { label: string; value: string }[];
@@ -78,6 +98,10 @@ export interface Database {
           key_decisions?: { title: string; rationale: string; tradeOff: string }[];
           system_flow?: string[];
           outcome_metrics?: { label: string; value: string; description: string }[];
+          gallery_images?: string[] | null;
+          steps?: { title: string; description: string }[] | null;
+          github_url?: string | null;
+          readme_content?: string | null;
           display_order?: number;
           created_at?: string;
           updated_at?: string;

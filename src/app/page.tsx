@@ -42,6 +42,26 @@ const IndustrySolutionsSection = dynamic(
   () => import('@/components/home/IndustrySolutionsSection').then((m) => m.IndustrySolutionsSection),
   { ssr: false, loading: () => <div className="py-12 max-w-7xl mx-auto px-4"><div className="h-72 rounded-2xl bg-surface-container/30 animate-pulse" /></div> }
 );
+const FeaturedProjectsGridSection = dynamic(
+  () => import('@/components/home/FeaturedProjectsGridSection').then((m) => m.FeaturedProjectsGridSection),
+  { ssr: false, loading: () => <div className="py-12 max-w-7xl mx-auto px-4"><div className="h-96 rounded-2xl bg-surface-container/30 animate-pulse" /></div> }
+);
+const DeliveryProcessSection = dynamic(
+  () => import('@/components/home/DeliveryProcessSection').then((m) => m.DeliveryProcessSection),
+  { ssr: false, loading: () => <div className="py-12 max-w-7xl mx-auto px-4"><div className="h-64 rounded-2xl bg-surface-container/30 animate-pulse" /></div> }
+);
+const LatestInsightsSection = dynamic(
+  () => import('@/components/home/LatestInsightsSection').then((m) => m.LatestInsightsSection),
+  { ssr: false, loading: () => <div className="py-12 max-w-7xl mx-auto px-4"><div className="h-64 rounded-2xl bg-surface-container/30 animate-pulse" /></div> }
+);
+const ExecutiveFaqSection = dynamic(
+  () => import('@/components/home/ExecutiveFaqSection').then((m) => m.ExecutiveFaqSection),
+  { ssr: false, loading: () => <div className="py-12 max-w-7xl mx-auto px-4"><div className="h-64 rounded-2xl bg-surface-container/30 animate-pulse" /></div> }
+);
+const OperationsResearchSection = dynamic(
+  () => import('@/components/home/OperationsResearchSection').then((m) => m.OperationsResearchSection),
+  { ssr: false, loading: () => <div className="py-12 max-w-7xl mx-auto px-4"><div className="h-96 rounded-2xl bg-surface-container/30 animate-pulse" /></div> }
+);
 
 export default function PortfolioHomePage() {
   const { t, language } = useLanguage();
@@ -580,7 +600,7 @@ try {
     {t('hero.headlineStart', 'Custom ERP Systems, AI Agents & Data Engineering.')} <span className="bg-gradient-to-r from-primary via-secondary to-tertiary-fixed bg-clip-text text-transparent">{t('hero.headlineGradient', 'Built to Scale Business Revenue.')}</span>
   </h1>
   <p className="font-body-md text-xs sm:text-sm text-on-surface-variant max-w-2xl mx-auto mt-1 leading-relaxed">
-    {t('hero.subtitle', 'Lead Data Engineer & Full-Stack Architect specializing in high-concurrency custom ERP platforms, autonomous AI agent workflows, zero-overhead automations, executive BI analytics, and modern web applications.')}
+    {t('hero.subtitle', 'Data Engineer & ERP Systems Architect engineering custom resource management platforms for factories and institutions with Operations Research and guaranteed ROI.')}
   </p>
 </motion.div>
 {/*  Hero CTAs  */}
@@ -692,12 +712,12 @@ try {
         {/* Islam Samy Portrait Card with Glowing Violet-Cyan Border */}
         <div className="relative z-10 p-1.5 rounded-3xl bg-gradient-to-br from-primary via-secondary to-tertiary shadow-[0_0_60px_rgba(160,120,255,0.4),0_0_20px_rgba(123,208,255,0.3)] hover:shadow-[0_0_80px_rgba(160,120,255,0.6),0_0_30px_rgba(123,208,255,0.5)] transition-all duration-500">
           <div className="relative w-64 h-72 sm:w-72 sm:h-80 rounded-[22px] overflow-hidden bg-surface-container-lowest flex items-center justify-center group">
-            <img alt="Islam Samy - Lead Data Engineer &amp; ERP Architect" className="w-full h-full object-cover object-top filter brightness-105 contrast-105 group-hover:scale-105 transition-transform duration-500" src="/images/islam-samy-portrait.jpg" />
+            <img alt="Islam Samy - Data Engineer &amp; ERP Systems Architect" className="w-full h-full object-cover object-top filter brightness-105 contrast-105 group-hover:scale-105 transition-transform duration-500" src="/images/islam-samy-portrait.jpg" />
             <div className="absolute inset-0 bg-gradient-to-t from-surface-container-lowest via-transparent to-transparent opacity-80"></div>
             <div className="absolute bottom-3 left-3 right-3 p-2.5 rounded-xl bg-surface-container-lowest/95 border border-white/15 shadow-sm flex items-center justify-between">
               <div className="flex flex-col text-left">
                 <span className="font-headline-sm text-body-sm font-bold text-on-surface">{t('header.name', 'Islam Samy')}</span>
-                <span className="font-label-sm text-[10px] text-secondary uppercase font-semibold">{t('hero.portraitRole', 'Lead Data Engineer & ERP Architect')}</span>
+                <span className="font-label-sm text-[10px] text-secondary uppercase font-semibold">{t('hero.portraitRole', 'Data Engineer & ERP Systems Architect')}</span>
               </div>
               <div className="flex items-center gap-1.5 px-2 py-1 rounded-full bg-surface-container-high/80 border border-secondary/30">
                 <span className="w-2 h-2 rounded-full bg-secondary animate-ping"></span>
@@ -797,11 +817,14 @@ try {
 >
   <div className="flex items-center gap-1.5 p-1.5 rounded-full bg-surface-container-low/80 dark:bg-surface-container-low/55 backdrop-blur-xl border border-outline-variant/25 dark:border-white/[0.08] overflow-x-auto max-w-full [scrollbar-width:none] [&::-webkit-scrollbar]:hidden shadow-sm">
     {[
+      { href: '#operations-research', label: language === 'ar' ? 'بحوث العمليات وضمان العائد' : 'Operations Research & ROI' },
+      { href: '#project-cards', label: language === 'ar' ? 'بطاقات المشاريع' : 'Project Cards' },
       { href: '#solutions', label: language === 'ar' ? 'الحلول والقطاعات' : 'Industry Solutions' },
+      { href: '#process', label: language === 'ar' ? 'منهجية التنفيذ' : 'Delivery Process' },
       { href: '#projects', label: language === 'ar' ? 'المشاريع المميزة' : 'Flagship Work' },
-      { href: '/projects', label: language === 'ar' ? `معرض المشاريع (${projects.length})` : `Project Gallery (${projects.length})`, isLink: true },
+      { href: '#insights', label: language === 'ar' ? 'المدونة الهندسية' : 'Blog & Proposals' },
       { href: '#pricing', label: language === 'ar' ? 'الباقات والأسعار' : 'Advisory Packages' },
-      { href: '/reviews', label: language === 'ar' ? 'آراء العملاء' : 'Client Reviews', isLink: true },
+      { href: '#faq', label: language === 'ar' ? 'الأسئلة الشائعة' : 'FAQ' },
       { href: '#contact', label: language === 'ar' ? 'تواصل مباشر' : 'Direct Contact' },
     ].map((item) =>
       item.isLink ? (
@@ -825,11 +848,20 @@ try {
   </div>
 </nav>
 
+{/* OPERATIONS RESEARCH & GUARANTEED ROI FOUNDATION */}
+<OperationsResearchSection />
+
 {/* PROJECTS SHOWCASE SLIDESHOW (Immediate Visual Proof of Work) */}
 <ProjectsSlideshowSection />
 
+{/* INTERACTIVE PROJECT CARDS GRID WITH IMPORTANCE ARRANGEMENT */}
+<FeaturedProjectsGridSection />
+
 {/* WHY MY SOLUTIONS WORK & CUSTOMIZED FOR ALL INDUSTRIES */}
 <IndustrySolutionsSection />
+
+{/* 4-PHASE ENGINEERING DELIVERY & 48-HOUR DIAGNOSTIC */}
+<DeliveryProcessSection />
 
 {/* SECTION 3: TECHNICAL ARSENAL (Single-Row Horizontal Showcase Gliding to Right) */}
       <TechArsenalSection />
@@ -1114,6 +1146,12 @@ try {
 
       {/* CLIENT REVIEWS SECTION */}
       <ClientReviewsSection />
+
+      {/* LATEST ENGINEERING BLOG & PROPOSALS */}
+      <LatestInsightsSection />
+
+      {/* EXECUTIVE FAQ & TECHNICAL READINESS */}
+      <ExecutiveFaqSection />
 
       {/* Cybernetic Grid Horizon Transition */}
       <div className="w-full relative overflow-hidden -my-10 pointer-events-none flex justify-center">

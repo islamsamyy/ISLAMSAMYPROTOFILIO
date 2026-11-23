@@ -7,6 +7,7 @@ import { X, ArrowRight, Calendar } from 'lucide-react';
 import { SiteHeader } from '@/components/navigation/SiteHeader';
 import { SiteFooter } from '@/components/navigation/SiteFooter';
 import { ArticleCard } from '@/components/blog/ArticleCard';
+import { ArticleMarkdownRenderer } from '@/components/blog/ArticleMarkdownRenderer';
 import { TiltCard } from '@/components/ui/TiltCard';
 import { useArticles } from '@/lib/hooks';
 import { useLanguage } from '@/context/LanguageContext';
@@ -321,30 +322,11 @@ export default function BlogPage() {
               </div>
 
               {/* Formatted Article Body */}
-              <div className="prose prose-invert max-w-none text-on-surface leading-relaxed space-y-4 text-sm sm:text-base">
-                {((language === 'ar' && readingArticle.content_ar) ? readingArticle.content_ar : readingArticle.content).split('\n\n').map((block, idx) => {
-                  if (block.startsWith('### ')) {
-                    return (
-                      <h3 key={idx} className="font-display-xl text-lg sm:text-xl font-bold text-primary mt-6 mb-2">
-                        {block.replace('### ', '')}
-                      </h3>
-                    );
-                  }
-                  if (block.startsWith('```')) {
-                    const lines = block.split('\n');
-                    const code = lines.slice(1, -1).join('\n');
-                    return (
-                      <pre key={idx} dir="ltr" className="p-4 rounded-xl bg-surface-container-lowest border border-outline-variant/30 text-secondary font-mono text-xs overflow-x-auto shadow-inner my-4 text-left">
-                        <code>{code}</code>
-                      </pre>
-                    );
-                  }
-                  return (
-                    <p key={idx} className="text-on-surface-variant leading-relaxed">
-                      {block}
-                    </p>
-                  );
-                })}
+              <div className="max-w-none text-on-surface leading-relaxed text-sm sm:text-base">
+                <ArticleMarkdownRenderer
+                  content={(language === 'ar' && readingArticle.content_ar) ? readingArticle.content_ar : readingArticle.content}
+                  productionLabel={t('blogPost.productionArch', 'Production Architecture')}
+                />
               </div>
 
               <div className="pt-6 border-t border-surface-container-high/60 flex items-center justify-between gap-4">

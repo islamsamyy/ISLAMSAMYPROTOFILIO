@@ -26,9 +26,118 @@ export interface ProjectItem {
   steps?: { title: string; description: string }[];
   readmeContent?: string;
   githubUrl?: string;
+  displayOrder?: number;
 }
 
 export const initialProjects: ProjectItem[] = [
+  {
+    id: 'wirecut-os-marble-erp',
+    title: 'WireCut OS — Industrial MES, 28-Channel PLC Historian & Costing ERP',
+    client: 'Marble & Granite Manufacturing Plants (Multi-Wire Diamond Saws)',
+    companyLogo: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=120&q=80',
+    category: 'ERP Systems',
+    role: 'Principal Solutions Architect & Data Engineer',
+    impactMetric: '8–20x ROI · -15% Diamond Wire Waste',
+    metrics: [
+      { label: 'PLC Channels', value: '28 Live Sensors' },
+      { label: 'Wire Cost Saving', value: '8% – 15%' },
+      { label: 'Uptime Recovery', value: '+10% – 15%' },
+      { label: 'Export Suites', value: '11 CSV Reports' }
+    ],
+    techStack: [
+      'Operations Research',
+      'PLC Telemetry (MWS-01)',
+      'TypeScript',
+      'Next.js',
+      'Costing ERP & MES',
+      '28-Channel Historian',
+      'RBAC (5 Tiers)',
+      'Audit Logging'
+    ],
+    summary:
+      'Industrial MES, PLC Telemetry Historian, and Costing ERP engineered specifically for Multi-Wire Diamond Saws in marble and granite factories. Built on Operations Research (OR) mathematical modeling to decompose cutting vs. downtime, benchmark diamond wire spools (1st/2nd use), track Roller Grooves 1..6 wear, and calculate true cost per m² across 28 live PLC sensor channels.',
+    architectureHighlights: [
+      'Time-Motion & Bottleneck Decomposition: Splits PLC Elapsed Time into Active Cutting Minutes, Retraction Minutes, In-Operation Stops (with exact cut depth in mm), and inter-block Downtime Gaps to compute Active Cutting Efficiency % and MTBS.',
+      'Plan vs. Actual & Recipe Adherence: Compares PLC 12-Slot Step Recipes, Planned Time, Max Slices, and Planned Wire Cost against live execution—flagging A1→A2 / A2→A1 direction shifts and Loop Mismatches.',
+      'Multi-Source Ingestion: Parses native PLC log.CSV alongside operator Excel/CSV files with automatic Arabic numeral (٠-٩) normalization and mm/cm/m unit unification.',
+      'Unit-Economics Costing Engine: Connects L × W × H × 52 = Area (m²), wire consumption (m/m²), energy intensity (kWh/m²), stone hardness, and labor overhead per job and Block Owner (factory vs. contract cutting).',
+      '28-Channel Predictive Machine Health: Monitors motor temperatures (°C), Torque %, A1/A2 wire tension (N), feed rate, wire speed, and Roller Grooves 1..6 degradation with automated Alert Rules.',
+      'Enterprise Governance: Automated Data Quality % scoring, immutable Raw Logs Archive, 5-tier RBAC (Admin, Supervisor, Operator, Accountant, Viewer), full before/after Audit Log, and 11 one-click CSV report exports.'
+    ],
+    challenge:
+      'Marble and granite factories traditionally rely on paper shift logs and disconnected Excel sheets that capture production data after the shift ends. This blind spot causes silent profit erosion through 8–15% unnecessary diamond wire wear, unrecorded micro-stops, unexpected motor or roller failures, and mispriced stone varieties.',
+    solution:
+      'Architected WireCut OS—an end-to-end MES + PLC Telemetry Historian + Costing ERP grounded in Operations Research. By streaming and parsing 28 PLC channels at 60-second telemetry zoom resolution alongside operator logs, inventory, orders, quality checks, and preventive maintenance, plant leadership gains true per-block unit economics and predictive mechanical alerts.',
+    keyDecisions: [
+      {
+        title: 'Operations Research Decomposition vs. Basic Job Timestamps',
+        rationale:
+          'Separating Active Cutting, Retraction, In-Operation Stops (at exact mm depth), and inter-block Downtime Gaps isolates true machine utilization and MTBS rather than hiding micro-stops inside total elapsed hours.',
+        tradeOff:
+          'Requires dedicated PLC parser alignment (such as MWS-01 log.CSV schemas) and configurable sensor thresholds per machine.'
+      },
+      {
+        title: 'Unified MES + Costing ERP + Inventory Ledger',
+        rationale:
+          'Linking diamond wire spool lifecycles (First & Second Use), Roller Grooves 1..6 wear, energy meter readings (kWh/m²), and customer Order Allocations produces exact net profit per block and per stone type.',
+        tradeOff:
+          'Requires initial calibration of stone hardness coefficients, electricity tariffs, and operator workflows during Week 1.'
+      }
+    ],
+    systemFlow: [
+      'Multi-Source Ingestion: Native PLC log.CSV (28 channels) + Operator Excel/CSV (auto Arabic numeral ٠-٩ & mm/cm/m normalization).',
+      'Time-Motion & Recipe Engine: Decomposes Active Cutting vs. Retraction, flags Loop Mismatches, and computes Adherence % and MTBS.',
+      '28-Channel Historian & Telemetry Zoom: 60-second resolution tracking motor °C, Torque %, A1/A2 Tension N, and Roller Grooves 1..6.',
+      'Unit-Economics Costing Engine: Combines Wire (m/m²) + Energy (kWh/m²) + Labor + Overhead against Block Owner & Order Allocations.',
+      'Governance & Reporting: Immutable Raw Logs Archive, Data Quality % audit, 5-tier RBAC Audit Log, and 11 one-click CSV exports.'
+    ],
+    outcomeMetrics: [
+      {
+        label: 'Diamond Wire Savings',
+        value: '8% – 15%',
+        description: 'Saves 15,000–35,000 EGP/mo (Egypt) or $500–$1,200/mo (GCC) per multi-wire saw via feed/tension optimization and supplier benchmarking.'
+      },
+      {
+        label: 'Lost Uptime Recovered',
+        value: '+10% – 15%',
+        description: 'Adds 150–300 m²/month of extra slab output per saw with zero increase in fixed rent or payroll.'
+      },
+      {
+        label: 'System ROI',
+        value: '8x – 20x',
+        description: 'Covers monthly subscription from 1–2 optimized blocks while preventing 50,000–200,000 EGP catastrophic motor/roller failures.'
+      }
+    ],
+    steps: [
+      {
+        title: 'Production Monitoring & Telemetry Zoom',
+        description: 'Live Jobs command deck, 60-second block telemetry curves, and clean separation between Factory vs. Third-Party Block Owners.'
+      },
+      {
+        title: 'Diamond Wire & Roller Grooves 1..6',
+        description: 'First Use vs. Second Use spool tracking, supplier wear-rate benchmarking (m/m²), and 6-groove roller utilization tracking.'
+      },
+      {
+        title: 'Machine Health, Downtime & Energy (kWh/m²)',
+        description: '28-channel PLC anomaly alerts, categorized stop reasons (wire snap, water, power, setup), and per-stone energy costing.'
+      },
+      {
+        title: 'Factory ERP, Inventory, Orders & 5-Tier RBAC',
+        description: 'Net block profit costing, storage & consumables ledger, customer order allocations, slab quality inspection, and immutable audit logs.'
+      }
+    ],
+    featured: true,
+    readmeContent: `# WireCut OS — Industrial MES, PLC Telemetry Historian & Costing ERP
+
+**WireCut OS** is a specialized Operations Research platform built for **Marble & Granite Multi-Wire Diamond Saws**, combining **MES**, **28-Channel PLC Telemetry**, and **Unit-Economics Costing ERP**.
+
+## Core Modules
+- **Time-Motion & OR Decomposition:** Active Cutting Minutes, Retraction Minutes, In-Operation Stops (mm depth), Downtime Gaps, Active Cutting Efficiency %, and MTBS.
+- **Plan vs. Actual & Recipe Adherence:** Evaluates 12-Slot Step Recipes, Planned Time, Max Slices, direction changes (\`A1→A2\` / \`A2→A1\`), and Loop Mismatches.
+- **Diamond Wire & Roller Lifecycle:** First Use & Second Use tracking, supplier \`m/m²\` benchmarking, and Roller Grooves 1..6 area tracking.
+- **28-Channel Machine Health & Energy:** Motor temperatures (\`°C\`), Torque \`%\`, A1/A2 wire tension (\`N\`), feed/wire speed, and \`kWh/m²\` stone energy intensity.
+- **Factory ERP & Governance:** Costing Engine, Inventory, Customer Orders, Quality Inspection, Preventive Maintenance, immutable Raw Logs Archive, 5-tier RBAC, Audit Log, and 11 CSV report exports.`
+  },
   {
     id: 'telco-churn-analysis',
     title: 'Telco Customer Churn Analysis — Python & Power BI',

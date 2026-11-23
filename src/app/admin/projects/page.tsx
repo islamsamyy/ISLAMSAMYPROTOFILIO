@@ -3,11 +3,11 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, LayoutGrid, List, Star, ExternalLink, Image as ImageIcon, X } from 'lucide-react';
+import { Search, LayoutGrid, List, Star, ExternalLink, Image as ImageIcon, X, ArrowUp, ArrowDown, Pin } from 'lucide-react';
 import { AdminNav } from '@/components/navigation/AdminNav';
 import { AdminFooter } from '@/components/navigation/AdminFooter';
 import { useProjects } from '@/lib/hooks';
-import { saveProject, deleteProject } from '@/lib/data-store';
+import { saveProject, deleteProject, normalizeProjectCategory, reorderProjects } from '@/lib/data-store';
 import { supabase } from '@/lib/supabase/client';
 import { ProjectItem } from '@/data/seedProjects';
 
@@ -71,12 +71,14 @@ export default function AdminProjectsPage() {
   const [techStackStr, setTechStackStr] = useState('Kafka, Go, ClickHouse, Docker');
   const [highlightsStr, setHighlightsStr] = useState('Sub-second analytics lakehouse\nReal-time CDC pipeline from OPERA PMS');
   const [liveDemoUrl, setLiveDemoUrl] = useState('');
+  const [githubUrl, setGithubUrl] = useState('');
   const [galleryImagesStr, setGalleryImagesStr] = useState('');
   const [stepsStr, setStepsStr] = useState('');
   const [featured, setFeatured] = useState(true);
   const [uploadingLogo, setUploadingLogo] = useState(false);
   const [uploadingGallery, setUploadingGallery] = useState(false);
   const [newPhotoUrl, setNewPhotoUrl] = useState('');
+  const [formError, setFormError] = useState<string | null>(null);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -100,6 +102,25 @@ export default function AdminProjectsPage() {
       );
     });
   }, [projects, searchQuery, filterCategory, filterType]);
+
+  const handleMovePriority = async (id: string, direction: 'up' | 'down' | 'top') => {
+    const idx = projects.findIndex((p) => p.id === id);
+    if (idx === -1) return;
+    const next = [...projects];
+    const [moved] = next.splice(idx, 1);
+    if (direction === 'top') {
+      next.unshift(moved);
+    } else if (direction === 'up' && idx > 0) {
+      next.splice(idx - 1, 0, moved);
+    } else if (direction === 'down' && idx < next.length) {
+      next.splice(Math.min(idx + 1, next.length), 0, moved);
+    } else {
+      return;
+    }
+    await reorderProjects(next, true);
+    setSuccessToast(`Priority updated for "${moved.title}"`);
+    setTimeout(() => setSuccessToast(null), 2500);
+  };
 
   const uploadImageFile = async (file: File): Promise<string | null> => {
     const fd = new FormData();
@@ -184,9 +205,11 @@ export default function AdminProjectsPage() {
     setTechStackStr('Kafka, ClickHouse, Go, Docker');
     setHighlightsStr('Engineered distributed stream pipeline\nReduced cloud compute cost by 60%');
     setLiveDemoUrl('');
+    setGithubUrl('');
     setGalleryImagesStr('');
     setStepsStr('');
     setFeatured(true);
+    setFormError(null);
     setModalTab('basics');
     setEditingProject(null);
     setIsCreating(true);
@@ -205,7 +228,7 @@ export default function AdminProjectsPage() {
     setTitle(p.title);
     setClient(p.client);
     setCompanyLogo(p.companyLogo);
-    setCategory(p.category);
+    setCategory(normalizeProjectCategory(p.category));
     setRole(p.role);
     setImpactMetric(p.impactMetric);
     setSummary(p.summary);
@@ -214,9 +237,11 @@ export default function AdminProjectsPage() {
     setTechStackStr(p.techStack.join(', '));
     setHighlightsStr(p.architectureHighlights.join('\n'));
     setLiveDemoUrl(p.liveDemoUrl || '');
+    setGithubUrl(p.githubUrl || '');
     setGalleryImagesStr((p.galleryImages || []).join('\n'));
     setStepsStr((p.steps || []).map((st) => `${st.title} | ${st.description}`).join('\n'));
     setFeatured(p.featured);
+    setFormError(null);
     setModalTab('basics');
     setEditingProject(p);
     setIsCreating(true);
@@ -234,7 +259,13 @@ export default function AdminProjectsPage() {
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!title.trim() || !client.trim()) return;
+    setFormError(null);
+
+    if (!title.trim() || !client.trim() || !summary.trim()) {
+      setModalTab('basics');
+      setFormError('Project Title, Client / Company Name, and Executive Summary are required.');
+      return;
+    }
 
     setIsSaving(true);
     try {
@@ -256,22 +287,22 @@ export default function AdminProjectsPage() {
 
       const updated: ProjectItem = {
         id,
-        title,
-        client,
-        companyLogo,
+        title: title.trim(),
+        client: client.trim(),
+        companyLogo: companyLogo.trim(),
         category,
-        role,
-        impactMetric,
+        role: role.trim(),
+        impactMetric: impactMetric.trim(),
         metrics: editingProject?.metrics?.length ? editingProject.metrics : [
           { label: 'Throughput', value: impactMetric },
           { label: 'Latency', value: '< 200ms' },
           { label: 'Availability', value: '99.99%' }
         ],
         techStack,
-        summary,
+        summary: summary.trim(),
         architectureHighlights,
         featured,
-        liveDemoUrl: liveDemoUrl || undefined,
+        liveDemoUrl: liveDemoUrl.trim() || undefined,
         challenge: challenge.trim() || undefined,
         solution: solution.trim() || undefined,
         keyDecisions: editingProject?.keyDecisions || [],
@@ -280,16 +311,17 @@ export default function AdminProjectsPage() {
         galleryImages,
         steps,
         readmeContent: editingProject?.readmeContent,
-        githubUrl: editingProject?.githubUrl,
+        githubUrl: githubUrl.trim() || undefined,
       };
 
       await saveProject(updated);
       setIsCreating(false);
       setEditingProject(null);
-      setSuccessToast(`Project "${title}" saved successfully to database!`);
+      setSuccessToast(`Project "${updated.title}" saved successfully to database!`);
       setTimeout(() => setSuccessToast(null), 3000);
     } catch (err: any) {
-      alert(`Save failed: ${err.message || 'Error saving project'}`);
+      const msg = err?.message || 'Error saving project';
+      setFormError(`Save failed: ${msg}`);
     } finally {
       setIsSaving(false);
     }
@@ -531,7 +563,7 @@ export default function AdminProjectsPage() {
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div className="flex flex-col gap-1">
-                        <label className="text-xs font-semibold text-on-surface">Live Demo / Repository URL</label>
+                        <label className="text-xs font-semibold text-on-surface">Live Demo URL</label>
                         <input
                           type="text"
                           value={liveDemoUrl}
@@ -541,18 +573,29 @@ export default function AdminProjectsPage() {
                         />
                       </div>
 
-                      <div className="flex items-center gap-2 pt-6">
+                      <div className="flex flex-col gap-1">
+                        <label className="text-xs font-semibold text-on-surface">GitHub Repository URL</label>
                         <input
-                          type="checkbox"
-                          id="featuredProjectCheck"
-                          checked={featured}
-                          onChange={(e) => setFeatured(e.target.checked)}
-                          className="w-4 h-4 rounded text-primary focus:ring-primary"
+                          type="text"
+                          value={githubUrl}
+                          onChange={(e) => setGithubUrl(e.target.value)}
+                          placeholder="https://github.com/..."
+                          className="px-3.5 py-2 rounded-xl bg-surface-container-lowest border border-outline-variant/30 text-xs text-on-surface focus:outline-none focus:ring-2 focus:ring-primary"
                         />
-                        <label htmlFor="featuredProjectCheck" className="text-xs font-semibold text-on-surface cursor-pointer">
-                          Featured on Homepage Portfolio Showcase
-                        </label>
                       </div>
+                    </div>
+
+                    <div className="flex items-center gap-2 pt-1">
+                      <input
+                        type="checkbox"
+                        id="featuredProjectCheck"
+                        checked={featured}
+                        onChange={(e) => setFeatured(e.target.checked)}
+                        className="w-4 h-4 rounded text-primary focus:ring-primary"
+                      />
+                      <label htmlFor="featuredProjectCheck" className="text-xs font-semibold text-on-surface cursor-pointer">
+                        Featured on Homepage Portfolio Showcase
+                      </label>
                     </div>
 
                     <div className="flex flex-col gap-1">
@@ -718,6 +761,12 @@ export default function AdminProjectsPage() {
 
                   </form>
 
+                  {formError && (
+                    <div className="px-4 py-2.5 rounded-xl bg-error/15 border border-error/40 text-error text-xs font-mono">
+                      {formError}
+                    </div>
+                  )}
+
                   <div className="flex items-center gap-3 pt-4 border-t border-surface-container-high shrink-0">
                     <button
                       type="submit"
@@ -838,6 +887,7 @@ export default function AdminProjectsPage() {
             <table className="w-full text-left text-xs">
               <thead className="bg-surface-container-high text-on-surface-variant uppercase text-[10px] font-mono">
                 <tr>
+                  <th className="p-4">Priority</th>
                   <th className="p-4">Logo</th>
                   <th className="p-4">Client &amp; Title</th>
                   <th className="p-4">Category</th>
@@ -848,8 +898,44 @@ export default function AdminProjectsPage() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-surface-container-high/40">
-                {filteredProjects.map((p) => (
+                {filteredProjects.map((p) => {
+                  const rank = projects.findIndex((item) => item.id === p.id) + 1;
+                  return (
                   <tr key={p.id} className="hover:bg-surface-container-high/25 transition-colors">
+                    <td className="p-4 whitespace-nowrap">
+                      <div className="flex items-center gap-1">
+                        <span className="inline-flex items-center justify-center min-w-[28px] px-1.5 py-0.5 rounded-md bg-primary/15 text-primary font-mono text-[11px] font-bold">
+                          #{rank}
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() => handleMovePriority(p.id, 'top')}
+                          disabled={rank === 1}
+                          title="Pin to #1"
+                          className="p-1 rounded bg-surface-container-high hover:bg-primary/20 hover:text-primary disabled:opacity-30 text-on-surface-variant"
+                        >
+                          <Pin className="w-3 h-3" />
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => handleMovePriority(p.id, 'up')}
+                          disabled={rank === 1}
+                          title="Move Up"
+                          className="p-1 rounded bg-surface-container-high hover:bg-secondary/20 hover:text-secondary disabled:opacity-30 text-on-surface-variant"
+                        >
+                          <ArrowUp className="w-3 h-3" />
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => handleMovePriority(p.id, 'down')}
+                          disabled={rank === projects.length}
+                          title="Move Down"
+                          className="p-1 rounded bg-surface-container-high hover:bg-secondary/20 hover:text-secondary disabled:opacity-30 text-on-surface-variant"
+                        >
+                          <ArrowDown className="w-3 h-3" />
+                        </button>
+                      </div>
+                    </td>
                     <td className="p-4">
                       <ProjectLogo
                         src={p.companyLogo}
@@ -913,7 +999,8 @@ export default function AdminProjectsPage() {
                       </button>
                     </td>
                   </tr>
-                ))}
+                  );
+                })}
               </tbody>
             </table>
           </div>

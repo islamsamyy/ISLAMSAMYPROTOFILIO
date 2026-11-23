@@ -82,7 +82,13 @@ export function notifyUpdate(table?: string) {
  */
 async function getAdminAuthHeaders(): Promise<Record<string, string>> {
   try {
-    const { data: { session } } = await supabase.auth.getSession();
+    let { data: { session } } = await supabase.auth.getSession();
+    if (session?.expires_at && session.expires_at * 1000 < Date.now() + 60_000) {
+      const { data: refreshed } = await supabase.auth.refreshSession();
+      if (refreshed?.session) {
+        session = refreshed.session;
+      }
+    }
     if (session?.access_token) {
       return { Authorization: `Bearer ${session.access_token}` };
     }
@@ -108,9 +114,15 @@ async function apiMutate(table: string, action: 'upsert' | 'delete' | 'update', 
       }
       lastError = new Error(json.error || `Server responded with status ${res.status}`);
       console.warn(`[apiMutate] /api/admin/mutate returned error for ${table}:`, json);
+      if (res.status === 401) {
+        throw lastError;
+      }
     } catch (err: any) {
       lastError = err;
-      console.warn(`[apiMutate] Network error calling /api/admin/mutate for ${table}:`, err);
+      console.warn(`[apiMutate] Error calling /api/admin/mutate for ${table}:`, err);
+      if (err?.message && /unauthorized|token|session|administrator/i.test(err.message)) {
+        throw err;
+      }
     }
   }
 
@@ -154,38 +166,42 @@ export function normalizeProjectCategory(raw?: string): ProjectItem['category'] 
 
 export function mapProjectRowToItem(row: any): ProjectItem {
   const seed = initialProjects.find((p) => p.id === row.id);
-  const rowGallery = Array.isArray(row.gallery_images) && row.gallery_images.length > 0 ? row.gallery_images : undefined;
-  const rowSteps = Array.isArray(row.steps) && row.steps.length > 0 ? row.steps : undefined;
+  const hasDbGallery = Array.isArray(row.gallery_images);
+  const hasDbSteps = Array.isArray(row.steps);
   const rowKeyDecisions = Array.isArray(row.key_decisions) && row.key_decisions.length > 0 ? row.key_decisions : undefined;
   const rowOutcomeMetrics = Array.isArray(row.outcome_metrics) && row.outcome_metrics.length > 0 ? row.outcome_metrics : undefined;
   const rowSystemFlow = Array.isArray(row.system_flow) && row.system_flow.length > 0 ? row.system_flow : undefined;
 
   return {
     id: row.id,
-    title: row.title || seed?.title || '',
-    client: row.client || seed?.client || '',
-    companyLogo: row.company_logo || seed?.companyLogo || '',
-    category: seed?.category || normalizeProjectCategory(row.category),
+    title: row.title ?? seed?.title ?? '',
+    client: row.client ?? seed?.client ?? '',
+    companyLogo: 'company_logo' in row ? (row.company_logo || '') : (seed?.companyLogo || ''),
+    category: row.category ? normalizeProjectCategory(row.category) : normalizeProjectCategory(seed?.category),
     role: row.role || seed?.role || 'Creator & Lead Engineer',
-    impactMetric: row.impact_metric || seed?.impactMetric || '',
+    impactMetric: 'impact_metric' in row ? (row.impact_metric || '') : (seed?.impactMetric || ''),
     metrics: Array.isArray(row.metrics) && row.metrics.length > 0 ? row.metrics : (seed?.metrics || []),
-    techStack: Array.isArray(row.tech_stack) && row.tech_stack.length > 0 ? row.tech_stack : (seed?.techStack || []),
-    summary: row.summary || seed?.summary || '',
-    architectureHighlights:
-      Array.isArray(row.architecture_highlights) && row.architecture_highlights.length > 0
-        ? row.architecture_highlights
-        : (seed?.architectureHighlights || []),
-    liveDemoUrl: row.live_demo_url || seed?.liveDemoUrl || undefined,
+    techStack: Array.isArray(row.tech_stack) ? row.tech_stack : (seed?.techStack || []),
+    summary: row.summary ?? seed?.summary ?? '',
+    architectureHighlights: Array.isArray(row.architecture_highlights)
+      ? row.architecture_highlights
+      : (seed?.architectureHighlights || []),
+    liveDemoUrl: 'live_demo_url' in row ? (row.live_demo_url || undefined) : seed?.liveDemoUrl,
     featured: typeof row.featured === 'boolean' ? row.featured : Boolean(seed?.featured),
-    challenge: row.challenge || seed?.challenge || undefined,
-    solution: row.solution || seed?.solution || undefined,
+    challenge: 'challenge' in row ? (row.challenge || undefined) : seed?.challenge,
+    solution: 'solution' in row ? (row.solution || undefined) : seed?.solution,
     keyDecisions: rowKeyDecisions || seed?.keyDecisions || [],
     systemFlow: rowSystemFlow || seed?.systemFlow || [],
     outcomeMetrics: rowOutcomeMetrics || seed?.outcomeMetrics || [],
-    galleryImages: rowGallery || seed?.galleryImages || [],
-    steps: rowSteps || seed?.steps || [],
-    readmeContent: row.readme_content || seed?.readmeContent || undefined,
-    githubUrl: row.github_url || seed?.githubUrl || undefined,
+    galleryImages: hasDbGallery ? row.gallery_images : (seed?.galleryImages || []),
+    steps: hasDbSteps ? row.steps : (seed?.steps || []),
+    readmeContent: row.readme_content !== null && row.readme_content !== undefined
+      ? (row.readme_content || undefined)
+      : seed?.readmeContent,
+    githubUrl: row.github_url !== null && row.github_url !== undefined
+      ? (row.github_url || undefined)
+      : seed?.githubUrl,
+    displayOrder: typeof row.display_order === 'number' ? row.display_order : seed?.displayOrder,
   };
 }
 
@@ -211,8 +227,20 @@ export function mapProjectItemToRow(p: ProjectItem) {
     outcome_metrics: p.outcomeMetrics || [],
     gallery_images: p.galleryImages || [],
     steps: p.steps || [],
+    github_url: p.githubUrl ?? null,
+    readme_content: p.readmeContent ?? null,
+    ...(typeof p.displayOrder === 'number' ? { display_order: p.displayOrder } : {}),
     updated_at: new Date().toISOString()
   };
+}
+
+export function sortProjectsByImportance(projects: ProjectItem[]): ProjectItem[] {
+  return [...projects].sort((a, b) => {
+    const ao = typeof a.displayOrder === 'number' ? a.displayOrder : Number.MAX_SAFE_INTEGER;
+    const bo = typeof b.displayOrder === 'number' ? b.displayOrder : Number.MAX_SAFE_INTEGER;
+    if (ao !== bo) return ao - bo;
+    return 0;
+  });
 }
 
 export function getStoredProjects(): ProjectItem[] {
@@ -220,7 +248,13 @@ export function getStoredProjects(): ProjectItem[] {
   try {
     const data = localStorage.getItem(STORAGE_KEYS.PROJECTS);
     if (!data) return initialProjects;
-    return JSON.parse(data);
+    const parsed = JSON.parse(data);
+    if (!Array.isArray(parsed)) return initialProjects;
+    const normalized = parsed.map((p: any) => ({
+      ...p,
+      category: normalizeProjectCategory(p.category),
+    }));
+    return sortProjectsByImportance(normalized);
   } catch (e) {
     return initialProjects;
   }
@@ -245,10 +279,10 @@ export async function fetchProjectsFromSupabase(): Promise<ProjectItem[]> {
     const item = mapProjectRowToItem(row);
     const local = localById.get(item.id);
     if (local) {
-      if ((!row.gallery_images || row.gallery_images.length === 0) && local.galleryImages?.length) {
+      if (!Array.isArray(row.gallery_images) && (!item.galleryImages || item.galleryImages.length === 0) && local.galleryImages?.length) {
         item.galleryImages = local.galleryImages;
       }
-      if ((!row.steps || row.steps.length === 0) && local.steps?.length) {
+      if (!Array.isArray(row.steps) && (!item.steps || item.steps.length === 0) && local.steps?.length) {
         item.steps = local.steps;
       }
     }
@@ -259,6 +293,8 @@ export async function fetchProjectsFromSupabase(): Promise<ProjectItem[]> {
 }
 
 export async function saveProject(project: ProjectItem) {
+  await apiMutate('projects', 'upsert', mapProjectItemToRow(project));
+
   const list = getStoredProjects();
   const index = list.findIndex(p => p.id === project.id);
   if (index > -1) {
@@ -267,8 +303,6 @@ export async function saveProject(project: ProjectItem) {
     list.unshift(project);
   }
   setStoredProjects(list);
-
-  await apiMutate('projects', 'upsert', mapProjectItemToRow(project));
   notifyCrossTab('projects');
 }
 
@@ -278,6 +312,30 @@ export async function deleteProject(id: string) {
 
   await apiMutate('projects', 'delete', undefined, id);
   notifyCrossTab('projects');
+}
+
+export async function reorderProjects(orderedProjects: ProjectItem[], syncRemote = false) {
+  const withOrder = orderedProjects.map((p, idx) => ({
+    ...p,
+    displayOrder: idx + 1,
+  }));
+  setStoredProjects(withOrder);
+  notifyCrossTab('projects');
+
+  if (syncRemote && isClient()) {
+    try {
+      const authHeaders = await getAdminAuthHeaders();
+      if (authHeaders.Authorization) {
+        await Promise.allSettled(
+          withOrder.map((p) =>
+            apiMutate('projects', 'update', { display_order: p.displayOrder }, p.id)
+          )
+        );
+      }
+    } catch {
+      // Local order is already persisted
+    }
+  }
 }
 
 export function getStoredProjectById(id: string): ProjectItem | undefined {

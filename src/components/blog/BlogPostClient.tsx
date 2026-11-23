@@ -3,6 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { useLanguage } from '@/context/LanguageContext';
+import { ArticleMarkdownRenderer } from './ArticleMarkdownRenderer';
 
 export interface BlogPostArticle {
   id?: string;
@@ -96,37 +97,11 @@ export function BlogPostClient({ article }: BlogPostClientProps) {
       </div>
 
       {/* Article Formatted Body */}
-      <article className="p-8 sm:p-10 rounded-3xl bg-surface-container-low/40 backdrop-blur-xl border border-white/20 dark:border-white/[0.08] shadow-md prose prose-invert max-w-none text-on-surface leading-relaxed space-y-6 text-base sm:text-lg">
-        {activeContent.split('\n\n').map((block: string, idx: number) => {
-          if (block.startsWith('### ')) {
-            return (
-              <h3 key={idx} className="font-display-xl text-xl sm:text-2xl font-bold text-primary mt-8 mb-3">
-                {block.replace('### ', '')}
-              </h3>
-            );
-          }
-          if (block.startsWith('```')) {
-            const lines = block.split('\n');
-            const lang = lines[0].replace('```', '') || 'sql';
-            const code = lines.slice(1, -1).join('\n');
-            return (
-              <div key={idx} dir="ltr" className="my-6 rounded-2xl bg-surface-container-lowest/90 border border-outline-variant/30 overflow-hidden shadow-inner text-left">
-                <div className="px-4 py-2 bg-surface-container-high/60 border-b border-outline-variant/20 flex items-center justify-between">
-                  <span className="font-mono text-xs text-secondary font-bold uppercase">{lang}</span>
-                  <span className="text-[10px] text-on-surface-variant font-mono">{t('blogPost.productionArch')}</span>
-                </div>
-                <pre className="p-4 sm:p-6 text-secondary font-mono text-xs sm:text-sm overflow-x-auto leading-relaxed text-left">
-                  <code>{code}</code>
-                </pre>
-              </div>
-            );
-          }
-          return (
-            <p key={idx} className="text-on-surface-variant leading-relaxed text-sm sm:text-base">
-              {block}
-            </p>
-          );
-        })}
+      <article className="p-8 sm:p-10 rounded-3xl bg-surface-container-low/40 backdrop-blur-xl border border-white/20 dark:border-white/[0.08] shadow-md max-w-none text-on-surface leading-relaxed text-base sm:text-lg">
+        <ArticleMarkdownRenderer
+          content={activeContent}
+          productionLabel={t('blogPost.productionArch')}
+        />
       </article>
 
       {/* Bottom Advisory CTA Card */}

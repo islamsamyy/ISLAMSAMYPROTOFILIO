@@ -33,10 +33,6 @@ function sanitizeDataForTable(table: string, payload: any): any {
       const { updated_at, ...rest } = cleaned;
       cleaned = rest;
     }
-    if (table === 'projects') {
-      const { gallery_images, steps, ...rest } = cleaned;
-      cleaned = rest;
-    }
     return cleaned;
   };
   if (Array.isArray(payload)) {

@@ -129,17 +129,18 @@ export default function RootLayout({
                   "@type": "Person",
                   "@id": "https://islamsamy.com/#person",
                   "name": "Islam Samy",
-                  "jobTitle": "Lead Data Engineer & Enterprise Solutions Architect",
-                  "description": "Expert Data Engineer specializing in custom ERP system design, autonomous AI agents, workflow automations, executive data analytics, and modern full-stack web development.",
+                  "jobTitle": "Data Engineer & ERP Systems Architect for Factories & Institutions",
+                  "description": "Data Engineer & ERP Systems Architect building Operations-Research-driven resource management systems (ERP) for factories and institutions, with autonomous AI agents, workflow automations, and guaranteed ROI upon contracting.",
                   "knowsAbout": [
-                    "Enterprise Resource Planning (ERP)",
+                    "Operations Research (OR) & Industrial Optimization",
+                    "Enterprise Resource Planning (ERP) for Factories & Institutions",
                     "Data Engineering & Distributed Systems",
                     "Autonomous AI Agents",
                     "Workflow Automation & n8n",
                     "Business Intelligence & Power BI",
                     "Full-Stack Web Development",
                     "ClickHouse & Apache Kafka",
-                    "OPERA PMS & System Integration"
+                    "PLC Telemetry & OPERA PMS Integration"
                   ],
                   "sameAs": [
                     "https://www.linkedin.com/in/islam-samy-3b72061a9/",
