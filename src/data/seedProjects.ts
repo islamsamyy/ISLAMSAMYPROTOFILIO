@@ -32,64 +32,64 @@ export interface ProjectItem {
 export const initialProjects: ProjectItem[] = [
   {
     id: 'wirecut-os-marble-erp',
-    title: 'WireCut OS — Industrial MES, 28-Channel PLC Historian & Costing ERP',
+    displayOrder: 0,
+    title: 'WireCut OS — نظام تشغيل مصانع القواطع الماس | Industrial MES & Costing ERP',
     client: 'Marble & Granite Manufacturing Plants (Multi-Wire Diamond Saws)',
-    companyLogo: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=120&q=80',
+    companyLogo: 'https://raw.githubusercontent.com/islamsamyy/wirecut-/main/public/maadi-logo.png',
     category: 'ERP Systems',
-    role: 'Principal Solutions Architect & Data Engineer',
-    impactMetric: '8–20x ROI · -15% Diamond Wire Waste',
+    role: 'ERP Systems & Operations Research Architect',
+    impactMetric: '8–20x ROI · -15% Diamond Wire Waste · 20 Executive Dashboards',
     metrics: [
-      { label: 'PLC Channels', value: '28 Live Sensors' },
+      { label: 'Executive Dashboards', value: '20 Plant Modules' },
+      { label: 'PLC Telemetry', value: '28 Live Sensors' },
       { label: 'Wire Cost Saving', value: '8% – 15%' },
-      { label: 'Uptime Recovery', value: '+10% – 15%' },
-      { label: 'Export Suites', value: '11 CSV Reports' }
+      { label: 'Uptime Recovery', value: '+10% – 15%' }
     ],
     techStack: [
-      'Operations Research',
-      'PLC Telemetry (MWS-01)',
-      'TypeScript',
-      'Next.js',
-      'Costing ERP & MES',
-      '28-Channel Historian',
-      'RBAC (5 Tiers)',
-      'Audit Logging'
+      'Operations Research (OR)',
+      'Multi-Wire Diamond Saws',
+      '28-Channel PLC Telemetry',
+      'Unit-Economics Costing',
+      'Predictive Machine Health',
+      'Factory ERP & Inventory',
+      '5-Tier Governance (RBAC)',
+      '11 Executive Reports'
     ],
     summary:
-      'Industrial MES, PLC Telemetry Historian, and Costing ERP engineered specifically for Multi-Wire Diamond Saws in marble and granite factories. Built on Operations Research (OR) mathematical modeling to decompose cutting vs. downtime, benchmark diamond wire spools (1st/2nd use), track Roller Grooves 1..6 wear, and calculate true cost per m² across 28 live PLC sensor channels.',
+      'نظام تشغيل مصانع القواطع الماس (WireCut OS): منصة تشغيل وتحليل إنتاج وتكاليف (MES + PLC Telemetry Historian + Costing ERP) مصممة خصيصاً لمناشير السلك الماسي متعدد الأسلاك في مصانع الرخام والجرانيت. مبنية على منهجية بحوث العمليات (Operations Research) بـ 20 لوحة تحكم تشغيلية ومالية لتحقيق عائد استثماري مضمون يتراوح بين 8 إلى 20 ضعفاً، وخفض هدر السلك الماسي بنسبة 8%–15%، واستعادة 10%–15% من ساعات التشغيل الضائعة.',
     architectureHighlights: [
-      'Time-Motion & Bottleneck Decomposition: Splits PLC Elapsed Time into Active Cutting Minutes, Retraction Minutes, In-Operation Stops (with exact cut depth in mm), and inter-block Downtime Gaps to compute Active Cutting Efficiency % and MTBS.',
-      'Plan vs. Actual & Recipe Adherence: Compares PLC 12-Slot Step Recipes, Planned Time, Max Slices, and Planned Wire Cost against live execution—flagging A1→A2 / A2→A1 direction shifts and Loop Mismatches.',
-      'Multi-Source Ingestion: Parses native PLC log.CSV alongside operator Excel/CSV files with automatic Arabic numeral (٠-٩) normalization and mm/cm/m unit unification.',
-      'Unit-Economics Costing Engine: Connects L × W × H × 52 = Area (m²), wire consumption (m/m²), energy intensity (kWh/m²), stone hardness, and labor overhead per job and Block Owner (factory vs. contract cutting).',
-      '28-Channel Predictive Machine Health: Monitors motor temperatures (°C), Torque %, A1/A2 wire tension (N), feed rate, wire speed, and Roller Grooves 1..6 degradation with automated Alert Rules.',
-      'Enterprise Governance: Automated Data Quality % scoring, immutable Raw Logs Archive, 5-tier RBAC (Admin, Supervisor, Operator, Accountant, Viewer), full before/after Audit Log, and 11 one-click CSV report exports.'
+      'Time-Motion & Bottleneck Decomposition (Operations Research): Splits total machine elapsed time into Active Cutting Minutes, Retraction Minutes, In-Operation Stops (at exact cutting depth in mm), and inter-block Downtime Gaps to compute Active Cutting Efficiency % and MTBS.',
+      'Plan vs. Actual & Recipe Adherence: Compares the machine’s programmed 12-Slot Step Recipe, Planned Time, Max Slices, and Planned Wire Cost against live execution—immediately flagging direction shifts (A1→A2 / A2→A1) and Loop Mismatches.',
+      '20 Specialized Plant Dashboards across 5 Operational Suites: Production Monitoring (7), Predictive Analytics (3), Factory ERP & Costing (4), Data Quality & Archive (3), and Governance & Permissions (3).',
+      'Unit-Economics Costing Engine: Connects slab geometry (L × W × H × 52 = Area m²), diamond wire wear (m/m² across 1st & 2nd use spools), energy intensity (kWh/m²), stone hardness, and labor overhead to reveal true net profit per block and per slab.',
+      '28-Channel Predictive Machine Health: Continuously monitors motor temperatures (°C), Torque %, A1/A2 wire tension (N), feed/wire speed, and Roller Grooves 1..6 wear with early warning alerts before catastrophic breakdowns.',
+      'Enterprise Governance & Anti-Tampering: Automated Data Quality % audit, immutable Raw Logs Archive, 5-tier Role-Based Access Control (Admin, Supervisor, Operator, Accountant, Viewer), complete before/after Audit Log, and 11 one-click executive report exports.'
     ],
     challenge:
-      'Marble and granite factories traditionally rely on paper shift logs and disconnected Excel sheets that capture production data after the shift ends. This blind spot causes silent profit erosion through 8–15% unnecessary diamond wire wear, unrecorded micro-stops, unexpected motor or roller failures, and mispriced stone varieties.',
+      'Marble and granite factories traditionally rely on paper shift logs and fragmented spreadsheets that record production after the shift has already ended. As a result, diamond wire and roller groove wear goes untracked, downtime hides silently between shifts, cutting plans drift from reality, and per-block unit costs remain rough estimates—quietly eroding 15%–25% of factory profit margins.',
     solution:
-      'Architected WireCut OS—an end-to-end MES + PLC Telemetry Historian + Costing ERP grounded in Operations Research. By streaming and parsing 28 PLC channels at 60-second telemetry zoom resolution alongside operator logs, inventory, orders, quality checks, and preventive maintenance, plant leadership gains true per-block unit economics and predictive mechanical alerts.',
+      'Engineered WireCut OS—a unified industrial operating system combining Production Monitoring (MES), 28-Channel PLC Telemetry, and Unit-Economics Costing ERP built on Operations Research. By unifying machine logs, operator inputs (with automatic Arabic numeral ٠-٩ and mm/cm/m conversion), inventory, customer orders, quality inspections, and preventive maintenance into 20 clear dashboards, factory owners gain live per-block profitability, objective wire supplier benchmarking, and predictive failure prevention.',
     keyDecisions: [
       {
-        title: 'Operations Research Decomposition vs. Basic Job Timestamps',
+        title: 'Operations Research Optimization vs. Passive Accounting Dashboards',
         rationale:
-          'Separating Active Cutting, Retraction, In-Operation Stops (at exact mm depth), and inter-block Downtime Gaps isolates true machine utilization and MTBS rather than hiding micro-stops inside total elapsed hours.',
+          'Instead of merely recording past totals, mathematical decomposition of active cutting time, micro-stops, wire wear (m/m²), and energy intensity (kWh/m²) directly guides plant managers to the #1 profit leak.',
         tradeOff:
-          'Requires dedicated PLC parser alignment (such as MWS-01 log.CSV schemas) and configurable sensor thresholds per machine.'
+          'Requires a 1-week initial calibration of stone hardness, electricity tariffs, and shift workflows to establish an accurate baseline.'
       },
       {
-        title: 'Unified MES + Costing ERP + Inventory Ledger',
+        title: 'Immutable Archive + 5-Tier Role Governance',
         rationale:
-          'Linking diamond wire spool lifecycles (First & Second Use), Roller Grooves 1..6 wear, energy meter readings (kWh/m²), and customer Order Allocations produces exact net profit per block and per stone type.',
+          'Separating permissions across Admin, Supervisor, Operator, Accountant, and Viewer while archiving every original machine log prevents silent edits and guarantees financial auditability.',
         tradeOff:
-          'Requires initial calibration of stone hardness coefficients, electricity tariffs, and operator workflows during Week 1.'
+          'Enforces disciplined shift handoffs and structured approvals across production and finance teams.'
       }
     ],
     systemFlow: [
-      'Multi-Source Ingestion: Native PLC log.CSV (28 channels) + Operator Excel/CSV (auto Arabic numeral ٠-٩ & mm/cm/m normalization).',
-      'Time-Motion & Recipe Engine: Decomposes Active Cutting vs. Retraction, flags Loop Mismatches, and computes Adherence % and MTBS.',
-      '28-Channel Historian & Telemetry Zoom: 60-second resolution tracking motor °C, Torque %, A1/A2 Tension N, and Roller Grooves 1..6.',
-      'Unit-Economics Costing Engine: Combines Wire (m/m²) + Energy (kWh/m²) + Labor + Overhead against Block Owner & Order Allocations.',
-      'Governance & Reporting: Immutable Raw Logs Archive, Data Quality % audit, 5-tier RBAC Audit Log, and 11 one-click CSV exports.'
+      'Unified Plant Data Capture: Ingests native machine PLC logs (28 sensor channels) alongside operator shift sheets with automatic Arabic numeral (٠-٩) and mm/cm/m unit normalization.',
+      'Operations Research Optimization Engine: Computes Active Cutting Efficiency %, MTBS, inter-block Downtime Gaps, Plan vs. Actual Recipe Adherence, and Loop Mismatches.',
+      '20-Dashboard Executive Command Center: Real-time visibility across Production, Wires & Rollers (1..6), Machine Health, Energy (kWh/m²), Costing, Inventory, Orders, Quality, and Maintenance.',
+      'Compounding ROI & Governance: Automated Data Quality % checks, 5-tier RBAC Audit Log, predictive overload alerts, and 11 one-click executive financial & operational reports.'
     ],
     outcomeMetrics: [
       {
@@ -100,49 +100,115 @@ export const initialProjects: ProjectItem[] = [
       {
         label: 'Lost Uptime Recovered',
         value: '+10% – 15%',
-        description: 'Adds 150–300 m²/month of extra slab output per saw with zero increase in fixed rent or payroll.'
+        description: 'Adds 150–300 m²/month of extra slab output per saw with zero increase in fixed rent or payroll (25,000–60,000 EGP/mo in Egypt; $1,200–$2,800/mo in GCC).'
       },
       {
-        label: 'System ROI',
+        label: 'Guaranteed System ROI',
         value: '8x – 20x',
-        description: 'Covers monthly subscription from 1–2 optimized blocks while preventing 50,000–200,000 EGP catastrophic motor/roller failures.'
+        description: 'Pays for itself by optimizing just 1–2 blocks/month while preventing 50,000–200,000 EGP catastrophic motor or roller failures.'
       }
+    ],
+    galleryImages: [
+      'https://raw.githubusercontent.com/islamsamyy/wirecut-/main/docs/screenshots/system/02-dashboard.png',
+      'https://raw.githubusercontent.com/islamsamyy/wirecut-/main/docs/screenshots/system/03-operations.png',
+      'https://raw.githubusercontent.com/islamsamyy/wirecut-/main/docs/screenshots/system/04-operation-detail.png',
+      'https://raw.githubusercontent.com/islamsamyy/wirecut-/main/docs/screenshots/system/05-live-jobs.png',
+      'https://raw.githubusercontent.com/islamsamyy/wirecut-/main/docs/screenshots/system/06-wires.png',
+      'https://raw.githubusercontent.com/islamsamyy/wirecut-/main/docs/screenshots/system/07-stones.png',
+      'https://raw.githubusercontent.com/islamsamyy/wirecut-/main/docs/screenshots/system/08-operators.png',
+      'https://raw.githubusercontent.com/islamsamyy/wirecut-/main/docs/screenshots/system/09-machine-health.png',
+      'https://raw.githubusercontent.com/islamsamyy/wirecut-/main/docs/screenshots/system/10-energy.png',
+      'https://raw.githubusercontent.com/islamsamyy/wirecut-/main/docs/screenshots/system/11-downtime.png'
     ],
     steps: [
       {
-        title: 'Production Monitoring & Telemetry Zoom',
-        description: 'Live Jobs command deck, 60-second block telemetry curves, and clean separation between Factory vs. Third-Party Block Owners.'
+        title: 'Production Monitoring Suite (7 Dashboards)',
+        description: 'Executive Overview, Operations Registry, 60-Second Telemetry Zoom, Live Saw Jobs, Diamond Wire Spools (1st & 2nd Use), Stones & Blocks, and Operators & Shifts.'
       },
       {
-        title: 'Diamond Wire & Roller Grooves 1..6',
-        description: 'First Use vs. Second Use spool tracking, supplier wear-rate benchmarking (m/m²), and 6-groove roller utilization tracking.'
+        title: 'Predictive Analytics Suite (3 Dashboards)',
+        description: '28-Channel Machine Health (motor °C, Torque %, A1/A2 Tension N), Energy Analytics (kWh/m² per stone), and Downtime & Stops root-cause analysis.'
       },
       {
-        title: 'Machine Health, Downtime & Energy (kWh/m²)',
-        description: '28-channel PLC anomaly alerts, categorized stop reasons (wire snap, water, power, setup), and per-stone energy costing.'
+        title: 'Factory ERP Suite (4 Dashboards)',
+        description: 'Costing & Gross Margin Engine (true cost per m² & per slab), Customer Orders & Slab Quality Inspection, Inventory & Consumables, and Preventive Maintenance.'
       },
       {
-        title: 'Factory ERP, Inventory, Orders & 5-Tier RBAC',
-        description: 'Net block profit costing, storage & consumables ledger, customer order allocations, slab quality inspection, and immutable audit logs.'
+        title: 'Governance & Data Quality Suite (6 Dashboards)',
+        description: 'Multi-Source Data Upload, Immutable Raw Logs Archive, Data Quality % Audit, 5-Tier Role Permissions (RBAC), Complete Audit Log, and Plant Settings.'
       }
     ],
     featured: true,
-    readmeContent: `# WireCut OS — Industrial MES, PLC Telemetry Historian & Costing ERP
+    readmeContent: `# عرض فني ومالي متكامل: نظام WireCut OS — نظام تشغيل مصانع القواطع الماس
+*(Commercial & Operational Proposal — Confidential Client Overview)*
 
-**WireCut OS** is a specialized Operations Research platform built for **Marble & Granite Multi-Wire Diamond Saws**, combining **MES**, **28-Channel PLC Telemetry**, and **Unit-Economics Costing ERP**.
+---
 
-## Core Modules
-- **Time-Motion & OR Decomposition:** Active Cutting Minutes, Retraction Minutes, In-Operation Stops (mm depth), Downtime Gaps, Active Cutting Efficiency %, and MTBS.
-- **Plan vs. Actual & Recipe Adherence:** Evaluates 12-Slot Step Recipes, Planned Time, Max Slices, direction changes (\`A1→A2\` / \`A2→A1\`), and Loop Mismatches.
-- **Diamond Wire & Roller Lifecycle:** First Use & Second Use tracking, supplier \`m/m²\` benchmarking, and Roller Grooves 1..6 area tracking.
-- **28-Channel Machine Health & Energy:** Motor temperatures (\`°C\`), Torque \`%\`, A1/A2 wire tension (\`N\`), feed/wire speed, and \`kWh/m²\` stone energy intensity.
-- **Factory ERP & Governance:** Costing Engine, Inventory, Customer Orders, Quality Inspection, Preventive Maintenance, immutable Raw Logs Archive, 5-tier RBAC, Audit Log, and 11 CSV report exports.`
+## 1. المقدمة التنفيذية: لماذا WireCut OS وليس مجرد برنامج حسابات أو داشبورد؟
+أغلب مصانع الرخام والجرانيت تعتمد على تقارير ورقية أو ملفات إكسيل متفرقة تسجل ما حدث "بعد فوات الأوان"، مما يؤدي إلى تآكل هامش الربح في هدر السلك الماسي، والتوقفات الصامتة، والأعطال المفاجئة، وتسعير خاطئ لبعض أنواع الحجر.
+
+**WireCut OS** هو منصة تشغيل وتحليل إنتاج وتكاليف (**MES + PLC Telemetry Historian + Costing ERP**) مصممة خصيصاً لـ **مناشير السلك الماسي متعدد الأسلاك (Multi-Wire Diamond Saws)**، ومبنية على منهجية **بحوث العمليات (Operations Research — OR)** لتحويل بيانات الماكينة والمشغلين إلى قرارات تشغيلية ومالية تقلل التكلفة وترفع الطاقة الإنتاجية الفعلية للمصنع.
+
+---
+
+## 2. القوة العلمية: كيف يطبق WireCut OS بحوث العمليات (Operations Research)؟
+1. **تفكيك الزمن وكشف الاختناقات:** يفكك الزمن الكلي للعملية إلى زمن القطع الفعلي، زمن السحب والرجوع، التوقفات الدقيقة داخل العملية (مع عمق القطع بالمليمتر)، وفجوات التوقف بين البلوكات، لحساب **كفاءة القطع الفعلي (%)** و**متوسط الوقت بين التوقفات (MTBS)**.
+2. **المقارنة بين الخطة والواقع:** يقارن خطة الماكينة المبرمجة (الزمن المخطط، عدد الألواح، تكلفة السلك، وصفة القطع 12 مرحلة) بالتنفيذ الفعلي، ويكشف فوراً تغيير اتجاه القطع (\`A1→A2\` / \`A2→A1\`) أو اختلاف اللفات.
+3. **اقتصاديات الوحدة والتكلفة الحقيقية:** يربط معادلة الإنتاج (\`L × W × H × 52 = Area m²\`) باستهلاك السلك الماسي (\`m/m²\`)، وكثافة الطاقة (\`kWh/m²\`)، وصلابة الحجر، والعمالة، للوصول إلى **التكلفة الحقيقية للمتر المربع ولللوح** لكل بلوك.
+4. **الموثوقية والصيانة الوقائية:** يراقب **28 قناة حساس** (حرارة المواتير، عزم الدوران، شد السلك، سرعة التغذية) وتآكل **مجاري البكر الـ 6** للتدخل قبل وقوع العطل الكارثي.
+
+---
+
+## 3. شرح تفصيلي للوحات التحكم (20 داشبورد متكاملة)
+- **مجموعة الإنتاج (7 لوحات):** لوحة القيادة التنفيذية، سجل العمليات، التحليل المكبّر كل 60 ثانية، حالة المناشير الحية، إدارة بكر السلك الماسي (الاستخدام الأول والثاني ومقارنة الموردين)، تحليل أنواع الحجر والبلوكات (نشر المصنع مقابل نشر الغير)، وأداء المشغلين والورديات.
+- **مجموعة التحليلات التنبؤية (3 لوحات):** الصحة الميكانيكية (28 حساساً)، تحليلات الطاقة (\`kWh/m²\`)، وتحليل التوقفات وتصنيف أسبابها (قطع/لحام سلك، شد، مياه، كهرباء، ضبط).
+- **مجموعة ERP المصنع (4 لوحات):** محرك التكاليف والأرباح، العملاء وأوامر الشغل وفحص الجودة، المخازن والمستهلكات، والصيانة الوقائية المرتبطة بساعات التشغيل.
+- **مجموعة البيانات والحوكمة (6 لوحات):** استيعاب ملفات الماكينة والإكسيل (مع دعم الأرقام العربية \`٠-٩\` والوحدات)، الأرشيف غير القابل للحذف، مؤشر جودة البيانات (\`%\`)، 5 مستويات صلاحيات (مدير، مشرف، مشغل، محاسب، مشاهد)، سجل الرقابة الكامل، وتصدير **11 تقريراً تنفيذياً** بضغطة زر.
+
+---
+
+## 4. العائد المالي المباشر (ROI) والعائد المركّب من الاستمرار
+بافتراض منشار سلك واحد ينتج **1,500 – 2,500 m²/شهر**:
+- **توفير 8% – 15% من السلك الماسي:** وفر **15,000 – 35,000 ج.م/شهر** في مصر (**$500 – $1,200/شهر** في الخليج).
+- **استعادة 10% – 15% من ساعات التشغيل:** إنتاج إضافي **150 – 300 m²/شهر** بصافي هامش **25,000 – 60,000 ج.م/شهر** في مصر (**$1,200 – $2,800/شهر** في الخليج).
+- **تفادي الأعطال الكارثية:** يوفر **50,000 – 200,000 ج.م** في الواقعة الواحدة.
+- **النتيجة:** النظام يغطي اشتراكه من توفير **بلوك إلى بلوكين شهرياً** بعائد **8 إلى 20 ضعفاً**، ويتضاعف العائد عبر **الشهر 1 (الكشف)** ← **الأشهر 2–3 (المعايرة)** ← **الأشهر 4–6 (التحسين)** ← **الشهر 6+ (الذاكرة المؤسسية)**.
+
+---
+
+## 5. باقات التسعير (مصر، الخليج، والسوق الدولي)
+### داخل مصر (ج.م)
+| الباقة | النطاق | التأسيس والتدريب (مرة واحدة) | الاشتراك الشهري | الاشتراك السنوي (خصم شهرين) |
+| :--- | :--- | :---: | :---: | :---: |
+| **البداية (Starter)** | منشار واحد | **15,000 – 25,000 ج.م** | **4,500 – 6,500 ج.م** | **45,000 – 65,000 ج.م** |
+| **النمو (Full ERP)** | 2 إلى 4 مناشير | **30,000 – 50,000 ج.م** | **8,500 – 13,000 ج.م** | **85,000 – 130,000 ج.م** |
+| **المجمعات (Enterprise)** | 5 مناشير فأكثر | **60,000 – 120,000 ج.م** | **18,000 – 30,000+ ج.م** | اتفاق سنوي خاص |
+
+- **التجربة الميدانية (Paid Pilot):** تشغيل فعلي لمدة 30 يوماً بـ **10,000 – 15,000 ج.م** (تُخصم بالكامل عند التعاقد).
+
+### الخليج والأردن (USD)
+| الباقة | النطاق | التأسيس والتدريب | الاشتراك الشهري | الاشتراك السنوي |
+| :--- | :--- | :---: | :---: | :---: |
+| **Starter (1–2 Saws)** | مصنع متوسط | **$1,500 – $2,500** | **$350 – $500** | **$3,500 – $5,000** |
+| **Growth / Full ERP (3–5 Saws)** | مصنع متكامل | **$3,500 – $6,000** | **$750 – $1,200** | **$7,500 – $12,000** |
+| **Enterprise (6+ Saws)** | مجموعات صناعية | **$8,000 – $15,000+** | **$1,800 – $3,000+** | **$18,000 – $30,000+** |
+
+- **السوق الدولي:** **$250 – $450 / منشار / شهر** (بحد أدنى $500 شهرياً) أو ترخيص دائم على سيرفر المصنع (**$15,000 – $35,000** + 20% صيانة سنوية).
+
+---
+
+## 6. خطة التنفيذ (3–4 أسابيع) والعرض التشخيصي المجاني
+1. **الأسبوع 1:** تحليل ملفات الماكينة والإكسيل وضبط معاملات التكلفة والصلاحيات.
+2. **الأسبوع 2:** بناء خط الأساس وتدريب المشغلين والمحاسب ومدير الإنتاج.
+3. **الأسبوع 3–4:** تسليم أول تقرير فجوات وتوقفات وتكلفة حجر فعلية لتحقيق أول موجة توفير.
+
+> **عرض تشخيصي مجاني خلال 48 ساعة:** أرسل ملفات تشغيل آخر 15 يوماً من الماكينة، واستلم تقريراً مجانياً يوضح ساعات التوقف الضائعة، كفاءة القطع الفعلي، ونسبة انحراف استهلاك السلك قبل التعاقد.`
   },
   {
     id: 'telco-churn-analysis',
     title: 'Telco Customer Churn Analysis — Python & Power BI',
     client: 'Telecommunications Retention Analytics',
-    companyLogo: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=120&q=80',
+    companyLogo: 'https://eevtuamdgthbcgtkepbh.supabase.co/storage/v1/object/public/portfolio-uploads/projects/telco-churn-analysis/all-customer-profile.jpg',
     category: 'AI & Machine Learning',
     role: 'Data Scientist & BI Developer',
     impactMetric: '7,043 Customers · Churn Drivers',
@@ -153,7 +219,7 @@ export const initialProjects: ProjectItem[] = [
       { label: 'Stack', value: 'Python + Power BI' }
     ],
     techStack: ['Python', 'Pandas', 'Scikit-learn', 'Power BI', 'DAX', 'Power Query'],
-    summary: 'In-depth customer churn analysis for a telecom company combining Python (data preprocessing, feature engineering, predictive modeling) with a 3-page interactive Power BI dashboard to uncover attrition drivers and enable targeted retention strategies.',
+    summary: 'Conducted an in-depth analysis of customer churn for a telecom company, utilizing Python (data preprocessing, feature engineering, predictive modeling) and interactive Power BI dashboards to visualize customer behavior, uncover critical churn drivers, and enable actionable retention strategies.',
     architectureHighlights: [
       'Python preprocessing pipeline handling missing values, categorical encoding, and Tenure Category engineering.',
       'Predictive modeling to identify high-risk churn segments across contract types and service tiers.',
@@ -194,7 +260,7 @@ export const initialProjects: ProjectItem[] = [
     id: 'call-center-powerbi',
     title: 'Call Center Analysis Dashboard — Power BI & SLA Intelligence',
     client: 'Customer Operations & Support Analytics',
-    companyLogo: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=120&q=80',
+    companyLogo: 'https://eevtuamdgthbcgtkepbh.supabase.co/storage/v1/object/public/portfolio-uploads/projects/call-center-powerbi/dashboard-overview.jpg',
     category: 'Data Analysis & Power BI',
     role: 'BI Developer & Data Analyst',
     impactMetric: '33K Calls · 75.3% SLA Response',
@@ -958,6 +1024,408 @@ A 6-dashboard Power BI hospitality analytics suite built for **Safir Hotels & Re
 `,
   },
   {
+    id: 'sotex-powerbi-analytix',
+    title: 'SOTEX Power BI & Analytix — Executive Intelligence, SQL Server & Revenue Optimization Suite',
+    client: 'SOTEX Egyptian Textiles (Architected by Nexalytix)',
+    companyLogo: '/projects/sotex-powerbi-analytix/08-sales-revenue-dashboard.png',
+    category: 'Data Analysis & Power BI',
+    role: 'Lead BI Architect & Data Engineer (Nexalytix)',
+    impactMetric: '57% Gross Margin · 0.02% Defect Rate',
+    metrics: [
+      { label: 'Gross Margin', value: '57%' },
+      { label: 'Online vs Retail', value: '1.71K vs 447' },
+      { label: 'Defect Rate', value: '0.02%' },
+      { label: 'Avg Order Value', value: '$231.82' },
+    ],
+    techStack: [
+      'Power BI',
+      'DAX',
+      'SQL Server',
+      'Normalized Star Schema',
+      'E-Commerce & B2B RFQ',
+      'POS & Shopify API',
+      'Inventory Forecasting',
+    ],
+    summary:
+      'End-to-end digital transformation and Power BI executive analytics suite architected by Nexalytix for SOTEX ("Premium Egyptian Textile Products From Our Factory to Your Door"). Combines a normalized SQL Server database, a multilingual retail & B2B export e-commerce website with RFQ workflows, and 4 real-time Power BI dashboards (Sales, Inventory, Quality Control, and HR) engineered to eliminate data silos, cut defect waste, prevent stockouts, and directly accelerate revenue growth.',
+    architectureHighlights: [
+      'Revenue-Driven Sales & Channel Intelligence: Tracks 57% Gross Margin (1.32K Gross Profit on 2.32K Total Sales, $231.82 AOV), compares Online (1.71K) vs. Retail POS (446.92) performance, surfaces Top 5 Bestsellers (Silk Evening Dress, Wool Coat Classic, Winter Jacket Puffer, Designer Handbag, Silk Scarf Pattern), and monitors Debit/Credit/PayPal/Cash risk.',
+      'Proactive Inventory & DAX Stockout Forecasting: Monitors 945 Raw Stock and 330 Finished Stock levels, flags 15 items below reorder threshold with automated alerts, and runs DAX daily-average measures to predict out-of-stock dates before lost sales occur.',
+      'Zero-Waste Quality Control Analytics: Pinpoints 10 unique defect types (Material flaw, Stitching defect, Thread loose, Color variation, etc.) across 20 rejected units (0.02% defect rate) and evaluates inspector effectiveness to drive machine calibration and worker workshops.',
+      'HR & Shift Cost Optimization: Links 53.75K total salaries across 15 active employees (Production 31K, Quality Control 14K, Logistics 4K, Maintenance 4K, Design) with 0.99% absence rate and attendance days for dynamic shift planning.',
+      'Scalable SQL Server + B2B Export E-Commerce: Fully normalized relational database powering an online catalog, bulk Request for Quotation (RFQ) B2B portal, multilingual export section, and factory news hub.',
+    ],
+    featured: true,
+    challenge:
+      'SOTEX relied on manual Excel spreadsheets and fragmented departmental systems, causing data silos, human error, and weekly or monthly reporting delays across inventory, sales, and production. Leadership lacked real-time visibility into production costs, quality defect sources, and channel profitability, slowing down strategic planning and revenue capture.',
+    solution:
+      'Nexalytix architected a 3-pillar data-first transformation: (1) a fully normalized SQL Server relational database unifying Finance, Production, Inventory, HR, Quality, and Sales; (2) a modern retail e-commerce & multilingual B2B export website with bulk RFQ intake; and (3) a 4-cockpit Power BI suite (Sales, Inventory, Quality Control, HR) delivering real-time KPIs, DAX stockout forecasting, and automated reorder alerts.',
+    keyDecisions: [
+      {
+        title: 'Normalized SQL Server Star Schema vs. Disconnected Excel Sheets',
+        rationale:
+          'Centralizing product_categories, subcategories, dim_date, inventory movements, quality inspections, HR payroll, and omnichannel sales in SQL Server eliminated reconciliation lag and guaranteed a single source of truth.',
+        tradeOff:
+          'Required upfront schema normalization and ETL alignment across POS, website API, and factory floor inputs.',
+      },
+      {
+        title: 'DAX Safe-Stock Forecasting & Automated Reorder Alerts',
+        rationale:
+          'Using DAX daily-average consumption measures to predict exact out-of-stock dates prevents missed retail and B2B export orders while avoiding excess raw-material holding costs.',
+        tradeOff:
+          'Requires consistent IN/OUT movement logging (Raw vs. Finished) to keep forecast horizons accurate.',
+      },
+    ],
+    systemFlow: [
+      '1. Omnichannel & Factory Ingestion: Retail POS, Website/Shopify API orders, B2B Export RFQs, Quality Inspections, and HR Attendance flow into the normalized SQL Server database.',
+      '2. Relational Modeling & DAX Engine: Fact and dimension tables (dim_date, product_categories, subcategories, inventory, inspections, payroll) compute real-time margins, defect ratios, and daily burn rates.',
+      '3. 4-Cockpit Power BI Intelligence: Executive dashboards for Sales, Inventory, Quality Control, and HR surface actionable bottlenecks, bestsellers, and reorder alerts.',
+      '4. Revenue & Margin Feedback Loop: Insights guide seasonal demand forecasting, high-margin category focus, defect-eliminating machine calibration, and B2B RFQ conversion.',
+    ],
+    outcomeMetrics: [
+      {
+        label: 'Gross Profit Margin',
+        value: '57%',
+        description: 'Clear per-product and per-channel margin visibility (1.32K gross profit on 2.32K sales, $231.82 AOV) enables higher-margin product mix decisions.',
+      },
+      {
+        label: 'Online Channel Share',
+        value: '73.7%',
+        description: 'Online sales (1.71K) vs. Retail POS (446.92) tracked in real time, validating digital & international B2B export expansion.',
+      },
+      {
+        label: 'Quality Defect Rate',
+        value: '0.02%',
+        description: 'Granular tracking of 10 defect types and inspector performance cuts rework, scrap loss, and customer returns.',
+      },
+      {
+        label: 'Stockout Prevention',
+        value: '15 Alerts',
+        description: 'Automated reorder thresholds and DAX out-of-stock date forecasting protect revenue by keeping 945 raw & 330 finished SKUs in stock.',
+      },
+    ],
+    galleryImages: [
+      '/projects/sotex-powerbi-analytix/01-nexalytix-sotex-cover.png',
+      '/projects/sotex-powerbi-analytix/02-executive-summary.png',
+      '/projects/sotex-powerbi-analytix/03-operational-challenges.png',
+      '/projects/sotex-powerbi-analytix/04-sql-server-data-model.png',
+      '/projects/sotex-powerbi-analytix/05-ecommerce-export-website.png',
+      '/projects/sotex-powerbi-analytix/06-hr-dashboard.png',
+      '/projects/sotex-powerbi-analytix/07-quality-control-dashboard.png',
+      '/projects/sotex-powerbi-analytix/08-sales-revenue-dashboard.png',
+      '/projects/sotex-powerbi-analytix/09-inventory-forecasting-dashboard.png',
+    ],
+    steps: [
+      {
+        title: '1. Normalized SQL Server Architecture',
+        description: 'Unified relational database linking Finance, Production, Inventory, HR, Quality, and Sales into a single source of truth.',
+      },
+      {
+        title: '2. E-Commerce & B2B Export Website',
+        description: 'Launched SOTEX online catalog with multilingual export pages, factory news, and bulk B2B Request for Quotation (RFQ) forms.',
+      },
+      {
+        title: '3. Sales & Revenue Intelligence',
+        description: 'Real-time tracking of Gross Profit (1.32K), Gross Margin (57%), AOV ($231.82), Online vs. POS channels, Top 5 Bestsellers, and payment risk.',
+      },
+      {
+        title: '4. Inventory Forecasting, QC & HR',
+        description: 'DAX out-of-stock forecasting with 15 reorder alerts, 0.02% defect-rate root-cause tracking, and departmental payroll/shift optimization.',
+      },
+    ],
+    readmeContent: `# SOTEX Power BI & Analytix — Executive Intelligence, SQL Server & Revenue Optimization Suite
+
+## Executive Summary
+Architected and implemented by **Nexalytix** for **SOTEX** (*"Premium Egyptian Textile Products From Our Factory to Your Door"*), this digital transformation initiative replaces fragmented Excel spreadsheets with a comprehensive, data-first business infrastructure:
+1. **Scalable SQL Server Database** — Fully normalized relational schema across Finance, Production, Inventory, HR, Quality, and Sales.
+2. **Real-Time Power BI Dashboards** — Four executive cockpits (Sales, Inventory, Quality Control, and Human Resources) delivering instant KPI visibility.
+3. **Modern E-Commerce & B2B Export Website** — Online product catalog, multilingual international export section, news/certifications hub, and bulk Request for Quotation (RFQ) intake integrated with the backend.
+
+---
+
+## Business Benefits
+- **Eliminates Data Silos & Manual Errors:** Replaces disconnected Excel sheets with automated SQL Server pipelines and real-time Power BI refreshes.
+- **Instant Executive Visibility:** Replaces weekly/monthly reporting delays with live tracking of production costs, defect ratios, payroll distribution, and channel profitability.
+- **Proactive Inventory Control:** Separates Raw Stock (945 units) and Finished Stock (330 units) with IN/OUT movement auditing and automated reorder alerts (15 items flagged below threshold).
+- **Root-Cause Quality Governance:** Tracks 10 distinct defect types (Material flaw, Stitching defect, Thread loose, Color variation, Finishing issues, etc.) and inspector performance to guide targeted machine calibration and worker workshops.
+- **Data-Driven Workforce Planning:** Links 53.75K payroll across Production (31K), Quality Control (14K), Logistics (4K), Maintenance (4K), and Design with attendance and a 0.99% absence rate for dynamic shift scheduling.
+
+---
+
+## How This Enhances Revenue
+1. **Eliminates Lost Sales from Stockouts:** DAX safe-stock forecasting calculates daily consumption averages to predict exact out-of-stock dates and trigger reorder alerts before top-selling SKUs run dry.
+2. **Focuses Capital on High-Margin & Bestselling Products:** Live tracking of **57% Gross Margin**, **\$231.82 Average Order Value**, and the **Top 5 Bestsellers** (*Silk Evening Dress*, *Wool Coat Classic*, *Winter Jacket Puffer*, *Designer Handbag*, *Silk Scarf Pattern*) lets SOTEX double down on its most profitable lines and seasonal demand peaks.
+3. **Expands High-Growth Digital & B2B Export Channels:** Comparing **Online Sales (1.71K)** against **Retail POS (446.92)** highlights digital's 3.8x lead, while the new **multilingual Export Section** and **bulk B2B RFQ workflow** open international wholesale revenue streams.
+4. **Protects Margins by Cutting Defect Waste:** Keeping the defect rate at **0.02%** (just 20 rejected units) and resolving top defect sources directly reduces material scrap, rework labor, and customer returns.
+5. **Reduces Payment Leakage & Fraud Risk:** Payment-method analytics across Debit Card, Credit Card, PayPal, and Cash enable proactive chargeback and fraud monitoring.
+`,
+  },
+  {
+    id: 'sotex-website-analytix',
+    title: 'SOTEX Website & Analytix — Retail E-Commerce, B2B Export & RFQ Platform',
+    client: 'SOTEX Egyptian Textiles (Architected by Nexalytix)',
+    companyLogo: '/projects/sotex-website-analytix/02-home-and-shop-pages.png',
+    category: 'Software Engineering & Online Systems',
+    role: 'Lead Full-Stack & E-Commerce Architect (Nexalytix)',
+    impactMetric: '73.7% Online Sales Share · Global B2B RFQ',
+    metrics: [
+      { label: 'Online Sales Share', value: '73.7%' },
+      { label: 'Avg Order Value', value: '$231.82' },
+      { label: 'B2B Pipeline', value: 'Bulk RFQ' },
+      { label: 'Export Reach', value: 'Multilingual' },
+    ],
+    techStack: [
+      'Next.js / React',
+      'TypeScript',
+      'SQL Server Backend',
+      'E-Commerce Storefront',
+      'B2B RFQ Workflow',
+      'Multilingual Export',
+      'Power BI Telemetry',
+    ],
+    summary:
+      'Factory-direct retail e-commerce storefront and international B2B export portal architected by Nexalytix for SOTEX ("Premium Egyptian Textile Products From Our Factory to Your Door"). Unifies a luxury dark-gold Home experience, a filterable Shop & Online Catalog, bulk Request for Quotation (RFQ) intake, multilingual Export pages, a factory News & Certifications hub, and direct SQL Server / Power BI analytics integration.',
+    architectureHighlights: [
+      'Online Catalog & Shop Storefront: Categorized product showcase with high-resolution imagery, technical specs, price-range & status filters, "Sotex New arrivals" merchandising, and instant Add-to-Cart checkout.',
+      'B2B Request for Quotation (RFQ) Engine: Dedicated bulk order form capturing wholesale quantities, fabric specs, and delivery timelines directly into the backend pipeline.',
+      'Multilingual Export Section: Localized international buyer experience designed to convert global textile importers and wholesale distributors.',
+      'News & Trust Hub: Editorial blog highlighting trade events, quality certifications, and factory production updates to build international buyer confidence.',
+      'Classification & Time-Indexed Backend: Structured around product_categories, subcategories, and dim_date tables for seamless synchronization with SQL Server and Power BI revenue analytics.',
+    ],
+    featured: true,
+    challenge:
+      'SOTEX lacked a unified digital storefront capable of serving both direct-to-consumer retail shoppers and high-volume international B2B textile buyers, limiting sales to offline channels and manual wholesale inquiries.',
+    solution:
+      'Nexalytix designed and launched a dual-engine web platform combining a high-converting retail Shop (with price/status filters and curated collections) with a multilingual B2B Export & Bulk RFQ portal—backed by normalized product_categories, subcategories, and dim_date schemas wired directly into Power BI.',
+    keyDecisions: [
+      {
+        title: 'Unified Retail Storefront + B2B RFQ Architecture',
+        rationale:
+          'Serving both individual retail shoppers (Add to Cart) and bulk wholesale buyers (Request for Quotation) on one domain maximizes factory-direct margin without maintaining two separate platforms.',
+        tradeOff:
+          'Requires distinct UX flows and backend routing between instant retail checkout and B2B quote approvals.',
+      },
+      {
+        title: 'Analytics-Native Schema (product_categories, subcategories, dim_date)',
+        rationale:
+          'Structuring the website catalog with BI-ready classification and time dimensions eliminates ETL friction and feeds live online vs. POS sales directly into Power BI.',
+        tradeOff:
+          'Requires strict catalog taxonomy governance when adding new seasonal textile lines.',
+      },
+    ],
+    systemFlow: [
+      '1. Brand & Discovery (Home Page): Visitors land on the factory-direct showcase ("Premium Egyptian Textile Products From Our Factory to Your Door") and explore curated collections.',
+      '2. Retail Conversion (Shop Page): Consumers filter by price, stock status, and category, browse New Arrivals, and complete online orders.',
+      '3. B2B & Export Capture: International buyers switch to multilingual Export pages and submit bulk Request for Quotation (RFQ) forms.',
+      '4. Backend & Analytics Sync: Orders, RFQs, and catalog interactions flow through product_categories, subcategories, and dim_date into SQL Server and Power BI.',
+    ],
+    outcomeMetrics: [
+      {
+        label: 'Online Channel Revenue',
+        value: '73.7% Share',
+        description: 'Online storefront generated 1.71K vs. 446.92 retail POS, proving digital as SOTEX’s primary growth engine.',
+      },
+      {
+        label: 'Factory-Direct Margin',
+        value: '57% Gross',
+        description: 'Direct-to-consumer and direct-to-importer sales bypass middlemen, preserving 57% gross profit margin and $231.82 AOV.',
+      },
+      {
+        label: 'Global B2B Expansion',
+        value: '24/7 RFQ',
+        description: 'Multilingual Export section and bulk RFQ form capture international wholesale leads around the clock.',
+      },
+    ],
+    galleryImages: [
+      '/projects/sotex-website-analytix/01-website-features-overview.png',
+      '/projects/sotex-website-analytix/02-home-and-shop-pages.png',
+    ],
+    steps: [
+      {
+        title: '1. Luxury Home & Brand Positioning',
+        description: 'Designed the dark-and-gold Home page ("Premium Egyptian Textile Products From Our Factory to Your Door") to elevate brand perception.',
+      },
+      {
+        title: '2. Filterable Shop & Online Catalog',
+        description: 'Built categorized product listings with price sliders, status filters, sale badges, New Arrivals, and Add-to-Cart flows.',
+      },
+      {
+        title: '3. B2B RFQ & Multilingual Export',
+        description: 'Added bulk Request for Quotation (RFQ) forms, multilingual export content, and a News/Certifications blog for international buyers.',
+      },
+      {
+        title: '4. Analytix & BI Integration',
+        description: 'Wired product_categories, subcategories, and dim_date directly into SQL Server & Power BI for real-time revenue attribution.',
+      },
+    ],
+    readmeContent: `# SOTEX Website & Analytix — Retail E-Commerce, B2B Export & RFQ Platform
+
+## Executive Summary
+Architected and launched by **Nexalytix** for **SOTEX**, this full-stack web platform brings *"Premium Egyptian Textile Products From Our Factory to Your Door"* to both retail consumers and international B2B buyers—while feeding live transactional data into SOTEX's SQL Server & Power BI analytics suite.
+
+---
+
+## Key Platform Features
+- **HOME Page:** Luxury dark-and-gold hero experience with direct *"See Collection"* conversion flow.
+- **Shop Page & Online Catalog:** Categorized product showcase with images, specs, price-range slider, status filters, sorting, *"Sotex New arrivals"* merchandising, and Add-to-Cart checkout.
+- **Request for Quotation (RFQ):** Dedicated bulk order intake form tailored for B2B wholesale clients.
+- **Export Section:** Multilingual content built for international textile buyers and importers.
+- **News Section:** Blog for trade events, quality certifications, and factory updates.
+- **Classification & Time Schema:** Built on \`product_categories\`, \`subcategories\`, and \`dim_date\` for seamless BI reporting.
+
+---
+
+## Business Benefits
+- **24/7 Digital Storefront:** Replaces geographic and store-hour limits with an always-on retail and wholesale channel.
+- **Unified Retail + B2B Operations:** Serves individual shoppers and bulk international buyers from a single, centrally managed catalog.
+- **Higher Buyer Trust:** The News & Certifications hub and factory-direct positioning strengthen credibility with overseas importers.
+- **Zero-Friction Analytics:** Catalog taxonomies (\`product_categories\`, \`subcategories\`, \`dim_date\`) sync directly with Power BI—eliminating manual sales reconciliation.
+
+---
+
+## How This Enhances Revenue
+1. **Unlocks High-Growth Online Sales:** Online revenue (**1.71K**) already outperforms physical retail POS (**446.92**) by **3.8x**, proving the website is SOTEX's highest-leverage revenue channel.
+2. **Captures Factory-Direct Margins (57% Gross Margin):** Selling *"From Our Factory to Your Door"* eliminates distributor markups, supporting a **57% gross margin** and **\$231.82 Average Order Value**.
+3. **Opens International B2B Wholesale Revenue:** The **multilingual Export Section** and **Bulk RFQ form** convert global wholesale inquiries into high-ticket export contracts.
+4. **Boosts Conversion & Basket Size:** Price/status filtering, sale badges, and *"Sotex New arrivals"* cross-selling increase product discovery and average order value.
+5. **Data-Driven Merchandising:** Real-time integration with Power BI identifies Top 5 bestsellers and seasonal demand trends so SOTEX promotes its highest-converting products first.
+`,
+  },
+  {
+    id: 'faireer-academy',
+    title: 'Fairer Saudi Academy (جامعة فايرير السعودية) — Bilingual EdTech, LMS & Academic Publishing Platform',
+    client: 'Fairer Saudi Academy',
+    companyLogo: '/projects/faireer-academy/01-home.png',
+    category: 'Software Engineering & Online Systems',
+    role: 'Lead Full-Stack & Platform Architect',
+    impactMetric: '25-Table Schema · 5 Revenue Streams',
+    metrics: [
+      { label: 'Database Schema', value: '25 Tables' },
+      { label: 'Admin Modules', value: '13 Tabs' },
+      { label: 'Localization', value: 'AR/EN RTL' },
+      { label: 'Payments', value: 'Fatora API' },
+    ],
+    techStack: [
+      'Next.js 16',
+      'React 19',
+      'TypeScript 5',
+      'Supabase (PostgreSQL + RLS)',
+      'Tailwind CSS v4',
+      'Tiptap 3',
+      'Fatora Payments',
+      'Playwright',
+    ],
+    summary:
+      'Bilingual (Arabic/English, full RTL/LTR) higher-education, e-learning, and academic publishing platform built with Next.js 16 (App Router), React 19, Supabase (25 tables + RLS), Tailwind CSS v4, Tiptap 3, and Fatora Payments. Unifies paid & freemium courses, HTML5 Canvas verifiable certificates, a peer-reviewed Academic Magazine, a Scholarships Portal, Community Forum, 13-module Admin Control Center, and the BidJobs graduate marketplace.',
+    architectureHighlights: [
+      'Bilingual RTL/LTR & Role-Based Governance: Edge Middleware + Supabase get_my_role() RPC + PostgreSQL Row Level Security (RLS) enforcing Guest, Student, Instructor, and 13-tab Admin access.',
+      'Interactive LMS & Verifiable Credentials: Dual YouTube/HTML5 video player, autosaving lesson notes, server-graded quizzes (/api/quizzes/submit), and automated HTML5 Canvas certificates with public verification URLs & LinkedIn sharing.',
+      'Fatora Payment Gateway & Fulfillment: Server-side price verification, cryptographic order references, checkout redirect (/api/payments/fatora/checkout), verification, and async webhook fulfillment (/api/webhooks/fatora).',
+      'Peer-Reviewed Academic Magazine & Blog: Multi-issue digital journal (magazine_issues, magazine_articles, magazine_reviews) with Tiptap 3 WYSIWYG authoring, DOMPurify HTML sanitization, and editorial review workflow.',
+      'Instructor Analytics, Scholarships & BidJobs: Live course_stats analytics with 6-month revenue trends, funded Scholarships Portal, Community Forum with upvoting, and BidJobs graduate talent waitlist.',
+    ],
+    liveDemoUrl: 'https://github.com/islamsamyy/faireer-academy',
+    githubUrl: 'https://github.com/islamsamyy/faireer-academy',
+    featured: true,
+    displayOrder: 3,
+    challenge:
+      'Higher-education and training institutions in Saudi Arabia and MENA often rely on fragmented tools—separate LMS, manual payment reconciliation, disconnected academic journals, and unverified PDF certificates—creating friction for learners, instructors, and administrators.',
+    solution:
+      'Architected Fairer Saudi Academy on Next.js 16, React 19, and a 25-table Supabase PostgreSQL database with RLS. Delivered a unified bilingual RTL/LTR platform covering course authoring, Fatora checkout, server-graded quizzes, verifiable Canvas certificates, a peer-reviewed Academic Magazine, Scholarships, and a 13-module Admin Control Center.',
+    keyDecisions: [
+      {
+        title: 'Supabase 25-Table PostgreSQL + RLS & Edge Middleware',
+        rationale:
+          'Enforcing Row Level Security alongside Next.js Edge Middleware (supabase.auth.getUser() and get_my_role() RPC) guarantees strict tenant and role isolation across Students, Instructors, and Admins.',
+        tradeOff:
+          'Requires disciplined SQL migration and RLS policy testing across all 25 tables and course_stats views.',
+      },
+      {
+        title: 'Server-Verified Fatora Payments & Server-Graded Quizzes',
+        rationale:
+          'Validating prices and grading quizzes strictly on the server (/api/payments/fatora/* and /api/quizzes/submit) prevents client-side tampering before issuing verifiable completion certificates.',
+        tradeOff:
+          'Adds server API round-trips during checkout and quiz submission in exchange for cryptographic integrity.',
+      },
+    ],
+    systemFlow: [
+      '1. Discovery & Onboarding: Guests browse the bilingual catalog, Academic Magazine, Blog, Scholarships, and Global Omni-Search, then authenticate via Email, Google/GitHub OAuth PKCE, or National ID validation.',
+      '2. Enrollment & Fatora Checkout: Students enroll in free courses or check out paid courses through Fatora Payment Gateway with cryptographic order verification and async webhooks.',
+      '3. Learning & Credentialing: Students watch video lessons, save private notes, complete server-graded quizzes, and earn HTML5 Canvas certificates with public verification links.',
+      '4. Publishing, Community & Governance: Researchers submit peer-reviewed magazine articles via Tiptap, instructors track course_stats revenue, and admins govern 13 management tabs.',
+    ],
+    outcomeMetrics: [
+      {
+        label: 'Hybrid Revenue Streams',
+        value: '5 Streams',
+        description: 'Paid B2C courses (Fatora), Freemium acquisition funnel, Sponsored Scholarships, Academic Publishing SEO, and BidJobs marketplace.',
+      },
+      {
+        label: 'Database & Security',
+        value: '25 Tables',
+        description: 'PostgreSQL schema with Row Level Security (RLS), Edge JWT verification, and DOMPurify sanitization.',
+      },
+      {
+        label: 'Admin Governance',
+        value: '13 Modules',
+        description: 'Centralized control over users, courses, orders, reviews, certificates, scholarships, support tickets, broadcasts, blog, and magazine.',
+      },
+    ],
+    galleryImages: [
+      '/projects/faireer-academy/01-home.png',
+      '/projects/faireer-academy/02-courses.png',
+      '/projects/faireer-academy/03-magazine.png',
+      '/projects/faireer-academy/04-blog.png',
+      '/projects/faireer-academy/05-scholarships.png',
+      '/projects/faireer-academy/06-bidjobs.png',
+      '/projects/faireer-academy/07-support.png',
+      '/projects/faireer-academy/08-community-forum.png',
+      '/projects/faireer-academy/09-support-chat.png',
+      '/projects/faireer-academy/10-search.png',
+      '/projects/faireer-academy/11-about.png',
+      '/projects/faireer-academy/12-login.png',
+      '/projects/faireer-academy/13-signup.png',
+    ],
+    steps: [
+      {
+        title: '1. Bilingual Home & Course Catalog',
+        description: 'Full Arabic/English RTL/LTR landing experience, multi-criteria course filtering, and global omni-search.',
+      },
+      {
+        title: '2. Fatora Checkout & Learning Player',
+        description: 'Server-verified Fatora payments, dual YouTube/HTML5 video player, autosaving notes, and server-graded quizzes.',
+      },
+      {
+        title: '3. Academic Magazine, Blog & Scholarships',
+        description: 'Tiptap-powered peer-reviewed digital journal, institutional blog, and funded scholarship application portal.',
+      },
+      {
+        title: '4. Community, Support & 13-Tab Admin',
+        description: 'Community forum, helpdesk ticketing, support chat assistant, BidJobs waitlist, and 13-module admin cockpit.',
+      },
+    ],
+    readmeContent: `# Fairer Academy (جامعة فايرير السعودية)
+
+A bilingual (Arabic/English, full RTL/LTR) online higher-education, e-learning, and academic publishing platform built with **Next.js 16 (App Router)**, **React 19**, **Supabase**, **Tailwind CSS v4**, and **Fatora Payments**.
+
+---
+
+## System Benefits
+- **For Students & Learners:** Full Arabic/English RTL/LTR switching, YouTube/HTML5 video lessons, autosaving notes, server-graded quizzes, verifiable HTML5 Canvas certificates (PNG export + LinkedIn sharing), and a funded **Scholarships Portal**.
+- **For Instructors:** Self-serve course & quiz authoring, Supabase Storage uploads, Q&A threads, and live \`course_stats\` analytics with 6-month revenue trends.
+- **For Researchers & Institutions:** Peer-reviewed **Academic Magazine** with Tiptap WYSIWYG editing and structured editorial review workflows (\`draft\` → \`submitted\` → \`in_review\` → \`accepted\`/\`rejected\`), plus a **13-module Admin Control Center**.
+
+---
+
+## Business Model & Revenue Streams
+1. **Paid Course Tuition (B2C):** Direct course sales & cart checkout via **Fatora Payment Gateway** with server-side price verification and async webhook fulfillment.
+2. **Freemium Acquisition Funnel:** Free courses (\`price = 0\`) convert organic visitors into registered learners who upgrade to paid specializations.
+3. **Sponsored Scholarships & B2B Partnerships:** Universities, NGOs, and corporate sponsors fund scholarship seats via \`scholarships\` and \`scholarship_applications\`.
+4. **Academic Publishing & SEO Authority:** Peer-reviewed Academic Magazine and institutional Blog drive organic authority and institutional partnerships.
+5. **Talent Marketplace (BidJobs):** Connects certified graduates with freelance projects and employers (*Learn → Certify → Earn*).
+`,
+  },
+  {
     id: 'north-hejaz-hr-bi',
     title: 'North Hejaz HR — Recruitment Platform & Power BI Analytics Suite',
     client: 'North Hejaz HR Co. (شركة شمال الحجاز للتوظيف)',
@@ -1667,238 +2135,300 @@ An end-to-end **SQL Server (SSMS)** and **Power BI** analytics suite built on \`
   },
   {
     "id": "gh-sotexerp",
-    "title": "Sotexerp",
+    "title": "SOTEX Garment Manufacturing ERP — منظومة سوتكس لإدارة وتصنيع الملابس",
     "client": "GitHub • islamsamyy/sotexerp",
     "companyLogo": "/projects/gh-sotexerp/logo.png",
     "category": "ERP Systems",
-    "role": "Creator & Lead Engineer",
-    "impactMetric": "TypeScript",
+    "role": "Principal Solutions Architect & Full-Stack Engineer",
+    "impactMetric": "42 Tables · OR Engine · +15% OEE",
     "metrics": [
       {
-        "label": "Primary Stack",
-        "value": "TypeScript"
+        "label": "Database Schema",
+        "value": "42 Relational Tables"
       },
       {
-        "label": "Repository",
-        "value": "islamsamyy/sotexerp"
+        "label": "App Router Pages",
+        "value": "63 Next.js Routes"
       },
       {
-        "label": "Visuals",
-        "value": "6 Assets"
+        "label": "Productivity Lift",
+        "value": "+10% – 15% OEE"
       },
       {
-        "label": "Highlights",
-        "value": "12 Items"
+        "label": "Fabric Waste Cut",
+        "value": "-3% – 5% BOM"
       }
     ],
     "techStack": [
-      "TypeScript",
-      "Next.js",
-      "Supabase"
+      "Next.js 16.4.5",
+      "React 19.3.0",
+      "TypeScript 5",
+      "Supabase PostgreSQL",
+      "Row Level Security (RLS)",
+      "Operations Research (LP/EOQ/CR)",
+      "Tailwind CSS 3.4",
+      "RTL-First UI"
     ],
-    "summary": "sotexerp (sotex-workspace / sotex/) is an enterprise-grade, multi-branch Textile & Garment Manufacturing ERP built with Next.js, Radix UI, TypeScript, and Supabase. It unifies every core factory department—Fabric & Material Inventory, Product SKUs, BOM & Multi-Stage Production (OEE), Inline Quality Inspections, Procurement, Sales, Double-Entry Finance, HR/Payroll, and Granular RBAC Approval Workflows—into one auditable platform. Live UI screens located in sotex/public/screens/: subgraph L2[\"2. Governance, RBAC & Approval Engine\"] Roles[\"/settings/roles (create, compare, permissions)\"] Scope[\"/settings/permissions/{matrix,data-scope}\"] Approvals[\"/settings/approvals/{workflows,limits,delegation}\"] Sec[\"/settings/security/sessions • /settings/audit-log • /settings/users\"] end",
+    "summary": "SOTEX Garment ERP is an end-to-end, Arabic-first (RTL) Enterprise Resource Planning platform purpose-built for garment and textile manufacturing. It unifies executive leadership, production (OEE & BOM), fabric/batch inventory, Color × Size SKU matrices, AQL quality assurance, sales & export, procurement, double-entry finance & live P&L, piecework HR payroll, 4-tier PostgreSQL Row Level Security (RLS), tamper-proof audit trails, and an integrated Operations Research (OR) Profit Optimization Engine across 42 relational Supabase tables and 63 Next.js App Router pages.",
     "architectureHighlights": [
-      "Executive Summary & Business Utility",
-      "Visual Showcase (UI & Dashboards)",
-      "System Architecture & Layers",
-      "Data Model & Analytics",
-      "Database Schema, Migrations & RLS",
-      "Application Modules & Workflows",
-      "Getting Started & Scripts",
-      "Business Value, ROI & Growth Opportunities",
-      "Zero-Blindspot Factory Control: Links fabric roll wastage and inline defect rates directly to production order margins and P&L statements.",
-      "Enterprise Governance Out-of-the-Box: Multi-branch data scopes (userdatascopes), approval monetary limits, and delegation rules make sotexerp ready for mid-to-large multi-plant textile groups.",
-      "Vertical SaaS Commercialization: Generic ERPs struggle with textile BOMs and inline sewing/knitting quality checks—package sotexerp as a multi-tenant SaaS for apparel & textile manufacturers across Egypt, Turkey, and MENA.",
-      "Shop-Floor Barcode/RFID Add-On: Connect handheld QR scanners directly to /inventory/fabrics and /production/stages."
+      "Operations Research Engine (/optimization): Solves Linear Programming Product Mix (solveProductMixLP) to maximize profit under fabric & line-hour constraints, prioritizes work orders via Critical Ratio (CR) & EDD (prioritizeWorkOrdersOR), and computes EOQ, Safety Stock & Reorder Points (calculateEOQAndROP).",
+      "Database-Enforced 4-Tier RBAC & PostgreSQL RLS: Enforces OWNER_ADMIN, FINANCE_SALES_MANAGER, PRODUCTION_MANAGER, and WAREHOUSE_MANAGER both in the UI (AppShell route guard + role-filtered Sidebar) and inside PostgreSQL via x-sotex-role header injection (public.get_current_user_role()).",
+      "Tamper-Proof Audit Trail: Protects audit_logs with a PostgreSQL database trigger (trg_audit_logs_immutable) that rejects any UPDATE attempt, paired with monetary approval limits and delegation rules.",
+      "Garment-Native Manufacturing & Quality: Built around fabric Batch/Lot tracking, BOM consumption per piece, Color × Size SKU matrices, cutting/sewing/finishing stages, OEE (Availability × Performance × Quality), and AQL quality inspections.",
+      "Double-Entry Finance, Live P&L & Piecework HR: Real-time Income Statement (Revenue, COGS, OpEx, EBIT) calculated directly from database ledgers, treasury/checks tracking, and piecework payroll incentives.",
+      "Verified Engineering Quality: 63/63 Next.js App Router routes built cleanly, 12/12 frontend logic & OR unit tests passing, and 14/14 Supabase backend CRUD & RLS integration tests passing."
     ],
     "liveDemoUrl": "https://sotex-one.vercel.app",
-    "featured": false,
-    "challenge": "sotexerp (sotex-workspace / sotex/) is an enterprise-grade, multi-branch Textile & Garment Manufacturing ERP built with Next.js, Radix UI, TypeScript, and Supabase. It unifies every core factory department—Fabric & Material Inventory, Product SKUs, BOM & Multi-Stage Production (OEE), Inline Quality Inspections, Procurement, Sales, Double-Entry Finance, HR/Payroll, and Granular RBAC Approval Workflows—into one auditable platform. Live UI screens located in sotex/public/screens/:",
-    "solution": "Live UI screens located in sotex/public/screens/: subgraph L2[\"2. Governance, RBAC & Approval Engine\"] Roles[\"/settings/roles (create, compare, permissions)\"] Scope[\"/settings/permissions/{matrix,data-scope}\"] Approvals[\"/settings/approvals/{workflows,limits,delegation}\"] Sec[\"/settings/security/sessions • /settings/audit-log • /settings/users\"] end subgraph L3[\"3. Persistence, Seed & Testing Layer\"] Supa[\"Supabase Postgres (20261109000001sotexerpschema.sql + seed.sql)\"] Tests[\"tsx Frontend Logic Tests & WebSocket Backend Tests\"] end",
+    "featured": true,
+    "challenge": "Garment and textile factories face operational and financial complexities that generic ERPs fail to handle accurately: managing fabric rolls by Batch/Lot and weight/meter, Color × Size SKU matrices, calculating production line OEE, running AQL statistical quality sampling, computing piecework technician payroll, and protecting unit costs and profit margins from unauthorized internal exposure.",
+    "solution": "Architected SOTEX Garment ERP on Next.js 16.4.5, React 19.3.0, TypeScript 5, and Supabase PostgreSQL across 42 interconnected relational tables. Implemented real-time sync via erp-context.tsx, injected x-sotex-role headers into every Supabase query for database-level RLS cost/margin isolation, enforced immutable audit logging via PostgreSQL triggers, and embedded a dedicated Operations Research engine (lib/or-engine.ts) that turns live factory data into optimal production mix, scheduling, and inventory replenishment decisions.",
     "keyDecisions": [
       {
-        "title": "Core Architecture: TypeScript + Next.js + Supabase",
-        "rationale": "Selected TypeScript, Next.js, Supabase to deliver high reliability, clean modularity, and fast iteration for Sotexerp.",
-        "tradeOff": "Requires adhering to the documented environment variables and runtime dependencies in the repository README."
+        "title": "Database-Enforced PostgreSQL RLS (x-sotex-role) vs. UI-Only Role Checks",
+        "rationale": "Isolating sensitive unit costs, profit margins, and financial ledgers inside PostgreSQL via public.get_current_user_role() guarantees that PRODUCTION_MANAGER and WAREHOUSE_MANAGER roles cannot access financial secrets even via direct API calls.",
+        "tradeOff": "Requires injecting the active role header on every Supabase client request and maintaining comprehensive RLS integration tests (14/14 verified)."
       },
       {
-        "title": "Documentation-First Repository Structure",
-        "rationale": "Maintained structured README documentation, visual assets (6 images), and clear module boundaries in islamsamyy/sotexerp.",
-        "tradeOff": "Requires keeping README documentation and screenshots synchronized as features evolve."
+        "title": "Embedded Operations Research Engine (LP / CR / EOQ) vs. Static BI Dashboards",
+        "rationale": "Instead of only reporting historical metrics, embedding solveProductMixLP, prioritizeWorkOrdersOR, and calculateEOQAndROP directly on live factory tables prescribes exact profit-maximizing production quantities and reorder triggers.",
+        "tradeOff": "Requires clean BOM, fabric batch, and line capacity data discipline during Week 1 onboarding."
+      },
+      {
+        "title": "Immutable Audit Trigger (trg_audit_logs_immutable) vs. Application-Level Logging",
+        "rationale": "Enforcing append-only compliance at the PostgreSQL trigger level prevents any user or compromised client session from altering historical financial or approval records.",
+        "tradeOff": "Corrections must be recorded as compensating entries rather than in-place edits."
       }
     ],
     "systemFlow": [
-      "Executive Summary & Business Utility",
-      "Visual Showcase (UI & Dashboards)",
-      "System Architecture & Layers",
-      "Data Model & Analytics",
-      "Database Schema, Migrations & RLS",
-      "Application Modules & Workflows"
+      "Unified Role-Based Entry (/login): Routes each of the 4 RBAC roles directly to its authorized workspace and injects x-sotex-role into Supabase.",
+      "Procurement & Fabric Batch Inventory (/procurement & /inventory): Records supplier RFQs/POs and tracks fabric rolls by Batch/Lot, stock_movements linked to work orders, and EOQ/ROP alerts.",
+      "Operations Research Optimization (/optimization): Computes optimal LP Product Mix (x*), Critical Ratio / EDD work order priority, and Safety Stock.",
+      "Production, OEE & AQL Quality (/production & /quality): Tracks cutting/sewing/finishing stages against BOM, monitors Availability × Performance × Quality (OEE), and enforces AQL defect sampling.",
+      "Sales, Double-Entry Finance & Piecework HR (/sales, /finance/pnl, /hr/employees): Links export/wholesale contracts, treasury/checks, real-time P&L (EBIT), and piecework payroll.",
+      "Enterprise Governance & Immutable Audit (/settings/roles & /settings/audit-log): Enforces monetary approval limits and logs every action to tamper-proof audit_logs."
     ],
     "outcomeMetrics": [
       {
-        "label": "Documentation",
-        "value": "8 KB",
-        "description": "Detailed README documentation covering architecture, features, setup, and usage."
+        "label": "Line Productivity (OEE)",
+        "value": "+10% – 15%",
+        "description": "Real-time OEE tracking and Critical Ratio (CR) scheduling eliminate bottlenecks and delivery penalties without increasing fixed overhead."
       },
       {
-        "label": "Visual Assets",
-        "value": "6 Images",
-        "description": "Screenshots, analytical charts, or architecture preview cards."
+        "label": "Fabric Waste Reduction",
+        "value": "-3% – 5%",
+        "description": "Linking every stock_movement to a work order and BOM plus EOQ/ROP calculation cuts cutting-room waste and prevents line stoppages."
       },
       {
-        "label": "Tech Modules",
-        "value": "3 Stack",
-        "description": "TypeScript, Next.js, Supabase"
+        "label": "Margin & Audit Security",
+        "value": "100% RLS",
+        "description": "PostgreSQL RLS isolates cost/profit data by role while trg_audit_logs_immutable blocks any tampering with compliance logs."
+      },
+      {
+        "label": "Automated Verification",
+        "value": "26/26 Tests",
+        "description": "12/12 frontend & OR unit tests + 14/14 backend Supabase CRUD & RLS tests passing across all 63 built App Router pages."
       }
     ],
     "galleryImages": [
-      "/projects/gh-sotexerp/screen_1_dashboard.png",
-      "/projects/gh-sotexerp/screen_2_inventory.png",
-      "/projects/gh-sotexerp/screen_3_production-orders.png",
-      "/projects/gh-sotexerp/screen_4_products-management.png",
-      "/projects/gh-sotexerp/screen_5_logo.png",
-      "/projects/gh-sotexerp/screen_6_sotex-logo.png"
+      "/projects/gh-sotexerp/01_login.png",
+      "/projects/gh-sotexerp/02_dashboard.png",
+      "/projects/gh-sotexerp/03_optimization_or.png",
+      "/projects/gh-sotexerp/04_production.png",
+      "/projects/gh-sotexerp/05_inventory.png",
+      "/projects/gh-sotexerp/06_products.png",
+      "/projects/gh-sotexerp/07_sales.png",
+      "/projects/gh-sotexerp/08_procurement.png",
+      "/projects/gh-sotexerp/09_quality.png",
+      "/projects/gh-sotexerp/10_finance.png",
+      "/projects/gh-sotexerp/11_finance_pnl.png",
+      "/projects/gh-sotexerp/12_hr_employees.png",
+      "/projects/gh-sotexerp/13_settings_roles.png",
+      "/projects/gh-sotexerp/14_settings_audit_log.png"
     ],
     "steps": [
       {
-        "title": "Capability 1",
-        "description": "Executive Summary & Business Utility"
+        "title": "Unified Login Portal (/login)",
+        "description": "بوابة الدخول الموحدة — Quick role-based or email/password authentication with automatic routing to each role's dedicated workspace."
       },
       {
-        "title": "Capability 2",
-        "description": "Visual Showcase (UI & Dashboards)"
+        "title": "Executive Dashboard (/dashboard)",
+        "description": "لوحة التحكم التنفيذية — Real-time total contracts, estimated expenses, net profit, monthly output, average OEE, inventory valuation, AQL acceptance rate, and line performance."
       },
       {
-        "title": "Capability 3",
-        "description": "System Architecture & Layers"
+        "title": "Operations Research Engine (/optimization)",
+        "description": "محرك بحوث العمليات وتعظيم الأرباح — Linear Programming Product Mix (x*), Critical Ratio (CR) & EDD scheduling, and EOQ / Safety Stock / Reorder Point (ROP) optimization."
       },
       {
-        "title": "Capability 4",
-        "description": "Data Model & Analytics"
+        "title": "Production & OEE (/production)",
+        "description": "خطوط الإنتاج والتشغيل — Live work orders, completion rates, bottleneck detection, OEE metrics, and Bill of Materials (BOM) tracking."
+      },
+      {
+        "title": "Inventory & Fabrics (/inventory)",
+        "description": "المخازن والأقمشة — Fabric Batch/Lot balances, stock issue/receipt vouchers linked to work orders, and inter-warehouse transfers."
+      },
+      {
+        "title": "Products & SKU Matrix (/products)",
+        "description": "كتالوج المنتجات والألوان والمقاسات — Style management, Color × Size SKU matrices, barcodes, unit cost, wholesale, and retail pricing."
+      },
+      {
+        "title": "Sales & Export (/sales)",
+        "description": "المبيعات والتصدير والعملاء — Agency and export contracts, collections, and customer aging receivables."
+      },
+      {
+        "title": "Procurement & RFQs (/procurement)",
+        "description": "المشتريات والتوريد — Purchase orders, supplier RFQs, and vendor invoice matching."
+      },
+      {
+        "title": "Quality Assurance AQL (/quality)",
+        "description": "مراقبة وضمان الجودة — Standard AQL sampling inspections, inline sewing/cutting checks, and defect tracking."
+      },
+      {
+        "title": "Finance & Treasury (/finance)",
+        "description": "الإدارة المالية والمركز المالي — Cash liquidity, journal entries, bank accounts, and check management."
+      },
+      {
+        "title": "Live P&L Statement (/finance/pnl)",
+        "description": "قائمة الدخل والأرباح والخسائر اللحظية — Direct database calculation of Revenue, COGS, OpEx, and Net Profit (EBIT)."
+      },
+      {
+        "title": "HR & Piecework Payroll (/hr/employees)",
+        "description": "الموارد البشرية وأجور القطعة — Technician roster, attendance tracking, and piecework production incentives."
+      },
+      {
+        "title": "Roles & RBAC Matrix (/settings/roles)",
+        "description": "الحوكمة وإدارة الأدوار — 4-tier RBAC permissions, monetary approval limits, and delegation rules."
+      },
+      {
+        "title": "Immutable Audit Log (/settings/audit-log)",
+        "description": "سجل التدقيق الرقابي — Tamper-proof compliance trail protected by PostgreSQL trigger trg_audit_logs_immutable."
       }
     ],
-    "readmeContent": "# Sotex ERP (`sotexerp`) — Enterprise Textile & Garment Manufacturing ERP\n\n<p align=\"center\">\n  <img src=\"https://raw.githubusercontent.com/islamsamyy/sotexerp/main/sotex/public/sotex-logo.png\" alt=\"Sotex ERP Logo\" width=\"200\" />\n</p>\n\n## Table of Contents\n- [Executive Summary & Business Utility](#executive-summary--business-utility)\n- [Visual Showcase (UI & Dashboards)](#visual-showcase-ui--dashboards)\n- [System Architecture & Layers](#system-architecture--layers)\n- [Data Model & Analytics](#data-model--analytics)\n- [Database Schema, Migrations & RLS](#database-schema-migrations--rls)\n- [Application Modules & Workflows](#application-modules--workflows)\n- [Getting Started & Scripts](#getting-started--scripts)\n- [Business Value, ROI & Growth Opportunities](#business-value-roi--growth-opportunities)\n\n---\n\n## Executive Summary & Business Utility\n`sotexerp` (`sotex-workspace` / `sotex/`) is an enterprise-grade, multi-branch **Textile & Garment Manufacturing ERP** built with Next.js, Radix UI, TypeScript, and Supabase. It unifies every core factory department—**Fabric & Material Inventory, Product SKUs, BOM & Multi-Stage Production (OEE), Inline Quality Inspections, Procurement, Sales, Double-Entry Finance, HR/Payroll, and Granular RBAC Approval Workflows**—into one auditable platform.\n\n---\n\n## Visual Showcase (UI & Dashboards)\nLive UI screens located in `sotex/public/screens/`:\n\n| Executive ERP Dashboard | Fabric & Materials Inventory | Production Orders |\n| :---: | :---: | :---: |\n| ![Dashboard](https://raw.githubusercontent.com/islamsamyy/sotexerp/main/sotex/public/screens/dashboard.png) | ![Inventory](https://raw.githubusercontent.com/islamsamyy/sotexerp/main/sotex/public/screens/inventory.png) | ![Production Orders](https://raw.githubusercontent.com/islamsamyy/sotexerp/main/sotex/public/screens/production-orders.png) |\n\n| Products Management | New Product Wizard |\n| :---: | :---: |\n| ![Products Management](https://raw.githubusercontent.com/islamsamyy/sotexerp/main/sotex/public/screens/products-management.png) | ![New Product Wizard](https://raw.githubusercontent.com/islamsamyy/sotexerp/main/sotex/public/screens/new-product-wizard.png) |\n\n---\n\n## System Architecture & Layers\n\n```mermaid\nflowchart TB\n    subgraph L1[\"1. Departmental UI & Presentation Layer\"]\n        Core[\"/dashboard • /reports • /tasks\"]\n        Mfg[\"/inventory/* • /production/* • /quality/* • /products/*\"]\n        BackOffice[\"/procurement/* • /sales/* • /finance/* • /hr/*\"]\n    end\n\n    subgraph L2[\"2. Governance, RBAC & Approval Engine\"]\n        Roles[\"/settings/roles (create, compare, permissions)\"]\n        Scope[\"/settings/permissions/{matrix,data-scope}\"]\n        Approvals[\"/settings/approvals/{workflows,limits,delegation}\"]\n        Sec[\"/settings/security/sessions • /settings/audit-log • /settings/users\"]\n    end\n\n    subgraph L3[\"3. Persistence, Seed & Testing Layer\"]\n        Supa[\"Supabase Postgres (20261109000001_sotex_erp_schema.sql + seed.sql)\"]\n        Tests[\"tsx Frontend Logic Tests & WebSocket Backend Tests\"]\n    end\n\n    L1 --> L2 --> L3\n```\n\n| Layer | Responsibility | Key Modules |\n| :--- | :--- | :--- |\n| **Manufacturing & Quality Layer** | Fabric roll inventory, stock counts, transfers, BOM, production planning, OEE, and inline defect inspections | `sotex/app/{inventory,production,quality,products}/*` |\n| **Commercial & Back-Office Layer** | Supplier quotations/invoices, customer sales, general ledgers, P&L, treasury, attendance, and payroll | `sotex/app/{procurement,sales,finance,hr}/*` |\n| **RBAC & Approval Governance Layer** | Role comparison, data-scope isolation (branch/department/warehouse), monetary approval limits, delegation, and audit trails | `sotex/app/settings/{roles,permissions,approvals,security,users,audit-log}/*` |\n| **Persistence & Verification Layer** | Supabase Postgres schema + seed data + dual `tsx` automated test suites | `sotex/supabase/migrations/20261109000001_sotex_erp_schema.sql`, `sotex/supabase/seed.sql`, `sotex/tests/*` |\n\n---\n\n## Data Model & Analytics\n```mermaid\nerDiagram\n    BRANCHES ||--o{ DEPARTMENTS : contains\n    BRANCHES ||--o{ WAREHOUSES : houses\n    BRANCHES ||--o{ PRODUCTION_LINES : operates\n    ROLES ||--o{ USER_ROLES : assigned_to\n    PROFILES ||--o{ USER_ROLES : holds\n    PROFILES ||--o{ USER_DATA_SCOPES : restricted_by\n    PRODUCTS ||--o{ PRODUCTION_ORDERS : manufactured_via\n    WAREHOUSES ||--o{ MATERIALS_INVENTORY : stores\n    PROFILES ||--o{ APPROVAL_REQUESTS : submits\n    PROFILES ||--o{ AUDIT_LOGS : generates\n```\n\n---\n\n## Database Schema, Migrations & RLS\nDefined in `sotex/supabase/migrations/20261109000001_sotex_erp_schema.sql` (plus `sotex/supabase/seed.sql`):\n\n| Table | Purpose |\n| :--- | :--- |\n| `public.branches`, `public.departments`, `public.warehouses`, `public.production_lines` | Multi-branch organizational & plant topology |\n| `public.roles`, `public.profiles`, `public.user_roles`, `public.user_data_scopes` | Fine-grained RBAC and row-level branch/warehouse data scoping |\n| `public.products`, `public.production_orders`, `public.materials_inventory` | Core SKU catalog, factory work orders, and fabric/material stock |\n| `public.approval_requests`, `public.audit_logs` | Multi-step approval workflow state and immutable compliance logs |\n\n---\n\n## Application Modules & Workflows\n\n| Domain | Routes Implemented |\n| :--- | :--- |\n| **Executive** | `/dashboard`, `/reports`, `/tasks`, `/login` |\n| **Inventory** | `/inventory`, `/inventory/fabrics`, `/inventory/fabrics/[id]`, `/inventory/stock-count`, `/inventory/transactions`, `/inventory/transfers` |\n| **Production** | `/production`, `/production/[id]`, `/production/bom`, `/production/oee`, `/production/planning`, `/production/stages` |\n| **Quality** | `/quality`, `/quality/defects`, `/quality/inline`, `/quality/inspections` |\n| **Products** | `/products`, `/products/[id]`, `/products/new`, `/products/pricing`, `/products/skus` |\n| **Procurement & Sales** | `/procurement/{suppliers,quotations,invoices}`, `/sales/{customers,quotations}` |\n| **Finance & HR** | `/finance/{accounts,ledgers,pnl,treasury}`, `/hr/{employees,attendance,payroll}` |\n| **Enterprise Settings** | `/settings/roles/{new,compare,[id]/permissions}`, `/settings/permissions/{matrix,data-scope}`, `/settings/approvals/{workflows,limits,delegation}`, `/settings/security/sessions`, `/settings/users/*`, `/settings/audit-log` |\n\n---\n\n## Getting Started & Scripts\n\n```bash\ngit clone https://github.com/islamsamyy/sotexerp.git\ncd sotexerp\nnpm --prefix sotex install\ncp .env.example .env.local\n```\n\n| Script | Command | Description |\n| :--- | :--- | :--- |\n| Dev | `npm run dev` | Start Next.js dev server (`sotex/`) |\n| Build | `npm run build` | Production build (`next build --webpack`) |\n| Lint | `npm run lint` | Run ESLint |\n| Backend Tests | `npm --prefix sotex run test:backend` | Run WebSocket backend integration tests |\n| Frontend Tests | `npm --prefix sotex run test:frontend` | Run frontend logic unit tests |\n| All Tests | `npm --prefix sotex test` | Run both frontend and backend test suites |\n\n---\n\n## Business Value, ROI & Growth Opportunities\n- **Zero-Blindspot Factory Control**: Links fabric roll wastage and inline defect rates directly to production order margins and P&L statements.\n- **Enterprise Governance Out-of-the-Box**: Multi-branch data scopes (`user_data_scopes`), approval monetary limits, and delegation rules make `sotexerp` ready for mid-to-large multi-plant textile groups.\n- **Vertical SaaS Commercialization**: Generic ERPs struggle with textile BOMs and inline sewing/knitting quality checks—package `sotexerp` as a multi-tenant SaaS for apparel & textile manufacturers across Egypt, Turkey, and MENA.\n- **Shop-Floor Barcode/RFID Add-On**: Connect handheld QR scanners directly to `/inventory/fabrics` and `/production/stages`.\n",
-    "githubUrl": "https://github.com/islamsamyy/sotexerp"
+    "readmeContent": "# البربوزال التجاري وتعظيم الأرباح — منظومة SOTEX Garment ERP\n# Commercial & Profit-Growth Proposal — SOTEX Garment Manufacturing ERP\n\n> منظومة إدارة موارد مصانع الملابس الجاهزة والمنسوجات — مصممة لرفع هوامش الربح، تقليل الهالك، تسريع المبيعات والتصدير، وحماية أسرار التسعير.\n\n---\n\n## 1. الملخص التنفيذي (Executive Summary)\n\nتواجه مصانع الملابس الجاهزة والمنسوجات خسائر صامتة في الأرباح بسبب قرارات تسعير غير دقيقة، هالك مرتفع في الأقمشة، تشغيل موديلات ضعيفة الربحية على حساب الموديلات الأكثر طلباً، وتأخر تسليم عقود التصدير والجملة. أنظمة الـ ERP التقليدية لا تفهم طبيعة صناعة الملابس (الألوان والمقاسات SKUs، أرصدة الأقمشة بالـ Batch/Lot، أجور القطعة، وفحوصات الجودة AQL).\n\nتقدم منظومة **SOTEX Garment ERP** منصة عربية متكاملة مصممة خصيصاً لمصانع الملابس في مصر والشرق الأوسط، تمنح صاحب المصنع والإدارة التجارية رؤية لحظية لصافي الربح الحقيقي، وتوجّه خطوط الإنتاج تلقائياً نحو **أعلى مزيج إنتاجي ربحاً**، مع حماية كاملة لتكاليف الإنتاج وأسرار التسعير.\n\n---\n\n## 2. الفوائد التجارية والعائد على الاستثمار (Business Benefits & ROI)\n\n| المحور | المشكلة التقليدية في المصانع | الحل في SOTEX ERP | الأثر المالي والتشغيلي (ROI) |\n|---|---|---|---|\n| **1. تعظيم ربحية المزيج الإنتاجي** | تشغيل موديلات ذات هامش ربح أقل واستنزاف القماش والخطوط عليها | محرك ذكاء تشغيلي يحدد الكمية المثلى (`x*`) لكل موديل لتعظيم الربح تحت قيود القماش وساعات الخطوط | **تعظيم صافي الربح** من نفس الموارد المتاحة |\n| **2. تقليل هالك القص والمخزون** | هالك مرتفع في فرشات القص وصرف خامات بدون ربط بأوامر التشغيل | ربط كل إذن صرف بأمر تشغيل ومعدل الاستهلاك (`BOM`) + حساب الكمية الاقتصادية للطلب ونقطة إعادة الطلب | **توفير 3%–5% من هالك الأقمشة** ومنع توقف الخطوط |\n| **3. رفع الطاقة الإنتاجية والمبيعات** | اكتشاف تأخر التسليم أو اختناق الخطوط بعد فوات الأوان وخسارة العملاء | متابعة لحظية لكفاءة الخطوط (`OEE`) وترتيب الأوامر الحرجة لضمان التسليم في الموعد | **رفع الإنتاجية 10%–15%** بنفس التكاليف الثابتة |\n| **4. حماية الهوامش والتسعير** | اطلاع غير المصرح لهم على تكلفة القطعة أو منح خصومات عشوائية | عزل تام لبيانات التكاليف وهوامش الربح + سقوف خصومات واعتمادات مالية محددة لكل دور | **منع البيع بخسارة** وحماية أسرار التسعير |\n| **5. تسريع السيولة النقدية والتحصيل** | تأخر تحصيل مديونيات العملاء أو غياب الرؤية اللحظية للأرباح | قائمة دخل لحظية (**P&L**) + متابعة الخزينة والبنوك والشيكات وأعمار الديون | **تسريع دورة التحصيل** وتقليل الديون المعدومة |\n| **6. الحوكمة ومنع التلاعب** | تعديل أو حذف الفواتير والقيود في الأنظمة التقليدية | سجل تدقيق رقابي غير قابل للتعديل أو الحذف مع حدود اعتماد مالي لكل مستوى إداري | **رقابة كاملة 100%** وحماية أصول المصنع |\n\n---\n\n## 3. تعظيم الأرباح والنمو التسويقي والمبيعات (Profit Maximization & Marketing Growth)\n\n### 3.1 كيف يضاعف النظام أرباح المصنع ويفتح أسواقاً جديدة؟\n- **تسعير تنافسي مبني على التكلفة الحقيقية:** حساب دقيق لتكلفة كل موديل ومقاس ولون (قماش + إكسسوارات + قص + خياطة + تشطيب + هالك) قبل تقديم عروض الأسعار لتجار الجملة والتوكيلات وعملاء التصدير، مما يضمن هامش ربح مستهدف في كل صفقة.\n- **التركيز على الموديلات الأعلى ربحية:** يحدد النظام تلقائياً الموديلات والعملاء الأكثر ربحية مقابل الموديلات التي تستهلك وقت الخطوط بعائد ضعيف، ليوجه فريق التسويق والمبيعات طاقته نحو العقود الأعلى عائداً.\n- **الالتزام بمواعيد التصدير وكسب ثقة كبار العملاء:** الالتزام الصارم بجداول التسليم وجودة الـ **AQL** يمنع غرامات التأخير ويجعل المصنع مؤهلاً للتعاقد مع البراندات الكبرى وأسواق التصدير في الخليج وأوروبا.\n- **سرعة تلبية طلبات السوق (Time-to-Market):** ربط كتالوج المنتجات ومصفوفة الألوان والمقاسات (`SKUs`) بالمخزون الجاهز يمكّن فريق المبيعات من تأكيد الكميات المتاحة وإغلاق الصفقات فوراً بدون انتظار جرد يدوي.\n- **إدارة احترافية للتوكيلات والعملاء:** تتبع كامل لعقود المبيعات، عروض الأسعار، سقوف الائتمان، والتحصيلات النقدية والشيكات لزيادة المبيعات الآمنة دون تعثر مالي.\n\n### 3.2 حماية أسرار التجارة والتكاليف داخل المصنع\n\n| الدور الوظيفي | ما يراه في المنظومة | حماية الأسرار التجارية والأرباح |\n|---|---|---|\n| **المدير التنفيذي / المالك** | كامل الأرباح، التكاليف، المبيعات، العقود، والإنتاج | ✅ رؤية شاملة 360° وتحكم كامل في الاعتمادات |\n| **المدير المالي والتجاري** | المبيعات، المشتريات، التدفقات النقدية، وقائمة الدخل | ✅ إدارة التسعير والتحصيل ضمن سقوف الخصم المعتمدة |\n| **مدير المصنع والإنتاج** | أوامر التشغيل، كفاءة الخطوط OEE، والجودة فقط | 🔒 التكاليف وهوامش الربح وأسعار الموردين محجوبة تماماً |\n| **مدير المخازن وسلاسل الإمداد** | الكميات، بالات الأقمشة، وأذون الصرف والاستلام فقط | 🔒 القيم المالية وأرباح العقود محجوبة تماماً |\n\n---\n\n## 4. استعراض وحدات النظام (System Modules)\n- **4.1 بوابة الدخول الموحدة (`/login`):** توجيه تلقائي لكل مدير إلى لوحة القيادة الخاصة بمسؤولياته.\n- **4.2 لوحة التحكم التنفيذية (`/dashboard`):** إجمالي العقود، المصروفات، صافي الربح، الإنتاج الشهري، متوسط الـ OEE، قيمة المخزون، ونسبة قبول الجودة AQL.\n- **4.3 محرك تعظيم الأرباح (`/optimization`):** تحديد المزيج الإنتاجي الأعلى ربحاً، جدولة الأوامر الحرجة، ونقاط إعادة طلب الخامات.\n- **4.4 خطوط الإنتاج والتشغيل (`/production`):** متابعة أوامر التشغيل، نسب الإنجاز، الاختناقات، وكفاءة الخطوط.\n- **4.5 المخازن والأقمشة (`/inventory`):** إدارة بالات الأقمشة بالـ Batch/Lot، أذون الصرف والاستلام، ومنع الهالك.\n- **4.6 كتالوج المنتجات والـ SKUs (`/products`):** إدارة الموديلات، الألوان والمقاسات، تسعير الجملة والقطاعي، وهوامش الربح.\n- **4.7 المبيعات والتصدير (`/sales`):** عقود التوكيلات والتصدير، عروض الأسعار، التحصيلات، والمديونيات.\n- **4.8 المشتريات والتوريد (`/procurement`):** مقارنة عروض أسعار الموردين (RFQs)، أوامر الشراء، والفواتير.\n- **4.9 مراقبة وضمان الجودة (`/quality`):** فحوصات العينات القياسية AQL لتقليل المرتجعات وكسب ثقة عملاء التصدير.\n- **4.10 الإدارة المالية وقائمة الدخل اللحظية (`/finance` و`/finance/pnl`):** السيولة النقدية، الشيكات، وصافي الربح الحقيقي لحظة بلحظة.\n- **4.11 الموارد البشرية وأجور القطعة (`/hr/employees`):** ربط أجور وحوافز العمال بالإنتاجية الفعلية بالقطعة.\n- **4.12 الحوكمة وسجل التدقيق (`/settings/roles` و`/settings/audit-log`):** صلاحيات دقيقة وسجل رقابي غير قابل للتلاعب.\n\n---\n\n## 5. العرض التجاري وخطة التنفيذ (Commercial Proposal & Deployment Roadmap)\n\n### 5.1 باقات التعاقد والتنفيذ المقترحة\n\n| الباقة | النطاق المشمول | المدة التنفيذية | القيمة التجارية |\n|---|---|---|---|\n| **باقة المصنع الأساسي (Core Factory)** | الإنتاج، المخازن والأقمشة، الجودة AQL، المنتجات، الموارد البشرية (أجر القطعة)، والصلاحيات | 2 – 3 أسابيع | ضبط التشغيل وتقليل هالك القص والأقمشة |\n| **باقة المؤسسة المتكاملة (Enterprise + Finance)** | جميع وحدات Core + المالية وقائمة الدخل P&L + المبيعات والتصدير والمشتريات + سجل التدقيق | 3 – 4 أسابيع | تحكم مالي كامل وتسريع التحصيل والسيولة |\n| **باقة تعظيم الأرباح (Enterprise + OR Engine)** | جميع وحدات Enterprise + **محرك تعظيم الأرباح والمزيج الإنتاجي** + تدريب الإدارة | 4 – 6 أسابيع | مضاعفة العائد على الاستثمار (ROI) وتعظيم صافي الربح |\n\n### 5.2 مراحل التسليم والتشغيل (Implementation Phases)\n1. **الأسبوع 1 — التهيئة وترحيل البيانات:** إعداد شجرة الحسابات، تعريف الأدوار، واستيراد بيانات الموديلات والأقمشة والموردين والعملاء.\n2. **الأسبوع 2 — التشغيل الموازي والتدريب:** تدريب فرق المبيعات والإنتاج والمخازن والمالية والجودة على الدورات اليومية الفعلية.\n3. **الأسبوع 3–4 — الإطلاق الكامل وتعظيم الأرباح:** تفعيل الإطلاق الكامل ومراجعة توصيات المزيج الإنتاجي الأعلى ربحية مع الإدارة التنفيذية.\n\n---\n\n## 6. الجاهزية التشغيلية والاعتمادية\n- منظومة مكتملة وجاهزة للتشغيل الفوري في مصانع الملابس الجاهزة (63 شاشة مترابطة + 42 جدول بيانات + اختبارات تحقق شاملة بنسبة نجاح 100%).",
+    "githubUrl": "https://github.com/islamsamyy/sotexerp",
+    "displayOrder": 2
   },
   {
     "id": "gh-shamalelhejaz",
-    "title": "Shamalelhejaz",
-    "client": "GitHub • islamsamyy/shamalelhejaz",
+    "title": "Shamal El-Hejaz (Souq Saudiya) — Sovereign Multi-Vendor MENA E-Commerce Marketplace",
+    "client": "Shamal El-Hejaz / Souq Saudiya (شركة شمال الحجاز • سوق السعودية)",
     "companyLogo": "/projects/gh-shamalelhejaz/logo.png",
     "category": "Software Engineering & Online Systems",
-    "role": "Creator & Lead Engineer",
-    "impactMetric": "HTML",
+    "role": "Principal Full-Stack Architect & Lead Engineer",
+    "impactMetric": "33+ Routes · 4 Payment Gateways · ZATCA Phase-2 & SAMA Escrow",
     "metrics": [
       {
-        "label": "Primary Stack",
-        "value": "HTML"
+        "label": "Platform Scope",
+        "value": "33+ Routes (3 Portals)"
       },
       {
-        "label": "Repository",
-        "value": "islamsamyy/shamalelhejaz"
+        "label": "Payment Rails",
+        "value": "HyperPay · Moyasar · Tap · Stripe"
       },
       {
-        "label": "Visuals",
-        "value": "3 Assets"
+        "label": "Compliance",
+        "value": "ZATCA Phase-2 TLV + SAMA"
       },
       {
-        "label": "Highlights",
-        "value": "11 Items"
+        "label": "Core Stack",
+        "value": "Next.js 16 · React 19 · Prisma"
       }
     ],
     "techStack": [
-      "HTML",
-      "Next.js",
       "Next.js 16",
-      "React",
-      "Supabase",
+      "React 19",
+      "TypeScript",
       "Prisma",
-      "Stripe",
+      "Supabase",
+      "Tailwind CSS v4",
+      "Radix UI",
+      "TanStack Table",
+      "Recharts",
+      "Zod",
       "HyperPay",
-      "Moyasar"
+      "Moyasar",
+      "Tap Payments",
+      "Stripe",
+      "Vitest"
     ],
-    "summary": "Multi-vendor MENA e-commerce marketplace (Next.js 16, Prisma, Supabase) with HyperPay, Moyasar, Tap & Stripe. shamalelhejaz (souq) is a full-stack Next.js 16, React 19, Prisma, and Supabase multi-vendor e-commerce marketplace built for Saudi Arabia and the broader MENA market. It supports multi-merchant storefronts (/store/[storeId]), localized categories/products, loyalty wallets & referrals, real-time order tracking (/orders/[id]/tracking), dedicated Vendor (/vendor/) and Admin (/admin/) portals, and 4 integrated payment gateways: HyperPay, Moyasar, Tap, and Stripe. Brand identity assets in public/ (plus UI screen specs in stitchscreens/): subgraph L2[\"2. Vendor Self-Service Portal (/vendor)\"] Vendor[\"/vendor/register • /vendor/catalog(/add) • /vendor/orders • /vendor/financials • /vendor/settings\"] end",
+    "summary": "Sovereign-tier, bilingual (AR/EN) multi-vendor e-commerce marketplace engineered for Saudi Arabia and MENA using Next.js 16, React 19, Prisma, and Supabase. Spans 33+ routes across 3 dedicated portals—Customer Storefront (17 routes with 5-step checkout, vendor-grouped cart, 13-tab account center, and live order tracking), Vendor Operations (7 routes with 8-step KYB wizard, TanStack inventory studio, SPL/SMSA waybills, and SAMA escrow ledger), and Enterprise Admin (9 routes)—backed by ZATCA Phase-2 TLV QR e-invoicing, 15% tax-inclusive VAT arithmetic, Saudi CR/VAT/IBAN/SPL validation, and 4 payment gateways (HyperPay, Moyasar, Tap, Stripe).",
     "architectureHighlights": [
-      "Executive Summary & Business Utility",
-      "Visual Showcase (UI & Dashboards)",
-      "System Architecture & Layers",
-      "Data Model & Multi-Gateway Commerce",
-      "Database Schema, Migrations & Prisma",
-      "Application Modules & API Endpoints",
-      "Getting Started & Scripts",
-      "Business Value, ROI & Growth Opportunities",
-      "Zero Single-Gateway Risk: Supporting HyperPay, Moyasar, Tap, and Stripe simultaneously lets operators route transactions to the lowest-fee or highest-converting regional acquirer.",
-      "Built-In Retention Engine: Wallets, reward rules, referral tracking, and coupons reduce reliance on paid ads.",
-      "B2B / Vendor Subscription + Commission: Monetize via per-order marketplace commissions (vendorpayouts) plus paid vendor marketing placements (/admin/marketing)."
+      "Customer Storefront (B2C — 17 Routes): Discovery, smart search, catalog filtering, product provenance PDP, vendor-grouped cart, 5-step checkout (National Address, Shipping, Payment, Review, Confirmation), ZATCA order confirmation, visual tracking, 13-tab account center, returns, and editorial magazine.",
+      "Vendor Operations Portal (B2B — 7 Routes): Real-time revenue dashboard, TanStack Table product inventory studio, SPL/SMSA waybill fulfillment, SAMA escrow payout ledger, and an 8-step KYB registration wizard.",
+      "Enterprise Admin Command Center (9 Routes): Executive GMV overview, master catalog moderation queue, order disputes, vendor verification vault, customer CRM, category taxonomy builder, marketing coupon engine, and RBAC system settings.",
+      "ZATCA Phase-2 E-Invoicing & 15% VAT Engine: Generates genuine Tag-Length-Value (TLV Tags 1–5) base64 QR codes, UBL 2.1 compliant tax invoices, and tax-inclusive 15% VAT arithmetic without double-taxation.",
+      "Saudi Regulatory Validation Suite: Enforces 10-digit Commercial Registration (^\\d{10}$), 15-digit ZATCA Tax ID (^3\\d{13}3$), ISO 7064 Mod 97-10 Saudi IBAN (^SA\\d{22}$), and Saudi Post (SPL) National & Short Address (^[A-Z]{4}\\d{4}$) verification.",
+      "Multi-Gateway Payment & SAMA Escrow Layer: Unified /api/checkout orchestrating HyperPay, Moyasar, Tap Payments, and Stripe (mada, Apple Pay, STC Pay, Tabby/Tamara BNPL, and international cards).",
+      "Security, RBAC & Bilingual RTL/LTR: Cryptographic HMAC-SHA256 JWT sessions (souq_session HttpOnly cookie), CSP/HSTS security headers, strict CSS Logical Properties (ms-*, me-*, ps-*, pe-*), and dynamic AR/EN RTL/LTR switching.",
+      "Dual ORM Persistence & Automated QA: Combines Prisma relational schema with Supabase Postgres migrations, Row-Level Security (RLS), /api/health observability, and Vitest + Testing Library test suites."
     ],
     "liveDemoUrl": "https://shamalelhejaz.vercel.app",
-    "featured": false,
-    "challenge": "shamalelhejaz (souq) is a full-stack Next.js 16, React 19, Prisma, and Supabase multi-vendor e-commerce marketplace built for Saudi Arabia and the broader MENA market. It supports multi-merchant storefronts (/store/[storeId]), localized categories/products, loyalty wallets & referrals, real-time order tracking (/orders/[id]/tracking), dedicated Vendor (/vendor/) and Admin (/admin/) portals, and 4 integrated payment gateways: HyperPay, Moyasar, Tap, and Stripe. Brand identity assets in public/ (plus UI screen specs in stitchscreens/):",
-    "solution": "Brand identity assets in public/ (plus UI screen specs in stitchscreens/): subgraph L2[\"2. Vendor Self-Service Portal (/vendor)\"] Vendor[\"/vendor/register • /vendor/catalog(/add) • /vendor/orders • /vendor/financials • /vendor/settings\"] end subgraph L3[\"3. Marketplace Admin Suite (/admin)\"] Admin[\"/admin/{products,categories,vendors,orders,customers,finance,marketing,settings}\"] end subgraph L4[\"4. Multi-Gateway Payment & Auth API Layer\"] Pay[\"/api/checkout • /api/payments/{hyperpay,moyasar,tap,stripe} • /auth/callback\"] end",
+    "featured": true,
+    "challenge": "Building a production-grade multi-vendor marketplace for Saudi Arabia requires strict regulatory compliance beyond standard e-commerce: ZATCA Phase-2 TLV QR e-invoicing, 15% tax-inclusive VAT arithmetic, Saudi CR/Tax ID/IBAN/SPL National Address validation, multi-merchant SAMA escrow isolation, native RTL/LTR bilingual switching using CSS Logical Properties, and zero single-acquirer dependency across local (mada, Apple Pay, STC Pay) and global payment rails.",
+    "solution": "Architected Shamal El-Hejaz (Souq Saudiya) on Next.js 16, React 19, Prisma, and Supabase Postgres across 33+ routes and 3 role-gated portals (Buyer, Vendor, Admin). Implemented dedicated compliance modules (lib/zatca.ts, lib/saudi-validation.ts), HMAC-SHA256 session middleware (lib/session.ts), a unified multi-gateway payment layer (/api/payments/{hyperpay,moyasar,tap,stripe}), and an automated Vitest + E2E verification suite.",
     "keyDecisions": [
       {
-        "title": "Core Architecture: HTML + Next.js + Next.js 16",
-        "rationale": "Selected HTML, Next.js, Next.js 16 to deliver high reliability, clean modularity, and fast iteration for Shamalelhejaz.",
-        "tradeOff": "Requires adhering to the documented environment variables and runtime dependencies in the repository README."
+        "title": "Multi-Gateway Payment Abstraction (HyperPay, Moyasar, Tap, Stripe)",
+        "rationale": "Eliminates single-acquirer risk and routes transactions to the lowest-fee or highest-converting gateway for mada, Apple Pay, STC Pay, BNPL, and international cards.",
+        "tradeOff": "Requires maintaining webhook verification and idempotent payment state machines across four provider adapters."
       },
       {
-        "title": "Ecosystem Integrations: React, Supabase, Prisma",
-        "rationale": "Integrated React, Supabase, Prisma to handle specialized capabilities (persistence, styling, analytics, or automation) without reinventing core primitives.",
-        "tradeOff": "Introduces external library/service configuration managed via environment setup."
+        "title": "Native Saudi Regulatory Engine (ZATCA Phase-2 + CR/IBAN/SPL)",
+        "rationale": "Embedding TLV base64 QR encoding (Tags 1–5), 15% tax-inclusive VAT calculation, and ISO 7064 Mod 97-10 IBAN/CR/SPL validation directly in TypeScript ensures every vendor and invoice is compliant out of the box.",
+        "tradeOff": "Requires strict schema alignment between Prisma models, Supabase migrations, and KYB onboarding steps."
       },
       {
-        "title": "Documentation-First Repository Structure",
-        "rationale": "Maintained structured README documentation, visual assets (3 images), and clear module boundaries in islamsamyy/shamalelhejaz.",
-        "tradeOff": "Requires keeping README documentation and screenshots synchronized as features evolve."
+        "title": "CSS Logical Properties & Cryptographic HMAC-SHA256 Sessions",
+        "rationale": "Replacing physical directional classes with logical properties (ms-*, ps-*) enables instant AR/EN RTL/LTR flipping, while HMAC-SHA256 HttpOnly cookies (souq_session) harden /admin/*, /vendor/*, and /account/* routes.",
+        "tradeOff": "Enforces disciplined Tailwind v4 logical utility usage and server-side session verification across all protected route matchers."
       }
     ],
     "systemFlow": [
-      "Executive Summary & Business Utility",
-      "Visual Showcase (UI & Dashboards)",
-      "System Architecture & Layers",
-      "Data Model & Multi-Gateway Commerce",
-      "Database Schema, Migrations & Prisma",
-      "Application Modules & API Endpoints"
+      "1. Buyer Discovery & Vendor-Grouped Cart: Customers browse localized collections, filter by provenance/delivery SLA, and add multi-merchant items into a persistent vendor-grouped cart.",
+      "2. 5-Step Checkout & Multi-Gateway Payment: National Address (SPL) -> Shipping -> Payment (HyperPay, Moyasar, Tap, Stripe) -> Review -> ZATCA TLV QR Order Confirmation.",
+      "3. Vendor KYB & Fulfillment (/vendor/*): Merchants complete 8-step KYB verification (CR, VAT, IBAN), publish SKUs via TanStack Studio, generate SPL/SMSA waybills, and track SAMA escrow payouts.",
+      "4. Enterprise Admin Governance (/admin/*): Operators monitor real-time GMV, moderate catalog items, resolve disputes, manage coupons/marketing, and audit ZATCA Phase-2 compliance."
     ],
     "outcomeMetrics": [
       {
-        "label": "Documentation",
-        "value": "7 KB",
-        "description": "Detailed README documentation covering architecture, features, setup, and usage."
+        "label": "Portal Architecture",
+        "value": "33+ Routes",
+        "description": "17 Buyer Storefront routes, 7 Vendor B2B routes, and 9 Enterprise Admin routes."
       },
       {
-        "label": "Visual Assets",
-        "value": "3 Images",
-        "description": "Screenshots, analytical charts, or architecture preview cards."
+        "label": "Payment & Escrow",
+        "value": "4 Gateways",
+        "description": "HyperPay, Moyasar, Tap, and Stripe supporting mada, Apple Pay, STC Pay, and SAMA escrow."
       },
       {
-        "label": "Tech Modules",
-        "value": "9 Stack",
-        "description": "HTML, Next.js, Next.js 16, React, Supabase, Prisma, Stripe, HyperPay, Moyasar"
+        "label": "Saudi Compliance",
+        "value": "ZATCA Phase-2",
+        "description": "TLV base64 QR (Tags 1–5), 15% VAT, 10-digit CR, 15-digit Tax ID, Mod 97-10 IBAN, and SPL Address."
       }
     ],
     "galleryImages": [
-      "/projects/gh-shamalelhejaz/screen_1_logo-mark.png",
-      "/projects/gh-shamalelhejaz/screen_2_logo-square.png",
-      "/projects/gh-shamalelhejaz/screen_3_logo.png"
+      "/projects/gh-shamalelhejaz/screen_1_landing_hero.png",
+      "/projects/gh-shamalelhejaz/screen_2_catalog.png",
+      "/projects/gh-shamalelhejaz/screen_3_product_detail.png",
+      "/projects/gh-shamalelhejaz/screen_4_checkout.png",
+      "/projects/gh-shamalelhejaz/screen_5_vendor_hub.png",
+      "/projects/gh-shamalelhejaz/screen_6_admin_command.png"
     ],
     "steps": [
       {
-        "title": "Capability 1",
-        "description": "Executive Summary & Business Utility"
+        "title": "Storefront & Luxury Hero",
+        "description": "RTL/LTR bilingual landing experience with curated collections, live countdown drops, and Riyadh/Jeddah 2-hour delivery badges."
       },
       {
-        "title": "Capability 2",
-        "description": "Visual Showcase (UI & Dashboards)"
+        "title": "Catalog & Smart Filtering",
+        "description": "Multi-facet discovery by delivery SLA, origin, artisan, and price range with side-by-side specification comparison."
       },
       {
-        "title": "Capability 3",
-        "description": "System Architecture & Layers"
+        "title": "5-Step Checkout & ZATCA",
+        "description": "SPL National Address validation, multi-gateway payment orchestration (mada/Apple Pay/Cards), and ZATCA Phase-2 TLV QR invoicing."
       },
       {
-        "title": "Capability 4",
-        "description": "Data Model & Multi-Gateway Commerce"
+        "title": "Vendor Hub & Admin Command",
+        "description": "8-step KYB onboarding, TanStack inventory studio, SAMA escrow ledger, and executive GMV & ZATCA compliance monitoring."
       }
     ],
     "readmeContent": "# Shamal El-Hejaz / Souq (`shamalelhejaz`) — Multi-Vendor MENA E-Commerce Marketplace\n\n<p align=\"center\">\n  <img src=\"https://raw.githubusercontent.com/islamsamyy/shamalelhejaz/main/public/logo.png\" alt=\"Shamal El-Hejaz Souq Logo\" width=\"180\" />\n</p>\n\n## Table of Contents\n- [Executive Summary & Business Utility](#executive-summary--business-utility)\n- [Visual Showcase (UI & Dashboards)](#visual-showcase-ui--dashboards)\n- [System Architecture & Layers](#system-architecture--layers)\n- [Data Model & Multi-Gateway Commerce](#data-model--multi-gateway-commerce)\n- [Database Schema, Migrations & Prisma](#database-schema-migrations--prisma)\n- [Application Modules & API Endpoints](#application-modules--api-endpoints)\n- [Getting Started & Scripts](#getting-started--scripts)\n- [Business Value, ROI & Growth Opportunities](#business-value-roi--growth-opportunities)\n\n---\n\n## Executive Summary & Business Utility\n`shamalelhejaz` (`souq`) is a full-stack Next.js 16, React 19, Prisma, and Supabase **multi-vendor e-commerce marketplace** built for Saudi Arabia and the broader MENA market. It supports multi-merchant storefronts (`/store/[storeId]`), localized categories/products, loyalty wallets & referrals, real-time order tracking (`/orders/[id]/tracking`), dedicated **Vendor** (`/vendor/*`) and **Admin** (`/admin/*`) portals, and **4 integrated payment gateways**: **HyperPay**, **Moyasar**, **Tap**, and **Stripe**.\n\n---\n\n## Visual Showcase (UI & Dashboards)\nBrand identity assets in `public/` (plus UI screen specs in `stitch_screens/`):\n\n| Primary Logo | Brand Mark | Square App Icon |\n| :---: | :---: | :---: |\n| ![Logo](https://raw.githubusercontent.com/islamsamyy/shamalelhejaz/main/public/logo.png) | ![Logo Mark](https://raw.githubusercontent.com/islamsamyy/shamalelhejaz/main/public/logo-mark.png) | ![Square Logo](https://raw.githubusercontent.com/islamsamyy/shamalelhejaz/main/public/logo-square.png) |\n\n---\n\n## System Architecture & Layers\n\n```mermaid\nflowchart TB\n    subgraph L1[\"1. Buyer Storefront & Engagement Layer\"]\n        Shop[\"/catalog • /categories • /deals • /search • /products/[id] • /store/[storeId] • /magazine\"]\n        OrderUI[\"/cart • /checkout • /orders/[id]/confirmation • /orders/[id]/tracking • /returns\"]\n    end\n\n    subgraph L2[\"2. Vendor Self-Service Portal (/vendor)\"]\n        Vendor[\"/vendor/register • /vendor/catalog(/add) • /vendor/orders • /vendor/financials • /vendor/settings\"]\n    end\n\n    subgraph L3[\"3. Marketplace Admin Suite (/admin)\"]\n        Admin[\"/admin/{products,categories,vendors,orders,customers,finance,marketing,settings}\"]\n    end\n\n    subgraph L4[\"4. Multi-Gateway Payment & Auth API Layer\"]\n        Pay[\"/api/checkout • /api/payments/{hyperpay,moyasar,tap,stripe} • /auth/callback\"]\n    end\n\n    subgraph L5[\"5. Dual ORM, Persistence & QA Layer\"]\n        DB[\"Prisma (prisma/schema.prisma) + Supabase Postgres (4 SQL files) + RLS\"]\n        QA[\"Vitest + Testing Library + TanStack Table + Recharts + Zod\"]\n    end\n\n    L1 --> L4 --> L5\n    L2 --> L5\n    L3 --> L5\n```\n\n| Layer | Responsibility | Key Files |\n| :--- | :--- | :--- |\n| **Buyer Storefront Layer** | Catalog filtering, deals, vendor storefronts, cart, checkout, order tracking, returns, and policies | `app/{catalog,categories,deals,search,store,cart,checkout,orders,returns,magazine,portals}/` |\n| **Vendor Self-Service Layer** | Vendor onboarding, SKU publishing, order fulfillment, and payout reconciliation | `app/vendor/{register,catalog,catalog/add,orders,financials,settings}/page.tsx` |\n| **Marketplace Admin Layer** | Platform-wide management of vendors, categories, finance, marketing, and customers | `app/admin/{vendors,products,categories,orders,customers,finance,marketing,settings}/page.tsx` |\n| **Multi-Gateway Payment Layer** | Unified checkout endpoint + 4 payment gateway adapters for mada, Apple Pay, STC Pay, and cards | `app/api/checkout/route.ts`, `app/api/payments/{hyperpay,moyasar,tap,stripe}/route.ts` |\n| **ORM, Schema & QA Layer** | Prisma relational schema, Supabase production migrations, and Vitest test coverage | `prisma/schema.prisma`, `supabase/migrations/*.sql`, `__tests__/` |\n\n---\n\n## Data Model & Multi-Gateway Commerce\n```mermaid\nerDiagram\n    USER ||--o| WALLET : owns\n    WALLET ||--o{ TRANSACTION : logs\n    CATEGORY ||--o{ CATEGORYTRANSLATION : localized_by\n    PRODUCT ||--o{ PRODUCTTRANSLATION : localized_by\n    ORDER ||--|{ ORDERITEM : contains\n    ORDER ||--o| SHIPPINGINFO : ships_via\n    ORDER ||--o| PAYMENTINFO : paid_via\n    REWARDPROGRAM ||--|{ REWARDRULE : defines\n```\n\n---\n\n## Database Schema, Migrations & Prisma\nCombined Prisma (`prisma/schema.prisma`) and Supabase SQL (`supabase/schema.sql` + `supabase/migrations/20261110000001..000002*.sql`):\n\n| Domain | Tables / Models |\n| :--- | :--- |\n| **Identity & Vendors** | `User`, `public.profiles`, `public.vendors`, `public.addresses`, `Follow` |\n| **Localized Catalog & SEO** | `Category`, `CategoryTranslation`, `Product`, `ProductTranslation`, `Image`, `SEOData`, `Review`, `ReviewMedia` |\n| **Cart, Orders & Shipping** | `public.cart_items`, `public.wishlists`, `Order`, `OrderItem`, `public.order_items`, `ShippingInfo` |\n| **Payments, Wallets & Payouts** | `public.payment_gateways`, `public.payments`, `PaymentInfo`, `public.invoices`, `public.vendor_payouts`, `Wallet`, `Transaction`, `public.wallets`, `public.wallet_transactions` |\n| **Growth, Loyalty & Governance** | `RewardProgram`, `RewardRule`, `Referral`, `Coupon`, `Notification`, `public.app_settings`, `public.audit_log` |\n\n---\n\n## Application Modules & API Endpoints\n\n| Endpoint | Purpose |\n| :--- | :--- |\n| `/api/checkout` | Multi-vendor order creation & checkout orchestration |\n| `/api/payments/moyasar` | Moyasar payment processing (mada, Visa/MC, Apple Pay) |\n| `/api/payments/hyperpay` | HyperPay payment processing |\n| `/api/payments/tap` | Tap Payments gateway integration |\n| `/api/payments/stripe` | Stripe international card processing |\n| `/auth/callback` | Supabase auth callback handler |\n\n---\n\n## Getting Started & Scripts\n\n```bash\ngit clone https://github.com/islamsamyy/shamalelhejaz.git\ncd shamalelhejaz\nnpm install\nnpm run dev\n```\n\n| Script | Command | Description |\n| :--- | :--- | :--- |\n| Dev | `npm run dev` | Start Next.js 16 dev server |\n| Build | `npm run build` | Production build (`next build --webpack`) |\n| Typecheck | `npm run typecheck` | Run `tsc --noEmit` |\n| Lint | `npm run lint` | Run ESLint 9 |\n| Test | `npm test` | Run Vitest suite |\n\n---\n\n## Business Value, ROI & Growth Opportunities\n- **Zero Single-Gateway Risk**: Supporting HyperPay, Moyasar, Tap, and Stripe simultaneously lets operators route transactions to the lowest-fee or highest-converting regional acquirer.\n- **Built-In Retention Engine**: Wallets, reward rules, referral tracking, and coupons reduce reliance on paid ads.\n- **B2B / Vendor Subscription + Commission**: Monetize via per-order marketplace commissions (`vendor_payouts`) plus paid vendor marketing placements (`/admin/marketing`).\n",
@@ -2624,50 +3154,46 @@ An end-to-end **SQL Server (SSMS)** and **Power BI** analytics suite built on \`
   },
   {
     "id": "gh-supply-chain",
-    "title": "Supply Chain",
-    "client": "GitHub • islamsamyy/supply-chain-",
-    "companyLogo": "/projects/gh-supply-chain/overview.svg",
+    "title": "Supply Chain Operations & Logistics Intelligence — Power BI",
+    "client": "Supply Chain & Logistics Analytics",
+    "companyLogo": "https://eevtuamdgthbcgtkepbh.supabase.co/storage/v1/object/public/portfolio-uploads/projects/gh-supply-chain/overview-dashboard.jpg",
     "category": "Data Analysis & Power BI",
-    "role": "Creator & Lead Engineer",
-    "impactMetric": "Open Source",
+    "role": "BI Developer & Data Analyst",
+    "impactMetric": "$1.7M Revenue · 5K Shipments",
     "metrics": [
       {
-        "label": "Primary Stack",
-        "value": "Power BI"
+        "label": "Total Revenue",
+        "value": "$1.7M"
       },
       {
-        "label": "Repository",
-        "value": "islamsamyy/supply-chain-"
+        "label": "Shipments",
+        "value": "5,000 Total"
       },
       {
-        "label": "Visuals",
-        "value": "2 Assets"
+        "label": "Completed / Active",
+        "value": "3K / 2K"
       },
       {
-        "label": "Highlights",
-        "value": "12 Items"
+        "label": "Avg Delivery Time",
+        "value": "10 Days"
       }
     ],
     "techStack": [
-      "Power BI"
+      "Power BI",
+      "DAX",
+      "Power Query",
+      "Star Schema",
+      "Logistics Analytics"
     ],
-    "summary": "Power BI supply chain analytics dashboard for shipments, products, and regional sales. supply-chain- is an executive Business Intelligence solution built in Power BI (supply chain.pbix) on a 5,000-row transactional shipment dataset (Shipment.csv) joined with normalized dimension tables (Country.csv, Product.csv, SalesPerson.csv). It provides operations and sales leadership with immediate visibility into delivery SLA performance, regional revenue, product unit margins, and salesperson productivity. 1. Clone the repository: git clone https://github.com/islamsamyy/supply-chain-.git 2. Open supply chain.pbix in Power BI Desktop. 3. Update CSV data source paths if refreshing locally.",
+    "summary": "Comprehensive Power BI supply chain operations analysis covering $1.7M in revenue across 5,000 shipments (3K completed, 2K active, 248 returned). Evaluates revenue insights by product and team, monitors active vs. completed shipments, and tracks average delivery times by geography to optimize logistics strategies.",
     "architectureHighlights": [
-      "Executive Summary & Business Utility",
-      "System Architecture & Layers",
-      "Data Model & Star Schema",
-      "BI Metrics & Analytical Capabilities",
-      "Getting Started",
-      "Business Value, ROI & Growth Opportunities",
-      "Gross Margin & Costing: Join Shipment.Sales against Product[Cost per Box] to track net profitability by product category and region.",
-      "Delivery SLA & Status Monitoring: Track Status and Delivered On vs. Date to spot late corridors.",
-      "Sales Leaderboard: Compare rep and team performance with photo-enriched cards (SalesPerson.Picture).",
-      "Clone the repository: git clone https://github.com/islamsamyy/supply-chain-.git",
-      "Open supply chain.pbix in Power BI Desktop.",
-      "Update CSV data source paths if refreshing locally."
+      "Revenue Insights: Analyzed $1.7M revenue trends by product category (Electronics, Audio, Computing, Office Equipment), month, and sales team.",
+      "Shipment Tracking: Monitored 5K total shipments (3K completed, 2K active, 248 returned) with monthly status breakdowns.",
+      "Delivery Performance: Evaluated average delivery times across 10 countries to optimize logistics strategies.",
+      "Sales Team Leaderboard: Tracks per-rep shipments, active/completed/returned counts, and sparklines across 25 salespersons."
     ],
     "liveDemoUrl": "https://github.com/islamsamyy/supply-chain-",
-    "featured": false,
+    "featured": true,
     "challenge": "supply-chain- is an executive Business Intelligence solution built in Power BI (supply chain.pbix) on a 5,000-row transactional shipment dataset (Shipment.csv) joined with normalized dimension tables (Country.csv, Product.csv, SalesPerson.csv). It provides operations and sales leadership with immediate visibility into delivery SLA performance, regional revenue, product unit margins, and salesperson productivity. 1. Clone the repository: git clone https://github.com/islamsamyy/supply-chain-.git 2. Open supply chain.pbix in Power BI Desktop. 3. Update CSV data source paths if refreshing locally.",
     "solution": "1. Clone the repository: git clone https://github.com/islamsamyy/supply-chain-.git 2. Open supply chain.pbix in Power BI Desktop. 3. Update CSV data source paths if refreshing locally. The platform is built using Power BI, combining modular service boundaries, clean state management, and automated validation. Every module is documented in islamsamyy/supply-chain- with reproducible setup instructions, clear data flows, and production-ready patterns.",
     "keyDecisions": [
@@ -2708,25 +3234,17 @@ An end-to-end **SQL Server (SSMS)** and **Power BI** analytics suite built on \`
       }
     ],
     "galleryImages": [
-      "/projects/gh-supply-chain/overview.svg",
-      "/projects/gh-supply-chain/architecture.svg"
+      "https://eevtuamdgthbcgtkepbh.supabase.co/storage/v1/object/public/portfolio-uploads/projects/gh-supply-chain/overview-dashboard.jpg",
+      "https://eevtuamdgthbcgtkepbh.supabase.co/storage/v1/object/public/portfolio-uploads/projects/gh-supply-chain/products-view.jpg"
     ],
     "steps": [
       {
-        "title": "Capability 1",
-        "description": "Executive Summary & Business Utility"
+        "title": "Overview Dashboard ($1.7M Revenue & 5K Shipments)",
+        "description": "Executive view tracking Revenue by Category & Month, Return/Completed/Active shipments, Avg Delivery Time by Geography, and Sales Person performance."
       },
       {
-        "title": "Capability 2",
-        "description": "System Architecture & Layers"
-      },
-      {
-        "title": "Capability 3",
-        "description": "Data Model & Star Schema"
-      },
-      {
-        "title": "Capability 4",
-        "description": "BI Metrics & Analytical Capabilities"
+        "title": "Products & Team Analytics View",
+        "description": "Detailed product-level active/completed shipment rankings, revenue by team, and completion/return percentage KPIs."
       }
     ],
     "readmeContent": "# Supply Chain Analytics Dashboard (`supply-chain-`) — Power BI Star-Schema Intelligence\n\n## Table of Contents\n- [Executive Summary & Business Utility](#executive-summary--business-utility)\n- [System Architecture & Layers](#system-architecture--layers)\n- [Data Model & Star Schema](#data-model--star-schema)\n- [BI Metrics & Analytical Capabilities](#bi-metrics--analytical-capabilities)\n- [Getting Started](#getting-started)\n- [Business Value, ROI & Growth Opportunities](#business-value-roi--growth-opportunities)\n\n---\n\n## Executive Summary & Business Utility\n`supply-chain-` is an executive Business Intelligence solution built in **Power BI** (`supply chain.pbix`) on a **5,000-row transactional shipment dataset** (`Shipment.csv`) joined with normalized dimension tables (`Country.csv`, `Product.csv`, `SalesPerson.csv`). It provides operations and sales leadership with immediate visibility into delivery SLA performance, regional revenue, product unit margins, and salesperson productivity.\n\n---\n\n## System Architecture & Layers\n```mermaid\nflowchart LR\n    subgraph L1[\"1. Source Data Layer (CSVs)\"]\n        C[\"Country.csv (10 regions)\"]\n        P[\"Product.csv (10 SKUs)\"]\n        SP[\"SalesPerson.csv (25 reps)\"]\n        S[\"Shipment.csv (5,000 shipments)\"]\n    end\n    subgraph L2[\"2. Semantic & DAX Layer\"]\n        Model[\"Power BI Star Schema & Measures (supply chain.pbix)\"]\n    end\n    subgraph L3[\"3. Presentation & Executive BI Layer\"]\n        Dash[\"Interactive Power BI Dashboards\"]\n    end\n\n    C & P & SP --> S --> Model --> Dash\n```\n\n| Layer | Artifact | Role |\n| :--- | :--- | :--- |\n| **Dimension Layer** | `Country.csv`, `Product.csv`, `SalesPerson.csv` | Geographic markets, product cost catalog, and sales team roster |\n| **Fact Layer** | `Shipment.csv` | 5,000 shipment transactions with status, delivery date, and sales amounts |\n| **BI & DAX Layer** | `supply chain.pbix` | Relational star-schema model, KPI calculations, and visual drill-downs |\n\n---\n\n## Data Model & Star Schema\n```mermaid\nerDiagram\n    COUNTRY ||--o{ SHIPMENT : ships_to\n    PRODUCT ||--o{ SHIPMENT : shipped_as\n    SALESPERSON ||--o{ SHIPMENT : closes\n```\n\n| File | Rows | Columns |\n| :--- | :--- | :--- |\n| `Shipment.csv` | 5,000 | `Shipment ID`, `Sales Person`, `Geography`, `Product`, `Date`, `Sales`, `Status`, `Delivered On` |\n| `Country.csv` | 10 | `Geography`, `Region` |\n| `Product.csv` | 10 | `Product`, `Category`, `Cost per Box` |\n| `SalesPerson.csv` | 25 | `Sales Person`, `Team`, `Picture` |\n\n---\n\n## BI Metrics & Analytical Capabilities\n- **Gross Margin & Costing**: Join `Shipment.Sales` against `Product[Cost per Box]` to track net profitability by product category and region.\n- **Delivery SLA & Status Monitoring**: Track `Status` and `Delivered On` vs. `Date` to spot late corridors.\n- **Sales Leaderboard**: Compare rep and team performance with photo-enriched cards (`SalesPerson.Picture`).\n\n---\n\n## Getting Started\n1. Clone the repository: `git clone https://github.com/islamsamyy/supply-chain-.git`\n2. Open `supply chain.pbix` in **Power BI Desktop**.\n3. Update CSV data source paths if refreshing locally.\n\n---\n\n## Business Value, ROI & Growth Opportunities\n- **Logistics Cost & SLA Optimization**: Pinpoints high-delay geographies and low-margin SKUs to cut freight waste.\n- **Live ERP Gateway Upgrade**: Connect the star schema directly to `sotexerp` or `shamalelhejaz` Postgres views via Power BI Gateway for automated daily executive refreshes.\n",
@@ -3454,124 +3972,120 @@ An end-to-end **SQL Server (SSMS)** and **Power BI** analytics suite built on \`
   },
   {
     "id": "gh-maadi-website",
-    "title": "Maadi Website",
-    "client": "GitHub • islamsamyy/maadi-website",
+    "title": "Maadi Stone & Marble — B2B/B2C Manufacturing Catalog, Visualizer & RFQ Platform",
+    "client": "Maadi Stone & Marble Manufacturing",
     "companyLogo": "/projects/gh-maadi-website/logo.png",
     "category": "Software Engineering & Online Systems",
-    "role": "Creator & Lead Engineer",
-    "impactMetric": "TypeScript",
+    "role": "Principal Full-Stack Architect & Lead Engineer",
+    "impactMetric": "AI Stone Finder · Room Visualizer & VR Tour · RFQ Admin Portal",
     "metrics": [
       {
-        "label": "Primary Stack",
-        "value": "TypeScript"
+        "label": "Interactive Tools",
+        "value": "Stone Finder · Visualizer · VR"
       },
       {
-        "label": "Repository",
-        "value": "islamsamyy/maadi-website"
+        "label": "Database & Auth",
+        "value": "Supabase Postgres + RLS"
       },
       {
-        "label": "Visuals",
-        "value": "6 Assets"
+        "label": "UI Screens",
+        "value": "9 Production Views"
       },
       {
-        "label": "Highlights",
-        "value": "12 Items"
+        "label": "Core Stack",
+        "value": "Next.js 16 · React 19 · TS"
       }
     ],
     "techStack": [
-      "TypeScript",
-      "Next.js",
       "Next.js 16",
+      "React 19",
+      "TypeScript",
+      "Tailwind CSS v4",
       "Supabase",
       "PostgreSQL",
-      "Stripe",
-      "Moyasar"
+      "Row-Level Security",
+      "SSR Auth Proxy"
     ],
-    "summary": "Full-stack Next.js & Supabase stone/marble manufacturing catalog, quote request, and admin portal. maadi-website is a full-stack Next.js 16 and Supabase digital commerce and lead-generation platform engineered for Maadi Stone & Marble Manufacturing. It bridges the gap between raw quarry/factory supply and architects, interior designers, contractors, and homeowners by combining a searchable natural stone catalog, interactive visualization tools (Stone Finder, Architectural Visualizer, VR Tour), an educational Academy, and an end-to-end Request-for-Quote (RFQ) pipeline backed by a role-gated /admin portal. Real stone catalog assets served from public/stones/ and rendered across /stones, /stones/[slug], and /tools/: subgraph L2[\"2. Routing, Proxy & API Layer\"] Proxy[\"proxy.ts (Session & Auth Guard)\"] API[\"POST/GET /api/quotes\"] Queries[\"lib/queries.ts (Typed Server Data Layer)\"] end",
+    "summary": "Full-stack Next.js 16, React 19, and Supabase B2B/B2C digital commerce and lead-generation platform engineered for Maadi Stone & Marble Manufacturing. Bridges raw quarry and factory supply with architects, interior designers, contractors, and homeowners via a searchable natural stone catalog (/stones, /stones/[slug]), 3 interactive material tools (/tools/stone-finder, /tools/visualizer, /tools/vr-tour), an educational Academy (/academy), and an end-to-end Request-for-Quote (RFQ) pipeline (/api/quotes) backed by a role-gated /admin portal.",
     "architectureHighlights": [
-      "Executive Summary & Business Utility",
-      "Visual Showcase (UI & Dashboards)",
-      "System Architecture & Layers",
-      "Data Model & Analytics",
-      "Database Schema, Migrations & RLS",
-      "Application Modules & API Endpoints",
-      "Getting Started & Scripts",
-      "Business Value, ROI & Growth Opportunities",
-      "/ (app/page.tsx) — Brand landing with HomeClient & HomeInteractiveSections",
-      "/stones & /stones/[slug] — Filterable stone catalog (StonesCatalogClient) & detail specs (StoneDetailClient)",
-      "/tools/stone-finder, /tools/visualizer, /tools/vr-tour — Interactive material selection & virtual tour",
-      "/manufacturing, /projects, /our-story, /academy, /resources, /legal — Authority & trust pages"
+      "Searchable Natural Stone Catalog (/stones & /stones/[slug]): Filterable catalog (StonesCatalogClient) and detailed technical specification sheets (StoneDetailClient) backed by typed server queries (lib/queries.ts) and static fallback seeds (lib/stones-data.ts).",
+      "Interactive Buyer Visualization Suite (/tools/*): Includes an AI Stone Finder (/tools/stone-finder), Room & Surface Visualizer (/tools/visualizer) across Hotel Lobby, Living Room, Kitchen, and Bathroom environments, and a VR Quarry/Showroom Tour (/tools/vr-tour).",
+      "End-to-End RFQ & Quote Cart Pipeline: Persistent QuoteContext cart feeding POST/GET /api/quotes to validate and persist multi-item quote_requests and quote_request_items into PostgreSQL.",
+      "Role-Gated Admin Operations Portal (/admin/*): Protected by proxy.ts session guard and app/admin/layout.tsx, featuring /admin/stones (Catalog CRUD), /admin/quotes (RFQ triage & pricing), /admin/content (Projects & Academy CMS), and /admin/users (RBAC).",
+      "Supabase PostgreSQL Schema & RLS (0001_initial_schema.sql): Models profiles, stones, projects, academy_articles, favorites, quote_requests, quote_request_items, and newsletter_subscribers with browser, SSR, and service-role Supabase clients.",
+      "Authority & Trust Architecture: Dedicated /manufacturing, /projects, /our-story, /academy, /resources, /legal, /favorites, and /account routes with AnimatedCounter and Reveal motion components."
     ],
     "liveDemoUrl": "https://github.com/islamsamyy/maadi-website",
-    "featured": false,
-    "challenge": "maadi-website is a full-stack Next.js 16 and Supabase digital commerce and lead-generation platform engineered for Maadi Stone & Marble Manufacturing. It bridges the gap between raw quarry/factory supply and architects, interior designers, contractors, and homeowners by combining a searchable natural stone catalog, interactive visualization tools (Stone Finder, Architectural Visualizer, VR Tour), an educational Academy, and an end-to-end Request-for-Quote (RFQ) pipeline backed by a role-gated /admin portal. Real stone catalog assets served from public/stones/ and rendered across /stones, /stones/[slug], and /tools/:",
-    "solution": "Real stone catalog assets served from public/stones/ and rendered across /stones, /stones/[slug], and /tools/: subgraph L2[\"2. Routing, Proxy & API Layer\"] Proxy[\"proxy.ts (Session & Auth Guard)\"] API[\"POST/GET /api/quotes\"] Queries[\"lib/queries.ts (Typed Server Data Layer)\"] end subgraph L3[\"3. Domain & Admin Operations Layer\"] Admin[\"/admin (/stones, /quotes, /content, /users)\"] Customer[\"/sign-in • /account • /favorites • /request-price\"] end subgraph L4[\"4. Persistence & Auth Layer (Supabase)\"] Clients[\"lib/supabase/{client.ts, server.ts, admin.ts}\"] PG[\"Postgres + RLS (supabase/migrations/0001initialschema.sql)\"] end",
+    "featured": true,
+    "challenge": "Stone and marble manufacturers typically rely on static PDFs and manual phone/WhatsApp inquiries, causing slow specification cycles for architects and unqualified leads for sales teams. Maadi Stone & Marble needed a unified digital platform that showcases quarry origins and technical specs, lets buyers visualize stones in real environments, and captures structured multi-item RFQs.",
+    "solution": "Engineered a full-stack Next.js 16 and Supabase platform with a filterable stone catalog, interactive AI Stone Finder, Room & Surface Visualizer, VR Tour, and a persistent QuoteContext cart connected to /api/quotes. Paired the public storefront with a role-gated /admin suite (/stones, /quotes, /content, /users) backed by PostgreSQL Row-Level Security and SSR session proxying.",
     "keyDecisions": [
       {
-        "title": "Core Architecture: TypeScript + Next.js + Next.js 16",
-        "rationale": "Selected TypeScript, Next.js, Next.js 16 to deliver high reliability, clean modularity, and fast iteration for Maadi Website.",
-        "tradeOff": "Requires adhering to the documented environment variables and runtime dependencies in the repository README."
+        "title": "Typed Server Query Layer with Static Fallback (lib/queries.ts + lib/stones-data.ts)",
+        "rationale": "Ensures zero-downtime catalog rendering and fast SSR responses even during cold starts or offline local development while seamlessly reading live Supabase Postgres tables in production.",
+        "tradeOff": "Requires keeping fallback seed types synchronized with Supabase migration schemas."
       },
       {
-        "title": "Ecosystem Integrations: Supabase, PostgreSQL, Stripe",
-        "rationale": "Integrated Supabase, PostgreSQL, Stripe to handle specialized capabilities (persistence, styling, analytics, or automation) without reinventing core primitives.",
-        "tradeOff": "Introduces external library/service configuration managed via environment setup."
+        "title": "Interactive Pre-Qualification Tools (/tools/stone-finder & /tools/visualizer)",
+        "rationale": "Letting architects and buyers test marble, granite, and travertine finishes across real room environments before submitting /request-price dramatically reduces back-and-forth sales engineering.",
+        "tradeOff": "Adds client-side interactive state management and high-resolution surface asset curation."
       },
       {
-        "title": "Documentation-First Repository Structure",
-        "rationale": "Maintained structured README documentation, visual assets (6 images), and clear module boundaries in islamsamyy/maadi-website.",
-        "tradeOff": "Requires keeping README documentation and screenshots synchronized as features evolve."
+        "title": "Dedicated RFQ Relational Model (quote_requests + quote_request_items)",
+        "rationale": "Splitting quote headers from line items allows buyers to bundle multiple stone varieties and quantities in a single RFQ and lets sales admins triage and price each request in /admin/quotes.",
+        "tradeOff": "Requires transactional API handling in app/api/quotes/route.ts and strict RLS policies."
       }
     ],
     "systemFlow": [
-      "Executive Summary & Business Utility",
-      "Visual Showcase (UI & Dashboards)",
-      "System Architecture & Layers",
-      "Data Model & Analytics",
-      "Database Schema, Migrations & RLS",
-      "Application Modules & API Endpoints"
+      "1. Material Discovery & Visualization: Buyers browse /stones or use /tools/stone-finder, /tools/visualizer, and /tools/vr-tour to shortlist natural stone varieties.",
+      "2. Wishlist & Quote Cart: Users bookmark stones in /favorites and add multi-item specifications into QuoteContext.",
+      "3. RFQ Submission (/request-price -> /api/quotes): Validated quote_requests and quote_request_items are persisted to Supabase Postgres.",
+      "4. Admin Triage & CMS (/admin/*): Sales and operations teams manage stone inventory (/admin/stones), price incoming RFQs (/admin/quotes), and publish Academy/Project content (/admin/content)."
     ],
     "outcomeMetrics": [
       {
-        "label": "Documentation",
-        "value": "8 KB",
-        "description": "Detailed README documentation covering architecture, features, setup, and usage."
+        "label": "Interactive Buyer Tools",
+        "value": "3 Studios",
+        "description": "AI Stone Finder, Room & Surface Visualizer, and VR Quarry/Showroom Tour."
       },
       {
-        "label": "Visual Assets",
-        "value": "6 Images",
-        "description": "Screenshots, analytical charts, or architecture preview cards."
+        "label": "Database Schema",
+        "value": "8 Tables + RLS",
+        "description": "profiles, stones, projects, academy_articles, favorites, quote_requests, quote_request_items, newsletter_subscribers."
       },
       {
-        "label": "Tech Modules",
-        "value": "7 Stack",
-        "description": "TypeScript, Next.js, Next.js 16, Supabase, PostgreSQL, Stripe, Moyasar"
+        "label": "Platform Portals",
+        "value": "Public + Admin",
+        "description": "20+ storefront, academy, and tool routes paired with role-gated /admin operations."
       }
     ],
     "galleryImages": [
-      "/projects/gh-maadi-website/screen_1_adonis-beige-turkish-marble.jpg",
-      "/projects/gh-maadi-website/screen_2_adranos-white-turkish-marble.jpg",
-      "/projects/gh-maadi-website/screen_3_aegean-bordeaux-turkish-marble.jpg",
-      "/projects/gh-maadi-website/screen_4_aegean-white-greek-marble.jpg",
-      "/projects/gh-maadi-website/screen_5_afyon-white-turkish-marble.jpg",
-      "/projects/gh-maadi-website/screen_6_agia-marina-clouded-semi-white.jpg"
+      "/projects/gh-maadi-website/01-home-page.png",
+      "/projects/gh-maadi-website/02-stones-catalog.png",
+      "/projects/gh-maadi-website/03-stone-detail.png",
+      "/projects/gh-maadi-website/04-ai-stone-finder.png",
+      "/projects/gh-maadi-website/05-room-visualizer.png",
+      "/projects/gh-maadi-website/06-manufacturing-quarries.png",
+      "/projects/gh-maadi-website/07-request-price-rfq.png",
+      "/projects/gh-maadi-website/08-admin-dashboard.png",
+      "/projects/gh-maadi-website/09-admin-quotes.png"
     ],
     "steps": [
       {
-        "title": "Capability 1",
-        "description": "Executive Summary & Business Utility"
+        "title": "Storefront & Quarry Heritage",
+        "description": "Brand landing page highlighting 32+ years of experience, 5,000+ completed projects, and ISO 9001:2015 manufacturing."
       },
       {
-        "title": "Capability 2",
-        "description": "Visual Showcase (UI & Dashboards)"
+        "title": "Stone Catalog & Technical Specs",
+        "description": "Filterable marble, granite, and travertine catalog with origin, finish, and technical property pages."
       },
       {
-        "title": "Capability 3",
-        "description": "System Architecture & Layers"
+        "title": "AI Stone Finder & Room Visualizer",
+        "description": "Interactive tools to match stones by application and preview finishes in hotel lobbies, living rooms, kitchens, and baths."
       },
       {
-        "title": "Capability 4",
-        "description": "Data Model & Analytics"
+        "title": "RFQ Pipeline & Admin Portal",
+        "description": "Multi-item price request workflow (/request-price) feeding the role-gated /admin dashboard and /admin/quotes triage console."
       }
     ],
     "readmeContent": "# Maadi Website — B2B/B2C Stone & Marble Manufacturing Platform\n\n<p align=\"center\">\n  <img src=\"https://raw.githubusercontent.com/islamsamyy/maadi-website/main/public/logo.png\" alt=\"Maadi Stone & Marble Logo\" width=\"180\" />\n</p>\n\n## Table of Contents\n- [Executive Summary & Business Utility](#executive-summary--business-utility)\n- [Visual Showcase (UI & Dashboards)](#visual-showcase-ui--dashboards)\n- [System Architecture & Layers](#system-architecture--layers)\n- [Data Model & Analytics](#data-model--analytics)\n- [Database Schema, Migrations & RLS](#database-schema-migrations--rls)\n- [Application Modules & API Endpoints](#application-modules--api-endpoints)\n- [Getting Started & Scripts](#getting-started--scripts)\n- [Business Value, ROI & Growth Opportunities](#business-value-roi--growth-opportunities)\n\n---\n\n## Executive Summary & Business Utility\n`maadi-website` is a full-stack Next.js 16 and Supabase digital commerce and lead-generation platform engineered for **Maadi Stone & Marble Manufacturing**. It bridges the gap between raw quarry/factory supply and architects, interior designers, contractors, and homeowners by combining a searchable natural stone catalog, interactive visualization tools (Stone Finder, Architectural Visualizer, VR Tour), an educational Academy, and an end-to-end Request-for-Quote (RFQ) pipeline backed by a role-gated `/admin` portal.\n\n---\n\n## Visual Showcase (UI & Dashboards)\nReal stone catalog assets served from `public/stones/` and rendered across `/stones`, `/stones/[slug]`, and `/tools/*`:\n\n| Adonis Beige Turkish Marble | Adranos White Turkish Marble | Aegean Bordeaux Turkish Marble |\n| :---: | :---: | :---: |\n| ![Adonis Beige](https://raw.githubusercontent.com/islamsamyy/maadi-website/main/public/stones/adonis-beige-turkish-marble.jpg) | ![Adranos White](https://raw.githubusercontent.com/islamsamyy/maadi-website/main/public/stones/adranos-white-turkish-marble.jpg) | ![Aegean Bordeaux](https://raw.githubusercontent.com/islamsamyy/maadi-website/main/public/stones/aegean-bordeaux-turkish-marble.jpg) |\n\n| Aegean White Greek Marble | Afyon White Turkish Marble | Agia Marina Clouded Semi-White |\n| :---: | :---: | :---: |\n| ![Aegean White](https://raw.githubusercontent.com/islamsamyy/maadi-website/main/public/stones/aegean-white-greek-marble.jpg) | ![Afyon White](https://raw.githubusercontent.com/islamsamyy/maadi-website/main/public/stones/afyon-white-turkish-marble.jpg) | ![Agia Marina](https://raw.githubusercontent.com/islamsamyy/maadi-website/main/public/stones/agia-marina-clouded-semi-white.jpg) |\n\n---\n\n## System Architecture & Layers\n\n```mermaid\nflowchart TB\n    subgraph L1[\"1. Presentation & Interactive Tools Layer\"]\n        Pages[\"Public Pages (/ • /stones • /projects • /manufacturing • /academy • /resources)\"]\n        Tools[\"Interactive Tools (/tools/stone-finder • /tools/visualizer • /tools/vr-tour)\"]\n        Client[\"Client Components (HomeClient, StonesCatalogClient, StoneDetailClient, QuoteContext)\"]\n    end\n\n    subgraph L2[\"2. Routing, Proxy & API Layer\"]\n        Proxy[\"proxy.ts (Session & Auth Guard)\"]\n        API[\"POST/GET /api/quotes\"]\n        Queries[\"lib/queries.ts (Typed Server Data Layer)\"]\n    end\n\n    subgraph L3[\"3. Domain & Admin Operations Layer\"]\n        Admin[\"/admin (/stones, /quotes, /content, /users)\"]\n        Customer[\"/sign-in • /account • /favorites • /request-price\"]\n    end\n\n    subgraph L4[\"4. Persistence & Auth Layer (Supabase)\"]\n        Clients[\"lib/supabase/{client.ts, server.ts, admin.ts}\"]\n        PG[\"Postgres + RLS (supabase/migrations/0001_initial_schema.sql)\"]\n    end\n\n    L1 --> L2 --> L4\n    L3 --> L2\n```\n\n| Layer | Responsibility | Key Files |\n| :--- | :--- | :--- |\n| **Presentation & Interactive Layer** | Responsive storefront, animated counters (`AnimatedCounter`), scroll reveals (`Reveal`), quote cart state (`QuoteContext`), and 3 interactive buyer tools | `components/*.tsx`, `app/tools/{stone-finder,visualizer,vr-tour}/page.tsx` |\n| **Routing & Security Layer** | Request proxy, SSR cookie forwarding, and admin layout guard | `proxy.ts`, `app/admin/layout.tsx` |\n| **API & Query Layer** | RFQ ingestion (`app/api/quotes/route.ts`), typed queries (`lib/queries.ts`), static fallback seed (`lib/stones-data.ts`) | `app/api/quotes/route.ts`, `lib/{queries,stones-data,types}.ts` |\n| **Data & Auth Layer** | Browser, SSR, and service-role Supabase clients with PostgreSQL schema & RLS | `lib/supabase/{client,server,admin}.ts`, `supabase/migrations/0001_initial_schema.sql` |\n\n---\n\n## Data Model & Analytics\nThe platform models natural stone varieties, architectural case studies, educational articles, customer wishlists, and multi-item RFQ submissions (`quote_requests` + `quote_request_items`) alongside newsletter subscribers.\n\n```mermaid\nerDiagram\n    PROFILES ||--o{ FAVORITES : saves\n    STONES ||--o{ FAVORITES : bookmarked_in\n    PROFILES ||--o{ QUOTE_REQUESTS : submits\n    QUOTE_REQUESTS ||--|{ QUOTE_REQUEST_ITEMS : contains\n    STONES ||--o{ QUOTE_REQUEST_ITEMS : referenced_in\n```\n\n---\n\n## Database Schema, Migrations & RLS\nDefined in `supabase/migrations/0001_initial_schema.sql`:\n\n| Table | Purpose |\n| :--- | :--- |\n| `public.profiles` | Authenticated customer and admin user profiles & roles |\n| `public.stones` | Natural stone & marble catalog (slug, origin, finish, specs, imagery) |\n| `public.projects` | Completed architectural & commercial installations |\n| `public.academy_articles` | Technical stone-care, specification, and industry articles |\n| `public.favorites` | User-saved stone shortlists linked to `profiles` and `stones` |\n| `public.quote_requests` | Customer RFQ headers (contact info, project scope, status) |\n| `public.quote_request_items` | Line items linking requested `stones` and quantities to `quote_requests` |\n| `public.newsletter_subscribers` | Marketing & catalog update subscribers |\n\n---\n\n## Application Modules & API Endpoints\n\n### Public & Customer Routes\n- `/` (`app/page.tsx`) — Brand landing with `HomeClient` & `HomeInteractiveSections`\n- `/stones` & `/stones/[slug]` — Filterable stone catalog (`StonesCatalogClient`) & detail specs (`StoneDetailClient`)\n- `/tools/stone-finder`, `/tools/visualizer`, `/tools/vr-tour` — Interactive material selection & virtual tour\n- `/manufacturing`, `/projects`, `/our-story`, `/academy`, `/resources`, `/legal` — Authority & trust pages\n- `/request-price`, `/contact`, `/favorites`, `/account`, `/sign-in` — RFQ submission & customer portal\n\n### Admin Portal (`/admin`)\n- `/admin` — Admin overview (`AdminShell.tsx`)\n- `/admin/stones` — Catalog CRUD\n- `/admin/quotes` — Incoming RFQ triage & pricing workflow\n- `/admin/content` — Projects & academy CMS\n- `/admin/users` — Role & account management\n\n### API Endpoints\n| Endpoint | Purpose |\n| :--- | :--- |\n| `/api/quotes` (`app/api/quotes/route.ts`) | Validates and persists incoming customer RFQ requests and line items |\n\n---\n\n## Getting Started & Scripts\n\n```bash\ngit clone https://github.com/islamsamyy/maadi-website.git\ncd maadi-website\nnpm install\ncp .env.example .env.local\n```\n\n**Environment Variables (`.env.example`)**:\n```env\nNEXT_PUBLIC_SUPABASE_URL=https://your-project-ref.supabase.co\nNEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key\nSUPABASE_SERVICE_ROLE_KEY=your-service-role-key\n```\n\n| Script | Command | Description |\n| :--- | :--- | :--- |\n| Dev | `npm run dev` | Start Next.js 16 development server |\n| Build | `npm run build` | Production build |\n| Start | `npm run start` | Serve production build |\n| Lint | `npm run lint` | Run ESLint 9 checks |\n\n---\n\n## Business Value, ROI & Growth Opportunities\n- **Pre-Qualified B2B Lead Engine**: The combination of `/tools/stone-finder`, `/tools/visualizer`, and `QuoteContext` educates architects and contractors before they submit `/request-price`, cutting sales engineering back-and-forth.\n- **Factory-to-Storefront Sync**: Connect `public.stones` and `public.quote_requests` directly to `wirecut-` production/inventory logs to display live slab stock (m²) and factory lead times.\n- **B2B Trade Portal**: Add tiered wholesale pricing, instant PDF spec-sheet generation, and sample-box ordering via Stripe/Moyasar.\n- **Multilingual Export Expansion**: Add Arabic/French/Italian localization on `/stones/[slug]` to capture international stone import buyers.\n",
@@ -3705,127 +4219,303 @@ An end-to-end **SQL Server (SSMS)** and **Power BI** analytics suite built on \`
   },
   {
     "id": "gh-amani-khalii",
-    "title": "Amani KhalIi",
-    "client": "GitHub • islamsamyy/Amani-KhalIi",
+    "title": "Amani Khalil — Luxury Bridal & Occasion Makeup Booking Platform",
+    "client": "Amani Khalil Studio (Riyadh, Saudi Arabia)",
     "companyLogo": "/projects/gh-amani-khalii/logo.png",
     "category": "Software Engineering & Online Systems",
-    "role": "Creator & Lead Engineer",
-    "impactMetric": "TypeScript",
+    "role": "Creator & Lead Full-Stack Engineer",
+    "impactMetric": "<2 Min Accountless Booking · 9-Module Admin Suite",
     "metrics": [
       {
         "label": "Primary Stack",
-        "value": "TypeScript"
+        "value": "Next.js 16 · React 19"
       },
       {
         "label": "Repository",
         "value": "islamsamyy/Amani-KhalIi"
       },
       {
-        "label": "Visuals",
-        "value": "8 Assets"
+        "label": "Live Screens",
+        "value": "16 UI & Admin Views"
       },
       {
-        "label": "Highlights",
-        "value": "12 Items"
+        "label": "QA Coverage",
+        "value": "10 Suites · 33 Tests"
       }
     ],
     "techStack": [
-      "TypeScript",
-      "Next.js",
       "Next.js 16",
+      "React 19",
+      "TypeScript",
       "Supabase",
+      "PostgreSQL (RLS & RPC)",
+      "Tailwind CSS",
+      "Radix UI",
+      "Vitest",
       "Moyasar"
     ],
-    "summary": "Luxury bridal & occasion makeup artist platform in Riyadh with online booking, gallery, and admin CRM. Amani-KhalIi is a bilingual (Arabic-first, English second) Next.js 16 and Supabase luxury beauty booking and business management platform for Amani Khalil, a certified makeup artist providing private in-home sessions across Riyadh, Saudi Arabia. Designed to convert mobile visitors into deposit-secured bookings in under two minutes without requiring account registration, it combines SEO-targeted local landing pages, an artist-capacity-aware booking engine (Asia/Riyadh, SAR), and a full-featured /admin operations suite. Real brand & portfolio photography from public/ and public/gallery/: subgraph L2[\"2. Accountless Guest Booking Layer\"] Book[\"/book (booking-flow-client.tsx)\"] Confirm[\"/book/confirmation (Secure Manage-Booking Link)\"] end",
+    "summary": "Bilingual (Arabic-first RTL, English LTR) Next.js 16, React 19, and Supabase luxury beauty booking and studio operations platform for Amani Khalil, a CIDESCO-certified makeup artist providing private in-home sessions across Riyadh, Saudi Arabia. Designed to convert mobile and desktop visitors into deposit-secured bookings in under two minutes without account registration, combining local SEO funnels, an artist-capacity-aware booking engine (Asia/Riyadh, SAR), and a 9-module invite-only /admin operations suite.",
     "architectureHighlights": [
-      "Executive Summary & Business Utility",
-      "Visual Showcase (UI & Dashboards)",
-      "System Architecture & Layers",
-      "Data Model & Business Rules",
-      "Database Schema, Migrations & RLS",
-      "Application Modules & API Endpoints",
-      "Getting Started & Scripts",
-      "Business Value, ROI & Growth Opportunities",
-      "Timezone & Currency: Strict Asia/Riyadh (UTC+3) display with UTC database persistence and SAR pricing.",
-      "Zero Hardcoded Prices: All packages, add-ons, district travel fees, and deposit percentages live in servicepackages, addons, and riyadhareas.",
-      "Artist-Aware Capacity: Designed around 2-hour sessions and 2 sessions/day per artist (CLIENTHOME now, STUDIO ready).",
-      "Public & Booking Routes: /, /about, /services, /services/vip-bridal, /bridal-makeup-riyadh, /occasion-makeup-riyadh, /gallery, /reviews, /blog, /blog/[slug], /faq, /policies, /contact, /book, /book/confirmation"
+      "Bilingual Marketing & Local SEO Layer: Arabic-first RTL & English LTR storefronts across /, /about, /services, /services/vip-bridal, /bridal-makeup-riyadh, /occasion-makeup-riyadh, /gallery, /reviews, /blog/[slug], /faq, /policies, and /contact.",
+      "Accountless 4-Step Guest Booking (/book): Frictionless <2 min mobile & desktop booking flow with interactive package & add-on calculator, Riyadh district travel fees, skin profile form, and /book/confirmation management link.",
+      "9-Module Royal Admin Suite (/admin): Invite-only, role-gated operations dashboard covering Overview KPIs, Bookings & Schedule (CSV export), Bridal Calendar (1 VIP bride/day capacity + blackout dates), Services & Packages, Invoices & Payments (30% deposits + Apple Pay), Clients CRM (Diamond/VIP Royal loyalty tiers + skin notes), Content & Gallery moderation, Royal Blog CMS, and System Settings.",
+      "Zero Hardcoded Pricing & Business Rules: All packages, add-ons, district travel fees, 45-minute travel buffers, and deposit percentages live in service_packages, addons, and riyadh_areas with strict Asia/Riyadh (UTC+3) display and SAR currency.",
+      "Security, Migrations & RPC Layer: Server-side pricing calculation, atomic booking confirmation RPCs, invite-only admin auth (/auth/callback, proxy.ts), and Postgres Row-Level Security across migrations 002..005.",
+      "Automated QA & Testing: 10 Vitest + Testing Library test files (33 passing tests) covering UI primitives, admin chrome, notifications, and overview metrics."
     ],
     "liveDemoUrl": "https://amanikhalil.vercel.app",
     "featured": false,
-    "challenge": "Amani-KhalIi is a bilingual (Arabic-first, English second) Next.js 16 and Supabase luxury beauty booking and business management platform for Amani Khalil, a certified makeup artist providing private in-home sessions across Riyadh, Saudi Arabia. Designed to convert mobile visitors into deposit-secured bookings in under two minutes without requiring account registration, it combines SEO-targeted local landing pages, an artist-capacity-aware booking engine (Asia/Riyadh, SAR), and a full-featured /admin operations suite. Real brand & portfolio photography from public/ and public/gallery/:",
-    "solution": "Real brand & portfolio photography from public/ and public/gallery/: subgraph L2[\"2. Accountless Guest Booking Layer\"] Book[\"/book (booking-flow-client.tsx)\"] Confirm[\"/book/confirmation (Secure Manage-Booking Link)\"] end subgraph L3[\"3. Invite-Only Admin Operations Suite (/admin)\"] Admin[\"/admin/{bookings,calendar,customers,invoices,services,content,blog,settings}\"] Chrome[\"admin-chrome.tsx + Radix UI + Sonner\"] end subgraph L4[\"4. Domain Rules, Persistence & QA Layer\"] Proxy[\"proxy.ts & /auth/callback\"] Supa[\"Supabase Postgres + Server RPCs (002..005 migrations) + /api/supabase/seed\"] Tests[\"Vitest + Testing Library (admin-chrome, notifications, overview)\"] end",
+    "challenge": "Luxury bridal and occasion makeup studios in Riyadh typically lose high-intent clients to slow WhatsApp/DM back-and-forth, manual calendar double-booking, unpriced neighborhood travel fees, and fragmented spreadsheets for deposits, client skin notes, and portfolio approvals.",
+    "solution": "Architected a full-stack bilingual Next.js 16 + Supabase platform with a <2-minute accountless 4-step booking flow (/book), server-side SAR pricing & atomic confirmation RPCs, and a 9-module /admin operations suite featuring live KPI cards, 45-minute travel-buffer scheduling, bridal calendar occupancy, CRM loyalty tiers, invoicing, and consent-first review/gallery moderation.",
     "keyDecisions": [
       {
-        "title": "Core Architecture: TypeScript + Next.js + Next.js 16",
-        "rationale": "Selected TypeScript, Next.js, Next.js 16 to deliver high reliability, clean modularity, and fast iteration for Amani KhalIi.",
-        "tradeOff": "Requires adhering to the documented environment variables and runtime dependencies in the repository README."
+        "title": "Accountless 4-Step Booking vs. Forced Registration",
+        "rationale": "Eliminating signup friction lets mobile bridal and soirée clients select a package, Riyadh district, date, and deposit in under two minutes, with a secure confirmation link for managing their booking.",
+        "tradeOff": "Requires server-side RPC validation and phone/reference verification (#AK ref) instead of user session tokens."
       },
       {
-        "title": "Ecosystem Integrations: Supabase, Moyasar",
-        "rationale": "Integrated Supabase, Moyasar to handle specialized capabilities (persistence, styling, analytics, or automation) without reinventing core primitives.",
-        "tradeOff": "Introduces external library/service configuration managed via environment setup."
+        "title": "Database-Driven Pricing & Riyadh District Matrix",
+        "rationale": "Storing all packages, add-ons, travel fees, and deposit percentages in Supabase (service_packages, addons, riyadh_areas) allows the studio owner to update prices and district coverage from /admin/services and /admin/settings without code deployments.",
+        "tradeOff": "Booking pricing must be recalculated server-side at confirmation time to prevent stale client totals."
       },
       {
-        "title": "Documentation-First Repository Structure",
-        "rationale": "Maintained structured README documentation, visual assets (8 images), and clear module boundaries in islamsamyy/Amani-KhalIi.",
-        "tradeOff": "Requires keeping README documentation and screenshots synchronized as features evolve."
+        "title": "Invite-Only RBAC Admin Suite with 45-Min Travel Buffer",
+        "rationale": "Enforces artist-capacity rules (~2h sessions, 1 VIP bride/day or ~2 sessions/day, 45-minute Riyadh travel buffer) and role-gated access across 9 dedicated admin modules.",
+        "tradeOff": "Requires Supabase auth invite flow (/auth/callback) and RLS policies across all operational tables."
       }
     ],
     "systemFlow": [
-      "Executive Summary & Business Utility",
-      "Visual Showcase (UI & Dashboards)",
-      "System Architecture & Layers",
-      "Data Model & Business Rules",
-      "Database Schema, Migrations & RLS",
-      "Application Modules & API Endpoints"
+      "1. Marketing & Local SEO: Visitors arrive via Riyadh bridal/occasion landing pages, explore services, calculator, gallery, and consent-verified reviews.",
+      "2. Accountless 4-Step Booking (/book): Client selects package, add-ons, Riyadh district (auto travel fee), date/time slot, and submits skin profile.",
+      "3. Server-Side Pricing & Atomic RPC: Supabase RPC validates artist capacity, calculates SAR deposit/balance, creates customer + booking + invoice records.",
+      "4. Royal Admin Operations (/admin): Studio manages bookings, calendar blocks, 30% deposits, Diamond/VIP CRM profiles, blog posts, and gallery approvals.",
+      "5. Consent-First Social Proof: Post-session reviews and portfolio looks are moderated in /admin/content before publishing to the storefront."
     ],
     "outcomeMetrics": [
       {
-        "label": "Documentation",
-        "value": "8 KB",
-        "description": "Detailed README documentation covering architecture, features, setup, and usage."
+        "label": "Booking Speed",
+        "value": "< 2 Min",
+        "description": "4-step accountless mobile & desktop flow from service selection to deposit-secured confirmation."
       },
       {
-        "label": "Visual Assets",
-        "value": "8 Images",
-        "description": "Screenshots, analytical charts, or architecture preview cards."
+        "label": "Admin Operations",
+        "value": "9 Modules",
+        "description": "Full studio suite: Overview, Bookings, Calendar, Services, Invoices, Clients CRM, Content, Blog, and Settings."
       },
       {
-        "label": "Tech Modules",
-        "value": "5 Stack",
-        "description": "TypeScript, Next.js, Next.js 16, Supabase, Moyasar"
+        "label": "QA & Visuals",
+        "value": "33 Tests · 16 Screens",
+        "description": "10 Vitest suites passing with 16 live desktop (1440×900) public & admin dashboard screenshots."
       }
     ],
     "galleryImages": [
-      "/projects/gh-amani-khalii/screen_1_amani-hero.jpg",
-      "/projects/gh-amani-khalii/screen_2_hero_20section_20cover_20.jpeg",
-      "/projects/gh-amani-khalii/screen_3_amani_20khalil.jpg",
-      "/projects/gh-amani-khalii/screen_4_amani-1.jpg",
-      "/projects/gh-amani-khalii/screen_5_amani-2.jpg",
-      "/projects/gh-amani-khalii/screen_6_amani-3.jpg",
-      "/projects/gh-amani-khalii/screen_7_amani-client-bridal.jpg",
-      "/projects/gh-amani-khalii/screen_8_amani-mirror-glam.jpg"
+      "/projects/gh-amani-khalii/01-home.png",
+      "/projects/gh-amani-khalii/02-services.png",
+      "/projects/gh-amani-khalii/03-vip-bridal.png",
+      "/projects/gh-amani-khalii/04-gallery.png",
+      "/projects/gh-amani-khalii/05-booking-flow.png",
+      "/projects/gh-amani-khalii/06-reviews.png",
+      "/projects/gh-amani-khalii/07-admin-login.png",
+      "/projects/gh-amani-khalii/01-admin-overview.jpg",
+      "/projects/gh-amani-khalii/02-admin-bookings.png",
+      "/projects/gh-amani-khalii/03-admin-calendar.jpg",
+      "/projects/gh-amani-khalii/04-admin-services.jpg",
+      "/projects/gh-amani-khalii/05-admin-invoices.jpg",
+      "/projects/gh-amani-khalii/06-admin-customers-crm.jpg",
+      "/projects/gh-amani-khalii/07-admin-content-reviews.jpg",
+      "/projects/gh-amani-khalii/08-admin-blog.jpg",
+      "/projects/gh-amani-khalii/09-admin-settings.png"
     ],
     "steps": [
       {
-        "title": "Capability 1",
-        "description": "Executive Summary & Business Utility"
+        "title": "1. Bilingual Storefront & Riyadh SEO",
+        "description": "Arabic-first RTL & English LTR landing pages, CIDESCO credentials, VIP Bridal experience, interactive calculator, and consent-verified gallery & reviews."
       },
       {
-        "title": "Capability 2",
-        "description": "Visual Showcase (UI & Dashboards)"
+        "title": "2. Accountless 4-Step Guest Booking",
+        "description": "Under-2-minute booking flow with Riyadh neighborhood travel fees, add-ons, skin profile intake, and secure /book/confirmation link."
       },
       {
-        "title": "Capability 3",
-        "description": "System Architecture & Layers"
+        "title": "3. Royal Admin Suite (9 Modules)",
+        "description": "KPI overview, bookings & CSV export, bridal calendar occupancy, dynamic service pricing, invoices & 30% deposits, Diamond/VIP CRM, CMS, blog, and settings."
       },
       {
-        "title": "Capability 4",
-        "description": "Data Model & Business Rules"
+        "title": "4. Supabase RLS, RPCs & Vitest QA",
+        "description": "Atomic booking confirmation RPCs, invite-only admin auth, Asia/Riyadh UTC+3 persistence, and 33 passing Vitest component & admin tests."
       }
     ],
-    "readmeContent": "# Amani Khalil (`Amani-KhalIi`) — Luxury Bridal & Occasion Makeup Booking Platform (Riyadh)\n\n<p align=\"center\">\n  <img src=\"https://raw.githubusercontent.com/islamsamyy/Amani-KhalIi/main/public/ak-logo-full.png\" alt=\"Amani Khalil Studio Logo\" width=\"220\" />\n</p>\n\n## Table of Contents\n- [Executive Summary & Business Utility](#executive-summary--business-utility)\n- [Visual Showcase (UI & Dashboards)](#visual-showcase-ui--dashboards)\n- [System Architecture & Layers](#system-architecture--layers)\n- [Data Model & Business Rules](#data-model--business-rules)\n- [Database Schema, Migrations & RLS](#database-schema-migrations--rls)\n- [Application Modules & API Endpoints](#application-modules--api-endpoints)\n- [Getting Started & Scripts](#getting-started--scripts)\n- [Business Value, ROI & Growth Opportunities](#business-value-roi--growth-opportunities)\n\n---\n\n## Executive Summary & Business Utility\n`Amani-KhalIi` is a bilingual (Arabic-first, English second) Next.js 16 and Supabase luxury beauty booking and business management platform for **Amani Khalil**, a certified makeup artist providing private in-home sessions across **Riyadh, Saudi Arabia**. Designed to convert mobile visitors into deposit-secured bookings in **under two minutes without requiring account registration**, it combines SEO-targeted local landing pages, an artist-capacity-aware booking engine (`Asia/Riyadh`, `SAR`), and a full-featured `/admin` operations suite.\n\n---\n\n## Visual Showcase (UI & Dashboards)\nReal brand & portfolio photography from `public/` and `public/gallery/`:\n\n| Hero Brand Visual | Studio Portrait | Bridal Client Showcase |\n| :---: | :---: | :---: |\n| ![Amani Hero](https://raw.githubusercontent.com/islamsamyy/Amani-KhalIi/main/public/amani-hero.jpg) | ![Studio Portrait](https://raw.githubusercontent.com/islamsamyy/Amani-KhalIi/main/public/amani-studio-portrait.jpg) | ![Bridal Client](https://raw.githubusercontent.com/islamsamyy/Amani-KhalIi/main/public/amani-client-bridal.jpg) |\n\n| Gallery Look 1 | Gallery Look 2 | Gallery Look 3 |\n| :---: | :---: | :---: |\n| ![Look 1](https://raw.githubusercontent.com/islamsamyy/Amani-KhalIi/main/public/gallery/IMG_5729.webp) | ![Look 2](https://raw.githubusercontent.com/islamsamyy/Amani-KhalIi/main/public/gallery/IMG_5730.webp) | ![Look 3](https://raw.githubusercontent.com/islamsamyy/Amani-KhalIi/main/public/gallery/IMG_5731.webp) |\n\n---\n\n## System Architecture & Layers\n\n```mermaid\nflowchart TB\n    subgraph L1[\"1. Bilingual Marketing & Local SEO Layer\"]\n        Home[\"/ • /about • /services • /services/vip-bridal • /gallery • /reviews • /blog/[slug] • /faq • /policies • /contact\"]\n        LocalSEO[\"/bridal-makeup-riyadh • /occasion-makeup-riyadh\"]\n    end\n\n    subgraph L2[\"2. Accountless Guest Booking Layer\"]\n        Book[\"/book (booking-flow-client.tsx)\"]\n        Confirm[\"/book/confirmation (Secure Manage-Booking Link)\"]\n    end\n\n    subgraph L3[\"3. Invite-Only Admin Operations Suite (/admin)\"]\n        Admin[\"/admin/{bookings,calendar,customers,invoices,services,content,blog,settings}\"]\n        Chrome[\"admin-chrome.tsx + Radix UI + Sonner\"]\n    end\n\n    subgraph L4[\"4. Domain Rules, Persistence & QA Layer\"]\n        Proxy[\"proxy.ts & /auth/callback\"]\n        Supa[\"Supabase Postgres + Server RPCs (002..005 migrations) + /api/supabase/seed\"]\n        Tests[\"Vitest + Testing Library (admin-chrome, notifications, overview)\"]\n    end\n\n    L1 --> L2 --> L4\n    L3 --> L4\n```\n\n| Layer | Responsibility | Key Files |\n| :--- | :--- | :--- |\n| **Marketing & Local SEO Layer** | Arabic-first trust building, animated studio banner, scroll reveals, and Riyadh SEO funnels | `app/(marketing)/*`, `app/{bridal-makeup-riyadh,occasion-makeup-riyadh,services/vip-bridal}/page.tsx` |\n| **Guest Booking Layer** | Frictionless <2 min mobile booking flow with phone verification, Riyadh district travel fees, and confirmation | `app/book/_components/booking-flow-client.tsx`, `app/book/confirmation/_components/confirmation-client.tsx` |\n| **Admin Operations Layer** | Role-gated calendar, booking triage, customer CRM, invoicing, dynamic service pricing, and CMS | `app/admin/{bookings,calendar,customers,invoices,services,content,blog,settings}/page.tsx` |\n| **Security & RPC Layer** | Server-side pricing calculation, atomic booking confirmation RPCs, and invite-only admin auth | `proxy.ts`, `supabase/migrations/002..005*.sql` |\n| **QA & Component Layer** | Radix UI primitives and Vitest component/admin tests | `components/ui/*`, `components/__tests__/*`, `app/admin/_components/__tests__/admin-overview.test.tsx` |\n\n---\n\n## Data Model & Business Rules\n- **Timezone & Currency**: Strict `Asia/Riyadh` (UTC+3) display with UTC database persistence and `SAR` pricing.\n- **Zero Hardcoded Prices**: All packages, add-ons, district travel fees, and deposit percentages live in `service_packages`, `addons`, and `riyadh_areas`.\n- **Artist-Aware Capacity**: Designed around ~2-hour sessions and ~2 sessions/day per artist (`CLIENT_HOME` now, `STUDIO` ready).\n\n```mermaid\nerDiagram\n    SERVICE_PACKAGES ||--o{ BOOKINGS : selected_in\n    RIYADH_AREAS ||--o{ BOOKINGS : determines_travel_fee\n    CUSTOMERS ||--o{ BOOKINGS : places\n    BOOKINGS ||--o| INVOICES : generates\n    BOOKINGS ||--o| REVIEWS : unlocks_consent_review\n```\n\n---\n\n## Database Schema, Migrations & RLS\nDefined across `supabase/schema.sql` and `supabase/migrations/002_relations_security_rpc.sql` through `005_admin_delete_operations.sql`:\n\n| Table | Purpose |\n| :--- | :--- |\n| `public.admin_users` | Invite-only admin accounts & RBAC roles |\n| `public.service_packages` | Dynamic bridal, VIP, and occasion makeup packages & SAR pricing |\n| `public.addons` | Optional add-on services (e.g., hair, trial session, extra guests) |\n| `public.riyadh_areas` | Riyadh neighborhoods and travel fee matrix |\n| `public.customers` | Guest & repeat client CRM records |\n| `public.bookings` | Core appointments, artist assignment, location type, deposit status |\n| `public.invoices` | Booking invoices & payment tracking |\n| `public.blocked_dates` | Calendar availability & blackout dates |\n| `public.reviews`, `public.gallery_looks`, `public.blog_posts`, `public.faqs` | Social proof & CMS content |\n\n---\n\n## Application Modules & API Endpoints\n- **Public & Booking Routes**: `/`, `/about`, `/services`, `/services/vip-bridal`, `/bridal-makeup-riyadh`, `/occasion-makeup-riyadh`, `/gallery`, `/reviews`, `/blog`, `/blog/[slug]`, `/faq`, `/policies`, `/contact`, `/book`, `/book/confirmation`\n- **Admin Routes**: `/admin`, `/admin/login`, `/admin/bookings`, `/admin/calendar`, `/admin/customers`, `/admin/invoices`, `/admin/services`, `/admin/services/new`, `/admin/content`, `/admin/blog`, `/admin/settings`\n- **API Endpoints**:\n  - `app/api/supabase/seed/route.ts` — Database seed initializer\n  - `app/auth/callback/route.ts` — Supabase invite/auth callback\n\n---\n\n## Getting Started & Scripts\n\n```bash\ngit clone https://github.com/islamsamyy/Amani-KhalIi.git\ncd Amani-KhalIi\nnpm install\n```\n\n| Script | Command | Description |\n| :--- | :--- | :--- |\n| Dev | `npm run dev` | Start Next.js 16 dev server |\n| Build | `npm run build` | Production build |\n| Start | `npm run start` | Serve production build |\n| Lint | `npm run lint` | Run ESLint 9 |\n| Test | `npm test` | Run Vitest suite |\n\n---\n\n## Business Value, ROI & Growth Opportunities\n- **Direct Revenue Without Marketplace Fees**: Eliminates manual WhatsApp/DM scheduling friction and retains 100% of bridal/VIP margins.\n- **Multi-Artist Studio Scaling**: Because scheduling and location (`CLIENT_HOME` / `STUDIO`) are already data-driven, Amani can onboard junior artists and operate as a Riyadh luxury beauty agency taking a commission per booking.\n- **Saudi Payments & BNPL (Moyasar / Tabby / Tamara)**: Integrating local Mada, Apple Pay, and Tabby/Tamara installments on `/book` directly lifts high-ticket VIP Bridal conversions.\n- **Automated WhatsApp Lifecycle**: Trigger pre-appointment prep guides and post-session consent review links automatically to compound organic trust.\n",
+    "readmeContent": `# Amani Khalil (\`Amani-KhalIi\`) — Luxury Bridal & Occasion Makeup Booking Platform (Riyadh)
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/islamsamyy/Amani-KhalIi/main/public/ak-logo-full.png" alt="Amani Khalil Studio Logo" width="220" />
+</p>
+
+## Table of Contents
+- [Executive Summary & Business Utility](#executive-summary--business-utility)
+- [Full System Screenshots (UI & Dashboards)](#full-system-screenshots-ui--dashboards)
+- [System Architecture & Layers](#system-architecture--layers)
+- [Data Model & Business Rules](#data-model--business-rules)
+- [Database Schema, Migrations & RLS](#database-schema-migrations--rls)
+- [Application Modules & API Endpoints](#application-modules--api-endpoints)
+- [Getting Started, Scripts & Testing](#getting-started-scripts--testing)
+- [Business Value, ROI & Growth Opportunities](#business-value-roi--growth-opportunities)
+
+---
+
+## Executive Summary & Business Utility
+\`Amani-KhalIi\` is a bilingual (Arabic-first RTL, English LTR) **Next.js 16.4.6**, **React 19**, and **Supabase** luxury beauty booking and studio operations platform for **Amani Khalil**, a CIDESCO-certified makeup artist providing private in-home sessions across **Riyadh, Saudi Arabia**.
+
+Designed to convert mobile and desktop visitors into deposit-secured bookings in **under two minutes without requiring account registration**, it combines SEO-targeted local landing pages, an artist-capacity-aware booking engine (\`Asia/Riyadh\`, \`SAR\`), and a full-featured \`/admin\` operations suite.
+
+---
+
+## Full System Screenshots (UI & Dashboards)
+Live screenshots captured from the running Next.js application (\`1440x900\` desktop viewport):
+
+### 1. Public Marketing, Services & Trust Layer
+| Home Page (\`/\`) | Services & Interactive Calculator (\`/services\`) |
+| :---: | :---: |
+| ![Home Page](https://raw.githubusercontent.com/islamsamyy/Amani-KhalIi/main/docs/screenshots/01-home.png) | ![Services Page](https://raw.githubusercontent.com/islamsamyy/Amani-KhalIi/main/docs/screenshots/02-services.png) |
+
+| VIP Bridal Experience (\`/services/vip-bridal\`) | Portfolio Gallery (\`/gallery\`) |
+| :---: | :---: |
+| ![VIP Bridal](https://raw.githubusercontent.com/islamsamyy/Amani-KhalIi/main/docs/screenshots/03-vip-bridal.png) | ![Gallery](https://raw.githubusercontent.com/islamsamyy/Amani-KhalIi/main/docs/screenshots/04-gallery.png) |
+
+### 2. Guest Booking Flow, Social Proof & Admin Portal
+| 4-Step Guest Booking Flow (\`/book\`) | Verified Client Reviews (\`/reviews\`) |
+| :---: | :---: |
+| ![Booking Flow](https://raw.githubusercontent.com/islamsamyy/Amani-KhalIi/main/docs/screenshots/05-booking-flow.png) | ![Reviews](https://raw.githubusercontent.com/islamsamyy/Amani-KhalIi/main/docs/screenshots/06-reviews.png) |
+
+| Invite-Only Admin Portal Login (\`/admin/login\`) |
+| :---: |
+| ![Admin Login](https://raw.githubusercontent.com/islamsamyy/Amani-KhalIi/main/docs/screenshots/07-admin-login.png) |
+
+### 3. Royal Admin Suite (\`/admin\`) — Dashboard & Functionality
+The invite-only, role-gated admin dashboard provides end-to-end operational control in both Arabic and English, with global instant search (\`#AK\` ref, client name, phone, status), manual booking creation, light/dark mode, and real-time notifications:
+
+| Overview & Activity (\`/admin\`) | Bookings & Schedule (\`/admin/bookings\`) | Bridal Calendar (\`/admin/calendar\`) |
+| :---: | :---: | :---: |
+| ![Admin Overview](https://raw.githubusercontent.com/islamsamyy/Amani-KhalIi/main/docs/screenshots/admin/01-admin-overview.jpg) | ![Admin Bookings](https://raw.githubusercontent.com/islamsamyy/Amani-KhalIi/main/docs/screenshots/admin/02-admin-bookings.png) | ![Admin Calendar](https://raw.githubusercontent.com/islamsamyy/Amani-KhalIi/main/docs/screenshots/admin/03-admin-calendar.jpg) |
+
+| Services & Packages (\`/admin/services\`) | Invoices & Payments (\`/admin/invoices\`) | Clients CRM (\`/admin/customers\`) |
+| :---: | :---: | :---: |
+| ![Admin Services](https://raw.githubusercontent.com/islamsamyy/Amani-KhalIi/main/docs/screenshots/admin/04-admin-services.jpg) | ![Admin Invoices](https://raw.githubusercontent.com/islamsamyy/Amani-KhalIi/main/docs/screenshots/admin/05-admin-invoices.jpg) | ![Admin CRM](https://raw.githubusercontent.com/islamsamyy/Amani-KhalIi/main/docs/screenshots/admin/06-admin-customers-crm.jpg) |
+
+| Content, Reviews & Gallery (\`/admin/content\`) | Royal Blog & Journal (\`/admin/blog\`) | System Settings & Access (\`/admin/settings\`) |
+| :---: | :---: | :---: |
+| ![Admin Content](https://raw.githubusercontent.com/islamsamyy/Amani-KhalIi/main/docs/screenshots/admin/07-admin-content-reviews.jpg) | ![Admin Blog](https://raw.githubusercontent.com/islamsamyy/Amani-KhalIi/main/docs/screenshots/admin/08-admin-blog.jpg) | ![Admin Settings](https://raw.githubusercontent.com/islamsamyy/Amani-KhalIi/main/docs/screenshots/admin/09-admin-settings.png) |
+
+| Admin Module | Route | Key Functionality |
+| :--- | :--- | :--- |
+| **Overview & Activity** | \`/admin\` | Live KPI cards (active contracts, total bookings, collected deposits & remaining balances, pending deposit requests), upcoming sessions with automatic travel buffer (\`45 min\`), pending bride alerts, and featured gallery look |
+| **Bookings & Schedule** | \`/admin/bookings\` | Track bridal & soirée appointments, filter by status (All / Confirmed / Pending / Completed), search by name/\`#AK\` ref/phone, add manual bookings, inspect/delete records, and **Export Bookings CSV** |
+| **Bridal Calendar** | \`/admin/calendar\` | Monthly occupancy view, artist capacity indicator (\`1 VIP bride/day\`), per-day schedule inspector, and one-click date blocking/holidays |
+| **Services & Packages** | \`/admin/services\` | Create, edit, pause/activate, or delete storefront packages, durations, deposit percentages, and feature bullets without code changes |
+| **Invoices & Payments** | \`/admin/invoices\` | Real-time financial summary (total contracts, 30% collected deposits, remaining due on event day), payment method tracking (e.g., Apple Pay), invoice inspection, and **Export Financial CSV** |
+| **Clients CRM** | \`/admin/customers\` | Private client profiles with loyalty tiers (\`Diamond\`, \`VIP Royal\`), booking count, skin type & undertone, preferred palettes/products, private artist notes, and direct **Call / WhatsApp** actions |
+| **Content & Gallery** | \`/admin/content\` | Moderate and approve client reviews, feature testimonials on the homepage, manage portfolio gallery looks, and edit official contract/policy clauses |
+| **Blog & Journal** | \`/admin/blog\` | Create, edit, publish/unpublish, and feature beauty & bridal preparation articles with categories, reading time, and SEO tags |
+| **Settings & Access** | \`/admin/settings\` | Configure studio identity, official WhatsApp number, max daily sessions per artist, automatic travel buffer, deposit rules, Riyadh district coverage/fees, and WhatsApp templates |
+
+---
+
+## System Architecture & Layers
+
+\`\`\`mermaid
+flowchart TB
+    subgraph L1["1. Bilingual Marketing & Local SEO Layer"]
+        Home["/ • /about • /services • /services/vip-bridal • /gallery • /reviews • /blog/[slug] • /faq • /policies • /contact"]
+        LocalSEO["/bridal-makeup-riyadh • /occasion-makeup-riyadh"]
+    end
+
+    subgraph L2["2. Accountless Guest Booking Layer"]
+        Book["/book (booking-flow-client.tsx)"]
+        Confirm["/book/confirmation (Secure Manage-Booking Link)"]
+    end
+
+    subgraph L3["3. Invite-Only Admin Operations Suite (/admin)"]
+        Admin["/admin/{bookings,calendar,customers,invoices,services,content,blog,settings}"]
+        Chrome["admin-chrome.tsx + Radix UI + Sonner"]
+    end
+
+    subgraph L4["4. Domain Rules, Persistence & QA Layer"]
+        Proxy["proxy.ts & /auth/callback"]
+        Supa["Supabase Postgres + Server RPCs (002..005 migrations) + /api/supabase/seed"]
+        Tests["Vitest 4 + Testing Library (10 test files, 33 tests)"]
+    end
+
+    L1 --> L2 --> L4
+    L3 --> L4
+\`\`\`
+
+| Layer | Responsibility | Key Files |
+| :--- | :--- | :--- |
+| **Marketing & Local SEO Layer** | Arabic-first trust building, CIDESCO badge, signature styles, and Riyadh SEO funnels | \`app/page.tsx\`, \`app/{bridal-makeup-riyadh,occasion-makeup-riyadh,services/vip-bridal}/page.tsx\` |
+| **Guest Booking Layer** | Frictionless <2 min 4-step booking flow with Riyadh district travel fees, add-ons, skin form, and confirmation | \`app/book/page.tsx\`, \`app/book/confirmation/page.tsx\`, \`features/booking/pricing.ts\` |
+| **Admin Operations Layer** | Role-gated calendar, booking triage, customer CRM, invoicing, dynamic service pricing, and CMS | \`app/admin/{bookings,calendar,customers,invoices,services,content,blog,settings}/page.tsx\` |
+| **Security & RPC Layer** | Server-side pricing calculation, atomic booking confirmation RPCs, and invite-only admin auth | \`proxy.ts\`, \`lib/supabase/*\`, \`supabase/migrations/002..005*.sql\` |
+| **QA & Component Layer** | Radix UI primitives and Vitest component/admin tests | \`components/ui/*\`, \`components/__tests__/*\`, \`app/admin/_components/__tests__/admin-overview.test.tsx\` |
+
+---
+
+## Data Model & Business Rules
+- **Timezone & Currency:** Strict \`Asia/Riyadh\` (UTC+3) display with UTC database persistence and \`SAR\` pricing.
+- **Zero Hardcoded Prices:** All packages, add-ons, district travel fees, and deposit percentages live in \`service_packages\`, \`addons\`, and \`riyadh_areas\` and are editable from \`/admin/services\` and \`/admin/settings\`.
+- **Artist-Aware Capacity:** Designed around ~2-hour sessions and ~2 sessions/day per artist (\`CLIENT_HOME\` active, \`STUDIO\` ready).
+- **Consent-First Social Proof:** Reviews and gallery photos are published only with explicit client consent.
+
+---
+
+## Database Schema, Migrations & RLS
+Defined across \`supabase/schema.sql\` and migrations \`002_relations_security_rpc.sql\` through \`005_admin_delete_operations.sql\`:
+
+| Table | Purpose |
+| :--- | :--- |
+| \`public.admin_users\` | Invite-only admin accounts & RBAC roles |
+| \`public.service_packages\` | Dynamic bridal, VIP, and occasion makeup packages & SAR pricing |
+| \`public.addons\` | Optional add-on services (hair styling, trial session, extra guests) |
+| \`public.riyadh_areas\` | Riyadh neighborhoods and travel fee matrix |
+| \`public.customers\` | Guest & repeat client CRM records |
+| \`public.bookings\` | Core appointments, artist assignment, location type, deposit status |
+| \`public.invoices\` | Booking invoices & payment tracking |
+| \`public.blocked_dates\` | Calendar availability & blackout dates |
+| \`public.reviews\`, \`public.gallery_looks\`, \`public.blog_posts\`, \`public.faqs\` | Social proof & CMS content |
+
+---
+
+## Application Modules & API Endpoints
+- **Public & Booking Routes:** \`/\`, \`/about\`, \`/services\`, \`/services/vip-bridal\`, \`/bridal-makeup-riyadh\`, \`/occasion-makeup-riyadh\`, \`/gallery\`, \`/reviews\`, \`/blog\`, \`/blog/[slug]\`, \`/faq\`, \`/policies\`, \`/contact\`, \`/book\`, \`/book/confirmation\`
+- **Admin Routes:** \`/admin\`, \`/admin/login\`, \`/admin/bookings\`, \`/admin/calendar\`, \`/admin/customers\`, \`/admin/invoices\`, \`/admin/services\`, \`/admin/services/new\`, \`/admin/content\`, \`/admin/blog\`, \`/admin/settings\`
+- **API & Auth Endpoints:**
+  - \`app/api/supabase/seed/route.ts\` — Database seed initializer
+  - \`app/auth/callback/route.ts\` — Supabase invite/auth callback
+
+---
+
+## Getting Started, Scripts & Testing
+
+\`\`\`bash
+git clone https://github.com/islamsamyy/Amani-KhalIi.git
+cd Amani-KhalIi
+npm install
+\`\`\`
+
+| Script | Command | Description |
+| :--- | :--- | :--- |
+| Dev | \`npm run dev\` | Start Next.js 16 dev server |
+| Build | \`npm run build\` | Production build |
+| Start | \`npm run start\` | Serve production build |
+| Lint | \`npm run lint\` | Run ESLint 9 |
+| Test | \`npm test\` | Run Vitest suite (\`10\` test files, \`33\` tests passing) |
+
+---
+
+## Business Value, ROI & Growth Opportunities
+- **Direct Revenue Without Marketplace Fees:** Eliminates manual WhatsApp/DM scheduling friction and retains 100% of bridal/VIP margins.
+- **Higher Average Order Value (AOV):** Interactive add-ons and transparent Riyadh neighborhood travel pricing lift per-booking revenue.
+- **Multi-Artist Studio Scaling:** Because scheduling and location (\`CLIENT_HOME\` / \`STUDIO\`) are data-driven, Amani can onboard junior artists and operate as a Riyadh luxury beauty agency taking a commission per booking.
+- **Saudi Payments & BNPL (Moyasar / Tabby / Tamara):** Integrating local Mada, Apple Pay, and Tabby/Tamara installments on \`/book\` directly lifts high-ticket VIP Bridal conversions.
+- **Automated WhatsApp Lifecycle:** Trigger pre-appointment prep guides and post-session consent review links automatically to compound organic trust.`,
     "githubUrl": "https://github.com/islamsamyy/Amani-KhalIi"
   },
   {

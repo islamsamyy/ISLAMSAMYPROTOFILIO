@@ -3,6 +3,7 @@ export interface CertificationItem {
   title: string;
   issuer: string;
   issuerLogo?: string;
+  imageUrl?: string;
   issueDate: string;
   credentialId?: string;
   verificationUrl?: string;
@@ -99,14 +100,14 @@ export const initialCertifications: CertificationItem[] = [
   },
   {
     id: 'cert-masters-prog',
-    title: 'Master of Science in Business Information Systems',
-    issuer: 'Tanta University (In Progress)',
-    issueDate: '2024 – Present',
-    credentialId: 'TU-MS-ENROLLED',
+    title: "Pre-Master's Degree in Business Information Systems (BIS)",
+    issuer: 'Tanta University',
+    issueDate: 'Completed',
+    credentialId: 'TU-PRE-MS-BIS',
     verificationUrl: 'https://tanta.edu.eg',
     category: 'Academic',
-    status: 'In Progress',
+    status: 'Verified',
     skills: ['Distributed Lakehouses', 'Advanced Predictive Models', 'Big Data Engineering', 'Research'],
-    description: 'Postgraduate research exploring scalable distributed ingestion, real-time lakehouses, and high-precision machine learning inference for enterprise systems.',
+    description: 'Postgraduate Pre-Master’s degree in Business Information Systems (BIS) exploring scalable distributed ingestion, real-time lakehouses, and high-precision machine learning inference for enterprise systems.',
   },
 ];

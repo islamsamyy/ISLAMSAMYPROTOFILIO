@@ -53,16 +53,8 @@ export default function ProjectsPage() {
   const { t, language } = useLanguage();
   const isArabic = language === 'ar';
 
-  const [scopeFilter, setScopeFilter] = useState<ScopeFilter>('all');
   const [selectedCategory, setSelectedCategory] = useState<string>('All Projects');
-  const [selectedTech, setSelectedTech] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
-  const [sortBy, setSortBy] = useState<SortOption>('curated');
-  const [viewMode, setViewMode] = useState<ViewMode>('grid');
-  const [showAllFeatured, setShowAllFeatured] = useState(false);
-  const [showAllRepos, setShowAllRepos] = useState(false);
-  const [repoSubCategory, setRepoSubCategory] = useState<string>('All');
-
   const [activeBlueprint, setActiveBlueprint] = useState<ProjectItem | null>(null);
   const [slideIndex, setSlideIndex] = useState(0);
   const [activeSubImageIdx, setActiveSubImageIdx] = useState(0);
@@ -159,16 +151,11 @@ export default function ProjectsPage() {
       .slice(0, 14);
   }, [projects]);
 
-  // Filtered & sorted projects
+  // Filtered projects (all projects together in one list)
   const filteredProjects = useMemo(() => {
     const q = searchQuery.trim().toLowerCase();
-    const list = projects.filter((p) => {
-      if (scopeFilter === 'featured' && !p.featured) return false;
-      if (scopeFilter === 'repo' && p.featured) return false;
+    return projects.filter((p) => {
       if (selectedCategory !== 'All Projects' && p.category !== selectedCategory) return false;
-      if (selectedTech && !p.techStack.some((t) => t.toLowerCase() === selectedTech.toLowerCase())) {
-        return false;
-      }
       if (!q) return true;
       return (
         p.title.toLowerCase().includes(q) ||
@@ -177,54 +164,7 @@ export default function ProjectsPage() {
         p.techStack.some((t) => t.toLowerCase().includes(q))
       );
     });
-
-    if (sortBy === 'visuals') {
-      return [...list].sort((a, b) => (b.galleryImages?.length || 0) - (a.galleryImages?.length || 0));
-    }
-    if (sortBy === 'stack') {
-      return [...list].sort((a, b) => b.techStack.length - a.techStack.length);
-    }
-    if (sortBy === 'alpha') {
-      return [...list].sort((a, b) => a.title.localeCompare(b.title));
-    }
-    return list;
-  }, [projects, scopeFilter, selectedCategory, selectedTech, searchQuery, sortBy]);
-
-  const hasActiveFilter =
-    scopeFilter !== 'all' ||
-    selectedCategory !== 'All Projects' ||
-    Boolean(selectedTech) ||
-    Boolean(searchQuery.trim()) ||
-    sortBy !== 'curated';
-
-  const resetAllFilters = () => {
-    setScopeFilter('all');
-    setSelectedCategory('All Projects');
-    setSelectedTech(null);
-    setSearchQuery('');
-    setSortBy('curated');
-    setRepoSubCategory('All');
-  };
-
-  const featuredList = filteredProjects.filter((p) => p.featured);
-  const repoList = filteredProjects.filter((p) => !p.featured);
-
-  const signatureTrio = !hasActiveFilter && viewMode === 'grid' ? featuredList.slice(0, 3) : [];
-  const remainingFeatured =
-    !hasActiveFilter && viewMode === 'grid' ? featuredList.slice(3) : featuredList;
-  const visibleRemainingFeatured =
-    hasActiveFilter || showAllFeatured || viewMode === 'compact'
-      ? remainingFeatured
-      : remainingFeatured.slice(0, 6);
-
-  const filteredRepoList =
-    repoSubCategory === 'All'
-      ? repoList
-      : repoList.filter((p) => p.category === repoSubCategory);
-  const visibleRepos =
-    hasActiveFilter || showAllRepos || viewMode === 'compact'
-      ? filteredRepoList
-      : filteredRepoList.slice(0, 6);
+  }, [projects, selectedCategory, searchQuery]);
 
   const totalFlagshipCount = projects.filter((p) => p.featured).length;
   const totalRepoCount = projects.length - totalFlagshipCount;
@@ -567,447 +507,67 @@ export default function ProjectsPage() {
             );
           })()}
 
-          {/* SECTION 4: STICKY DISCOVERY & FILTER COMMAND BAR */}
-          <div id="project-explorer" className="scroll-mt-24 sticky top-20 z-30">
-            <div className="flex flex-col gap-3 p-4 sm:p-5 rounded-3xl bg-surface-container-low/90 dark:bg-surface-container-low/85 backdrop-blur-2xl border border-outline-variant/30 dark:border-white/[0.1] shadow-[0_12px_36px_rgba(0,0,0,0.18)] dark:shadow-[0_12px_36px_rgba(0,0,0,0.45)]">
-              {/* Top Row: Scope Switcher + Search + Sort + View Mode */}
-              <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-3">
-                {/* Scope Tabs */}
-                <div className="flex flex-wrap items-center gap-1.5 p-1 rounded-2xl bg-surface-container-lowest/90 border border-outline-variant/20 w-fit">
-                  {[
-                    { id: 'all', label: isArabic ? 'الكل' : 'All Work', count: projects.length },
-                    { id: 'featured', label: isArabic ? 'دراسات مميزة' : 'Flagship Studies', count: totalFlagshipCount },
-                    { id: 'repo', label: isArabic ? 'مستودعات GitHub' : 'GitHub Repos', count: totalRepoCount },
-                  ].map((tab) => (
-                    <button
-                      key={tab.id}
-                      type="button"
-                      onClick={() => setScopeFilter(tab.id as ScopeFilter)}
-                      className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all flex items-center gap-1.5 ${
-                        scopeFilter === tab.id
-                          ? 'bg-primary-container text-on-primary-container shadow-sm'
-                          : 'text-on-surface-variant hover:text-on-surface'
-                      }`}
-                    >
-                      <span>{tab.label}</span>
-                      <span className="px-1.5 py-0.5 rounded-full bg-black/15 dark:bg-black/25 text-[10px] font-mono">
-                        {tab.count}
-                      </span>
-                    </button>
-                  ))}
-                </div>
-
-                {/* Search, Sort & Density Controls */}
-                <div className="flex flex-wrap sm:flex-nowrap items-center gap-2.5 flex-1 xl:justify-end">
-                  <div className="relative flex-1 sm:max-w-xs">
-                    <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-base">
-                      search
-                    </span>
-                    <input
-                      type="text"
-                      placeholder={t('pages.projectsSearchPlaceholder', 'Search client, title, stack...')}
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      className="w-full pl-9 pr-8 py-2 rounded-xl bg-surface-container-lowest border border-outline-variant/30 text-xs text-on-surface placeholder:text-on-surface-variant/50 focus:outline-none focus:ring-2 focus:ring-primary"
-                    />
-                    {searchQuery && (
-                      <button
-                        type="button"
-                        onClick={() => setSearchQuery('')}
-                        aria-label="Clear project search"
-                        className="absolute right-2.5 top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-on-surface p-0.5"
-                      >
-                        <X className="w-3.5 h-3.5" />
-                      </button>
-                    )}
-                  </div>
-
-                  <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-surface-container-lowest border border-outline-variant/30">
-                    <SlidersHorizontal className="w-3.5 h-3.5 text-on-surface-variant" />
-                    <select
-                      value={sortBy}
-                      onChange={(e) => setSortBy(e.target.value as SortOption)}
-                      aria-label="Sort projects"
-                      className="bg-transparent text-xs text-on-surface focus:outline-none font-mono"
-                    >
-                      <option value="curated">{isArabic ? 'الترتيب المختار' : 'Curated Order'}</option>
-                      <option value="visuals">{isArabic ? 'الأكثر صوراً' : 'Most Visuals'}</option>
-                      <option value="stack">{isArabic ? 'الأغنى تقنياً' : 'Tech Depth'}</option>
-                      <option value="alpha">{isArabic ? 'أبجدياً' : 'A – Z'}</option>
-                    </select>
-                  </div>
-
-                  <div className="flex items-center p-1 rounded-xl bg-surface-container-lowest border border-outline-variant/30">
-                    <button
-                      type="button"
-                      onClick={() => setViewMode('grid')}
-                      aria-label="Gallery grid view"
-                      title="Gallery grid view"
-                      className={`p-1.5 rounded-lg transition-colors ${
-                        viewMode === 'grid'
-                          ? 'bg-primary-container text-on-primary-container'
-                          : 'text-on-surface-variant hover:text-on-surface'
-                      }`}
-                    >
-                      <LayoutGrid className="w-4 h-4" />
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setViewMode('compact')}
-                      aria-label="Compact directory list view"
-                      title="Compact directory list view"
-                      className={`p-1.5 rounded-lg transition-colors ${
-                        viewMode === 'compact'
-                          ? 'bg-primary-container text-on-primary-container'
-                          : 'text-on-surface-variant hover:text-on-surface'
-                      }`}
-                    >
-                      <List className="w-4 h-4" />
-                    </button>
-                  </div>
-                </div>
+          {/* UNIFIED ALL-PROJECTS GALLERY (NO FILTERS IN BETWEEN) */}
+          <section id="project-explorer" className="scroll-mt-24 flex flex-col gap-6">
+            <div className="flex flex-wrap items-end justify-between gap-4 border-b border-outline-variant/20 pb-4">
+              <div className="flex flex-col gap-1">
+                <span className="font-mono text-xs uppercase tracking-widest text-secondary font-bold">
+                  {isArabic ? 'كافة المشاريع ودراسات الحالة' : 'Complete Engineering Portfolio'}
+                </span>
+                <h2 className="font-nexa text-2xl sm:text-3xl font-extrabold text-on-surface">
+                  {isArabic ? 'جميع المشاريع' : 'All Projects'} ({filteredProjects.length})
+                </h2>
               </div>
 
-              {/* Bottom Row: Domain Pills + Active Tech Chip + Result Count */}
-              <div className="flex flex-wrap items-center justify-between gap-3 pt-2.5 border-t border-outline-variant/15">
-                <div className="flex flex-wrap items-center gap-1.5">
-                  {CATEGORIES.map((cat) => {
-                    const count =
-                      cat === 'All Projects'
-                        ? projects.length
-                        : projects.filter((p) => p.category === cat).length;
-                    const active = selectedCategory === cat;
-                    return (
-                      <button
-                        key={cat}
-                        type="button"
-                        onClick={() => setSelectedCategory(cat)}
-                        className={`px-3 py-1 rounded-full text-[11px] font-medium transition-all flex items-center gap-1.5 ${
-                          active
-                            ? 'bg-secondary/20 text-secondary border border-secondary/40 font-bold'
-                            : 'text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high/60'
-                        }`}
-                      >
-                        <span>{CATEGORY_MAP[cat] || cat}</span>
-                        <span className="opacity-70 font-mono text-[10px]">({count})</span>
-                      </button>
-                    );
-                  })}
-
-                  {selectedTech && (
-                    <button
-                      type="button"
-                      onClick={() => setSelectedTech(null)}
-                      className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-primary text-on-primary text-[11px] font-mono font-bold shadow-sm"
-                    >
-                      <span>Tech: {selectedTech}</span>
-                      <X className="w-3 h-3" />
-                    </button>
-                  )}
-                </div>
-
-                <div className="flex items-center gap-3 text-[11px] font-mono text-on-surface-variant">
-                  <span>
-                    {isArabic
-                      ? `عرض ${filteredProjects.length} من ${projects.length}`
-                      : `${filteredProjects.length} of ${projects.length} matching`}
-                  </span>
-                  {hasActiveFilter && (
-                    <button
-                      type="button"
-                      onClick={resetAllFilters}
-                      className="text-primary hover:underline font-semibold"
-                    >
-                      {isArabic ? 'إعادة ضبط' : 'Reset'}
-                    </button>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* PROJECT SECTIONS */}
-          {!loaded && projects.length === 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-7">
-              {[0, 1, 2, 3, 4, 5].map((skeleton) => (
-                <div
-                  key={skeleton}
-                  className="h-[440px] rounded-3xl bg-surface-container-low/50 border border-outline-variant/20 animate-pulse"
+              <div className="flex items-center gap-2 w-full sm:w-auto">
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder={isArabic ? 'ابحث في المشاريع...' : 'Search projects...'}
+                  className="w-full sm:w-72 px-3.5 py-2 rounded-xl bg-surface-container-low/80 border border-outline-variant/30 text-xs text-on-surface placeholder:text-on-surface-variant/60 focus:outline-none focus:ring-2 focus:ring-primary"
                 />
-              ))}
-            </div>
-          ) : filteredProjects.length > 0 ? (
-            <div className="flex flex-col gap-16">
-              {/* SECTION 5: FLAGSHIP CASE STUDIES */}
-              {featuredList.length > 0 && (
-                <section id="featured-case-studies" className="flex flex-col gap-8 scroll-mt-44">
-                  <div className="flex flex-wrap items-end justify-between gap-3 border-b border-outline-variant/20 pb-4">
-                    <div className="flex flex-col gap-1">
-                      <span className="font-mono text-xs text-primary uppercase tracking-widest font-semibold">
-                        01 &bull; {isArabic ? 'دراسات الحالة المميزة' : 'Flagship Production Systems'}
-                      </span>
-                      <h2 className="font-nexa text-2xl sm:text-3xl font-extrabold text-on-surface">
-                        {isArabic ? 'مشاريع المؤسسات المميزة' : 'Featured Enterprise Case Studies'}
-                      </h2>
-                    </div>
-                    <span className="px-3.5 py-1 rounded-full bg-primary/15 border border-primary/30 text-xs font-mono text-primary font-semibold">
-                      {featuredList.length} {featuredList.length === 1 ? 'Case Study' : 'Case Studies'}
-                    </span>
-                  </div>
-
-                  {/* Signature Flagship Trio (Top 3 highlighted in default gallery view) */}
-                  {signatureTrio.length > 0 && (
-                    <div className="flex flex-col gap-4">
-                      <div className="flex items-center gap-2 text-xs font-mono text-secondary uppercase tracking-wider font-semibold">
-                        <Sparkles className="w-3.5 h-3.5" />
-                        <span>{isArabic ? 'أبرز 3 دراسات حالة قيادية' : 'Signature Architecture Trio'}</span>
-                      </div>
-                      <div className="grid grid-cols-1 lg:grid-cols-3 gap-7">
-                        {signatureTrio.map((project) => (
-                          <TiltCard key={project.id} maxTilt={4} depth={10} glare={true} className="h-full">
-                            <ProjectCard
-                              project={project}
-                              variant="featured"
-                              language={language}
-                              onSelectBlueprint={(p) => setActiveBlueprint(p)}
-                            />
-                          </TiltCard>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Remaining / Filtered Flagship Grid or Compact Directory */}
-                  {visibleRemainingFeatured.length > 0 && (
-                    <div
-                      className={
-                        viewMode === 'compact'
-                          ? 'flex flex-col gap-3'
-                          : 'grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-7'
-                      }
-                    >
-                      {visibleRemainingFeatured.map((project) =>
-                        viewMode === 'compact' ? (
-                          <ProjectCard
-                            key={project.id}
-                            project={project}
-                            variant="compact"
-                            language={language}
-                            onSelectBlueprint={(p) => setActiveBlueprint(p)}
-                          />
-                        ) : (
-                          <TiltCard key={project.id} maxTilt={4} depth={10} glare={true} className="h-full">
-                            <ProjectCard
-                              project={project}
-                              variant="standard"
-                              language={language}
-                              onSelectBlueprint={(p) => setActiveBlueprint(p)}
-                            />
-                          </TiltCard>
-                        )
-                      )}
-                    </div>
-                  )}
-
-                  {/* Progressive Disclosure Toggle for Flagship Studies */}
-                  {!hasActiveFilter && viewMode === 'grid' && remainingFeatured.length > 6 && (
-                    <div className="flex justify-center pt-2">
-                      <button
-                        type="button"
-                        onClick={() => setShowAllFeatured((prev) => !prev)}
-                        className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-surface-container-low hover:bg-primary-container hover:text-on-primary-container border border-outline-variant/30 text-xs font-nexa font-bold uppercase tracking-wider text-on-surface transition-all shadow-sm"
-                      >
-                        <span>
-                          {showAllFeatured
-                            ? isArabic
-                              ? 'عرض عدد أقل'
-                              : 'Collapse Flagship Archive'
-                            : isArabic
-                            ? `عرض كافة الـ ${featuredList.length} دراسة حالة`
-                            : `Explore All ${featuredList.length} Flagship Case Studies`}
-                        </span>
-                        <ArrowRight className={`w-4 h-4 transition-transform ${showAllFeatured ? '-rotate-90' : 'rotate-90'}`} />
-                      </button>
-                    </div>
-                  )}
-                </section>
-              )}
-
-              {/* SECTION 6: INTERACTIVE TECHNOLOGY & PROTOCOL EXPLORER MATRIX */}
-              <section
-                aria-label="Technology Stack Explorer"
-                className="p-6 sm:p-8 rounded-3xl bg-surface-container-low/70 dark:bg-surface-container-low/45 backdrop-blur-2xl border border-outline-variant/25 dark:border-white/[0.08] flex flex-col gap-5"
-              >
-                <div className="flex flex-wrap items-end justify-between gap-3">
-                  <div className="flex flex-col gap-1">
-                    <span className="font-mono text-xs text-secondary uppercase tracking-widest font-semibold">
-                      {isArabic ? 'التصفية حسب التكنولوجيا' : 'Interactive Stack Matrix'}
-                    </span>
-                    <h2 className="font-nexa text-xl sm:text-2xl font-extrabold text-on-surface">
-                      {isArabic ? 'استكشف المشاريع حسب التقنية والأداة' : 'Filter Portfolio by Core Technology'}
-                    </h2>
-                  </div>
-                  {selectedTech && (
-                    <button
-                      type="button"
-                      onClick={() => setSelectedTech(null)}
-                      className="text-xs font-mono text-primary hover:underline"
-                    >
-                      {isArabic ? 'إزالة الفلتر' : 'Clear tech filter'}
-                    </button>
-                  )}
-                </div>
-
-                <div className="flex flex-wrap gap-2">
-                  {topTechnologies.map(([tech, count]) => {
-                    const active = selectedTech?.toLowerCase() === tech.toLowerCase();
-                    return (
-                      <button
-                        key={tech}
-                        type="button"
-                        onClick={() => {
-                          setSelectedTech(active ? null : tech);
-                          document.getElementById('project-explorer')?.scrollIntoView({ behavior: 'smooth' });
-                        }}
-                        className={`inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-mono transition-all border ${
-                          active
-                            ? 'bg-primary text-on-primary border-primary shadow-md font-bold'
-                            : 'bg-surface-container-lowest/85 hover:bg-surface-container-high text-on-surface border-outline-variant/25 hover:border-primary/40'
-                        }`}
-                      >
-                        <span>{tech}</span>
-                        <span
-                          className={`px-1.5 py-0.5 rounded-md text-[10px] ${
-                            active ? 'bg-black/20 text-on-primary' : 'bg-surface-container-high text-secondary'
-                          }`}
-                        >
-                          {count}
-                        </span>
-                      </button>
-                    );
-                  })}
-                </div>
-              </section>
-
-              {/* SECTION 7: OPEN-SOURCE & GITHUB ENGINEERING VAULT */}
-              {repoList.length > 0 && (
-                <section id="github-repositories" className="flex flex-col gap-7 scroll-mt-44">
-                  <div className="flex flex-wrap items-end justify-between gap-4 border-b border-outline-variant/20 pb-4">
-                    <div className="flex flex-col gap-1">
-                      <span className="font-mono text-xs text-secondary uppercase tracking-widest font-semibold flex items-center gap-1.5">
-                        <FolderGit2 className="w-3.5 h-3.5" />
-                        <span>02 &bull; {isArabic ? 'مستودعات GitHub المفتوحة' : 'GitHub Open-Source & Engineering Vault'}</span>
-                      </span>
-                      <h2 className="font-nexa text-2xl sm:text-3xl font-extrabold text-on-surface">
-                        {isArabic ? 'جميع مشاريع ومستودعات GitHub' : 'Open-Source Repositories & Tools'}
-                      </h2>
-                    </div>
-
-                    {/* Domain Sub-Tabs inside Repo Vault */}
-                    <div className="flex flex-wrap items-center gap-1.5">
-                      {[
-                        'All',
-                        'ERP Systems',
-                        'Data Engineering',
-                        'Software Engineering & Online Systems',
-                        'Data Analysis & Power BI',
-                        'AI & Machine Learning',
-                      ].map((sub) => {
-                        const subCount =
-                          sub === 'All' ? repoList.length : repoList.filter((r) => r.category === sub).length;
-                        if (sub !== 'All' && subCount === 0) return null;
-                        return (
-                          <button
-                            key={sub}
-                            type="button"
-                            onClick={() => setRepoSubCategory(sub)}
-                            className={`px-3 py-1.5 rounded-full text-[11px] font-mono transition-all ${
-                              repoSubCategory === sub
-                                ? 'bg-secondary text-on-secondary font-bold shadow-sm'
-                                : 'bg-surface-container-low text-on-surface-variant hover:text-on-surface border border-outline-variant/20'
-                            }`}
-                          >
-                            {sub === 'All' ? (isArabic ? `الكل (${subCount})` : `All (${subCount})`) : `${sub} (${subCount})`}
-                          </button>
-                        );
-                      })}
-                    </div>
-                  </div>
-
-                  <div
-                    className={
-                      viewMode === 'compact'
-                        ? 'flex flex-col gap-3'
-                        : 'grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-7'
-                    }
+                {selectedCategory !== 'All Projects' && (
+                  <button
+                    type="button"
+                    onClick={() => setSelectedCategory('All Projects')}
+                    className="px-3 py-2 rounded-xl bg-primary/15 text-primary border border-primary/30 text-xs font-mono font-bold whitespace-nowrap"
                   >
-                    {visibleRepos.map((project) =>
-                      viewMode === 'compact' ? (
-                        <ProjectCard
-                          key={project.id}
-                          project={project}
-                          variant="compact"
-                          language={language}
-                          onSelectBlueprint={(p) => setActiveBlueprint(p)}
-                        />
-                      ) : (
-                        <TiltCard key={project.id} maxTilt={4} depth={10} glare={true} className="h-full">
-                          <ProjectCard
-                            project={project}
-                            variant="standard"
-                            language={language}
-                            onSelectBlueprint={(p) => setActiveBlueprint(p)}
-                          />
-                        </TiltCard>
-                      )
-                    )}
-                  </div>
+                    {selectedCategory} ✕
+                  </button>
+                )}
+              </div>
+            </div>
 
-                  {!hasActiveFilter && viewMode === 'grid' && filteredRepoList.length > 6 && (
-                    <div className="flex justify-center pt-2">
-                      <button
-                        type="button"
-                        onClick={() => setShowAllRepos((prev) => !prev)}
-                        className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-surface-container-low hover:bg-secondary hover:text-on-secondary border border-outline-variant/30 text-xs font-nexa font-bold uppercase tracking-wider text-on-surface transition-all shadow-sm"
-                      >
-                        <span>
-                          {showAllRepos
-                            ? isArabic
-                              ? 'تقليص المستودعات'
-                              : 'Collapse Repository Vault'
-                            : isArabic
-                            ? `عرض كافة الـ ${filteredRepoList.length} مستودع`
-                            : `View All ${filteredRepoList.length} GitHub Repositories`}
-                        </span>
-                        <ArrowRight className={`w-4 h-4 transition-transform ${showAllRepos ? '-rotate-90' : 'rotate-90'}`} />
-                      </button>
-                    </div>
-                  )}
-                </section>
-              )}
-            </div>
-          ) : (
-            <div className="flex flex-col items-center justify-center p-16 rounded-3xl bg-surface-container-low/70 border border-outline-variant/25 text-center gap-3">
-              <span className="material-symbols-outlined text-4xl text-on-surface-variant">
-                folder_off
-              </span>
-              <p className="font-headline-sm text-lg text-on-surface font-bold">
-                {isArabic ? 'لا توجد مشاريع مطابقة للبحث' : 'No matching projects found'}
-              </p>
-              <p className="text-xs text-on-surface-variant max-w-md">
-                {isArabic
-                  ? 'حاول مسح نص البحث أو اختيار مجال تقني مختلف.'
-                  : 'Try clearing your search query, removing the technology filter, or selecting another engineering domain.'}
-              </p>
-              <button
-                type="button"
-                onClick={resetAllFilters}
-                className="mt-2 px-5 py-2.5 rounded-xl bg-primary text-on-primary text-xs font-nexa font-bold uppercase tracking-wider shadow-md"
-              >
-                {isArabic ? 'إعادة ضبط الفلاتر' : 'Reset All Filters'}
-              </button>
-            </div>
-          )}
+            {filteredProjects.length > 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {filteredProjects.map((project) => (
+                  <ProjectCard
+                    key={project.id}
+                    project={project}
+                    language={language}
+                    onSelectBlueprint={(p) => setActiveBlueprint(p)}
+                  />
+                ))}
+              </div>
+            ) : (
+              <div className="p-12 rounded-3xl bg-surface-container-low/60 border border-outline-variant/25 text-center flex flex-col items-center gap-3">
+                <p className="font-nexa text-lg font-bold text-on-surface">
+                  {isArabic ? 'لا توجد مشاريع مطابقة للبحث' : 'No matching projects found'}
+                </p>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSearchQuery('');
+                    setSelectedCategory('All Projects');
+                  }}
+                  className="px-5 py-2 rounded-xl bg-primary text-on-primary text-xs font-nexa font-bold uppercase tracking-wider"
+                >
+                  {isArabic ? 'عرض جميع المشاريع' : 'Show All Projects'}
+                </button>
+              </div>
+            )}
+          </section>
 
           {/* SECTION 8: ARCHITECTURE ADVISORY CTA BANNER */}
           <section className="p-8 sm:p-10 rounded-3xl bg-gradient-to-br from-surface-container-low via-surface-container to-surface-container-high border border-primary/30 shadow-xl flex flex-col lg:flex-row lg:items-center justify-between gap-6">

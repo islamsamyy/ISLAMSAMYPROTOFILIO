@@ -26,6 +26,8 @@ export async function POST(req: NextRequest) {
 
     const formData = await req.formData();
     const file = formData.get('file');
+    const rawFolder = String(formData.get('folder') || 'projects').toLowerCase();
+    const folder = rawFolder === 'certifications' ? 'certifications' : 'projects';
     const projectId = String(formData.get('projectId') || 'general')
       .toLowerCase()
       .replace(/[^a-z0-9-_]/g, '-')
@@ -63,7 +65,7 @@ export async function POST(req: NextRequest) {
         await supabase.storage.createBucket(BUCKET_NAME, { public: true });
       }
 
-      const storagePath = `projects/${projectId}/${fileName}`;
+      const storagePath = `${folder}/${projectId}/${fileName}`;
       const { error: uploadError } = await supabase.storage
         .from(BUCKET_NAME)
         .upload(storagePath, buffer, {
@@ -83,11 +85,11 @@ export async function POST(req: NextRequest) {
     }
 
     // Fallback for local dev without Supabase service key
-    const uploadDir = path.join(process.cwd(), 'public', 'uploads', 'projects', projectId);
+    const uploadDir = path.join(process.cwd(), 'public', 'uploads', folder, projectId);
     await fs.mkdir(uploadDir, { recursive: true });
     await fs.writeFile(path.join(uploadDir, fileName), buffer);
 
-    const url = `/uploads/projects/${projectId}/${fileName}`;
+    const url = `/uploads/${folder}/${projectId}/${fileName}`;
     return NextResponse.json({ success: true, url });
   } catch (err: any) {
     console.error('[API /admin/upload] Error:', err);

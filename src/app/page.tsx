@@ -848,8 +848,8 @@ try {
   </div>
 </nav>
 
-{/* OPERATIONS RESEARCH & GUARANTEED ROI FOUNDATION */}
-<OperationsResearchSection />
+{/* CERTIFICATIONS & VERIFIED CREDENTIALS */}
+<CertificationsSection />
 
 {/* PROJECTS SHOWCASE SLIDESHOW (Immediate Visual Proof of Work) */}
 <ProjectsSlideshowSection />
@@ -863,173 +863,11 @@ try {
 {/* 4-PHASE ENGINEERING DELIVERY & 48-HOUR DIAGNOSTIC */}
 <DeliveryProcessSection />
 
-{/* SECTION 3: TECHNICAL ARSENAL (Single-Row Horizontal Showcase Gliding to Right) */}
-      <TechArsenalSection />
       {/* SECTION 4: PROFESSIONAL EXPERIENCE (Compact 2-Column Grid) */}
       <ExperienceTimelineSection />
 
-{/* CERTIFICATIONS & VERIFIED CREDENTIALS */}
-<CertificationsSection />
 
-{/* SECTION 5: FEATURED REAL PROJECTS SLIDESHOW */}
-<ScrollRevealSection className="w-full max-w-[1280px] mx-auto px-gutter py-10 relative z-10 content-auto" id="projects" suppressHydrationWarning>
-<div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-6 border-b border-outline-variant/20 pb-5">
-  <div className="max-w-2xl">
-    <span className="font-label-sm text-label-sm uppercase tracking-widest text-primary font-semibold">{t('projects.badge', 'Flagship Production Systems')}</span>
-    <h2 className="font-headline-lg text-headline-lg text-on-surface mt-1.5 mb-2">{t('projects.title', 'Enterprise ERP, Autonomous AI Agents & Data Lakehouses')}</h2>
-    <p className="font-body-md text-body-md text-on-surface-variant">{t('projects.subtitle', 'Real-world production architectures delivering tangible business revenue, zero-overhead automation, and sub-second analytics.')}</p>
-  </div>
-  <div className="flex items-center gap-2.5 shrink-0">
-    {featuredPageCount > 1 && (
-      <div className="flex items-center gap-1.5 mr-1">
-        <span className="text-xs font-mono text-on-surface-variant mr-1">
-          {(featuredSlide % featuredPageCount) + 1} / {featuredPageCount}
-        </span>
-        <button
-          type="button"
-          onClick={() => setFeaturedSlide((prev) => (prev - 1 + featuredPageCount) % featuredPageCount)}
-          aria-label="Previous featured projects slide"
-          className="w-9 h-9 rounded-xl bg-surface-container-high hover:bg-primary-container hover:text-on-primary-container border border-outline-variant/30 flex items-center justify-center text-on-surface transition-colors"
-        >
-          <span className="material-symbols-outlined text-lg">chevron_left</span>
-        </button>
-        <button
-          type="button"
-          onClick={() => setFeaturedSlide((prev) => (prev + 1) % featuredPageCount)}
-          aria-label="Next featured projects slide"
-          className="w-9 h-9 rounded-xl bg-surface-container-high hover:bg-primary-container hover:text-on-primary-container border border-outline-variant/30 flex items-center justify-center text-on-surface transition-colors"
-        >
-          <span className="material-symbols-outlined text-lg">chevron_right</span>
-        </button>
-      </div>
-    )}
-    <Link
-      href="/projects"
-      className="shrink-0 inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary-container text-on-primary-container hover:bg-primary hover:text-on-primary font-nexa text-xs font-bold uppercase tracking-wider shadow-sm transition-all"
-    >
-      <span>{language === 'ar' ? `استعرض كافة الـ ${projects.length} مشروع` : `Explore All ${projects.length} Projects`}</span>
-      <span className="material-symbols-outlined text-sm">arrow_forward</span>
-    </Link>
-  </div>
-</div>
 
-<div
-  onMouseEnter={() => setFeaturedPaused(true)}
-  onMouseLeave={() => setFeaturedPaused(false)}
-  className="grid grid-cols-1 lg:grid-cols-2 gap-6"
-  suppressHydrationWarning
->
-  {(() => {
-    const start = (featuredSlide % featuredPageCount) * 2;
-    const visiblePair = featuredProjects.slice(start, start + 2);
-    return visiblePair.map((proj, idx) => {
-      const coverSrc = getProjectCover(proj as any);
-      const isDiag = isDiagramAsset(coverSrc);
-      const borderColor =
-        idx % 2 === 0 ? 'border-primary/25 hover:border-primary/50' : 'border-secondary/25 hover:border-secondary/50';
-      const tagColor =
-        idx % 2 === 0 ? 'bg-primary-container/30 text-primary' : 'bg-secondary-container/30 text-secondary';
-
-      return (
-        <TiltCard key={proj.id} maxTilt={4} depth={8} glare={true} className="rounded-3xl h-full">
-          <div className={`p-5 sm:p-6 rounded-3xl bg-surface-container-low/90 dark:bg-[#14161f]/95 border ${borderColor} shadow-[0_12px_36px_rgba(0,0,0,0.16)] dark:shadow-[0_12px_36px_rgba(0,0,0,0.5)] flex flex-col justify-between transition-all h-full`}>
-            <div>
-              <div className="flex items-center justify-between gap-2 mb-3">
-                <span className={`px-2.5 py-0.5 rounded-full ${tagColor} font-label-sm text-[11px] uppercase font-semibold`}>
-                  {proj.category}
-                </span>
-                <span className="font-label-sm text-label-sm text-on-surface-variant truncate">
-                  {proj.client} &bull; Featured
-                </span>
-              </div>
-
-              {coverSrc && (
-                <Link
-                  href={`/projects/${proj.id}`}
-                  className="block w-full aspect-[16/9] rounded-2xl bg-surface-container-lowest border border-outline-variant/25 dark:border-primary/20 relative overflow-hidden mb-4 group/viewport"
-                >
-                  <img
-                    src={coverSrc}
-                    alt={proj.title}
-                    loading="lazy"
-                    className={`w-full h-full ${isDiag ? 'object-contain p-3' : 'object-cover object-top'} group-hover/viewport:scale-[1.03] transition-transform duration-300`}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent pointer-events-none" />
-                  <div className="absolute bottom-2.5 left-3 px-2.5 py-1 rounded-lg bg-black/75 backdrop-blur-sm border border-primary/35 text-[11px] font-mono text-secondary flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse" />
-                    <span>{proj.impactMetric || 'Production Telemetry'}</span>
-                  </div>
-                </Link>
-              )}
-
-              <Link href={`/projects/${proj.id}`}>
-                <h3 suppressHydrationWarning className="font-headline-sm text-lg sm:text-xl font-bold text-on-surface hover:text-primary transition-colors mb-1.5 line-clamp-2">
-                  {proj.title}
-                </h3>
-              </Link>
-              <p suppressHydrationWarning className="font-body-sm text-xs sm:text-sm text-on-surface-variant mb-4 line-clamp-2 leading-relaxed">
-                {cleanProjectText(proj.summary)}
-              </p>
-
-              {proj.metrics && proj.metrics.length > 0 && (
-                <div className="grid grid-cols-2 gap-2 mb-4" suppressHydrationWarning>
-                  {proj.metrics.slice(0, 2).map((m, mIdx) => (
-                    <div key={mIdx} className="px-3 py-2 rounded-xl bg-surface-container-high/60 border border-outline-variant/15 flex items-center justify-between gap-2">
-                      <span className="font-body-sm text-xs text-on-surface-variant font-medium truncate">{m.label}</span>
-                      <span suppressHydrationWarning className="font-label-sm text-xs text-secondary font-bold shrink-0">{m.value}</span>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            <div className="flex flex-wrap gap-2 pt-3 border-t border-outline-variant/20 dark:border-surface-container-high/60 items-center justify-between">
-              <div className="flex flex-wrap gap-1.5">
-                {proj.techStack.slice(0, 4).map((tech, tIdx) => (
-                  <span key={tIdx} className="px-2 py-0.5 rounded-md bg-surface-container-highest text-on-surface font-label-sm text-[10px]">
-                    {tech}
-                  </span>
-                ))}
-              </div>
-              <Link href={`/projects/${proj.id}`} className="inline-flex items-center gap-1 text-xs text-primary hover:text-secondary font-semibold uppercase tracking-wider shrink-0">
-                {t('projects.caseStudy', 'Case Study')} <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
-              </Link>
-            </div>
-          </div>
-        </TiltCard>
-      );
-    });
-  })()}
-</div>
-
-{featuredPageCount > 1 && (
-  <div className="mt-6 flex items-center justify-center gap-2">
-    {Array.from({ length: featuredPageCount }).map((_, idx) => (
-      <button
-        key={idx}
-        type="button"
-        onClick={() => setFeaturedSlide(idx)}
-        aria-label={`Go to featured slide ${idx + 1}`}
-        className={`h-2 rounded-full transition-all ${
-          idx === featuredSlide % featuredPageCount
-            ? 'w-7 bg-primary shadow-[0_0_10px_rgba(160,120,255,0.6)]'
-            : 'w-2 bg-outline-variant/40 hover:bg-primary/50'
-        }`}
-      />
-    ))}
-  </div>
-)}
-
-<div className="mt-6 text-center">
-  <Link
-    href="/projects"
-    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-surface-container-high/80 hover:bg-surface-container-highest text-primary text-xs font-semibold uppercase tracking-wider border border-primary/30 transition-all hover:scale-105"
-  >
-    <span>{t('projects.viewAll', 'View All Production Projects')}</span>
-    <span className="material-symbols-outlined text-sm">arrow_forward</span>
-  </Link>
-</div>
-</ScrollRevealSection>
       {/* SECTION 6: EDUCATION & PROFESSIONAL CREDENTIALS */}
 {/*  SECTION 7: INTERACTIVE CONTACT & INQUIRY FORM  */}
 <ScrollRevealSection className="w-full max-w-[1280px] mx-auto px-gutter py-12 relative z-10 content-auto" id="pricing" suppressHydrationWarning>

@@ -3,7 +3,7 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, LayoutGrid, List, Star, ExternalLink, Image as ImageIcon, X, ArrowUp, ArrowDown, Pin } from 'lucide-react';
+import { Search, LayoutGrid, List, Star, ExternalLink, Image as ImageIcon, X, ArrowUp, ArrowDown, Pin, Trash2, Pencil, FileText } from 'lucide-react';
 import { AdminNav } from '@/components/navigation/AdminNav';
 import { AdminFooter } from '@/components/navigation/AdminFooter';
 import { useProjects } from '@/lib/hooks';
@@ -56,7 +56,9 @@ export default function AdminProjectsPage() {
   const [filterCategory, setFilterCategory] = useState<string>('All');
   const [filterType, setFilterType] = useState<'all' | 'featured' | 'repo'>('all');
   const [viewMode, setViewMode] = useState<'table' | 'grid'>('table');
-  const [modalTab, setModalTab] = useState<'basics' | 'architecture' | 'media' | 'steps'>('basics');
+  const [modalTab, setModalTab] = useState<'basics' | 'article' | 'media'>('basics');
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const [isBulkDeleting, setIsBulkDeleting] = useState(false);
 
   // Form Fields
   const [title, setTitle] = useState('');
@@ -68,6 +70,7 @@ export default function AdminProjectsPage() {
   const [summary, setSummary] = useState('');
   const [challenge, setChallenge] = useState('');
   const [solution, setSolution] = useState('');
+  const [readmeContent, setReadmeContent] = useState('');
   const [techStackStr, setTechStackStr] = useState('Kafka, Go, ClickHouse, Docker');
   const [highlightsStr, setHighlightsStr] = useState('Sub-second analytics lakehouse\nReal-time CDC pipeline from OPERA PMS');
   const [liveDemoUrl, setLiveDemoUrl] = useState('');
@@ -202,6 +205,7 @@ export default function AdminProjectsPage() {
     setSummary('');
     setChallenge('');
     setSolution('');
+    setReadmeContent('');
     setTechStackStr('Kafka, ClickHouse, Go, Docker');
     setHighlightsStr('Engineered distributed stream pipeline\nReduced cloud compute cost by 60%');
     setLiveDemoUrl('');
@@ -234,6 +238,7 @@ export default function AdminProjectsPage() {
     setSummary(p.summary);
     setChallenge(p.challenge || '');
     setSolution(p.solution || '');
+    setReadmeContent(p.readmeContent || '');
     setTechStackStr(p.techStack.join(', '));
     setHighlightsStr(p.architectureHighlights.join('\n'));
     setLiveDemoUrl(p.liveDemoUrl || '');
@@ -254,6 +259,49 @@ export default function AdminProjectsPage() {
       setTimeout(() => setSuccessToast(null), 2500);
     } catch (err: any) {
       alert(`Update failed: ${err.message || 'Error updating project'}`);
+    }
+  };
+
+  const handleQuickCategoryChange = async (p: ProjectItem, newCategory: ProjectItem['category']) => {
+    try {
+      await saveProject({ ...p, category: newCategory });
+      setSuccessToast(`Category for "${p.title}" updated to ${newCategory}.`);
+      setTimeout(() => setSuccessToast(null), 2500);
+    } catch (err: any) {
+      alert(`Update failed: ${err.message || 'Error updating category'}`);
+    }
+  };
+
+  const toggleSelectRow = (id: string) => {
+    setSelectedIds((prev) => (prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]));
+  };
+
+  const toggleSelectAll = () => {
+    if (selectedIds.length === filteredProjects.length) {
+      setSelectedIds([]);
+    } else {
+      setSelectedIds(filteredProjects.map((p) => p.id));
+    }
+  };
+
+  const handleBulkDelete = async () => {
+    if (selectedIds.length === 0) return;
+    if (!confirm(`Are you sure you want to permanently delete ${selectedIds.length} selected project(s)?`)) {
+      return;
+    }
+    setIsBulkDeleting(true);
+    try {
+      for (const id of selectedIds) {
+        await deleteProject(id);
+      }
+      const count = selectedIds.length;
+      setSelectedIds([]);
+      setSuccessToast(`Deleted ${count} project(s) successfully.`);
+      setTimeout(() => setSuccessToast(null), 3000);
+    } catch (err: any) {
+      alert(`Bulk delete failed: ${err.message || 'Error deleting projects'}`);
+    } finally {
+      setIsBulkDeleting(false);
     }
   };
 
@@ -310,7 +358,7 @@ export default function AdminProjectsPage() {
         outcomeMetrics: editingProject?.outcomeMetrics || [],
         galleryImages,
         steps,
-        readmeContent: editingProject?.readmeContent,
+        readmeContent: readmeContent.trim() || undefined,
         githubUrl: githubUrl.trim() || undefined,
       };
 
@@ -331,6 +379,11 @@ export default function AdminProjectsPage() {
     if (confirm(`Are you sure you want to delete project "${name}"?`)) {
       try {
         await deleteProject(id);
+        setSelectedIds((prev) => prev.filter((item) => item !== id));
+        if (editingProject?.id === id) {
+          setIsCreating(false);
+          setEditingProject(null);
+        }
         setSuccessToast(`Project "${name}" deleted.`);
         setTimeout(() => setSuccessToast(null), 3000);
       } catch (err: any) {
@@ -399,7 +452,7 @@ export default function AdminProjectsPage() {
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.95 }}
-                  className="relative w-full max-w-3xl max-h-[90vh] overflow-hidden rounded-3xl bg-surface-container-low/95 border border-primary/40 p-6 sm:p-8 shadow-2xl z-10 flex flex-col gap-4"
+                  className="relative w-full max-w-4xl max-h-[92vh] overflow-hidden rounded-3xl bg-surface-container-low/95 border border-primary/40 p-6 sm:p-8 shadow-2xl z-10 flex flex-col gap-4"
                 >
                   <div className="flex items-center justify-between pb-3 border-b border-surface-container-high shrink-0">
                     <div>
@@ -423,16 +476,15 @@ export default function AdminProjectsPage() {
                   {/* Modal Section Tabs */}
                   <div className="flex items-center gap-1.5 p-1 rounded-2xl bg-surface-container-lowest border border-outline-variant/20 shrink-0 overflow-x-auto">
                     {[
-                      { id: 'basics', label: '1. Basics & Client' },
-                      { id: 'architecture', label: '2. Architecture & Story' },
+                      { id: 'basics', label: '1. Basics & Links' },
+                      { id: 'article', label: '2. Article & Description' },
                       { id: 'media', label: `3. Media & Gallery (${galleryList.length})` },
-                      { id: 'steps', label: '4. Execution Steps' },
                     ].map((tab) => (
                       <button
                         key={tab.id}
                         type="button"
                         onClick={() => setModalTab(tab.id as any)}
-                        className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ${
+                        className={`px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ${
                           modalTab === tab.id
                             ? 'bg-primary-container text-on-primary-container shadow-sm'
                             : 'text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high/50'
@@ -612,8 +664,22 @@ export default function AdminProjectsPage() {
                       </>
                     )}
 
-                    {modalTab === 'architecture' && (
+                    {modalTab === 'article' && (
                       <>
+                    <div className="flex flex-col gap-1">
+                      <label className="text-xs font-semibold text-on-surface flex items-center gap-1.5">
+                        <FileText className="w-3.5 h-3.5 text-primary" />
+                        <span>Full Project Article / README.md (Markdown Supported)</span>
+                      </label>
+                      <textarea
+                        rows={10}
+                        value={readmeContent}
+                        onChange={(e) => setReadmeContent(e.target.value)}
+                        placeholder="# Project Overview&#10;Write the full project article, proposal, tables, or README markdown here..."
+                        className="px-3.5 py-2.5 rounded-xl bg-surface-container-lowest border border-outline-variant/30 text-xs font-mono text-on-surface leading-relaxed focus:outline-none focus:ring-2 focus:ring-primary"
+                      />
+                    </div>
+
                     <div className="flex flex-col gap-1">
                       <label className="text-xs font-semibold text-on-surface">Tech Stack (comma separated)</label>
                       <input
@@ -649,7 +715,7 @@ export default function AdminProjectsPage() {
                     </div>
 
                     <div className="flex flex-col gap-1">
-                      <label className="text-xs font-semibold text-on-surface">Architecture Highlights (one per line)</label>
+                      <label className="text-xs font-semibold text-on-surface">Key Highlights (one per line)</label>
                       <textarea
                         rows={4}
                         value={highlightsStr}
@@ -743,31 +809,15 @@ export default function AdminProjectsPage() {
                     </div>
                     )}
 
-                    {modalTab === 'steps' && (
-                    <div className="flex flex-col gap-2">
-                      <label className="text-xs font-semibold text-on-surface">Project Steps (Title | Description per line)</label>
-                      <textarea
-                        rows={6}
-                        value={stepsStr}
-                        onChange={(e) => setStepsStr(e.target.value)}
-                        placeholder="Edge Ingestion | Deployed Go CDC daemons across 14 properties&#10;Stream Processing | Routed events into Kafka & ClickHouse"
-                        className="px-3.5 py-2.5 rounded-xl bg-surface-container-lowest border border-outline-variant/30 text-xs text-on-surface focus:outline-none focus:ring-2 focus:ring-primary"
-                      />
-                      <p className="text-[11px] font-mono text-on-surface-variant">
-                        Format: <span className="text-secondary">Step Title | Step Description</span> — displayed as numbered execution cards on the project detail page.
-                      </p>
-                    </div>
-                    )}
-
                   </form>
 
                   {formError && (
-                    <div className="px-4 py-2.5 rounded-xl bg-error/15 border border-error/40 text-error text-xs font-mono">
+                    <div className="px-4 py-2.5 rounded-xl bg-red-500/15 border border-red-500/40 text-red-400 text-xs font-mono">
                       {formError}
                     </div>
                   )}
 
-                  <div className="flex items-center gap-3 pt-4 border-t border-surface-container-high shrink-0">
+                  <div className="flex flex-wrap items-center gap-3 pt-4 border-t border-surface-container-high shrink-0">
                     <button
                       type="submit"
                       form="project-editor-form"
@@ -776,6 +826,16 @@ export default function AdminProjectsPage() {
                     >
                       {isSaving ? 'Saving to Database...' : editingProject ? 'Save Changes' : 'Publish Project'}
                     </button>
+                    {editingProject && (
+                      <button
+                        type="button"
+                        onClick={() => handleDelete(editingProject.id, editingProject.title)}
+                        className="inline-flex items-center gap-1.5 px-4 py-3 rounded-xl bg-red-500/15 hover:bg-red-500 text-red-400 hover:text-white border border-red-500/30 text-xs font-semibold transition-colors"
+                      >
+                        <Trash2 className="w-3.5 h-3.5" />
+                        <span>Delete</span>
+                      </button>
+                    )}
                     <button
                       type="button"
                       onClick={() => setIsCreating(false)}
@@ -865,6 +925,33 @@ export default function AdminProjectsPage() {
             </div>
           </div>
 
+          {/* Bulk Action Bar */}
+          {selectedIds.length > 0 && (
+            <div className="flex flex-wrap items-center justify-between gap-3 px-4 py-3 rounded-2xl bg-red-500/10 border border-red-500/30">
+              <span className="text-xs font-mono font-bold text-red-400">
+                {selectedIds.length} project(s) selected
+              </span>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => setSelectedIds([])}
+                  className="px-3 py-1.5 rounded-xl bg-surface-container-high text-xs text-on-surface-variant hover:text-on-surface"
+                >
+                  Clear Selection
+                </button>
+                <button
+                  type="button"
+                  onClick={handleBulkDelete}
+                  disabled={isBulkDeleting}
+                  className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-xl bg-red-500 hover:bg-red-600 text-white text-xs font-bold shadow transition-colors disabled:opacity-50"
+                >
+                  <Trash2 className="w-3.5 h-3.5" />
+                  <span>{isBulkDeleting ? 'Deleting...' : `Delete Selected (${selectedIds.length})`}</span>
+                </button>
+              </div>
+            </div>
+          )}
+
           {/* Projects List: Table or Visual Grid */}
           {filteredProjects.length === 0 ? (
             <div className="p-12 rounded-3xl bg-surface-container-low border border-outline-variant/20 text-center flex flex-col items-center gap-3">
@@ -887,24 +974,46 @@ export default function AdminProjectsPage() {
             <table className="w-full text-left text-xs">
               <thead className="bg-surface-container-high text-on-surface-variant uppercase text-[10px] font-mono">
                 <tr>
-                  <th className="p-4">Priority</th>
-                  <th className="p-4">Logo</th>
-                  <th className="p-4">Client &amp; Title</th>
-                  <th className="p-4">Category</th>
-                  <th className="p-4">Key Metric</th>
-                  <th className="p-4">Media</th>
-                  <th className="p-4">Status</th>
-                  <th className="p-4 text-right">Actions</th>
+                  <th className="px-3 py-3.5 w-10 text-center">
+                    <input
+                      type="checkbox"
+                      aria-label="Select all projects"
+                      checked={filteredProjects.length > 0 && selectedIds.length === filteredProjects.length}
+                      onChange={toggleSelectAll}
+                      className="w-3.5 h-3.5 rounded accent-primary cursor-pointer"
+                    />
+                  </th>
+                  <th className="px-3 py-3.5">Order</th>
+                  <th className="px-3 py-3.5">Project &amp; Client (Click to Edit)</th>
+                  <th className="px-3 py-3.5">Category</th>
+                  <th className="px-3 py-3.5">Media</th>
+                  <th className="px-3 py-3.5">Status</th>
+                  <th className="px-3 py-3.5 text-right">Actions</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-surface-container-high/40">
                 {filteredProjects.map((p) => {
                   const rank = projects.findIndex((item) => item.id === p.id) + 1;
+                  const isSelected = selectedIds.includes(p.id);
                   return (
-                  <tr key={p.id} className="hover:bg-surface-container-high/25 transition-colors">
-                    <td className="p-4 whitespace-nowrap">
+                  <tr
+                    key={p.id}
+                    className={`transition-colors ${
+                      isSelected ? 'bg-primary/10' : 'hover:bg-surface-container-high/25'
+                    }`}
+                  >
+                    <td className="px-3 py-3.5 text-center">
+                      <input
+                        type="checkbox"
+                        aria-label={`Select ${p.title}`}
+                        checked={isSelected}
+                        onChange={() => toggleSelectRow(p.id)}
+                        className="w-3.5 h-3.5 rounded accent-primary cursor-pointer"
+                      />
+                    </td>
+                    <td className="px-3 py-3.5 whitespace-nowrap">
                       <div className="flex items-center gap-1">
-                        <span className="inline-flex items-center justify-center min-w-[28px] px-1.5 py-0.5 rounded-md bg-primary/15 text-primary font-mono text-[11px] font-bold">
+                        <span className="inline-flex items-center justify-center min-w-[26px] px-1.5 py-0.5 rounded-md bg-primary/15 text-primary font-mono text-[11px] font-bold">
                           #{rank}
                         </span>
                         <button
@@ -936,32 +1045,53 @@ export default function AdminProjectsPage() {
                         </button>
                       </div>
                     </td>
-                    <td className="p-4">
-                      <ProjectLogo
-                        src={p.companyLogo}
-                        alt={p.client}
-                        fallback={(p.title?.[0] || p.client?.[0] || 'P').toUpperCase()}
-                      />
-                    </td>
-                    <td className="p-4">
-                      <div className="flex flex-col">
-                        <span className="font-semibold text-on-surface">{p.title}</span>
-                        <span className="text-[11px] text-on-surface-variant font-mono">{p.client}</span>
+                    <td className="px-3 py-3.5 max-w-[340px]">
+                      <div className="flex items-center gap-3">
+                        <div className="shrink-0">
+                          <ProjectLogo
+                            src={p.companyLogo}
+                            alt={p.client}
+                            fallback={(p.title?.[0] || p.client?.[0] || 'P').toUpperCase()}
+                          />
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => startEdit(p)}
+                          className="flex flex-col text-left min-w-0 group"
+                        >
+                          <span className="font-semibold text-on-surface group-hover:text-primary transition-colors line-clamp-1">
+                            {p.title}
+                          </span>
+                          <span className="text-[11px] text-on-surface-variant font-mono truncate">
+                            {p.client}
+                            {p.impactMetric ? ` • ${p.impactMetric}` : ''}
+                          </span>
+                        </button>
                       </div>
                     </td>
-                    <td className="p-4">
-                      <span className="px-2.5 py-0.5 rounded-full bg-primary/10 text-primary text-[10px] font-bold whitespace-nowrap">
-                        {p.category}
-                      </span>
+                    <td className="px-3 py-3.5">
+                      <select
+                        value={normalizeProjectCategory(p.category)}
+                        onChange={(e) =>
+                          handleQuickCategoryChange(p, e.target.value as ProjectItem['category'])
+                        }
+                        aria-label={`Category for ${p.title}`}
+                        className="px-2.5 py-1 rounded-lg bg-surface-container-lowest border border-outline-variant/30 text-[11px] font-semibold text-primary focus:outline-none focus:ring-1 focus:ring-primary max-w-[175px]"
+                      >
+                        <option value="ERP Systems">ERP Systems</option>
+                        <option value="Data Engineering">Data Engineering</option>
+                        <option value="Software Engineering & Online Systems">Software Engineering</option>
+                        <option value="Data Analysis & Power BI">Data Analysis &amp; Power BI</option>
+                        <option value="AI & Machine Learning">AI &amp; Machine Learning</option>
+                      </select>
                     </td>
-                    <td className="p-4 font-mono text-secondary font-semibold whitespace-nowrap">{p.impactMetric}</td>
-                    <td className="p-4">
+                    <td className="px-3 py-3.5 whitespace-nowrap">
                       <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-surface-container-high text-[11px] font-mono text-on-surface-variant">
                         <ImageIcon className="w-3 h-3 text-secondary" />
                         {p.galleryImages?.length || 0}
                       </span>
                     </td>
-                    <td className="p-4">
+                    <td className="px-3 py-3.5 whitespace-nowrap">
                       <button
                         type="button"
                         onClick={() => handleToggleFeatured(p)}
@@ -976,27 +1106,34 @@ export default function AdminProjectsPage() {
                         <span>{p.featured ? 'Featured' : 'Repo'}</span>
                       </button>
                     </td>
-                    <td className="p-4 text-right whitespace-nowrap space-x-1.5">
-                      <Link
-                        href={`/projects/${p.id}`}
-                        target="_blank"
-                        className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-on-surface-variant hover:text-on-surface font-semibold"
-                        title="Preview public case study"
-                      >
-                        <ExternalLink className="w-3 h-3" />
-                      </Link>
-                      <button
-                        onClick={() => startEdit(p)}
-                        className="px-3 py-1 rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-primary font-semibold"
-                      >
-                        Edit
-                      </button>
-                      <button
-                        onClick={() => handleDelete(p.id, p.title)}
-                        className="px-3 py-1 rounded-lg bg-error-container/20 hover:bg-error hover:text-on-error text-error font-semibold transition-colors"
-                      >
-                        Delete
-                      </button>
+                    <td className="px-3 py-3.5 text-right whitespace-nowrap">
+                      <div className="inline-flex items-center justify-end gap-1.5">
+                        <Link
+                          href={`/projects/${p.id}`}
+                          target="_blank"
+                          className="inline-flex items-center justify-center p-1.5 rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-on-surface-variant hover:text-on-surface transition-colors"
+                          title="Preview public page"
+                        >
+                          <ExternalLink className="w-3.5 h-3.5" />
+                        </Link>
+                        <button
+                          type="button"
+                          onClick={() => startEdit(p)}
+                          className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-primary/15 hover:bg-primary text-primary hover:text-on-primary font-semibold transition-colors"
+                        >
+                          <Pencil className="w-3 h-3" />
+                          <span>Edit</span>
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => handleDelete(p.id, p.title)}
+                          className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-red-500/15 hover:bg-red-500 text-red-400 hover:text-white border border-red-500/30 font-semibold transition-colors"
+                          title={`Delete ${p.title}`}
+                        >
+                          <Trash2 className="w-3 h-3" />
+                          <span>Delete</span>
+                        </button>
+                      </div>
                     </td>
                   </tr>
                   );
@@ -1062,16 +1199,20 @@ export default function AdminProjectsPage() {
                           <ExternalLink className="w-3.5 h-3.5" />
                         </Link>
                         <button
+                          type="button"
                           onClick={() => startEdit(p)}
-                          className="px-3 py-1 rounded-lg bg-surface-container-high text-primary font-semibold"
+                          className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-primary/15 hover:bg-primary text-primary hover:text-on-primary font-semibold transition-colors"
                         >
-                          Edit
+                          <Pencil className="w-3 h-3" />
+                          <span>Edit</span>
                         </button>
                         <button
+                          type="button"
                           onClick={() => handleDelete(p.id, p.title)}
-                          className="px-3 py-1 rounded-lg bg-error-container/20 text-error font-semibold"
+                          className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-red-500/15 hover:bg-red-500 text-red-400 hover:text-white border border-red-500/30 font-semibold transition-colors"
                         >
-                          Delete
+                          <Trash2 className="w-3 h-3" />
+                          <span>Delete</span>
                         </button>
                       </div>
                     </div>

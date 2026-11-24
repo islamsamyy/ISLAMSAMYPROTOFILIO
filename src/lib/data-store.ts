@@ -9,7 +9,7 @@ import { initialExperiences, ExperienceItem } from '@/data/seedExperience';
 import { initialCrmLeads, CrmLead, CrmStage, CrmActivityLog } from '@/data/seedCrm';
 
 const STORAGE_KEYS = {
-  PROJECTS: 'islam_data_projects_v9',
+  PROJECTS: 'islam_data_projects_v11',
   PACKAGES: 'islam_data_packages_v1',
   CONSULTATION: 'islam_data_consultation_v1',
   ARTICLES: 'islam_data_articles_v1',
@@ -243,6 +243,12 @@ export function sortProjectsByImportance(projects: ProjectItem[]): ProjectItem[]
   });
 }
 
+function mergeMissingSeedProjects(list: ProjectItem[]): ProjectItem[] {
+  const existingIds = new Set(list.map((p) => p.id));
+  const missingSeeds = initialProjects.filter((seed) => !existingIds.has(seed.id));
+  return missingSeeds.length > 0 ? [...missingSeeds, ...list] : list;
+}
+
 export function getStoredProjects(): ProjectItem[] {
   if (!isClient()) return initialProjects;
   try {
@@ -254,7 +260,7 @@ export function getStoredProjects(): ProjectItem[] {
       ...p,
       category: normalizeProjectCategory(p.category),
     }));
-    return sortProjectsByImportance(normalized);
+    return sortProjectsByImportance(mergeMissingSeedProjects(normalized));
   } catch (e) {
     return initialProjects;
   }
@@ -266,30 +272,35 @@ export function setStoredProjects(projects: ProjectItem[]) {
 }
 
 export async function fetchProjectsFromSupabase(): Promise<ProjectItem[]> {
-  const { data, error } = await supabase
-    .from('projects')
-    .select('*')
-    .order('display_order', { ascending: true });
+  try {
+    const { data, error } = await supabase
+      .from('projects')
+      .select('*')
+      .order('display_order', { ascending: true });
 
-  if (error || !data || data.length === 0) {
+    if (error || !data || data.length === 0) {
+      return getStoredProjects();
+    }
+    const localById = new Map(getStoredProjects().map((p) => [p.id, p]));
+    const mapped = data.map((row: any) => {
+      const item = mapProjectRowToItem(row);
+      const local = localById.get(item.id);
+      if (local) {
+        if (!Array.isArray(row.gallery_images) && (!item.galleryImages || item.galleryImages.length === 0) && local.galleryImages?.length) {
+          item.galleryImages = local.galleryImages;
+        }
+        if (!Array.isArray(row.steps) && (!item.steps || item.steps.length === 0) && local.steps?.length) {
+          item.steps = local.steps;
+        }
+      }
+      return item;
+    });
+    const merged = mergeMissingSeedProjects(mapped);
+    cacheLocally(STORAGE_KEYS.PROJECTS, merged);
+    return merged;
+  } catch {
     return getStoredProjects();
   }
-  const localById = new Map(getStoredProjects().map((p) => [p.id, p]));
-  const mapped = data.map((row: any) => {
-    const item = mapProjectRowToItem(row);
-    const local = localById.get(item.id);
-    if (local) {
-      if (!Array.isArray(row.gallery_images) && (!item.galleryImages || item.galleryImages.length === 0) && local.galleryImages?.length) {
-        item.galleryImages = local.galleryImages;
-      }
-      if (!Array.isArray(row.steps) && (!item.steps || item.steps.length === 0) && local.steps?.length) {
-        item.steps = local.steps;
-      }
-    }
-    return item;
-  });
-  cacheLocally(STORAGE_KEYS.PROJECTS, mapped);
-  return mapped;
 }
 
 export async function saveProject(project: ProjectItem) {
@@ -518,12 +529,23 @@ export function mapArticleItemToRow(a: ArticleItem) {
   };
 }
 
+function mergeMissingSeedArticles(list: ArticleItem[]): ArticleItem[] {
+  const existingIds = new Set(list.map((a) => a.id));
+  const existingSlugs = new Set(list.map((a) => a.slug));
+  const missingSeeds = initialArticles.filter(
+    (seed) => !existingIds.has(seed.id) && !existingSlugs.has(seed.slug)
+  );
+  return missingSeeds.length > 0 ? [...missingSeeds, ...list] : list;
+}
+
 export function getStoredArticles(): ArticleItem[] {
   if (!isClient()) return initialArticles;
   try {
     const data = localStorage.getItem(STORAGE_KEYS.ARTICLES);
     if (!data) return initialArticles;
-    return JSON.parse(data);
+    const parsed = JSON.parse(data);
+    if (!Array.isArray(parsed)) return initialArticles;
+    return mergeMissingSeedArticles(parsed);
   } catch (e) {
     return initialArticles;
   }
@@ -535,17 +557,21 @@ export function setStoredArticles(articles: ArticleItem[]) {
 }
 
 export async function fetchArticlesFromSupabase(): Promise<ArticleItem[]> {
-  const { data, error } = await supabase
-    .from('articles')
-    .select('*')
-    .order('created_at', { ascending: false });
+  try {
+    const { data, error } = await supabase
+      .from('articles')
+      .select('*')
+      .order('created_at', { ascending: false });
 
-  if (error || !data || data.length === 0) {
+    if (error || !data || data.length === 0) {
+      return getStoredArticles();
+    }
+    const mapped = mergeMissingSeedArticles(data.map(mapArticleRowToItem));
+    cacheLocally(STORAGE_KEYS.ARTICLES, mapped);
+    return mapped;
+  } catch {
     return getStoredArticles();
   }
-  const mapped = data.map(mapArticleRowToItem);
-  cacheLocally(STORAGE_KEYS.ARTICLES, mapped);
-  return mapped;
 }
 
 export async function saveArticle(article: ArticleItem) {
@@ -796,6 +822,7 @@ export function mapCertRowToItem(row: any): CertificationItem & { date: string; 
     title: row.title,
     issuer: row.issuer,
     issuerLogo: row.issuer_logo || undefined,
+    imageUrl: row.issuer_logo || undefined,
     issueDate: row.issue_date,
     credentialId: row.credential_id || undefined,
     verificationUrl: row.verification_url || undefined,
@@ -814,7 +841,7 @@ export function mapCertItemToRow(c: any) {
     id: c.id,
     title: c.title,
     issuer: c.issuer,
-    issuer_logo: c.issuerLogo || '',
+    issuer_logo: c.imageUrl || c.issuerLogo || '',
     issue_date: c.issueDate || c.date || new Date().getFullYear().toString(),
     credential_id: c.credentialId || '',
     verification_url: c.verificationUrl || '',

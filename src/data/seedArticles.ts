@@ -79,6 +79,15 @@ Operations Research applies **mathematical modeling and operational data analyti
 - **Inventory, Orders, Quality & Maintenance:** Storage locations, consumables ledger, customer order allocations, slab/table/roller quality checks, and hour-based preventive maintenance.
 - **Data Quality, Immutable Raw Logs Archive & 5-Tier RBAC:** Automated anomaly scoring (\`%\`), non-deletable raw log archive, full before/after **Audit Log**, and **11 one-click CSV export suites**.
 
+### Complete 20-Dashboard Functional Breakdown
+
+| Operational Suite | Dashboards Included | Business Purpose & Decision Value |
+| :--- | :--- | :--- |
+| **Production (7)** | Executive Overview • Operations Registry • 60s Telemetry Zoom • Live Saw Jobs • Diamond Wires (1st/2nd Use) • Stones & Blocks • Operators & Shifts | Live visibility across every saw and block, objective diamond wire supplier benchmarking (\`m/m²\`), stone yield analysis, and transparent shift handoffs. |
+| **Predictive Analytics (3)** | Machine Health (28 PLC Sensors) • Energy Analytics (\`kWh/m²\`) • Downtime & Stops | Early thermal, torque, and wire-tension alerts before catastrophic breakdowns, per-stone electricity costing, and root-cause stop classification. |
+| **Factory ERP (4)** | Costing & Gross Margin Engine • Customer Orders & Quality • Inventory & Consumables • Preventive Maintenance | True unit-economics profit per m² and per slab, customer order allocations & slab quality logs, warehouse stock control, and hour-based preventive maintenance. |
+| **Governance & Data (6)** | Multi-Source Upload • Immutable Raw Logs Archive • Data Quality Audit • 5-Tier Role Permissions (RBAC) • Complete Audit Log • Plant Settings | Seamless machine & operator file ingestion, tamper-proof archive, automated data quality scoring, strict role separation, and 11 one-click executive reports. |
+
 ---
 
 ## 4. ROI & Compounding Value Over Time
@@ -156,6 +165,15 @@ Assuming a single multi-wire diamond saw operating 22 days/month at **1,500 – 
 - **تدقيق جودة البيانات (\`Data Quality\`):** فحص آلي يكشف القيم الشاذة أو الناقصة ويعطي مؤشر جودة للبيانات (\`%\`).
 - **الأرشيف غير القابل للحذف (\`Raw Logs Archive\`):** حفظ نسخة أصلية من كل ملف مرفوع مع إمكانية إعادة استيراده في أي وقت.
 - **5 مستويات صلاحيات (\`RBAC\`) وسجل رقابة (\`Audit Log\`):** صلاحيات منفصلة للمدير، المشرف، المشغل، المحاسب، والمشاهد؛ مع تسجيل كل إضافة أو تعديل بالاسم والتوقيت والبيانات قبل وبعد التعديل، وتصدير **11 نوع تقرير CSV** بضغطة واحدة.
+
+### سادساً: شرح تفصيلي لجميع لوحات التحكم (20 داشبورد متكاملة في نظام تشغيل مصانع القواطع الماس)
+
+| المجموعة | اللوحات المتضمنة | الوظيفة العملية والقيمة للقرار |
+| :--- | :--- | :--- |
+| **الإنتاج (7 لوحات)** | النظرة التنفيذية • سجل العمليات • التحليل المكبّر كل 60 ثانية • المناشير الحية • بكر السلك الماسي (الاستخدام الأول والثاني) • أنواع الرخام والجرانيت • المشغلون والورديات | متابعة فورية لكل بلوك وكل منشار، مقارنة موردين السلك بالأرقام (\`m/m²\`)، وقياس كفاءة كل مشغل ووردية بدقة. |
+| **التحليلات التنبؤية (3 لوحات)** | الصحة الميكانيكية (28 حساساً للماكينة) • تحليل الكهرباء (\`kWh/m²\`) • التوقفات وفجوات الانتظار | رصد حرارة وعزم المواتير وشد السلك قبل الأعطال الكارثية، وكشف السبب رقم 1 لضياع وقت الوردية تلقائياً. |
+| **ERP المصنع (4 لوحات)** | محرك التكاليف والربحية • أوامر الشغل والجودة • المخازن والمستهلكات • الصيانة الوقائية | حساب التكلفة الحقيقية للمتر المربع واللوح، ربط البلوكات بطلبات العملاء، وضبط أرصدة السلك الماسي ومواعيد الصيانة. |
+| **البيانات والحوكمة (6 لوحات)** | رفع ملفات الماكينة والإكسيل • الأرشيف غير القابل للحذف • مؤشر جودة البيانات • صلاحيات المستخدمين الخمس (RBAC) • سجل الرقابة • إعدادات المصنع | استيعاب آلي لملفات الماكينة والمشغلين، منع التلاعب أو الحذف الصامت، وتصدير 11 تقريراً مالياً وتشغيلياً بضغطة زر. |
 
 ---
 
