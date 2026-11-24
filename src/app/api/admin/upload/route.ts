@@ -57,34 +57,40 @@ export async function POST(req: NextRequest) {
     const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
     if (supabaseUrl && serviceKey) {
-      const supabase = createClient(supabaseUrl, serviceKey);
+      try {
+        const supabase = createClient(supabaseUrl, serviceKey);
 
-      // Ensure the public bucket exists
-      const { data: buckets } = await supabase.storage.listBuckets();
-      if (!buckets?.some((b) => b.name === BUCKET_NAME)) {
-        await supabase.storage.createBucket(BUCKET_NAME, { public: true });
+        // Ensure the public bucket exists AND is marked public
+        const { data: buckets } = await supabase.storage.listBuckets();
+        const existing = buckets?.find((b) => b.name === BUCKET_NAME);
+        if (!existing) {
+          await supabase.storage.createBucket(BUCKET_NAME, { public: true });
+        } else if (!existing.public) {
+          await supabase.storage.updateBucket(BUCKET_NAME, { public: true });
+        }
+
+        const storagePath = `${folder}/${projectId}/${fileName}`;
+        const { error: uploadError } = await supabase.storage
+          .from(BUCKET_NAME)
+          .upload(storagePath, buffer, {
+            contentType,
+            upsert: true,
+          });
+
+        if (!uploadError) {
+          const { data: publicData } = supabase.storage
+            .from(BUCKET_NAME)
+            .getPublicUrl(storagePath);
+
+          return NextResponse.json({ success: true, url: publicData.publicUrl });
+        }
+        console.warn('[API /admin/upload] Supabase upload failed, falling back to local:', uploadError.message);
+      } catch (supaErr: any) {
+        console.warn('[API /admin/upload] Supabase unreachable, falling back to local:', supaErr?.message);
       }
-
-      const storagePath = `${folder}/${projectId}/${fileName}`;
-      const { error: uploadError } = await supabase.storage
-        .from(BUCKET_NAME)
-        .upload(storagePath, buffer, {
-          contentType,
-          upsert: true,
-        });
-
-      if (uploadError) {
-        return NextResponse.json({ error: uploadError.message }, { status: 500 });
-      }
-
-      const { data: publicData } = supabase.storage
-        .from(BUCKET_NAME)
-        .getPublicUrl(storagePath);
-
-      return NextResponse.json({ success: true, url: publicData.publicUrl });
     }
 
-    // Fallback for local dev without Supabase service key
+    // Fallback for local dev or offline Supabase
     const uploadDir = path.join(process.cwd(), 'public', 'uploads', folder, projectId);
     await fs.mkdir(uploadDir, { recursive: true });
     await fs.writeFile(path.join(uploadDir, fileName), buffer);
