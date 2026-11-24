@@ -3,7 +3,7 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, LayoutGrid, List, Star, ExternalLink, Image as ImageIcon, X, ArrowUp, ArrowDown, Pin, Trash2, Pencil, FileText } from 'lucide-react';
+import { Search, LayoutGrid, List, Star, ExternalLink, Image as ImageIcon, X, ArrowUp, ArrowDown, Pin, Trash2, Pencil, FileText, GripVertical } from 'lucide-react';
 import { AdminNav } from '@/components/navigation/AdminNav';
 import { AdminFooter } from '@/components/navigation/AdminFooter';
 import { useProjects } from '@/lib/hooks';
@@ -59,14 +59,18 @@ export default function AdminProjectsPage() {
   const [modalTab, setModalTab] = useState<'basics' | 'article' | 'media'>('basics');
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [isBulkDeleting, setIsBulkDeleting] = useState(false);
+  const [draggedId, setDraggedId] = useState<string | null>(null);
+  const [dragOverId, setDragOverId] = useState<string | null>(null);
 
   // Form Fields
   const [title, setTitle] = useState('');
   const [client, setClient] = useState('');
   const [companyLogo, setCompanyLogo] = useState('');
   const [category, setCategory] = useState<ProjectItem['category']>('ERP Systems');
-  const [role, setRole] = useState('Lead Solutions Architect');
-  const [impactMetric, setImpactMetric] = useState('1.4M msg/sec');
+  const [role, setRole] = useState('Data Engineer & ERP Systems Architect');
+  const [impactMetric, setImpactMetric] = useState('8–20x ROI');
+  const [priorityOrder, setPriorityOrder] = useState<number>(1);
+  const [metricsStr, setMetricsStr] = useState('');
   const [summary, setSummary] = useState('');
   const [challenge, setChallenge] = useState('');
   const [solution, setSolution] = useState('');
@@ -122,6 +126,37 @@ export default function AdminProjectsPage() {
     }
     await reorderProjects(next, true);
     setSuccessToast(`Priority updated for "${moved.title}"`);
+    setTimeout(() => setSuccessToast(null), 2500);
+  };
+
+  const handleJumpToPosition = async (id: string, targetRank: number) => {
+    const clamped = Math.max(1, Math.min(projects.length, Math.round(targetRank)));
+    const currentIdx = projects.findIndex((p) => p.id === id);
+    if (currentIdx === -1 || currentIdx === clamped - 1) return;
+    const next = [...projects];
+    const [moved] = next.splice(currentIdx, 1);
+    next.splice(clamped - 1, 0, moved);
+    await reorderProjects(next, true);
+    setSuccessToast(`Moved "${moved.title}" to #${clamped}`);
+    setTimeout(() => setSuccessToast(null), 2500);
+  };
+
+  const handleDropRow = async (targetId: string) => {
+    if (!draggedId || draggedId === targetId) {
+      setDraggedId(null);
+      setDragOverId(null);
+      return;
+    }
+    const fromIdx = projects.findIndex((p) => p.id === draggedId);
+    const toIdx = projects.findIndex((p) => p.id === targetId);
+    setDraggedId(null);
+    setDragOverId(null);
+    if (fromIdx === -1 || toIdx === -1) return;
+    const next = [...projects];
+    const [moved] = next.splice(fromIdx, 1);
+    next.splice(toIdx, 0, moved);
+    await reorderProjects(next, true);
+    setSuccessToast(`Moved "${moved.title}" to #${toIdx + 1}`);
     setTimeout(() => setSuccessToast(null), 2500);
   };
 
@@ -200,14 +235,16 @@ export default function AdminProjectsPage() {
     setClient('');
     setCompanyLogo(SAMPLE_LOGOS[0].url);
     setCategory('ERP Systems');
-    setRole('Lead Solutions Architect');
-    setImpactMetric('95% Accuracy');
+    setRole('Data Engineer & ERP Systems Architect');
+    setImpactMetric('8–20x ROI');
+    setPriorityOrder(1);
+    setMetricsStr('ROI | 8x – 20x\nEfficiency | +15%\nCost Cut | -60%');
     setSummary('');
     setChallenge('');
     setSolution('');
     setReadmeContent('');
-    setTechStackStr('Kafka, ClickHouse, Go, Docker');
-    setHighlightsStr('Engineered distributed stream pipeline\nReduced cloud compute cost by 60%');
+    setTechStackStr('Operations Research, Custom ERP, PLC Telemetry, Power BI');
+    setHighlightsStr('Engineered Operations-Research-driven ERP system\nReduced operational overhead by 60%');
     setLiveDemoUrl('');
     setGithubUrl('');
     setGalleryImagesStr('');
@@ -229,12 +266,15 @@ export default function AdminProjectsPage() {
   }, []);
 
   const startEdit = (p: ProjectItem) => {
+    const rank = projects.findIndex((item) => item.id === p.id) + 1;
     setTitle(p.title);
     setClient(p.client);
     setCompanyLogo(p.companyLogo);
     setCategory(normalizeProjectCategory(p.category));
     setRole(p.role);
     setImpactMetric(p.impactMetric);
+    setPriorityOrder(rank > 0 ? rank : p.displayOrder || 1);
+    setMetricsStr((p.metrics || []).map((m) => `${m.label} | ${m.value}`).join('\n'));
     setSummary(p.summary);
     setChallenge(p.challenge || '');
     setSolution(p.solution || '');
@@ -333,6 +373,18 @@ export default function AdminProjectsPage() {
           };
         });
 
+      const parsedMetrics = metricsStr
+        .split('\n')
+        .map((line) => line.trim())
+        .filter(Boolean)
+        .map((line) => {
+          const [label, ...rest] = line.split('|');
+          return {
+            label: label.trim(),
+            value: rest.join('|').trim() || impactMetric.trim(),
+          };
+        });
+
       const updated: ProjectItem = {
         id,
         title: title.trim(),
@@ -341,11 +393,15 @@ export default function AdminProjectsPage() {
         category,
         role: role.trim(),
         impactMetric: impactMetric.trim(),
-        metrics: editingProject?.metrics?.length ? editingProject.metrics : [
-          { label: 'Throughput', value: impactMetric },
-          { label: 'Latency', value: '< 200ms' },
-          { label: 'Availability', value: '99.99%' }
-        ],
+        metrics:
+          parsedMetrics.length > 0
+            ? parsedMetrics
+            : editingProject?.metrics?.length
+            ? editingProject.metrics
+            : [
+                { label: 'Impact', value: impactMetric.trim() || 'Production' },
+                { label: 'Availability', value: '99.99%' },
+              ],
         techStack,
         summary: summary.trim(),
         architectureHighlights,
@@ -360,12 +416,21 @@ export default function AdminProjectsPage() {
         steps,
         readmeContent: readmeContent.trim() || undefined,
         githubUrl: githubUrl.trim() || undefined,
+        displayOrder: priorityOrder > 0 ? priorityOrder : editingProject?.displayOrder,
       };
 
       await saveProject(updated);
+      if (priorityOrder > 0) {
+        const currentList = [
+          ...projects.filter((p) => p.id !== updated.id),
+        ];
+        const targetIdx = Math.max(0, Math.min(currentList.length, priorityOrder - 1));
+        currentList.splice(targetIdx, 0, updated);
+        await reorderProjects(currentList, true);
+      }
       setIsCreating(false);
       setEditingProject(null);
-      setSuccessToast(`Project "${updated.title}" saved successfully to database!`);
+      setSuccessToast(`Project "${updated.title}" saved successfully!`);
       setTimeout(() => setSuccessToast(null), 3000);
     } catch (err: any) {
       const msg = err?.message || 'Error saving project';
@@ -393,7 +458,7 @@ export default function AdminProjectsPage() {
   };
 
   return (
-    <div className="bg-background font-body-md text-on-surface antialiased min-h-screen flex flex-col">
+    <div dir="ltr" className="bg-background font-body-md text-on-surface antialiased min-h-screen flex flex-col text-left">
       <AdminNav />
 
       <main className="w-full pt-24 pb-20 flex-1">
@@ -520,6 +585,31 @@ export default function AdminProjectsPage() {
                           onChange={(e) => setClient(e.target.value)}
                           placeholder="Safir Hotels & Resorts"
                           className="px-3.5 py-2 rounded-xl bg-surface-container-lowest border border-outline-variant/30 text-xs text-on-surface focus:outline-none focus:ring-2 focus:ring-primary"
+                        />
+                      </div>
+                    </div>
+
+                    {/* Priority Position & KPI Metrics */}
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                      <div className="flex flex-col gap-1">
+                        <label className="text-xs font-semibold text-on-surface">Priority Position (#1 = Top)</label>
+                        <input
+                          type="number"
+                          min={1}
+                          max={Math.max(projects.length + 1, 1)}
+                          value={priorityOrder}
+                          onChange={(e) => setPriorityOrder(Math.max(1, parseInt(e.target.value || '1', 10)))}
+                          className="px-3.5 py-2 rounded-xl bg-surface-container-lowest border border-outline-variant/30 text-xs font-mono text-primary font-bold focus:outline-none focus:ring-2 focus:ring-primary"
+                        />
+                      </div>
+                      <div className="sm:col-span-2 flex flex-col gap-1">
+                        <label className="text-xs font-semibold text-on-surface">Key Metrics (one per line: Label | Value)</label>
+                        <textarea
+                          rows={2}
+                          value={metricsStr}
+                          onChange={(e) => setMetricsStr(e.target.value)}
+                          placeholder={"Wire Cost Saving | 8% – 15%\nUptime Recovery | +10% – 15%"}
+                          className="px-3.5 py-2 rounded-xl bg-surface-container-lowest border border-outline-variant/30 text-xs font-mono text-on-surface focus:outline-none focus:ring-2 focus:ring-primary resize-y"
                         />
                       </div>
                     </div>
@@ -998,8 +1088,31 @@ export default function AdminProjectsPage() {
                   return (
                   <tr
                     key={p.id}
+                    draggable
+                    onDragStart={() => setDraggedId(p.id)}
+                    onDragOver={(e) => {
+                      e.preventDefault();
+                      if (dragOverId !== p.id) setDragOverId(p.id);
+                    }}
+                    onDragLeave={() => {
+                      if (dragOverId === p.id) setDragOverId(null);
+                    }}
+                    onDrop={(e) => {
+                      e.preventDefault();
+                      handleDropRow(p.id);
+                    }}
+                    onDragEnd={() => {
+                      setDraggedId(null);
+                      setDragOverId(null);
+                    }}
                     className={`transition-colors ${
-                      isSelected ? 'bg-primary/10' : 'hover:bg-surface-container-high/25'
+                      draggedId === p.id
+                        ? 'opacity-45 bg-primary/10'
+                        : dragOverId === p.id
+                        ? 'bg-secondary/15 ring-1 ring-inset ring-secondary'
+                        : isSelected
+                        ? 'bg-primary/10'
+                        : 'hover:bg-surface-container-high/25'
                     }`}
                   >
                     <td className="px-3 py-3.5 text-center">
@@ -1013,9 +1126,33 @@ export default function AdminProjectsPage() {
                     </td>
                     <td className="px-3 py-3.5 whitespace-nowrap">
                       <div className="flex items-center gap-1">
-                        <span className="inline-flex items-center justify-center min-w-[26px] px-1.5 py-0.5 rounded-md bg-primary/15 text-primary font-mono text-[11px] font-bold">
-                          #{rank}
+                        <span
+                          title="Drag row to reorder"
+                          className="cursor-grab active:cursor-grabbing text-on-surface-variant/60 hover:text-primary p-0.5"
+                        >
+                          <GripVertical className="w-3.5 h-3.5" />
                         </span>
+                        <input
+                          key={`${p.id}-${rank}`}
+                          type="number"
+                          min={1}
+                          max={projects.length}
+                          defaultValue={rank}
+                          title="Type target priority # and press Enter"
+                          aria-label={`Priority position for ${p.title}`}
+                          onKeyDown={(e) => {
+                            if (e.key === 'Enter') {
+                              const val = parseInt((e.target as HTMLInputElement).value, 10);
+                              if (!isNaN(val)) handleJumpToPosition(p.id, val);
+                              (e.target as HTMLInputElement).blur();
+                            }
+                          }}
+                          onBlur={(e) => {
+                            const val = parseInt(e.target.value, 10);
+                            if (!isNaN(val) && val !== rank) handleJumpToPosition(p.id, val);
+                          }}
+                          className="w-11 px-1.5 py-0.5 rounded-md bg-primary/15 border border-primary/30 text-primary font-mono text-[11px] font-bold text-center focus:outline-none focus:ring-1 focus:ring-primary"
+                        />
                         <button
                           type="button"
                           onClick={() => handleMovePriority(p.id, 'top')}

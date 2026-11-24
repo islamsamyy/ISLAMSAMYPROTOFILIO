@@ -234,28 +234,99 @@ export function mapProjectItemToRow(p: ProjectItem) {
   };
 }
 
+const DELETED_PROJECTS_KEY = 'islam_deleted_project_ids_v1';
+const PROJECT_ORDER_KEY = 'islam_project_order_v1';
+
+function getDeletedProjectIds(): Set<string> {
+  if (!isClient()) return new Set();
+  try {
+    const raw = localStorage.getItem(DELETED_PROJECTS_KEY);
+    if (!raw) return new Set();
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed) ? new Set(parsed.map(String)) : new Set();
+  } catch {
+    return new Set();
+  }
+}
+
+function markProjectDeleted(id: string) {
+  if (!isClient()) return;
+  try {
+    const set = getDeletedProjectIds();
+    set.add(id);
+    localStorage.setItem(DELETED_PROJECTS_KEY, JSON.stringify(Array.from(set)));
+  } catch {}
+}
+
+function unmarkProjectDeleted(id: string) {
+  if (!isClient()) return;
+  try {
+    const set = getDeletedProjectIds();
+    if (set.delete(id)) {
+      localStorage.setItem(DELETED_PROJECTS_KEY, JSON.stringify(Array.from(set)));
+    }
+  } catch {}
+}
+
+function getSavedProjectOrder(): string[] {
+  if (!isClient()) return [];
+  try {
+    const raw = localStorage.getItem(PROJECT_ORDER_KEY);
+    if (!raw) return [];
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed) ? parsed.map(String) : [];
+  } catch {
+    return [];
+  }
+}
+
+function saveProjectOrder(ids: string[]) {
+  if (!isClient()) return;
+  try {
+    localStorage.setItem(PROJECT_ORDER_KEY, JSON.stringify(ids));
+  } catch {}
+}
+
 export function sortProjectsByImportance(projects: ProjectItem[]): ProjectItem[] {
+  const savedOrder = getSavedProjectOrder();
+  const orderMap = new Map(savedOrder.map((id, idx) => [id, idx]));
+
   return [...projects].sort((a, b) => {
+    const aHasSaved = orderMap.has(a.id);
+    const bHasSaved = orderMap.has(b.id);
+    if (aHasSaved && bHasSaved) {
+      return orderMap.get(a.id)! - orderMap.get(b.id)!;
+    }
     const ao = typeof a.displayOrder === 'number' ? a.displayOrder : Number.MAX_SAFE_INTEGER;
     const bo = typeof b.displayOrder === 'number' ? b.displayOrder : Number.MAX_SAFE_INTEGER;
     if (ao !== bo) return ao - bo;
+    if (aHasSaved !== bHasSaved) return aHasSaved ? -1 : 1;
     return 0;
   });
 }
 
 function mergeMissingSeedProjects(list: ProjectItem[]): ProjectItem[] {
-  const existingIds = new Set(list.map((p) => p.id));
-  const missingSeeds = initialProjects.filter((seed) => !existingIds.has(seed.id));
-  return missingSeeds.length > 0 ? [...missingSeeds, ...list] : list;
+  const deletedIds = getDeletedProjectIds();
+  const filtered = list.filter((p) => !deletedIds.has(p.id));
+  const existingIds = new Set(filtered.map((p) => p.id));
+  const missingSeeds = initialProjects.filter(
+    (seed) => !existingIds.has(seed.id) && !deletedIds.has(seed.id)
+  );
+  return missingSeeds.length > 0 ? [...missingSeeds, ...filtered] : filtered;
 }
 
 export function getStoredProjects(): ProjectItem[] {
   if (!isClient()) return initialProjects;
   try {
+    const deletedIds = getDeletedProjectIds();
     const data = localStorage.getItem(STORAGE_KEYS.PROJECTS);
-    if (!data) return initialProjects;
+    if (!data) {
+      return sortProjectsByImportance(initialProjects.filter((p) => !deletedIds.has(p.id)));
+    }
     const parsed = JSON.parse(data);
-    if (!Array.isArray(parsed)) return initialProjects;
+    if (!Array.isArray(parsed)) {
+      return sortProjectsByImportance(initialProjects.filter((p) => !deletedIds.has(p.id)));
+    }
     const normalized = parsed.map((p: any) => ({
       ...p,
       category: normalizeProjectCategory(p.category),
@@ -281,21 +352,24 @@ export async function fetchProjectsFromSupabase(): Promise<ProjectItem[]> {
     if (error || !data || data.length === 0) {
       return getStoredProjects();
     }
+    const deletedIds = getDeletedProjectIds();
     const localById = new Map(getStoredProjects().map((p) => [p.id, p]));
-    const mapped = data.map((row: any) => {
-      const item = mapProjectRowToItem(row);
-      const local = localById.get(item.id);
-      if (local) {
-        if (!Array.isArray(row.gallery_images) && (!item.galleryImages || item.galleryImages.length === 0) && local.galleryImages?.length) {
-          item.galleryImages = local.galleryImages;
+    const mapped = data
+      .filter((row: any) => !deletedIds.has(row.id))
+      .map((row: any) => {
+        const item = mapProjectRowToItem(row);
+        const local = localById.get(item.id);
+        if (local) {
+          if (!Array.isArray(row.gallery_images) && (!item.galleryImages || item.galleryImages.length === 0) && local.galleryImages?.length) {
+            item.galleryImages = local.galleryImages;
+          }
+          if (!Array.isArray(row.steps) && (!item.steps || item.steps.length === 0) && local.steps?.length) {
+            item.steps = local.steps;
+          }
         }
-        if (!Array.isArray(row.steps) && (!item.steps || item.steps.length === 0) && local.steps?.length) {
-          item.steps = local.steps;
-        }
-      }
-      return item;
-    });
-    const merged = mergeMissingSeedProjects(mapped);
+        return item;
+      });
+    const merged = sortProjectsByImportance(mergeMissingSeedProjects(mapped));
     cacheLocally(STORAGE_KEYS.PROJECTS, merged);
     return merged;
   } catch {
@@ -304,32 +378,58 @@ export async function fetchProjectsFromSupabase(): Promise<ProjectItem[]> {
 }
 
 export async function saveProject(project: ProjectItem) {
-  await apiMutate('projects', 'upsert', mapProjectItemToRow(project));
+  unmarkProjectDeleted(project.id);
 
   const list = getStoredProjects();
-  const index = list.findIndex(p => p.id === project.id);
+  const index = list.findIndex((p) => p.id === project.id);
+  const projectWithOrder: ProjectItem = {
+    ...project,
+    displayOrder:
+      typeof project.displayOrder === 'number'
+        ? project.displayOrder
+        : index > -1
+        ? list[index].displayOrder ?? index + 1
+        : 1,
+  };
+
   if (index > -1) {
-    list[index] = project;
+    list[index] = projectWithOrder;
   } else {
-    list.unshift(project);
+    list.unshift(projectWithOrder);
   }
-  setStoredProjects(list);
+  const sorted = sortProjectsByImportance(list);
+  saveProjectOrder(sorted.map((p) => p.id));
+  setStoredProjects(sorted);
   notifyCrossTab('projects');
+
+  try {
+    await apiMutate('projects', 'upsert', mapProjectItemToRow(projectWithOrder));
+  } catch (err) {
+    console.warn('[saveProject] Saved locally; remote sync skipped/failed:', err);
+  }
 }
 
 export async function deleteProject(id: string) {
-  const list = getStoredProjects().filter(p => p.id !== id);
+  markProjectDeleted(id);
+  const list = getStoredProjects().filter((p) => p.id !== id);
+  saveProjectOrder(list.map((p) => p.id));
   setStoredProjects(list);
-
-  await apiMutate('projects', 'delete', undefined, id);
   notifyCrossTab('projects');
+
+  try {
+    await apiMutate('projects', 'delete', undefined, id);
+  } catch (err) {
+    console.warn('[deleteProject] Removed locally; remote delete skipped/failed:', err);
+  }
 }
 
 export async function reorderProjects(orderedProjects: ProjectItem[], syncRemote = false) {
+  const prevOrderById = new Map(getStoredProjects().map((p) => [p.id, p.displayOrder]));
   const withOrder = orderedProjects.map((p, idx) => ({
     ...p,
     displayOrder: idx + 1,
   }));
+  saveProjectOrder(withOrder.map((p) => p.id));
   setStoredProjects(withOrder);
   notifyCrossTab('projects');
 
@@ -337,11 +437,16 @@ export async function reorderProjects(orderedProjects: ProjectItem[], syncRemote
     try {
       const authHeaders = await getAdminAuthHeaders();
       if (authHeaders.Authorization) {
-        await Promise.allSettled(
-          withOrder.map((p) =>
-            apiMutate('projects', 'update', { display_order: p.displayOrder }, p.id)
-          )
-        );
+        const changed = withOrder.filter((p) => prevOrderById.get(p.id) !== p.displayOrder);
+        // Batch updates in chunks of 6 to avoid flooding the API
+        for (let i = 0; i < changed.length; i += 6) {
+          const chunk = changed.slice(i, i + 6);
+          await Promise.allSettled(
+            chunk.map((p) =>
+              apiMutate('projects', 'update', { display_order: p.displayOrder }, p.id)
+            )
+          );
+        }
       }
     } catch {
       // Local order is already persisted
