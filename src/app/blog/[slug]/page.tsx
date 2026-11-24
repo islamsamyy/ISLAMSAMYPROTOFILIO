@@ -23,12 +23,13 @@ interface PageProps {
 export default async function BlogPostPage({ params }: PageProps) {
   const { slug } = await params;
 
-  // Try fetching from Supabase first, fallback to initialArticles
+  // Try fetching from Supabase first (matching either slug or id), fallback to initialArticles
   let article: any = null;
+  const decodedSlug = decodeURIComponent(slug);
   try {
     const { data } = await (supabase.from('articles') as any)
       .select('*')
-      .eq('slug', slug)
+      .or(`slug.eq.${decodedSlug},id.eq.${decodedSlug}`)
       .maybeSingle();
 
     if (data) {
@@ -54,7 +55,7 @@ export default async function BlogPostPage({ params }: PageProps) {
     // Fallback below
   }
 
-  const seed = initialArticles.find((a) => a.slug === slug);
+  const seed = initialArticles.find((a) => a.slug === decodedSlug || a.id === decodedSlug);
   if (!article && seed) {
     article = seed;
   } else if (article && seed) {

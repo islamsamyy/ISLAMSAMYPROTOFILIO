@@ -109,13 +109,13 @@ export default function BlogPage() {
                   </p>
 
                   <div className="flex items-center gap-4 pt-2">
-                    <button
-                      onClick={() => setReadingArticle(featured)}
+                    <Link
+                      href={`/blog/${encodeURIComponent(featured.slug || featured.id)}`}
                       className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary-container text-on-primary-container font-label-md text-xs sm:text-sm font-semibold hover:bg-primary hover:text-on-primary shadow-[0_0_20px_rgba(160,120,255,0.4)] transition-all hover:scale-105"
                     >
                       <span className="material-symbols-outlined text-base">menu_book</span>
                       <span>{language === 'ar' ? 'قراءة التحليل المعماري الكامل' : 'Read Full Architecture Deep Dive'}</span>
-                    </button>
+                    </Link>
                     <span className="text-xs text-on-surface-variant font-mono">
                       By {featured.author} &bull; {featured.date}
                     </span>
@@ -217,10 +217,7 @@ export default function BlogPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredArticles.map((article) => (
                 <TiltCard key={article.id} maxTilt={5} depth={10} glare={true} className="h-full">
-                  <ArticleCard
-                    article={article}
-                    onRead={(a) => setReadingArticle(a)}
-                  />
+                  <ArticleCard article={article} />
                 </TiltCard>
               ))}
             </div>
