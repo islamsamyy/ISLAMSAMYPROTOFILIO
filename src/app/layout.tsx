@@ -4,6 +4,7 @@ import { ThemeProvider } from "@/components/theme/ThemeProvider";
 import { LanguageProvider } from "@/context/LanguageContext";
 import { ScrollProgress } from "@/components/navigation/ScrollProgress";
 import { GlobalBackgroundClient } from "@/components/canvas/GlobalBackgroundClient";
+import { Analytics } from "@vercel/analytics/next";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://islamsamy.dev";
 
@@ -208,6 +209,7 @@ export default function RootLayout({
             </div>
           </LanguageProvider>
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );
