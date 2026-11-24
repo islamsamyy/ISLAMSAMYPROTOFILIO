@@ -26,9 +26,9 @@ import { SiteFooter } from '@/components/navigation/SiteFooter';
 import { TiltCard } from '@/components/ui/TiltCard';
 import { usePricing } from '@/lib/hooks';
 import { useLanguage } from '@/context/LanguageContext';
-import { PricingPackage, PACKAGE_ENRICHMENT_MAP } from '@/data/seedPricing';
+import { PricingPackage, localizePackage } from '@/data/seedPricing';
 
-const FAQS = [
+const FAQS_EN = [
   {
     question: 'How do milestone-gated payments work?',
     answer:
@@ -47,12 +47,40 @@ const FAQS = [
   {
     question: 'How are intellectual property and source code handled?',
     answer:
-      '100% of all code, Terraform scripts, Kafka schemas, database migrations, and architecture documentation are directly committed to your organization’s private repositories under a mutual enterprise NDA with full IP transfer.',
+      '100% of all code, database schemas, automation workflows, and architecture documentation are directly committed to your organization’s private repositories under a mutual enterprise NDA with full IP transfer.',
   },
   {
-    question: 'What timezones and collaboration tools do you support?',
+    question: 'Can systems run on an internal local server without internet?',
     answer:
-      'Based in Cairo EET (UTC+2), overlapping with EMEA, UK/London GMT, and US East Coast business hours. We collaborate via Slack/Discord, Google Meet, GitHub, and Jira/Linear.',
+      'Yes. Our On-Premise and Industrial ERP/PLC packages can run 100% locally on your factory, shop, or school server with automated backups and optional encrypted cloud dashboards for management.',
+  },
+];
+
+const FAQS_AR = [
+  {
+    question: 'كيف يعمل نظام الدفعات المرتبطة بالمراحل (Milestone-Gated)؟',
+    answer:
+      'يُقسم المشروع إلى مراحل تسليم واضحة وموثّقة. لا يتم استحقاق دفعة أي مرحلة إلا بعد تسليمها، مراجعتها، والتأكد من مطابقتها لمعايير الجودة والأداء المتفق عليها.',
+  },
+  {
+    question: 'هل يمكن البدء بجلسة استشارية قبل التعاقد على باقة كاملة؟',
+    answer:
+      'نعم بالتأكيد. يبدأ معظم عملائنا بجلسة تشخيص معماري لمدة 60 دقيقة ($150) نراجع فيها وضع النظام الحالي ونحدد نقاط الاختناق ونطاق العمل الدقيق—وتُخصم قيمة الجلسة بالكامل من تكلفة الباقة عند البدء.',
+  },
+  {
+    question: 'هل يوجد ضمان وصيانة بعد إطلاق النظام؟',
+    answer:
+      'نعم، كل باقة تشمل ضماناً لمدة 30 يوماً بعد الإطلاق يغطي المراقبة، معالجة أي أخطاء، وتحسين الأداء، مع إمكانية التعاقد على باقة صيانة وتطوير شهرية مستمرة.',
+  },
+  {
+    question: 'من يمتلك الكود المصدري والملكية الفكرية للنظام؟',
+    answer:
+      'تمتلك شركتك 100% من الكود المصدري وقواعد البيانات والتوثيق الفني بموجب اتفاقية عدم إفشاء (NDA)، بدون أي اشتراكات شهرية خانقة لكل مستخدم.',
+  },
+  {
+    question: 'هل تعمل الأنظمة على سيرفر داخلي بدون إنترنت؟',
+    answer:
+      'نعم، نوفر تشغيل محلي كامل (On-Premise) على سيرفر المصنع أو المحل أو المدرسة بدون الحاجة للإنترنت، مع نسخ احتياطي تلقائي وإمكانية ربط لوحة متابعة سحابية آمنة للإدارة العليا.',
   },
 ];
 
@@ -152,28 +180,26 @@ export default function PricingPage() {
 
           {/* SECTION 1: PACKAGES CARDS GRID */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
-            {packages.map((rawPkg, idx) => {
-              const enriched = PACKAGE_ENRICHMENT_MAP[rawPkg.id];
-              const pkg: PricingPackage = enriched ? { ...enriched, ...rawPkg, ar: enriched.ar } : rawPkg;
+            {packages.map((rawPkg) => {
               const isAr = language === 'ar';
-              const localized = isAr && pkg.ar ? pkg.ar : null;
+              const pkg = localizePackage(rawPkg, isAr);
 
-              const name = localized?.name || pkg.name;
-              const badge = localized?.badge || pkg.badge || 'Targeted Sprint';
-              const headline = localized?.headline || pkg.headline;
-              const duration = localized?.duration || pkg.duration;
-              const targetAudience = localized?.targetAudience || pkg.targetAudience;
-              const detailedDescription = localized?.detailedDescription || pkg.detailedDescription;
-              const businessRoi = localized?.businessRoi || pkg.businessRoi;
-              const roiMetric = localized?.roiMetric || pkg.roiMetric;
-              const deliverables = localized?.deliverables || pkg.deliverables;
+              const name = pkg.name;
+              const badge = pkg.badge || (isAr ? 'باقة متخصصة' : 'Targeted Sprint');
+              const headline = pkg.headline;
+              const duration = pkg.duration;
+              const targetAudience = pkg.targetAudience;
+              const detailedDescription = pkg.detailedDescription;
+              const businessRoi = pkg.businessRoi;
+              const roiMetric = pkg.roiMetric;
+              const deliverables = pkg.deliverables;
 
               const isPopular = pkg.isPopular;
               const displayPrice = billingCycle === 'milestone'
                 ? pkg.price
                 : `$${Math.round(parseInt(pkg.price.replace(/[^0-9]/g, '') || '5000', 10) * 0.9).toLocaleString()}`;
               const displayFreq = billingCycle === 'milestone'
-                ? (localized?.frequency || pkg.frequency)
+                ? pkg.frequency
                 : (isAr ? '/ شهرياً (عقد مستمر)' : '/ month (retained)');
 
               return (
@@ -310,45 +336,61 @@ export default function PricingPage() {
             <div className="flex flex-col gap-4 max-w-2xl">
               <div className="flex items-center gap-2">
                 <span className="px-3 py-1 rounded-full bg-secondary/15 text-secondary border border-secondary/30 text-xs font-bold uppercase tracking-wider">
-                  Direct Advisory Track
+                  {language === 'ar' ? 'استشارات فنية مباشرة' : 'Direct Advisory Track'}
                 </span>
                 <span className="text-xs text-on-surface-variant font-mono">
-                  Same-Week Calendar Dispatch
+                  {language === 'ar' ? 'حجز في نفس الأسبوع' : 'Same-Week Calendar Dispatch'}
                 </span>
               </div>
 
               <h2 className="font-nexa text-2xl sm:text-4xl font-extrabold text-on-surface">
-                Need Fast Architectural Triage Before Committing?
+                {language === 'ar' ? 'تحتاج تشخيصاً معمارياً سريعاً قبل بدء المشروع؟' : 'Need Fast Architectural Triage Before Committing?'}
               </h2>
 
               <p className="text-xs sm:text-base text-on-surface-variant leading-relaxed">
-                Book a high-impact, confidential 1-on-1 strategy call to audit your streaming topology, optimize database performance, or prepare for enterprise scale.
+                {language === 'ar'
+                  ? 'احجز جلسة استشارية فردية سرية لتقييم البنية الحالية، تحسين أداء قواعد البيانات، أو تخطيط نظام ERP وربط ماكينات المصنع قبل الالتزام بأي باقة.'
+                  : 'Book a high-impact, confidential 1-on-1 strategy call to audit your streaming topology, optimize database performance, or prepare for enterprise scale.'}
               </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
                 <div className="p-4 rounded-2xl bg-surface-container-lowest/80 border border-outline-variant/30 flex flex-col gap-1">
-                  <span className="text-xs font-mono uppercase text-on-surface-variant">30-Minute Architecture Audit</span>
+                  <span className="text-xs font-mono uppercase text-on-surface-variant">
+                    {language === 'ar' ? 'جلسة تشخيص 30 دقيقة' : '30-Minute Architecture Audit'}
+                  </span>
                   <div className="flex items-baseline gap-1.5">
                     <span className="font-nexa text-3xl font-extrabold text-secondary">
                       {consultationRates?.session30Min || '$90'}
                     </span>
-                    <span className="text-xs text-on-surface-variant font-mono">/ session</span>
+                    <span className="text-xs text-on-surface-variant font-mono">
+                      {language === 'ar' ? '/ جلسة' : '/ session'}
+                    </span>
                   </div>
-                  <span className="text-[11px] text-on-surface-variant mt-1">Direct bottleneck triage &amp; immediate recommendations.</span>
+                  <span className="text-[11px] text-on-surface-variant mt-1">
+                    {language === 'ar' ? 'تشخيص سريع لنقاط الاختناق وتوصيات فورية.' : 'Direct bottleneck triage & immediate recommendations.'}
+                  </span>
                 </div>
 
                 <div className="p-4 rounded-2xl bg-surface-container-lowest/80 border border-secondary/30 flex flex-col gap-1 shadow-[0_0_20px_rgba(123,208,255,0.15)]">
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-mono uppercase text-secondary font-bold">60-Minute Deep Architecture Review</span>
-                    <span className="px-1.5 py-0.5 rounded bg-secondary/20 text-secondary text-[9px] font-bold">Recommended</span>
+                    <span className="text-xs font-mono uppercase text-secondary font-bold">
+                      {language === 'ar' ? 'مراجعة معمارية شاملة 60 دقيقة' : '60-Minute Deep Architecture Review'}
+                    </span>
+                    <span className="px-1.5 py-0.5 rounded bg-secondary/20 text-secondary text-[9px] font-bold">
+                      {language === 'ar' ? 'موصى به' : 'Recommended'}
+                    </span>
                   </div>
                   <div className="flex items-baseline gap-1.5">
                     <span className="font-nexa text-3xl font-extrabold text-primary">
                       {consultationRates?.session60Min || '$150'}
                     </span>
-                    <span className="text-xs text-on-surface-variant font-mono">/ session</span>
+                    <span className="text-xs text-on-surface-variant font-mono">
+                      {language === 'ar' ? '/ جلسة' : '/ session'}
+                    </span>
                   </div>
-                  <span className="text-[11px] text-on-surface-variant mt-1">Full system blueprinting, CDC design &amp; follow-up dossier.</span>
+                  <span className="text-[11px] text-on-surface-variant mt-1">
+                    {language === 'ar' ? 'مخطط نظام متكامل وخارطة طريق تنفيذية مفصلة.' : 'Full system blueprinting, CDC design & follow-up dossier.'}
+                  </span>
                 </div>
               </div>
             </div>
@@ -359,10 +401,10 @@ export default function PricingPage() {
                 className="w-full py-4 px-6 rounded-2xl bg-secondary text-on-secondary font-nexa text-xs sm:text-sm font-bold uppercase tracking-wider hover:bg-secondary-fixed transition-all shadow-[0_0_24px_rgba(123,208,255,0.4)] hover:shadow-[0_0_32px_rgba(123,208,255,0.6)] text-center flex items-center justify-center gap-2 hover:scale-105"
               >
                 <Calendar className="w-4 h-4" />
-                <span>Schedule Consultation &rarr;</span>
+                <span>{language === 'ar' ? 'احجز استشارة الآن ←' : 'Schedule Consultation →'}</span>
               </Link>
               <span className="text-[11px] text-center text-on-surface-variant font-mono">
-                100% credited toward any subsequent delivery sprint
+                {language === 'ar' ? 'تُخصم 100% من قيمة أي باقة تختارها لاحقاً' : '100% credited toward any subsequent delivery sprint'}
               </span>
             </div>
           </div>
@@ -374,10 +416,12 @@ export default function PricingPage() {
                 <ShieldCheck className="w-5 h-5" />
               </div>
               <h3 className="font-nexa text-lg font-bold text-on-surface">
-                100% Milestone-Gated Delivery
+                {language === 'ar' ? 'تسليم مرتبط بالإنجاز 100%' : '100% Milestone-Gated Delivery'}
               </h3>
               <p className="text-xs text-on-surface-variant leading-relaxed">
-                Invoices are only triggered upon verified acceptance criteria, automated test passing, and staging sign-off.
+                {language === 'ar'
+                  ? 'لا يتم تحرير الدفعات إلا بعد التحقق من معايير القبول واختبار الأداء واعتماد كل مرحلة.'
+                  : 'Invoices are only triggered upon verified acceptance criteria, automated test passing, and staging sign-off.'}
               </p>
             </div>
 
@@ -386,10 +430,12 @@ export default function PricingPage() {
                 <Lock className="w-5 h-5" />
               </div>
               <h3 className="font-nexa text-lg font-bold text-on-surface">
-                Mutual NDA &amp; Full IP Transfer
+                {language === 'ar' ? 'اتفاقية سرية وملكية كاملة للكود' : 'Mutual NDA & Full IP Transfer'}
               </h3>
               <p className="text-xs text-on-surface-variant leading-relaxed">
-                Strict confidentiality with immediate IP transfer. All code, models, and architecture artifacts belong solely to your company.
+                {language === 'ar'
+                  ? 'سرية تامة ونقل كامل للملكية الفكرية؛ كل الكود وقواعد البيانات والمستندات ملك حصري لشركتك.'
+                  : 'Strict confidentiality with immediate IP transfer. All code, models, and architecture artifacts belong solely to your company.'}
               </p>
             </div>
 
@@ -398,10 +444,12 @@ export default function PricingPage() {
                 <Zap className="w-5 h-5" />
               </div>
               <h3 className="font-nexa text-lg font-bold text-on-surface">
-                30-Day Post-Launch SLA Warranty
+                {language === 'ar' ? 'ضمان تشغيل 30 يوماً بعد الإطلاق' : '30-Day Post-Launch SLA Warranty'}
               </h3>
               <p className="text-xs text-on-surface-variant leading-relaxed">
-                Guaranteed coverage after production release including real-time telemetry observation, performance tuning, and hotfixes.
+                {language === 'ar'
+                  ? 'تغطية مضمونة بعد الإطلاق تشمل المراقبة اللحظية، تحسين الأداء، ومعالجة أي أعطال فوراً.'
+                  : 'Guaranteed coverage after production release including real-time telemetry observation, performance tuning, and hotfixes.'}
               </p>
             </div>
           </div>
@@ -410,20 +458,20 @@ export default function PricingPage() {
           <div className="p-8 sm:p-12 rounded-3xl bg-surface-container-low/60 backdrop-blur-2xl border border-white/20 dark:border-white/[0.08] shadow-[0_16px_50px_rgba(0,0,0,0.35)] flex flex-col gap-8 max-w-4xl mx-auto w-full">
             <div className="text-center flex flex-col items-center gap-2">
               <span className="font-mono text-xs uppercase text-primary font-bold tracking-wider">
-                Frequently Asked Questions
+                {language === 'ar' ? 'الأسئلة الشائعة' : 'Frequently Asked Questions'}
               </span>
               <h2 className="font-nexa text-2xl sm:text-3xl font-extrabold text-on-surface">
-                Everything You Need to Know About Pricing &amp; Terms
+                {language === 'ar' ? 'كل ما تحتاج معرفته عن الباقات والتعاقد' : 'Everything You Need to Know About Pricing & Terms'}
               </h2>
             </div>
 
             <div className="divide-y divide-surface-container-high/60">
-              {FAQS.map((faq, idx) => (
+              {(language === 'ar' ? FAQS_AR : FAQS_EN).map((faq, idx) => (
                 <div key={idx} className="py-4">
                   <button
                     type="button"
                     onClick={() => toggleFaq(idx)}
-                    className="w-full flex items-center justify-between gap-4 text-left font-nexa text-base sm:text-lg font-bold text-on-surface hover:text-primary transition-colors py-2"
+                    className={`w-full flex items-center justify-between gap-4 font-nexa text-base sm:text-lg font-bold text-on-surface hover:text-primary transition-colors py-2 ${language === 'ar' ? 'text-right' : 'text-left'}`}
                   >
                     <span>{faq.question}</span>
                     <ChevronDown
@@ -457,20 +505,22 @@ export default function PricingPage() {
           <div className="p-8 sm:p-12 rounded-3xl bg-gradient-to-r from-surface-container-low via-surface-container to-surface-container-high border border-primary/30 shadow-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-6">
             <div className="flex flex-col gap-2">
               <span className="font-mono text-xs text-secondary uppercase font-bold tracking-wider">
-                Tailored Engagements
+                {language === 'ar' ? 'حلول مفصلة حسب الطلب' : 'Tailored Engagements'}
               </span>
               <h3 className="font-nexa text-2xl font-bold text-on-surface">
-                Need a Custom Architectural Scope or Retainer?
+                {language === 'ar' ? 'تحتاج نطاق عمل مخصص لمصنعك أو شركتك؟' : 'Need a Custom Architectural Scope or Retainer?'}
               </h3>
               <p className="text-xs sm:text-sm text-on-surface-variant max-w-xl leading-relaxed">
-                If your project demands custom data governance, multi-region CDC streaming, or long-term staff augmentation, let's configure a custom SLA contract.
+                {language === 'ar'
+                  ? 'إذا كان مشروعك يحتاج ربط عدد محدد من ماكينات PLC أو دمج عدة فروع أو عقد تطوير طويل الأجل، تواصل معنا لتصميم عرض مخصص.'
+                  : 'If your project demands custom data governance, multi-region CDC streaming, or long-term staff augmentation, let\'s configure a custom SLA contract.'}
               </p>
             </div>
             <Link
               href="/#contact"
               className="px-6 py-3.5 rounded-2xl bg-primary text-on-primary font-nexa font-bold text-xs uppercase tracking-wider hover:bg-primary-container hover:text-on-primary-container shadow-lg transition-all hover:scale-105 shrink-0 text-center"
             >
-              Request Custom Enterprise Quote &rarr;
+              {language === 'ar' ? 'اطلب عرض سعر مخصص ←' : 'Request Custom Enterprise Quote →'}
             </Link>
           </div>
 

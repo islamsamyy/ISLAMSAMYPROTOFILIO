@@ -7,7 +7,7 @@ import { SiteFooter } from '@/components/navigation/SiteFooter';
 import { TiltCard } from '@/components/ui/TiltCard';
 import { usePricing } from '@/lib/hooks';
 import { saveReservation } from '@/lib/data-store';
-import { PricingPackage } from '@/data/seedPricing';
+import { PricingPackage, localizePackage } from '@/data/seedPricing';
 import { WhatsAppBanner, WhatsAppFloatingButton, WHATSAPP_NUMBER, WHATSAPP_URL, WhatsAppIcon } from '@/components/ui/WhatsAppButton';
 import { useLanguage } from '@/context/LanguageContext';
 
@@ -188,11 +188,13 @@ export default function BookPage() {
           {/* MODE 1: ENGAGEMENT PACKAGES */}
           {bookingMode === 'packages' && (
             <div className="flex flex-col gap-10">
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
-                {packages.map((pkg) => {
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
+                {packages.map((rawPkg) => {
+                  const isAr = language === 'ar';
+                  const pkg = localizePackage(rawPkg, isAr);
                   const isSelected = selectedPkg?.id === pkg.id;
                   return (
-                    <TiltCard key={pkg.id} maxTilt={6} depth={10} glare={true} className="h-full">
+                    <TiltCard key={pkg.id} maxTilt={5} depth={10} glare={true} className="h-full">
                       <motion.div
                         whileHover={{ y: -4 }}
                         onClick={() => setSelectedPkg(pkg)}
@@ -206,13 +208,13 @@ export default function BookPage() {
                         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/30 dark:via-primary/30 to-transparent pointer-events-none rounded-t-3xl" />
 
                         {pkg.isPopular && (
-                          <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full bg-gradient-to-r from-primary to-secondary text-on-primary-container font-label-sm text-[10px] font-bold uppercase tracking-wider shadow-md">
-                            {t('book.mostRequested')}
+                          <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full bg-gradient-to-r from-primary to-secondary text-on-primary-container font-label-sm text-[10px] font-bold uppercase tracking-wider shadow-md whitespace-nowrap">
+                            {isAr ? 'الأكثر طلباً • عائد مرتفع' : t('book.mostRequested')}
                           </div>
                         )}
 
                         <div className="flex flex-col gap-4">
-                          <div className="flex items-center justify-between">
+                          <div className="flex items-center justify-between gap-2 flex-wrap">
                             <span className="px-2.5 py-0.5 rounded-full bg-primary/15 text-primary text-xs font-bold">
                               {pkg.badge}
                             </span>
@@ -239,7 +241,25 @@ export default function BookPage() {
                             </span>
                           </div>
 
-                          <ul className="space-y-2 pt-2">
+                          {pkg.businessRoi && (
+                            <div className="p-3.5 rounded-2xl bg-emerald-500/10 border border-emerald-500/25 space-y-1">
+                              <div className="flex items-center justify-between gap-2 flex-wrap">
+                                <span className="text-[11px] font-mono font-bold text-emerald-400">
+                                  {isAr ? 'العائد على البيزنيس (ROI)' : 'Business ROI'}
+                                </span>
+                                {pkg.roiMetric && (
+                                  <span className="px-2 py-0.5 rounded-full bg-emerald-500/15 text-[10px] font-bold text-emerald-300">
+                                    {pkg.roiMetric}
+                                  </span>
+                                )}
+                              </div>
+                              <p className="text-xs text-on-surface leading-relaxed">
+                                {pkg.businessRoi}
+                              </p>
+                            </div>
+                          )}
+
+                          <ul className="space-y-2 pt-1">
                             {pkg.deliverables.map((item, idx) => (
                               <li key={idx} className="flex items-start gap-2.5 text-xs text-on-surface leading-relaxed">
                                 <span className="material-symbols-outlined text-secondary text-sm mt-0.5 shrink-0">
@@ -269,7 +289,9 @@ export default function BookPage() {
               </div>
 
               {/* Package Intake Form */}
-              {selectedPkg && (
+              {selectedPkg && (() => {
+                const displaySelected = localizePackage(selectedPkg, language === 'ar');
+                return (
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -281,7 +303,7 @@ export default function BookPage() {
                         {t('book.confirmReservation')}
                       </span>
                       <h3 className="font-nexa text-xl font-bold text-on-surface mt-1">
-                        {selectedPkg.name} ({selectedPkg.price})
+                        {displaySelected.name} ({displaySelected.price})
                       </h3>
                     </div>
                     <button
@@ -349,7 +371,8 @@ export default function BookPage() {
                     </button>
                   </form>
                 </motion.div>
-              )}
+                );
+              })()}
             </div>
           )}
 

@@ -387,6 +387,25 @@ export const PACKAGE_ENRICHMENT_MAP: Record<string, PricingPackage> = Object.fro
   initialPackages.map((pkg) => [pkg.id, pkg])
 );
 
+export function localizePackage(rawPkg: PricingPackage, isAr: boolean): PricingPackage {
+  const enriched = PACKAGE_ENRICHMENT_MAP[rawPkg.id];
+  const merged: PricingPackage = enriched ? { ...enriched, ...rawPkg, ar: enriched.ar } : rawPkg;
+  if (!isAr || !merged.ar) return merged;
+  return {
+    ...merged,
+    name: merged.ar.name,
+    badge: merged.ar.badge,
+    headline: merged.ar.headline,
+    frequency: merged.ar.frequency,
+    duration: merged.ar.duration,
+    targetAudience: merged.ar.targetAudience,
+    detailedDescription: merged.ar.detailedDescription,
+    businessRoi: merged.ar.businessRoi,
+    roiMetric: merged.ar.roiMetric,
+    deliverables: merged.ar.deliverables,
+  };
+}
+
 export const initialConsultationRates: ConsultationRates = {
   hourlyRate: '$150',
   session30Min: '$90',
