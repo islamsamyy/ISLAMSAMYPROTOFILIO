@@ -18,13 +18,15 @@ import {
   Lock,
   FileText,
   HelpCircle,
+  TrendingUp,
+  Target,
 } from 'lucide-react';
 import { SiteHeader } from '@/components/navigation/SiteHeader';
 import { SiteFooter } from '@/components/navigation/SiteFooter';
 import { TiltCard } from '@/components/ui/TiltCard';
 import { usePricing } from '@/lib/hooks';
 import { useLanguage } from '@/context/LanguageContext';
-import { PricingPackage } from '@/data/seedPricing';
+import { PricingPackage, PACKAGE_ENRICHMENT_MAP } from '@/data/seedPricing';
 
 const FAQS = [
   {
@@ -149,18 +151,33 @@ export default function PricingPage() {
           </div>
 
           {/* SECTION 1: PACKAGES CARDS GRID */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
-            {packages.map((pkg, idx) => {
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
+            {packages.map((rawPkg, idx) => {
+              const enriched = PACKAGE_ENRICHMENT_MAP[rawPkg.id];
+              const pkg: PricingPackage = enriched ? { ...enriched, ...rawPkg, ar: enriched.ar } : rawPkg;
+              const isAr = language === 'ar';
+              const localized = isAr && pkg.ar ? pkg.ar : null;
+
+              const name = localized?.name || pkg.name;
+              const badge = localized?.badge || pkg.badge || 'Targeted Sprint';
+              const headline = localized?.headline || pkg.headline;
+              const duration = localized?.duration || pkg.duration;
+              const targetAudience = localized?.targetAudience || pkg.targetAudience;
+              const detailedDescription = localized?.detailedDescription || pkg.detailedDescription;
+              const businessRoi = localized?.businessRoi || pkg.businessRoi;
+              const roiMetric = localized?.roiMetric || pkg.roiMetric;
+              const deliverables = localized?.deliverables || pkg.deliverables;
+
               const isPopular = pkg.isPopular;
               const displayPrice = billingCycle === 'milestone'
                 ? pkg.price
                 : `$${Math.round(parseInt(pkg.price.replace(/[^0-9]/g, '') || '5000', 10) * 0.9).toLocaleString()}`;
               const displayFreq = billingCycle === 'milestone'
-                ? pkg.frequency
-                : '/ month (retained)';
+                ? (localized?.frequency || pkg.frequency)
+                : (isAr ? '/ شهرياً (عقد مستمر)' : '/ month (retained)');
 
               return (
-                <TiltCard key={pkg.id} maxTilt={6} depth={12} glare={true} className="h-full">
+                <TiltCard key={pkg.id} maxTilt={4} depth={10} glare={true} className="h-full">
                   <div
                     className={`relative h-full p-7 sm:p-8 rounded-3xl backdrop-blur-2xl transition-all duration-300 flex flex-col justify-between gap-6 ${
                       isPopular
@@ -172,30 +189,42 @@ export default function PricingPage() {
                     <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/30 dark:via-primary/30 to-transparent pointer-events-none rounded-t-3xl" />
 
                     {isPopular && (
-                      <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-gradient-to-r from-primary to-secondary text-on-primary font-label-sm text-[11px] font-bold uppercase tracking-wider shadow-[0_0_16px_rgba(160,120,255,0.5)]">
-                        Most Requested &bull; Enterprise
+                      <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-gradient-to-r from-primary to-secondary text-on-primary font-label-sm text-[11px] font-bold uppercase tracking-wider shadow-[0_0_16px_rgba(160,120,255,0.5)] whitespace-nowrap">
+                        {isAr ? 'الأكثر طلباً • عائد استثماري مرتفع' : 'Most Requested • High ROI'}
                       </div>
                     )}
 
                     <div className="flex flex-col gap-4">
-                      <div className="flex items-center justify-between">
+                      <div className="flex items-center justify-between gap-2 flex-wrap">
                         <span className="px-3 py-1 rounded-full bg-primary/10 text-primary font-label-sm text-[11px] uppercase font-bold border border-primary/20">
-                          {pkg.badge || 'Targeted Sprint'}
+                          {badge}
                         </span>
                         <span className="text-xs font-mono text-on-surface-variant flex items-center gap-1">
                           <Clock className="w-3.5 h-3.5 text-secondary" />
-                          <span>{pkg.duration}</span>
+                          <span>{duration}</span>
                         </span>
                       </div>
 
                       <div>
-                        <h3 className="font-nexa text-2xl font-bold text-on-surface">
-                          {pkg.name}
+                        <h3 className="font-nexa text-xl sm:text-2xl font-bold text-on-surface leading-snug">
+                          {name}
                         </h3>
-                        <p className="text-xs sm:text-sm text-on-surface-variant mt-2 line-clamp-2 leading-relaxed">
-                          {pkg.headline}
+                        <p className="text-xs sm:text-sm text-on-surface-variant mt-2 leading-relaxed">
+                          {headline}
                         </p>
                       </div>
+
+                      {targetAudience && (
+                        <div className="flex items-start gap-2 px-3.5 py-2 rounded-xl bg-surface-container-highest/40 border border-outline-variant/20 text-xs text-on-surface-variant">
+                          <Target className="w-4 h-4 text-primary shrink-0 mt-0.5" />
+                          <div>
+                            <span className="font-bold text-on-surface">
+                              {isAr ? 'الأنسب لـ: ' : 'Best For: '}
+                            </span>
+                            <span>{targetAudience}</span>
+                          </div>
+                        </div>
+                      )}
 
                       <div className="flex items-baseline gap-2 py-4 border-y border-surface-container-high/60">
                         <span className={`font-nexa text-4xl font-extrabold ${isPopular ? 'text-primary' : 'text-on-surface'}`}>
@@ -206,12 +235,42 @@ export default function PricingPage() {
                         </span>
                       </div>
 
-                      <div className="space-y-2.5 pt-2">
+                      {detailedDescription && (
+                        <div className="space-y-1.5">
+                          <span className="text-[11px] font-mono uppercase tracking-wider text-secondary font-bold block">
+                            {isAr ? 'الشرح التفصيلي للباقة:' : 'Detailed Scope & Architecture:'}
+                          </span>
+                          <p className="text-xs sm:text-sm text-on-surface-variant leading-relaxed">
+                            {detailedDescription}
+                          </p>
+                        </div>
+                      )}
+
+                      {businessRoi && (
+                        <div className="p-4 rounded-2xl bg-gradient-to-br from-emerald-500/10 via-primary/5 to-secondary/10 border border-emerald-500/25 space-y-2">
+                          <div className="flex items-center justify-between gap-2 flex-wrap">
+                            <span className="inline-flex items-center gap-1.5 text-[11px] font-mono uppercase tracking-wider text-emerald-400 font-bold">
+                              <TrendingUp className="w-3.5 h-3.5" />
+                              {isAr ? 'العائد على الاستثمار (Business ROI)' : 'Business Value & Expected ROI'}
+                            </span>
+                            {roiMetric && (
+                              <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-[11px] font-bold text-emerald-300">
+                                {roiMetric}
+                              </span>
+                            )}
+                          </div>
+                          <p className="text-xs sm:text-sm text-on-surface leading-relaxed">
+                            {businessRoi}
+                          </p>
+                        </div>
+                      )}
+
+                      <div className="space-y-2.5 pt-1">
                         <span className="text-[11px] font-mono uppercase tracking-wider text-primary font-bold block">
-                          Deliverables &amp; Milestones Included:
+                          {isAr ? 'الخدمات والمخرجات المتضمنة:' : 'Deliverables & Milestones Included:'}
                         </span>
                         <ul className="space-y-2 text-xs sm:text-sm text-on-surface-variant">
-                          {pkg.deliverables.map((deliv, dIdx) => (
+                          {deliverables.map((deliv, dIdx) => (
                             <li key={dIdx} className="flex items-start gap-2.5 text-on-surface">
                               <CheckCircle2 className="w-4 h-4 text-secondary shrink-0 mt-0.5" />
                               <span className="leading-snug">{deliv}</span>
@@ -230,7 +289,13 @@ export default function PricingPage() {
                             : 'bg-surface-container-high hover:bg-primary-container hover:text-on-primary-container text-on-surface border border-outline-variant/30 hover:border-primary/50'
                         }`}
                       >
-                        <span>{isPopular ? t('pricing.deployCta', 'Deploy Enterprise Architecture') : `${t('pricing.bookCta', 'Book')} ${pkg.name}`}</span>
+                        <span>
+                          {isAr
+                            ? `احجز باقة: ${name}`
+                            : isPopular
+                            ? t('pricing.deployCta', 'Deploy Enterprise Architecture')
+                            : `${t('pricing.bookCta', 'Book')} ${name}`}
+                        </span>
                         <ArrowRight className="w-4 h-4" />
                       </Link>
                     </div>
