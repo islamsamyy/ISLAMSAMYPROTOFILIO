@@ -15,8 +15,6 @@
 ---
 
 ## Executive Summary & Operations Research Positioning
-`ISLAMSAMYPROTOFILIO` (`islam-samy-portfolio`) is a bilingual (**English + Arabic RTL**) Next.js 15, React 19, Three.js, Framer Motion, and Supabase platform engineered for **Islam Samy — Data Engineer & ERP Systems Architect for Factories & Institutions**.
-
 Every system showcased and delivered through this platform is grounded in **Operations Research (OR)**—turning raw factory PLC telemetry, relational ERP databases, and institutional workflows into mathematical optimization models that guarantee **measurable operational efficiency and financial ROI upon contracting**.
 
 ---
@@ -145,75 +143,6 @@ Unlike passive accounting software or static dashboards that report losses *afte
 
 - **Purpose:** Protected administration suite to manage leads, reservations, projects (including priority `#rank` ordering), blog proposals, pricing, certifications, experience, and reviews.
 - **Functionality:** Supabase-authenticated admin portal (`/admin/crm`, `/admin/reservations`, `/admin/projects`, `/admin/blog`, `/admin/pricing`, `/admin/certifications`, `/admin/experience`, `/admin/reviews`) backed by `/api/admin/mutate` and `/api/admin/upload`.
-- **Client Financial Value & OR Impact:** Serves as a live reference implementation of the exact RBAC, auditability, and operational control panels engineered for client organizations.
-
----
-
-## System Architecture & Layers
-
-```mermaid
-flowchart TB
-    subgraph L1["1. WebGL 3D & Motion Presentation Layer"]
-        Three["Three.js Canvases (Hero3DOrbit, CyberneticGridCanvas, ParticleMeshCanvas, ProjectTelemetryCanvas, ThreeBackgroundCanvas)"]
-        Motion["Framer Motion (ScrollRevealSection, TiltCard, motion-variants)"]
-        UI["Radix UI Primitives • ThemeProvider • i18n (EN/AR) • CairoTelemetry"]
-    end
-
-    subgraph L2["2. Public Showcase, OR & Booking Layer"]
-        Pub["/ • OperationsResearchSection • FeaturedProjectsGridSection • DeliveryProcessSection • ExecutiveFaqSection"]
-        Funnel["/projects/[id] • /blog/[slug] • /pricing • /reviews • /book • /my-bookings"]
-    end
-
-    subgraph L3["3. Admin CMS & CRM Layer (/admin)"]
-        Admin["/admin/{blog,certifications,crm,experience,pricing,projects,reservations,reviews}"]
-        Mutate["POST /api/admin/mutate & POST /api/admin/upload"]
-    end
-
-    subgraph L4["4. Persistence, SEO & QA Layer"]
-        Supa["Supabase (@supabase/supabase-js)"]
-        SEO["sitemap.ts • robots.ts • manifest.ts • JSON-LD Schema"]
-        QA["tests/runner.mjs & TypeScript strict build"]
-    end
-
-    L1 --> L2 --> L3 --> L4
-```
-
----
-
-## Application Modules & API Endpoints
-
-### Public Routes
-- `/` — Executive landing page with `OperationsResearchSection`, `ProjectsSlideshowSection`, `FeaturedProjectsGridSection` (importance-ranked), `IndustrySolutionsSection`, `DeliveryProcessSection`, `TechArsenalSection`, `ExperienceTimelineSection`, `CertificationsSection`, `ClientReviewsSection`, `LatestInsightsSection`, `ExecutiveFaqSection`, and Contact Form.
-- `/projects` & `/projects/[id]` — Case study showcase (`ProjectDetailClient.tsx`, `ArchitectureModal.tsx`).
-- `/blog` & `/blog/[slug]` — Technical & commercial proposals (`ArticleCard.tsx`, `BlogPostClient.tsx`, `ArticleMarkdownRenderer.tsx`).
-- `/pricing`, `/reviews`, `/book`, `/my-bookings` — Commercialization, social proof, and booking management.
-
-### Admin Suite (`/admin`)
-- `/admin/login` — Admin authentication.
-- `/admin/projects` — Full CRUD + priority `#rank` ordering (`Pin #1`, `Up`, `Down`) + image upload.
-- `/admin/crm`, `/admin/reservations`, `/admin/blog`, `/admin/certifications`, `/admin/experience`, `/admin/pricing`, `/admin/reviews`.
-
-### API Endpoints
-| Endpoint | Purpose |
-| :--- | :--- |
-| `/api/admin/mutate` (`src/app/api/admin/mutate/route.ts`) | Centralized server-side mutation handler for all Admin CMS & CRM CRUD actions |
-| `/api/admin/upload` (`src/app/api/admin/upload/route.ts`) | Media upload handler for project logos and gallery assets |
-
----
-
-## Getting Started & Scripts
-
-```bash
-git clone https://github.com/islamsamyy/ISLAMSAMYPROTOFILIO.git
-cd ISLAMSAMYPROTOFILIO
-npm install
-cp .env.example .env.local
-```
-
-| Script | Command | Description |
-| :--- | :--- | :--- |
-| Dev | `npm run dev` | Start Next.js 15 dev server |
-| Build | `npm run build` | Production build |
-| Start | `npm run start` | Start production server |
+- **Client Financial Value & OR Impact:** Serves as a live reference implementation of the exact RBAC, auditability, and operational control panels engineered for client organizations
 | Lint | `npm run lint` | Run Next.js ESLint |
 | Test | `npm test` | Execute custom test runner (`node tests/runner.mjs`) |
