@@ -2,9 +2,9 @@
 
 import React from 'react';
 
-export const WHATSAPP_NUMBER = '01206123824';
-export const WHATSAPP_INTERNATIONAL = '+20 120 612 3824';
-export const WHATSAPP_URL = 'https://wa.me/201206123824?text=Hello%20Islam%2C%20I%20would%20like%20to%20discuss%20a%20project%20or%20consultation.';
+export const WHATSAPP_NUMBER = '01242472743';
+export const WHATSAPP_INTERNATIONAL = '+20 124 247 2743';
+export const WHATSAPP_URL = 'https://wa.me/201242472743?text=Hello%20Islam%2C%20I%20would%20like%20to%20discuss%20a%20project%20or%20consultation.';
 
 export function WhatsAppIcon({ className = 'w-5 h-5' }: { className?: string }) {
   return (
@@ -32,7 +32,7 @@ export function WhatsAppFloatingButton() {
         href={WHATSAPP_URL}
         target="_blank"
         rel="noopener noreferrer"
-        aria-label="Direct WhatsApp Contact at 01206123824"
+        aria-label="Direct WhatsApp Contact at 01242472743"
         className="relative flex items-center justify-center w-14 h-14 rounded-full bg-emerald-500 hover:bg-emerald-400 text-white shadow-[0_0_24px_rgba(16,185,129,0.55)] hover:shadow-[0_0_36px_rgba(16,185,129,0.85)] transition-all duration-300 hover:scale-110 active:scale-95 focus:outline-none focus:ring-4 focus:ring-emerald-500/40"
       >
         <span className="absolute inset-0 rounded-full bg-emerald-400/40 animate-ping -z-10" />
