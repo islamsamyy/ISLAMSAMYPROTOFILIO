@@ -27,54 +27,54 @@
   :root {
     color-scheme: light;
 
-    /* Light Mode Tokens (Crisp High-Contrast) */
-    --background: 248 249 253;
-    --on-background: 23 26 31;
+    /* Light Mode Tokens (Executive High-Contrast Slate + Royal Violet + Ocean Cyan) */
+    --background: 248 250 252;
+    --on-background: 15 23 42;
     --surface: 255 255 255;
-    --surface-dim: 222 225 233;
+    --surface-dim: 226 232 240;
     --surface-bright: 255 255 255;
     --surface-container-lowest: 255 255 255;
-    --surface-container-low: 243 244 249;
-    --surface-container: 237 238 244;
-    --surface-container-high: 231 233 239;
-    --surface-container-highest: 223 226 232;
-    --surface-variant: 228 230 238;
-    --surface-tint: 102 38 226;
-    --on-surface: 23 26 31;
-    --on-surface-variant: 68 70 79;
-    --inverse-surface: 46 48 54;
-    --inverse-on-surface: 241 240 247;
-    --outline: 116 119 127;
-    --outline-variant: 196 198 207;
-    --primary: 102 38 226;
-    --primary-container: 233 221 255;
-    --primary-fixed: 233 221 255;
-    --primary-fixed-dim: 208 188 255;
+    --surface-container-low: 255 255 255;
+    --surface-container: 241 245 249;
+    --surface-container-high: 226 232 240;
+    --surface-container-highest: 203 213 225;
+    --surface-variant: 226 232 240;
+    --surface-tint: 91 33 182;
+    --on-surface: 15 23 42;
+    --on-surface-variant: 51 65 85;
+    --inverse-surface: 15 23 42;
+    --inverse-on-surface: 248 250 252;
+    --outline: 100 116 139;
+    --outline-variant: 203 213 225;
+    --primary: 91 33 182;
+    --primary-container: 109 40 217;
+    --primary-fixed: 237 233 254;
+    --primary-fixed-dim: 196 181 253;
     --on-primary: 255 255 255;
-    --on-primary-container: 35 0 92;
-    --on-primary-fixed: 35 0 92;
-    --on-primary-fixed-variant: 85 22 190;
-    --inverse-primary: 208 188 255;
-    --secondary: 0 101 139;
-    --secondary-container: 196 231 255;
-    --secondary-fixed: 196 231 255;
-    --secondary-fixed-dim: 123 208 255;
+    --on-primary-container: 255 255 255;
+    --on-primary-fixed: 46 16 101;
+    --on-primary-fixed-variant: 91 33 182;
+    --inverse-primary: 196 181 253;
+    --secondary: 3 105 161;
+    --secondary-container: 224 242 254;
+    --secondary-fixed: 224 242 254;
+    --secondary-fixed-dim: 125 211 252;
     --on-secondary: 255 255 255;
-    --on-secondary-container: 0 30 44;
-    --on-secondary-fixed: 0 30 44;
-    --on-secondary-fixed-variant: 0 76 105;
-    --tertiary: 148 66 0;
-    --tertiary-container: 255 219 202;
-    --tertiary-fixed: 255 219 202;
-    --tertiary-fixed-dim: 255 182 144;
+    --on-secondary-container: 12 74 110;
+    --on-secondary-fixed: 12 74 110;
+    --on-secondary-fixed-variant: 3 105 161;
+    --tertiary: 194 65 12;
+    --tertiary-container: 255 237 213;
+    --tertiary-fixed: 194 65 12;
+    --tertiary-fixed-dim: 251 146 60;
     --on-tertiary: 255 255 255;
-    --on-tertiary-container: 52 17 0;
-    --on-tertiary-fixed: 52 17 0;
-    --on-tertiary-fixed-variant: 120 50 0;
-    --error: 186 26 26;
-    --error-container: 255 218 214;
+    --on-tertiary-container: 124 45 18;
+    --on-tertiary-fixed: 124 45 18;
+    --on-tertiary-fixed-variant: 194 65 12;
+    --error: 185 28 28;
+    --error-container: 254 226 226;
     --on-error: 255 255 255;
-    --on-error-container: 65 0 2;
+    --on-error-container: 127 29 29;
 
     /* Radix / shadcn UI compatibility aliases */
     --border: var(--outline-variant);
@@ -157,18 +157,34 @@
   html {
     /* Native responsive scrolling response without wheel-tick interpolation lag */
     scroll-behavior: auto;
-    --font-inter: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    --font-mono: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
-    --font-jakarta: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    overflow-x: clip;
+    max-width: 100%;
   }
 
   body {
     background-color: rgb(var(--background));
     color: rgb(var(--on-surface));
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-family: var(--font-inter), 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    overflow-x: clip;
+    max-width: 100%;
     overscroll-behavior-y: none;
+    text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+  }
+
+  html[dir="rtl"] body {
+    font-family: var(--font-cairo), 'Cairo', 'Inter', sans-serif;
+    line-height: 1.78;
+    letter-spacing: 0;
+  }
+
+  html[dir="rtl"] h1,
+  html[dir="rtl"] h2,
+  html[dir="rtl"] h3,
+  html[dir="rtl"] .font-nexa {
+    font-family: var(--font-cairo), 'Cairo', sans-serif;
+    letter-spacing: 0;
   }
 
   main > :first-child {
@@ -339,4 +355,24 @@ body {
     animation: none !important;
   }
 }
+
+/* Light Mode Executive Surface & Shadow Refinement */
+html:not(.dark) .shadow-\[0_4px_24px_rgba\(0\,0\,0\,0\.4\)\],
+html:not(.dark) .shadow-\[0_8px_30px_rgba\(0\,0\,0\,0\.4\)\],
+html:not(.dark) .shadow-\[0_8px_30px_rgba\(0\,0\,0\,0\.5\)\],
+html:not(.dark) .shadow-\[0_10px_28px_rgba\(0\,0\,0\,0\.2\)\],
+html:not(.dark) .shadow-\[0_10px_30px_rgba\(0\,0\,0\,0\.22\)\],
+html:not(.dark) .shadow-\[0_20px_50px_rgba\(0\,0\,0\,0\.7\)\],
+html:not(.dark) .shadow-\[0_20px_60px_rgba\(0\,0\,0\,0\.35\)\] {
+  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.06), 0 1px 3px rgba(15, 23, 42, 0.05) !important;
+}
+
+html:not(.dark) .border-white\/\[0\.06\],
+html:not(.dark) .border-white\/\[0\.08\],
+html:not(.dark) .border-white\/5,
+html:not(.dark) .border-white\/10,
+html:not(.dark) .border-white\/15 {
+  border-color: rgba(15, 23, 42, 0.1) !important;
+}
+
 

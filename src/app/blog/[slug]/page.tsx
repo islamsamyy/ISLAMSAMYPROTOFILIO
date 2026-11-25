@@ -1,4 +1,5 @@
 import React from 'react';
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { SiteHeader } from '@/components/navigation/SiteHeader';
@@ -9,6 +10,40 @@ import { supabase } from '@/lib/supabase/client';
 import { BlogPostClient } from '@/components/blog/BlogPostClient';
 
 export const revalidate = 60;
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const decodedSlug = decodeURIComponent(slug);
+  const article = initialArticles.find((a) => a.slug === decodedSlug || a.id === decodedSlug);
+  if (!article) {
+    return {
+      title: 'Engineering Article & Proposal',
+      description: 'Technical blueprint and Operations Research guide by Islam Samy.',
+    };
+  }
+  const title = article.title;
+  const description = article.excerpt.slice(0, 160);
+  return {
+    title,
+    description,
+    keywords: [...article.tags, article.category, 'Islam Samy', 'Operations Research', 'ERP'],
+    openGraph: {
+      title: `${title} | Islam Samy`,
+      description,
+      type: 'article',
+      authors: [article.author],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${title} | Islam Samy`,
+      description,
+    },
+  };
+}
 
 export async function generateStaticParams() {
   return initialArticles.map((a) => ({

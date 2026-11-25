@@ -84,12 +84,12 @@ export function SiteHeader() {
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
         scrolled
-          ? "bg-black/75 dark:bg-[#0c0e15]/85 backdrop-blur-md border-b border-white/[0.10] shadow-[0_4px_24px_rgba(0,0,0,0.5)]"
-          : "bg-transparent backdrop-blur-[2px] border-b border-white/[0.05]"
+          ? "bg-white/92 dark:bg-[#0c0e15]/88 backdrop-blur-xl border-b border-slate-200/90 dark:border-white/[0.10] shadow-[0_4px_24px_rgba(15,23,42,0.08)] dark:shadow-[0_4px_24px_rgba(0,0,0,0.5)]"
+          : "bg-white/80 dark:bg-transparent backdrop-blur-md border-b border-slate-200/60 dark:border-white/[0.05]"
       )}
     >
       {/* Top Specular Rim Reflection */}
-      <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-cyan-400/40 via-primary/40 to-transparent pointer-events-none" />
+      <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-primary/35 dark:via-cyan-400/40 to-transparent pointer-events-none" />
 
       <div className="h-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4 relative z-10">
         
@@ -97,31 +97,31 @@ export function SiteHeader() {
         <Link
           href="/"
           onClick={() => setCurrentHash('')}
-          className="flex items-center gap-4 sm:gap-5 group shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-xl"
+          className="flex items-center gap-2 sm:gap-4 group min-w-0 shrink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-xl"
         >
           {/* Transparent Logo Crest without frame */}
           <div className="relative flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-105">
             <img
               src="/images/250LOGO.png"
               alt="Islam Samy"
-              className="h-12 sm:h-14 w-auto object-contain filter drop-shadow-[0_0_18px_rgba(123,208,255,0.95)] brightness-110 transition-all duration-300"
+              className="h-9 sm:h-12 md:h-14 w-auto object-contain filter drop-shadow-[0_2px_8px_rgba(91,33,182,0.22)] dark:drop-shadow-[0_0_18px_rgba(123,208,255,0.95)] dark:brightness-110 transition-all duration-300"
             />
           </div>
           <div className="flex flex-col min-w-0">
             <div className="flex items-center gap-1.5">
-              <span className="font-nexa text-sm sm:text-base font-extrabold text-zinc-900 dark:text-zinc-100 group-hover:text-primary transition-colors tracking-tight whitespace-nowrap">
+              <span className="font-nexa text-sm sm:text-base font-extrabold text-slate-900 dark:text-zinc-100 group-hover:text-primary transition-colors tracking-tight whitespace-nowrap truncate">
                 {t('header.name', 'Islam Samy')}
               </span>
-              <span className="px-1.5 py-0.5 rounded-full bg-secondary/15 text-secondary text-[9px] font-semibold tracking-wider uppercase border border-secondary/30 shadow-[0_0_8px_rgba(123,208,255,0.2)]">
+              <span className="hidden sm:inline-flex px-1.5 py-0.5 rounded-full bg-secondary/10 dark:bg-secondary/15 text-secondary text-[9px] font-bold tracking-wider uppercase border border-secondary/30 shrink-0">
                 {t('header.experienceBadge', '6 Yrs Exp')}
               </span>
             </div>
             <div className="hidden sm:flex flex-col text-[10px] leading-tight">
-              <span className="font-medium text-zinc-400 dark:text-zinc-400 whitespace-nowrap">
-                {t('header.role', 'Data Engineer & Software Developer')}
+              <span className="font-semibold text-slate-600 dark:text-zinc-400 whitespace-nowrap">
+                {t('header.role', 'Data Engineer & ERP Systems Architect')}
               </span>
-              <span className="text-[9px] text-zinc-500 dark:text-zinc-500 hidden 2xl:block whitespace-nowrap">
-                {t('header.subRole', 'Custom ERP Systems, AI Agents & Enterprise Architecture')}
+              <span className="text-[9px] text-slate-500 dark:text-zinc-500 hidden 2xl:block whitespace-nowrap">
+                {t('header.subRole', 'Operations Research ERP Systems for Factories & Institutions')}
               </span>
             </div>
           </div>
@@ -130,7 +130,7 @@ export function SiteHeader() {
         {/* Desktop Navigation with Frosted Glass Active Pill (visible from lg: 1024px) */}
         <nav
           aria-label="Primary Navigation"
-          className="hidden lg:flex items-center gap-1 p-1 rounded-full bg-white/40 dark:bg-white/[0.04] backdrop-blur-2xl border border-black/[0.06] dark:border-white/[0.1] shadow-[0_4px_24px_rgba(0,0,0,0.12)] shrink-0"
+          className="hidden lg:flex items-center gap-1 p-1 rounded-full bg-slate-100/90 dark:bg-white/[0.04] backdrop-blur-2xl border border-slate-200/90 dark:border-white/[0.1] shadow-[0_2px_12px_rgba(15,23,42,0.06)] dark:shadow-[0_4px_24px_rgba(0,0,0,0.12)] shrink-0"
         >
           {navLinks.map((item) => {
             const isActive = checkIsActive(item.href, pathname, currentHash);
@@ -151,7 +151,7 @@ export function SiteHeader() {
                   "relative isolate px-3.5 py-1.5 rounded-full text-xs transition-all duration-200 flex items-center gap-1 select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary whitespace-nowrap",
                   isActive
                     ? "text-primary font-bold shadow-sm"
-                    : "text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white font-medium hover:bg-white/30 dark:hover:bg-white/[0.04]"
+                    : "text-slate-700 dark:text-zinc-300 hover:text-slate-950 dark:hover:text-white font-semibold hover:bg-white/70 dark:hover:bg-white/[0.06]"
                 )}
               >
                 <span>{label}</span>
@@ -168,7 +168,7 @@ export function SiteHeader() {
         </nav>
 
         {/* Right Action Cluster */}
-        <div className="flex items-center gap-2.5 shrink-0">
+        <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
           
           {/* Book Consultation CTA Button */}
           <Link
@@ -186,9 +186,9 @@ export function SiteHeader() {
             onClick={toggleLanguage}
             title={language === 'en' ? 'التبديل إلى العربية' : 'Switch to English'}
             aria-label={t('header.switchAria', language === 'en' ? 'Switch to Arabic' : 'التبديل إلى الإنجليزية')}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/40 dark:bg-white/[0.06] hover:bg-white/70 dark:hover:bg-white/[0.14] border border-white/50 dark:border-white/10 text-zinc-800 dark:text-zinc-200 hover:text-primary dark:hover:text-secondary shadow-[0_2px_12px_rgba(0,0,0,0.06)] backdrop-blur-md transition-all hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary text-xs font-semibold select-none shrink-0"
+            className="flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-full bg-white/60 dark:bg-white/[0.06] hover:bg-white/80 dark:hover:bg-white/[0.14] border border-black/10 dark:border-white/10 text-zinc-800 dark:text-zinc-200 hover:text-primary dark:hover:text-secondary shadow-[0_2px_12px_rgba(0,0,0,0.06)] backdrop-blur-md transition-all hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary text-xs font-semibold select-none shrink-0"
           >
-            <Globe className="w-4 h-4 text-primary shrink-0" />
+            <Globe className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-primary shrink-0" />
             <span className="font-bold text-[11px] tracking-wide">
               {t('header.switchLanguage', language === 'en' ? 'العربية' : 'EN')}
             </span>
@@ -197,27 +197,27 @@ export function SiteHeader() {
           {/* Theme Switcher */}
           <ThemeToggle />
 
-          {/* Admin Command Center Link */}
+          {/* Admin Command Center Link (moved into Mobile Side Menu on < md to save mobile space) */}
           <Link
             href="/admin"
             title="Admin Command Center"
-            className="flex items-center justify-center w-9 h-9 rounded-full bg-white/40 dark:bg-white/[0.06] hover:bg-white/70 dark:hover:bg-white/[0.14] border border-white/50 dark:border-white/10 text-zinc-700 dark:text-zinc-300 hover:text-primary dark:hover:text-secondary shadow-[0_2px_12px_rgba(0,0,0,0.06)] backdrop-blur-md transition-all hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary shrink-0"
+            className="hidden md:flex items-center justify-center w-9 h-9 rounded-full bg-white/60 dark:bg-white/[0.06] hover:bg-white/80 dark:hover:bg-white/[0.14] border border-black/10 dark:border-white/10 text-zinc-700 dark:text-zinc-300 hover:text-primary dark:hover:text-secondary shadow-[0_2px_12px_rgba(0,0,0,0.06)] backdrop-blur-md transition-all hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary shrink-0"
           >
             <Shield className="w-4 h-4 text-primary" />
           </Link>
 
-          {/* Mobile Menu Trigger (visible on < lg: 1024px) */}
+          {/* Mobile Side Menu Trigger (always visible on < lg: 1024px, high-contrast in Light & Dark) */}
           <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden flex items-center justify-center w-10 h-10 rounded-xl bg-white/10 dark:bg-white/[0.08] hover:bg-white/20 dark:hover:bg-white/[0.14] border border-white/20 dark:border-white/10 text-zinc-800 dark:text-zinc-100 backdrop-blur-md transition-all active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary shadow-sm shrink-0"
+            className="lg:hidden flex items-center justify-center w-10 h-10 rounded-xl bg-primary/15 dark:bg-primary/20 hover:bg-primary/25 dark:hover:bg-primary/30 border border-primary/40 text-primary backdrop-blur-md transition-all active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary shadow-[0_0_16px_rgba(160,120,255,0.25)] shrink-0"
             aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
             aria-expanded={mobileMenuOpen}
           >
             {mobileMenuOpen ? (
               <X className="w-5 h-5 text-primary" />
             ) : (
-              <Menu className="w-5 h-5 text-zinc-100" />
+              <Menu className="w-5 h-5 text-primary" />
             )}
           </button>
         </div>
