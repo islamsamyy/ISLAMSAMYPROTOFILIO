@@ -78,7 +78,7 @@ export function DeliveryProcessSection() {
           </span>
         </div>
         <h2 className="font-headline-lg text-2xl sm:text-4xl font-extrabold text-on-surface tracking-tight">
-          {isAr ? 'كيف نحوّل التحدي التشغيلي إلى نظام إنتاجي خلال أسابيع' : 'From Operational Bottleneck to Production System in 4 Weeks'}
+          {isAr ? 'كيف أُحوّل التحدي التشغيلي إلى نظام إنتاجي خلال أسابيع' : 'How I Turn Operational Bottlenecks into Production Systems in 4 Weeks'}
         </h2>
         <p className="font-body-md text-xs sm:text-sm text-on-surface-variant mt-2.5 leading-relaxed">
           {isAr
@@ -140,8 +140,8 @@ export function DeliveryProcessSection() {
           </span>
           <p className="text-xs sm:text-sm text-on-surface font-medium leading-relaxed">
             {isAr
-              ? 'أرسل لنا عينة من بيانات التشغيل أو ملفات الـ PLC، وسنستخرج لك خلال 48 ساعة تقريراً يوضح التوقفات الضائعة وفرص التوفير قبل التعاقد.'
-              : 'Share a sample of your operational logs or ERP/database schema and receive a 48-hour diagnostic detailing hidden downtime and cost-saving opportunities.'}
+              ? 'أرسل لي عينة من بيانات التشغيل أو ملفات الـ PLC، وسأستخرج لك خلال 48 ساعة تقريراً يوضح التوقفات الضائعة وفرص التوفير قبل التعاقد.'
+              : 'Send me a sample of your operational logs or ERP/database schema and I will deliver a 48-hour diagnostic detailing hidden downtime and cost-saving opportunities.'}
           </p>
         </div>
         <Link

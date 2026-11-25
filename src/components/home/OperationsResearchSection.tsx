@@ -29,8 +29,8 @@ export function OperationsResearchSection() {
       title: isAr ? 'تفكيك الزمن وكشف الاختناقات' : 'Time-Motion & Bottleneck Elimination',
       metric: isAr ? '+15% طاقة إنتاجية مستعادة' : '+15% Recovered Capacity',
       desc: isAr
-        ? 'نحوّل كل دقيقة تشغيل إلى معادلة واضحة تفصل الإنتاج الفعلي عن التوقفات الصامتة وفجوات الانتظار داخل المصانع والهيئات، لنستعيد ساعات التشغيل المهدرة بدون زيادة في الرواتب أو الأصول.'
-        : 'Decomposes every operational minute into active output vs. silent stops and idle gaps across factories and institutions—recovering lost capacity without adding payroll or assets.',
+        ? 'أُحوّل كل دقيقة تشغيل إلى معادلة واضحة تفصل الإنتاج الفعلي عن التوقفات الصامتة وفجوات الانتظار داخل المصانع والهيئات، لأستعيد لك ساعات التشغيل المهدرة بدون زيادة في الرواتب أو الأصول.'
+        : 'I decompose every operational minute into active output vs. silent stops and idle gaps across factories and institutions—recovering lost capacity without adding payroll or assets.',
     },
     {
       num: '02',
@@ -100,7 +100,7 @@ export function OperationsResearchSection() {
           <h2 className="font-headline-lg text-2xl sm:text-4xl lg:text-[40px] font-extrabold text-on-surface tracking-tight leading-tight">
             {isAr ? (
               <>
-                كل نظام نبنيه قائم على{' '}
+                كل نظام أبنيه قائم على{' '}
                 <span className="bg-gradient-to-r from-primary via-secondary to-tertiary-fixed bg-clip-text text-transparent">
                   بحوث العمليات (Operations Research)
                 </span>{' '}
@@ -108,7 +108,7 @@ export function OperationsResearchSection() {
               </>
             ) : (
               <>
-                Every System Is Engineered on{' '}
+                Every System I Build Is Engineered on{' '}
                 <span className="bg-gradient-to-r from-primary via-secondary to-tertiary-fixed bg-clip-text text-transparent">
                   Operations Research (OR)
                 </span>{' '}
@@ -119,8 +119,8 @@ export function OperationsResearchSection() {
 
           <p className="font-body-md text-xs sm:text-base text-on-surface-variant mt-4 leading-relaxed max-w-3xl mx-auto">
             {isAr
-              ? 'سواء كنت تدير مصنعاً صناعياً أو هيئة أو مؤسسة خدمية، نحن لا نبيعك مجرد برنامج حسابات أو شاشات تقارير تسجل الخسارة بعد وقوعها — بل نبني لك نظام إدارة موارد (ERP) ذكياً يحوّل بيانات التشغيل إلى قرارات رياضية ترفع الإنتاجية وتضبط التكلفة وتضمن لك عائداً ملموساً بمجرد التعاقد.'
-              : 'Whether you run an industrial factory, government entity, or enterprise institution, we do not sell passive accounting screens that report losses after the fact. We build Operations-Research-driven ERP & data systems that turn live operations into mathematical profit and guaranteed ROI upon contracting.'}
+              ? 'سواء كنت تدير مصنعاً صناعياً أو هيئة أو مؤسسة خدمية، أنا لا أبيعك مجرد برنامج حسابات أو شاشات تقارير تسجل الخسارة بعد وقوعها — بل أبني لك نظام إدارة موارد (ERP) ذكياً يحوّل بيانات التشغيل إلى قرارات رياضية ترفع الإنتاجية وتضبط التكلفة وتضمن لك عائداً ملموساً بمجرد التعاقد.'
+              : 'Whether you run an industrial factory, government entity, or enterprise institution, I do not sell passive accounting screens that report losses after the fact. I build Operations-Research-driven ERP & data systems that turn live operations into mathematical profit and guaranteed ROI upon contracting.'}
           </p>
         </div>
 
