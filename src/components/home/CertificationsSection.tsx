@@ -85,7 +85,7 @@ export function CertificationsSection() {
     >
       {/* Header */}
       <div className="text-center max-w-3xl mx-auto mb-8">
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/40 dark:bg-white/[0.06] border border-primary/40 shadow-[0_0_24px_rgba(208,188,255,0.25)] mb-4 backdrop-blur-xl">
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-surface-container-low border border-outline-variant shadow-sm mb-4 backdrop-blur-xl">
           <Award className="w-4 h-4 text-primary" />
           <span className="font-label-sm text-xs uppercase tracking-wider text-primary font-bold">
             {t('certifications.badge', 'Verified Industry Accreditations & Degrees')}

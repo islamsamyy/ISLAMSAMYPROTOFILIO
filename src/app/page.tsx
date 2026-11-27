@@ -15,6 +15,7 @@ import { ScrollRevealSection } from '@/components/animation/ScrollRevealSection'
 import { submitContactInquiry } from '@/lib/data-store';
 import { useProjects, usePricing } from '@/lib/hooks';
 import { useLanguage } from '@/context/LanguageContext';
+import { localizePackage } from '@/data/seedPricing';
 import { cleanProjectText, getProjectCover, isDiagramAsset } from '@/lib/utils';
 import { WhatsAppFloatingButton, WHATSAPP_NUMBER, WHATSAPP_INTERNATIONAL, WHATSAPP_URL, WhatsAppIcon } from '@/components/ui/WhatsAppButton';
 
@@ -74,6 +75,7 @@ export default function PortfolioHomePage() {
   const [inqMessage, setInqMessage] = useState('');
   const [inqSending, setInqSending] = useState(false);
   const [inqSent, setInqSent] = useState(false);
+  const [billingCycle, setBillingCycle] = useState<'milestone' | 'retainer'>('milestone');
   const [featuredSlide, setFeaturedSlide] = useState(0);
   const [featuredPaused, setFeaturedPaused] = useState(false);
 
@@ -115,25 +117,6 @@ export default function PortfolioHomePage() {
       setInqSending(false);
     }
   };
-
-  useEffect(() => {
-    const tabMilestone = document.getElementById('pricing-tab-milestone');
-    const tabRetainer = document.getElementById('pricing-tab-retainer');
-    if (!tabMilestone || !tabRetainer) return;
-    const onMilestone = () => {
-      tabMilestone.className = 'px-5 py-2 rounded-full font-label-md text-label-md bg-primary text-on-primary shadow-sm transition-all duration-300 font-semibold';
-      tabRetainer.className = 'px-5 py-2 rounded-full font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-all duration-300 font-medium';
-      document.querySelectorAll('.price-display').forEach((el) => { const v = el.getAttribute('data-milestone'); if (v) el.textContent = v; });
-    };
-    const onRetainer = () => {
-      tabRetainer.className = 'px-5 py-2 rounded-full font-label-md text-label-md bg-primary text-on-primary shadow-sm transition-all duration-300 font-semibold';
-      tabMilestone.className = 'px-5 py-2 rounded-full font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-all duration-300 font-medium';
-      document.querySelectorAll('.price-display').forEach((el) => { const v = el.getAttribute('data-retainer'); if (v) el.textContent = v; });
-    };
-    tabMilestone.addEventListener('click', onMilestone);
-    tabRetainer.addEventListener('click', onRetainer);
-    return () => { tabMilestone.removeEventListener('click', onMilestone); tabRetainer.removeEventListener('click', onRetainer); };
-  }, []);
 
   return (
     <div className="bg-transparent font-body-md text-on-surface antialiased min-h-screen flex flex-col">
@@ -378,13 +361,13 @@ export default function PortfolioHomePage() {
 >
   <div className="flex items-center gap-1.5 p-1.5 rounded-full bg-surface-container-low/80 dark:bg-surface-container-low/55 backdrop-blur-xl border border-outline-variant/25 dark:border-white/[0.08] overflow-x-auto max-w-full [scrollbar-width:none] [&::-webkit-scrollbar]:hidden shadow-sm">
     {[
+      { href: '#certifications', label: language === 'ar' ? 'الشهادات والاعتمادات' : 'Certifications' },
+      { href: '#projects', label: language === 'ar' ? 'المشاريع' : 'Projects' },
+      { href: '#pricing', label: language === 'ar' ? 'الباقات والأسعار' : 'Pricing & Packages' },
       { href: '#operations-research', label: language === 'ar' ? 'بحوث العمليات وضمان العائد' : 'Operations Research & ROI' },
-      { href: '#project-cards', label: language === 'ar' ? 'بطاقات المشاريع' : 'Project Cards' },
       { href: '#solutions', label: language === 'ar' ? 'الحلول والقطاعات' : 'Industry Solutions' },
       { href: '#process', label: language === 'ar' ? 'منهجية التنفيذ' : 'Delivery Process' },
-      { href: '#projects', label: language === 'ar' ? 'المشاريع المميزة' : 'Flagship Work' },
       { href: '#insights', label: language === 'ar' ? 'المدونة الهندسية' : 'Blog & Proposals' },
-      { href: '#pricing', label: language === 'ar' ? 'الباقات والأسعار' : 'Advisory Packages' },
       { href: '#faq', label: language === 'ar' ? 'الأسئلة الشائعة' : 'FAQ' },
       { href: '#contact', label: language === 'ar' ? 'تواصل مباشر' : 'Direct Contact' },
     ].map((item) =>
@@ -409,28 +392,15 @@ export default function PortfolioHomePage() {
   </div>
 </nav>
 
-{/* OPERATIONS RESEARCH & GUARANTEED ROI FOUNDATION */}
-<OperationsResearchSection />
-
-{/* INTERACTIVE PROJECT CARDS GRID WITH IMPORTANCE ARRANGEMENT */}
-<FeaturedProjectsGridSection />
-
-{/* WHY MY SOLUTIONS WORK & CUSTOMIZED FOR ALL INDUSTRIES */}
-<IndustrySolutionsSection />
-
-{/* 4-PHASE ENGINEERING DELIVERY & 48-HOUR DIAGNOSTIC */}
-<DeliveryProcessSection />
-
-{/* PROFESSIONAL EXPERIENCE (Compact 2-Column Grid) */}
-<ExperienceTimelineSection />
-
 {/* CERTIFICATIONS & VERIFIED CREDENTIALS */}
 <CertificationsSection />
 
+{/* INTERACTIVE PROJECT CARDS GRID WITH IMPORTANCE ARRANGEMENT */}
+<div id="projects" className="scroll-mt-24">
+  <FeaturedProjectsGridSection />
+</div>
 
-
-      {/* SECTION 6: EDUCATION & PROFESSIONAL CREDENTIALS */}
-{/*  SECTION 7: INTERACTIVE CONTACT & INQUIRY FORM  */}
+{/* PRICING & ADVISORY PACKAGES */}
 <ScrollRevealSection className="w-full max-w-[1280px] mx-auto px-gutter py-12 relative z-10 content-auto" id="pricing" suppressHydrationWarning>
   <div className="text-center max-w-3xl mx-auto mb-12">
     <div className="inline-flex items-center gap-space-xs px-space-md py-1.5 rounded-full bg-surface-container-low border border-outline-variant shadow-sm mb-space-sm backdrop-blur-md">
@@ -441,21 +411,51 @@ export default function PortfolioHomePage() {
     <p className="font-body-md text-body-md text-on-surface-variant leading-relaxed">{t('pricing.subtitle', 'Turnkey architecture sprints and dedicated advisory engagements tailored for scaling enterprises, hospitality brands, and modern platforms.')}</p>
     <div className="mt-8 flex flex-col items-center gap-4">
       <div className="inline-flex items-center p-1 rounded-full bg-surface-container-high border border-outline-variant backdrop-blur-md shadow-sm">
-        <button type="button" id="pricing-tab-milestone" className="px-5 py-2 rounded-full font-label-md text-label-md bg-primary text-on-primary shadow-sm transition-all duration-300 font-semibold">{t('pricing.tabMilestone', 'Project-Based / Milestones')}</button>
-        <button type="button" id="pricing-tab-retainer" className="px-5 py-2 rounded-full font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-all duration-300 font-medium">{t('pricing.tabRetainer', 'Dedicated Advisory / Monthly Retainer')}</button>
+        <button
+          type="button"
+          id="pricing-tab-milestone"
+          onClick={() => setBillingCycle('milestone')}
+          className={`px-5 py-2 rounded-full font-label-md text-label-md transition-all duration-300 ${
+            billingCycle === 'milestone'
+              ? 'bg-primary text-on-primary shadow-sm font-semibold'
+              : 'text-on-surface-variant hover:text-on-surface font-medium'
+          }`}
+        >
+          {t('pricing.tabMilestone', 'Project-Based / Milestones')}
+        </button>
+        <button
+          type="button"
+          id="pricing-tab-retainer"
+          onClick={() => setBillingCycle('retainer')}
+          className={`px-5 py-2 rounded-full font-label-md text-label-md transition-all duration-300 ${
+            billingCycle === 'retainer'
+              ? 'bg-primary text-on-primary shadow-sm font-semibold'
+              : 'text-on-surface-variant hover:text-on-surface font-medium'
+          }`}
+        >
+          {t('pricing.tabRetainer', 'Dedicated Advisory / Monthly Retainer')}
+        </button>
       </div>
       <Link
         href="/pricing"
         className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-surface-container-low hover:bg-surface-container-high text-secondary text-xs font-mono font-semibold border border-secondary/30 transition-all shadow-sm hover:scale-105"
       >
         <span>{t('pricing.viewFullPricing', 'View Full Dedicated Pricing & Consultation Rates Page')}</span>
-        <span className="material-symbols-outlined text-sm">arrow_forward</span>
+        <span className="material-symbols-outlined text-sm rtl-flip">arrow_forward</span>
       </Link>
     </div>
   </div>
   <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch mb-12" suppressHydrationWarning>
-    {packages.map((pkg, idx) => {
+    {packages.map((rawPkg, idx) => {
+      const isAr = language === 'ar';
+      const pkg = localizePackage(rawPkg, isAr);
       const isPopular = pkg.isPopular;
+      const displayPrice = billingCycle === 'milestone'
+        ? pkg.price
+        : `$${Math.round(parseInt(pkg.price.replace(/[^0-9]/g, '') || '5000', 10) * 0.9).toLocaleString()}`;
+      const displayFreq = billingCycle === 'milestone'
+        ? pkg.frequency
+        : (isAr ? '/ شهرياً (عقد مستمر)' : '/ month (retained)');
       const borderCls = isPopular
         ? 'border-2 border-primary/70 shadow-md dark:shadow-[0_12px_40px_rgba(0,0,0,0.6)] bg-surface-container-low/95 dark:bg-[#111111]/95'
         : idx === 0
@@ -465,14 +465,14 @@ export default function PortfolioHomePage() {
       return (
         <div key={pkg.id} className={`relative p-space-lg rounded-2xl transition-all duration-300 flex flex-col justify-between group ${borderCls}`} suppressHydrationWarning>
           {isPopular && (
-            <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-primary text-on-primary font-label-sm text-[11px] font-bold uppercase tracking-wider shadow-sm">
-              Most Requested • Enterprise
+            <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-primary text-on-primary font-label-sm text-[11px] font-bold uppercase tracking-wider shadow-sm whitespace-nowrap">
+              {t('pricing.mostRequested', 'Most Requested • Enterprise')}
             </div>
           )}
           <div className={`flex flex-col ${isPopular ? 'pt-2' : ''}`}>
             <div className="flex items-center justify-between mb-4">
               <span className="px-3 py-1 rounded-full bg-primary/10 text-primary font-label-sm text-[11px] uppercase font-semibold border border-primary/20">
-                {pkg.badge || 'Targeted Sprint'}
+                {pkg.badge || (isAr ? 'باقة متخصصة' : 'Targeted Sprint')}
               </span>
               <span className="material-symbols-outlined text-primary text-[22px]">
                 {isPopular ? 'all_inclusive' : idx === 0 ? 'speed' : 'military_tech'}
@@ -486,13 +486,11 @@ export default function PortfolioHomePage() {
               <span
                 suppressHydrationWarning
                 className={`font-display-xl text-[40px] font-bold leading-none price-display ${isPopular ? 'bg-gradient-to-r from-primary via-secondary to-tertiary-fixed bg-clip-text text-transparent' : 'text-on-surface'}`}
-                data-milestone={pkg.price}
-                data-retainer={pkg.price}
               >
-                {pkg.price}
+                {displayPrice}
               </span>
               <span suppressHydrationWarning className="font-label-sm text-label-sm text-on-surface-variant uppercase frequency-label">
-                {pkg.frequency}
+                {displayFreq}
               </span>
             </div>
             <div className="space-y-3 mb-8" suppressHydrationWarning>
@@ -517,7 +515,7 @@ export default function PortfolioHomePage() {
               }`}
             >
               <span>{isPopular ? t('pricing.deployCta', 'Deploy Enterprise Architecture') : `${t('pricing.bookCta', 'Book')} ${pkg.name}`}</span>
-              <span className="material-symbols-outlined text-sm">arrow_forward</span>
+              <span className="material-symbols-outlined text-sm rtl-flip">arrow_forward</span>
             </Link>
             <a
               href="#contact"
@@ -542,6 +540,18 @@ export default function PortfolioHomePage() {
     <div className="flex items-center gap-2"><span className="material-symbols-outlined text-tertiary text-[20px]">lock</span><span className="text-on-surface font-semibold">{t('pricing.guarantee3', 'Enterprise Non-Disclosure Agreement (NDA) Guaranteed')}</span></div>
   </div>
 </ScrollRevealSection>
+
+{/* OPERATIONS RESEARCH & GUARANTEED ROI FOUNDATION */}
+<OperationsResearchSection />
+
+{/* WHY MY SOLUTIONS WORK & CUSTOMIZED FOR ALL INDUSTRIES */}
+<IndustrySolutionsSection />
+
+{/* 4-PHASE ENGINEERING DELIVERY & 48-HOUR DIAGNOSTIC */}
+<DeliveryProcessSection />
+
+{/* PROFESSIONAL EXPERIENCE (Compact 2-Column Grid) */}
+<ExperienceTimelineSection />
 
       {/* CLIENT REVIEWS SECTION */}
       <ClientReviewsSection />

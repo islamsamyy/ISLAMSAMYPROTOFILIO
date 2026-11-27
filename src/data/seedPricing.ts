@@ -387,22 +387,51 @@ export const PACKAGE_ENRICHMENT_MAP: Record<string, PricingPackage> = Object.fro
   initialPackages.map((pkg) => [pkg.id, pkg])
 );
 
+const PACKAGE_BY_NAME_MAP: Record<string, PricingPackage> = Object.fromEntries(
+  initialPackages.map((pkg) => [pkg.name.trim().toLowerCase(), pkg])
+);
+
+const FREQUENCY_AR_MAP: Record<string, string> = {
+  'starting from / project': 'يبدأ من / مشروع',
+  'starting from / store': 'يبدأ من / متجر',
+  'starting from / deployment': 'يبدأ من / نظام',
+  'starting from / system': 'يبدأ من / منظومة',
+  'starting from / suite': 'يبدأ من / منظومة',
+  'starting from / milestone': 'يبدأ من / مرحلة',
+  'starting from / plant': 'يبدأ من / مصنع',
+  'per sprint': 'لكل مرحلة تنفيذية',
+  'per project': 'لكل مشروع',
+  'per month': 'شهرياً',
+  '/ month': '/ شهرياً',
+};
+
 export function localizePackage(rawPkg: PricingPackage, isAr: boolean): PricingPackage {
-  const enriched = PACKAGE_ENRICHMENT_MAP[rawPkg.id];
-  const merged: PricingPackage = enriched ? { ...enriched, ...rawPkg, ar: enriched.ar } : rawPkg;
-  if (!isAr || !merged.ar) return merged;
+  const enriched =
+    PACKAGE_ENRICHMENT_MAP[rawPkg.id] ||
+    PACKAGE_BY_NAME_MAP[rawPkg.name?.trim().toLowerCase() || ''];
+  const merged: PricingPackage = enriched
+    ? { ...enriched, ...rawPkg, ar: rawPkg.ar || enriched.ar }
+    : rawPkg;
+  if (!isAr) return merged;
+  if (merged.ar) {
+    return {
+      ...merged,
+      name: merged.ar.name,
+      badge: merged.ar.badge,
+      headline: merged.ar.headline,
+      frequency: merged.ar.frequency,
+      duration: merged.ar.duration,
+      targetAudience: merged.ar.targetAudience,
+      detailedDescription: merged.ar.detailedDescription,
+      businessRoi: merged.ar.businessRoi,
+      roiMetric: merged.ar.roiMetric,
+      deliverables: merged.ar.deliverables,
+    };
+  }
+  const freqKey = merged.frequency?.trim().toLowerCase() || '';
   return {
     ...merged,
-    name: merged.ar.name,
-    badge: merged.ar.badge,
-    headline: merged.ar.headline,
-    frequency: merged.ar.frequency,
-    duration: merged.ar.duration,
-    targetAudience: merged.ar.targetAudience,
-    detailedDescription: merged.ar.detailedDescription,
-    businessRoi: merged.ar.businessRoi,
-    roiMetric: merged.ar.roiMetric,
-    deliverables: merged.ar.deliverables,
+    frequency: FREQUENCY_AR_MAP[freqKey] || merged.frequency,
   };
 }
 
