@@ -92,10 +92,10 @@ export function ProjectTelemetryCanvas({
       : null;
     resizeObserver?.observe(canvas);
 
-    // Color definitions based on theme tokens
-    const violet = isDark ? '208, 188, 255' : '102, 38, 226';
-    const cyan = isDark ? '123, 208, 255' : '0, 101, 139';
-    const amber = isDark ? '255, 182, 144' : '236, 106, 6';
+    // Color definitions based on theme tokens (Vercel Geist Neutral + Emerald)
+    const violet = isDark ? '237, 237, 237' : '23, 23, 23';
+    const cyan = isDark ? '161, 161, 161' : '102, 102, 102';
+    const amber = isDark ? '70, 167, 88' : '30, 138, 76';
 
     // 1. Radar state (Lakehouse & BI)
     const targets = [
@@ -304,7 +304,7 @@ export function ProjectTelemetryCanvas({
         ctx.arc(p.px, p.py, Math.max(1.5, r), 0, Math.PI * 2);
         ctx.fillStyle = p.isCoordinator ? `rgba(${amber}, 0.95)` : `rgba(${violet}, 0.9)`;
         if (isDark) {
-          ctx.shadowColor = p.isCoordinator ? '#ffb690' : '#d0bcff';
+          ctx.shadowColor = p.isCoordinator ? '#46a758' : '#ededed';
           ctx.shadowBlur = p.isCoordinator ? 8 : 4;
         }
         ctx.fill();
@@ -392,7 +392,7 @@ export function ProjectTelemetryCanvas({
         ctx.arc(p.px, p.py, 2.5, 0, Math.PI * 2);
         ctx.fillStyle = `rgba(${cyan}, 0.95)`;
         if (isDark) {
-          ctx.shadowColor = '#7bd0ff';
+          ctx.shadowColor = '#a1a1a1';
           ctx.shadowBlur = 6;
         }
         ctx.fill();

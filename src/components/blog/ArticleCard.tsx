@@ -25,7 +25,7 @@ export function ArticleCard({ article }: ArticleCardProps) {
         viewport={{ once: true }}
         whileHover={{ y: -5 }}
         transition={{ duration: 0.3 }}
-        className="group relative flex flex-col justify-between rounded-3xl bg-surface-container-low/40 hover:bg-surface-container-low/65 backdrop-blur-2xl border border-white/20 dark:border-white/[0.08] hover:border-primary/50 shadow-[0_8px_32px_rgba(0,0,0,0.35)] hover:shadow-[0_16px_48px_rgba(160,120,255,0.3)] transition-all duration-300 overflow-hidden h-full cursor-pointer"
+        className="group relative flex flex-col justify-between rounded-3xl bg-surface-container-low/95 dark:bg-surface-container-low/40 hover:bg-surface-container-low backdrop-blur-2xl border border-outline-variant dark:border-white/[0.08] hover:border-outline shadow-sm hover:shadow-md dark:shadow-[0_8px_32px_rgba(0,0,0,0.35)] transition-all duration-300 overflow-hidden h-full cursor-pointer"
       >
         {/* Top Specular Rim Light */}
         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/30 dark:via-primary/30 to-transparent pointer-events-none rounded-t-3xl" />

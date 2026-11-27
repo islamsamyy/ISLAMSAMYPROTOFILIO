@@ -34,7 +34,7 @@ export function ThreeBackgroundCanvas({
       typeof document !== 'undefined' &&
       document.documentElement.classList.contains('dark');
 
-    const getBgColor = () => (isDark() ? 0x000000 : 0xf6f7fc);
+    const getBgColor = () => (isDark() ? 0x000000 : 0xfafafa);
 
     let renderer: THREE.WebGLRenderer | null = null;
     let animId = 0;
@@ -126,12 +126,12 @@ export function ThreeBackgroundCanvas({
 
       const initialDark = isDark();
       const particleMaterial = new THREE.PointsMaterial({
-        size: initialDark ? 11.0 : 12.0,
+        size: initialDark ? 11.0 : 9.0,
         map: particleTexture,
-        color: new THREE.Color(initialDark ? 0xffffff : 0x5b21b6),
+        color: new THREE.Color(initialDark ? 0xffffff : 0x171717),
         vertexColors: true,
         transparent: true,
-        opacity: initialDark ? 0.5 : 0.72,
+        opacity: initialDark ? 0.5 : 0.35,
         blending: initialDark ? THREE.AdditiveBlending : THREE.NormalBlending,
         depthWrite: false,
       });
@@ -181,10 +181,10 @@ export function ThreeBackgroundCanvas({
       );
 
       const lineMaterial = new THREE.LineBasicMaterial({
-        color: new THREE.Color(initialDark ? 0xffffff : 0x4c1d95),
+        color: new THREE.Color(initialDark ? 0xffffff : 0x525252),
         vertexColors: true,
         transparent: true,
-        opacity: initialDark ? 0.35 : 0.28,
+        opacity: initialDark ? 0.35 : 0.16,
         blending: initialDark ? THREE.AdditiveBlending : THREE.NormalBlending,
         depthWrite: false,
       });
@@ -229,9 +229,9 @@ export function ThreeBackgroundCanvas({
       gridGeometry.setIndex(gridIndices);
 
       const gridMaterial = new THREE.LineBasicMaterial({
-        color: new THREE.Color(initialDark ? 0x2e2e2e : 0x0284c7),
+        color: new THREE.Color(initialDark ? 0x2e2e2e : 0xd4d4d4),
         transparent: true,
-        opacity: initialDark ? 0.35 : 0.22,
+        opacity: initialDark ? 0.35 : 0.45,
         blending: initialDark ? THREE.AdditiveBlending : THREE.NormalBlending,
         depthWrite: false,
       });
@@ -256,7 +256,7 @@ export function ThreeBackgroundCanvas({
         }
         ringGeom.setAttribute('position', new THREE.Float32BufferAttribute(pts, 3));
         const rMat = new THREE.LineBasicMaterial({
-          color: initialDark ? ringColors[idx] : idx === 0 ? 0x6626e2 : 0x00658b,
+          color: initialDark ? ringColors[idx] : idx === 0 ? 0xa3a3a3 : 0xd4d4d4,
           transparent: true,
           opacity: initialDark ? 0.2 : 0.24,
           blending: initialDark ? THREE.AdditiveBlending : THREE.NormalBlending,
@@ -313,24 +313,24 @@ export function ThreeBackgroundCanvas({
 
         const blend = dark ? THREE.AdditiveBlending : THREE.NormalBlending;
 
-        particleMaterial.size = dark ? 11.0 : 12.0;
-        particleMaterial.color.setHex(dark ? 0xffffff : 0x5b21b6);
-        particleMaterial.opacity = dark ? 0.5 : 0.72;
+        particleMaterial.size = dark ? 11.0 : 9.0;
+        particleMaterial.color.setHex(dark ? 0xffffff : 0x171717);
+        particleMaterial.opacity = dark ? 0.5 : 0.35;
         particleMaterial.blending = blend;
         particleMaterial.needsUpdate = true;
 
-        lineMaterial.color.setHex(dark ? 0xffffff : 0x4c1d95);
-        lineMaterial.opacity = dark ? 0.25 : 0.28;
+        lineMaterial.color.setHex(dark ? 0xffffff : 0x525252);
+        lineMaterial.opacity = dark ? 0.25 : 0.16;
         lineMaterial.blending = blend;
         lineMaterial.needsUpdate = true;
 
-        gridMaterial.color.setHex(dark ? 0x2e2e2e : 0x0284c7);
-        gridMaterial.opacity = dark ? 0.35 : 0.22;
+        gridMaterial.color.setHex(dark ? 0x2e2e2e : 0xd4d4d4);
+        gridMaterial.opacity = dark ? 0.35 : 0.45;
         gridMaterial.blending = blend;
         gridMaterial.needsUpdate = true;
 
         ringMaterials.forEach((m, idx) => {
-          m.color.setHex(dark ? ringColors[idx] : idx === 0 ? 0x6626e2 : 0x00658b);
+          m.color.setHex(dark ? ringColors[idx] : idx === 0 ? 0xa3a3a3 : 0xd4d4d4);
           m.opacity = dark ? 0.22 : 0.24;
           m.blending = blend;
           m.needsUpdate = true;

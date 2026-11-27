@@ -122,7 +122,7 @@ export function AdminNav() {
               <img
                 src="/images/artboard-mark.png"
                 alt="Islam Samy"
-                className="h-7 w-auto object-contain filter drop-shadow-[0_0_12px_rgba(123,208,255,0.85)] brightness-110"
+                className="h-7 w-auto object-contain filter drop-shadow-sm dark:drop-shadow-[0_0_10px_rgba(255,255,255,0.25)] dark:brightness-110"
               />
             </div>
             <div className="flex flex-col">
@@ -277,7 +277,7 @@ export function AdminNav() {
                     <img
                       src="/images/artboard-mark.png"
                       alt="Islam Samy"
-                      className="h-7 w-auto object-contain filter drop-shadow-[0_0_10px_rgba(123,208,255,0.85)] brightness-110"
+                      className="h-7 w-auto object-contain filter drop-shadow-sm dark:drop-shadow-[0_0_10px_rgba(255,255,255,0.25)] dark:brightness-110"
                     />
                     <span className="font-headline-sm text-sm font-bold text-on-surface">
                       Admin Navigation

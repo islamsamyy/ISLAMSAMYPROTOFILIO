@@ -285,7 +285,7 @@ export function TechArsenalSection() {
     <section id="skills" className="w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-10 relative z-10 scroll-mt-24 content-auto">
       {/* Section Header */}
       <div className="text-center max-w-3xl mx-auto mb-10">
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/40 dark:bg-white/[0.06] border border-primary/40 shadow-[0_0_24px_rgba(208,188,255,0.3)] mb-4 backdrop-blur-xl">
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-surface-container-low border border-outline-variant shadow-sm mb-4 backdrop-blur-xl">
           <Cpu className="w-4 h-4 text-primary" />
           <span className="font-label-sm text-xs uppercase tracking-wider text-primary font-bold">
             {t('tech.badge', 'Technical Arsenal & Capabilities')}
@@ -300,10 +300,10 @@ export function TechArsenalSection() {
       </div>
 
       {/* Live Architecture Telemetry Stream Box */}
-      <div className="w-full max-w-5xl mx-auto mb-8 p-4 sm:p-5 rounded-2xl bg-surface-container-low/90 dark:bg-[#0a0a0a]/95 border border-primary/30 shadow-[0_8px_32px_rgba(0,0,0,0.6)] relative overflow-hidden group">
-        <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-surface-container-high/60">
+      <div className="w-full max-w-5xl mx-auto mb-8 p-4 sm:p-5 rounded-2xl bg-surface-container-low/95 dark:bg-[#0a0a0a]/95 border border-outline-variant shadow-sm dark:shadow-[0_8px_32px_rgba(0,0,0,0.6)] relative overflow-hidden group">
+        <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-outline-variant">
           <div className="flex items-center gap-2">
-            <span className="w-2.5 h-2.5 rounded-full bg-secondary animate-pulse shadow-[0_0_8px_#7bd0ff]" />
+            <span className="w-2.5 h-2.5 rounded-full bg-secondary animate-pulse" />
             <span className="font-label-sm text-[10px] sm:text-[11px] text-secondary uppercase font-semibold tracking-wider">
               LIVE ARCHITECTURE STREAM: Ingestion &rarr; Spark Lakehouse &rarr; ML Inference &rarr; BI Cockpit
             </span>
@@ -364,8 +364,8 @@ export function TechArsenalSection() {
               onClick={() => setFilter(tab.id)}
               className={`tech-filter-tab px-3.5 py-1.5 rounded-full text-xs font-label-md transition-all duration-300 ${
                 filter === tab.id
-                  ? 'bg-primary text-on-primary font-bold shadow-[0_0_16px_rgba(160,120,255,0.4)] border border-primary/40 scale-105'
-                  : 'bg-surface-container-high/60 text-on-surface-variant hover:text-on-surface hover:border-primary/40 hover:bg-surface-container-highest border border-outline-variant/30 backdrop-blur-md'
+                  ? 'bg-primary text-on-primary font-bold shadow-sm border border-primary scale-105'
+                  : 'bg-surface-container-low text-on-surface-variant hover:text-on-surface hover:border-outline hover:bg-surface-container-high border border-outline-variant backdrop-blur-md'
               }`}
               data-filter={tab.id}
             >
@@ -433,10 +433,10 @@ export function TechArsenalSection() {
             {displayItems.map((tech, index) => {
               const borderTheme =
                 tech.badgeColor === 'primary'
-                  ? 'border-primary/20 hover:border-primary/50 hover:shadow-[0_0_25px_rgba(160,120,255,0.35)]'
+                  ? 'border-outline-variant hover:border-outline hover:shadow-md'
                   : tech.badgeColor === 'secondary'
-                  ? 'border-secondary/20 hover:border-secondary/50 hover:shadow-[0_0_25px_rgba(123,208,255,0.35)]'
-                  : 'border-tertiary/20 hover:border-tertiary/50 hover:shadow-[0_0_25px_rgba(255,182,144,0.35)]';
+                  ? 'border-outline-variant hover:border-secondary/50 hover:shadow-md'
+                  : 'border-outline-variant hover:border-outline hover:shadow-md';
 
               const badgeTheme =
                 tech.badgeColor === 'primary'
@@ -447,17 +447,17 @@ export function TechArsenalSection() {
 
               const iconContainerTheme =
                 tech.badgeColor === 'primary'
-                  ? 'bg-primary-container/20 border-primary/30 text-primary'
+                  ? 'bg-primary-container/10 border-outline-variant text-primary'
                   : tech.badgeColor === 'secondary'
-                  ? 'bg-secondary-container/20 border-secondary/30 text-secondary'
-                  : 'bg-tertiary-container/20 border-tertiary/30 text-tertiary';
+                  ? 'bg-secondary-container/40 border-secondary/30 text-secondary'
+                  : 'bg-tertiary-container border-outline-variant text-tertiary';
 
               const progressTheme =
                 tech.badgeColor === 'primary'
-                  ? 'from-primary-container via-primary to-secondary shadow-[0_0_8px_#d0bcff]'
+                  ? 'from-primary to-primary/80'
                   : tech.badgeColor === 'secondary'
-                  ? 'from-secondary to-primary shadow-[0_0_8px_#7bd0ff]'
-                  : 'from-tertiary via-primary to-secondary shadow-[0_0_8px_#ffb690]';
+                  ? 'from-secondary to-secondary/80'
+                  : 'from-tertiary to-primary';
 
               const textTheme =
                 tech.badgeColor === 'primary'

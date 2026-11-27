@@ -10,7 +10,7 @@ export function AdminFooter() {
             <img
               src="/images/artboard-mark.png"
               alt="Islam Samy"
-              className="h-6 w-auto object-contain filter drop-shadow-[0_0_8px_rgba(123,208,255,0.7)] group-hover:scale-105 transition-transform"
+              className="h-6 w-auto object-contain filter drop-shadow-sm dark:drop-shadow-[0_0_8px_rgba(255,255,255,0.25)] group-hover:scale-105 transition-transform"
             />
             <span className="font-nexa font-bold text-on-surface group-hover:text-primary transition-colors">
               Islam Samy Command Center

@@ -143,7 +143,7 @@ export default function BookPage() {
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
             className="flex flex-col items-center text-center max-w-3xl mx-auto"
           >
-            <div className="inline-flex items-center gap-space-xs px-4 py-1.5 rounded-full bg-white/40 dark:bg-white/[0.06] border border-primary/30 shadow-[0_0_24px_rgba(160,120,255,0.25)] mb-4 backdrop-blur-xl">
+            <div className="inline-flex items-center gap-space-xs px-4 py-1.5 rounded-full bg-surface-container-low border border-outline-variant shadow-sm mb-4 backdrop-blur-xl">
               <span className="material-symbols-outlined text-primary text-base">handshake</span>
               <span className="font-label-sm text-xs uppercase tracking-wider text-primary font-bold">
                 {t('book.badge')}
@@ -200,15 +200,15 @@ export default function BookPage() {
                         onClick={() => setSelectedPkg(pkg)}
                         className={`relative h-full p-6 sm:p-8 rounded-3xl backdrop-blur-2xl border transition-all duration-300 flex flex-col justify-between cursor-pointer ${
                           isSelected
-                            ? 'bg-surface-container-low/70 border-2 border-primary shadow-[0_0_35px_rgba(160,120,255,0.4)]'
-                            : 'bg-surface-container-low/40 hover:bg-surface-container-low/65 border-white/20 dark:border-white/[0.08] hover:border-primary/50 shadow-[0_8px_32px_rgba(0,0,0,0.35)]'
+                            ? 'bg-surface-container-low border-2 border-primary shadow-md'
+                            : 'bg-surface-container-low/95 dark:bg-surface-container-low/40 hover:bg-surface-container-low border-outline-variant dark:border-white/[0.08] hover:border-outline shadow-sm dark:shadow-[0_8px_32px_rgba(0,0,0,0.35)]'
                         }`}
                       >
                         {/* Top Specular Rim Light */}
-                        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/30 dark:via-primary/30 to-transparent pointer-events-none rounded-t-3xl" />
+                        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-black/10 dark:via-white/20 to-transparent pointer-events-none rounded-t-3xl" />
 
                         {pkg.isPopular && (
-                          <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full bg-gradient-to-r from-primary to-secondary text-on-primary-container font-label-sm text-[10px] font-bold uppercase tracking-wider shadow-md whitespace-nowrap">
+                          <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full bg-primary text-on-primary font-label-sm text-[10px] font-bold uppercase tracking-wider shadow-sm whitespace-nowrap">
                             {isAr ? 'الأكثر طلباً • عائد مرتفع' : t('book.mostRequested')}
                           </div>
                         )}
@@ -365,7 +365,7 @@ export default function BookPage() {
 
                     <button
                       type="submit"
-                      className="w-full mt-2 py-3.5 rounded-xl bg-primary-container text-on-primary-container font-semibold text-xs sm:text-sm hover:bg-primary hover:text-on-primary shadow-[0_0_24px_rgba(160,120,255,0.4)] transition-all"
+                      className="w-full mt-2 py-3.5 rounded-xl bg-primary text-on-primary font-semibold text-xs sm:text-sm hover:bg-primary/90 shadow-sm transition-all"
                     >
                       {t('book.submitPackage')}
                     </button>
@@ -381,7 +381,7 @@ export default function BookPage() {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
               
               {/* Left Column: Calendar & Time Selector */}
-              <div className="lg:col-span-7 flex flex-col gap-6 p-6 sm:p-8 rounded-3xl bg-surface-container-low/40 backdrop-blur-2xl border border-white/20 dark:border-white/[0.08] shadow-[0_16px_50px_rgba(0,0,0,0.35)]">
+              <div className="lg:col-span-7 flex flex-col gap-6 p-6 sm:p-8 rounded-3xl bg-surface-container-low/95 dark:bg-surface-container-low/40 backdrop-blur-2xl border border-outline-variant dark:border-white/[0.08] shadow-sm dark:shadow-[0_16px_50px_rgba(0,0,0,0.35)]">
                 
                 {/* Session Duration Tabs */}
                 <div className="flex items-center justify-between pb-4 border-b border-surface-container-high/60">
@@ -403,7 +403,7 @@ export default function BookPage() {
                       onClick={() => setConsultDuration('60')}
                       className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
                         consultDuration === '60'
-                          ? 'bg-primary text-on-primary shadow-[0_0_12px_rgba(208,188,255,0.3)]'
+                          ? 'bg-primary text-on-primary shadow-sm'
                           : 'bg-surface-container-high text-on-surface-variant'
                       }`}
                     >
@@ -423,8 +423,8 @@ export default function BookPage() {
                         onClick={() => setSelectedDate(d.full)}
                         className={`p-3 rounded-2xl flex flex-col items-center justify-center border transition-all ${
                           selectedDate === d.full
-                            ? 'bg-primary text-on-primary border-primary shadow-[0_0_16px_rgba(208,188,255,0.4)]'
-                            : 'bg-surface-container-lowest border-outline-variant/20 hover:border-primary/40 text-on-surface'
+                            ? 'bg-primary text-on-primary border-primary shadow-sm'
+                            : 'bg-surface-container-lowest border-outline-variant hover:border-outline text-on-surface'
                         }`}
                       >
                         <span className="text-[10px] font-mono opacity-80">{d.day}</span>
@@ -445,8 +445,8 @@ export default function BookPage() {
                         onClick={() => setSelectedTime(slot)}
                         className={`py-2 px-3 rounded-xl text-xs font-mono transition-all border ${
                           selectedTime === slot
-                            ? 'bg-secondary text-on-secondary border-secondary shadow-[0_0_12px_rgba(123,208,255,0.4)]'
-                            : 'bg-surface-container-lowest border-outline-variant/20 hover:border-secondary/40 text-on-surface'
+                            ? 'bg-secondary text-on-secondary border-secondary shadow-sm'
+                            : 'bg-surface-container-lowest border-outline-variant hover:border-secondary/40 text-on-surface'
                         }`}
                       >
                         {slot}

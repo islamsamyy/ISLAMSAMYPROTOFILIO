@@ -144,14 +144,14 @@ export function ProjectCard({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-40px' }}
       transition={{ duration: 0.3 }}
-      className={`group relative flex flex-col justify-between h-full rounded-3xl bg-surface-container-low/75 dark:bg-surface-container-low/55 backdrop-blur-2xl border ${
+      className={`group relative flex flex-col justify-between h-full rounded-3xl bg-surface-container-low/95 dark:bg-surface-container-low/55 backdrop-blur-2xl border ${
         isFeaturedVariant
-          ? 'border-primary/35 dark:border-primary/30 shadow-[0_12px_40px_rgba(102,38,226,0.12)] dark:shadow-[0_12px_40px_rgba(0,0,0,0.45)]'
-          : 'border-outline-variant/30 dark:border-white/[0.08] shadow-[0_8px_30px_rgba(0,0,0,0.12)] dark:shadow-[0_8px_30px_rgba(0,0,0,0.35)]'
-      } hover:border-primary/60 hover:shadow-[0_18px_48px_rgba(160,120,255,0.2)] transition-all duration-300 overflow-hidden`}
+          ? 'border-outline dark:border-white/20 shadow-md dark:shadow-[0_12px_40px_rgba(0,0,0,0.45)]'
+          : 'border-outline-variant dark:border-white/[0.08] shadow-sm dark:shadow-[0_8px_30px_rgba(0,0,0,0.35)]'
+      } hover:border-outline hover:shadow-lg transition-all duration-300 overflow-hidden`}
     >
       {/* Top Specular Rim Light */}
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent pointer-events-none z-10" />
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-black/10 dark:via-white/20 to-transparent pointer-events-none z-10" />
 
       {/* 1. Visual Stage */}
       {coverSrc && (
@@ -162,7 +162,7 @@ export function ProjectCard({
           } overflow-hidden bg-surface-container-lowest border-b border-outline-variant/20 dark:border-white/[0.08] block`}
         >
           {isDiagram ? (
-            <div className="w-full h-full flex items-center justify-center p-4 bg-[radial-gradient(circle_at_center,rgba(123,208,255,0.08),transparent_70%)]">
+            <div className="w-full h-full flex items-center justify-center p-4 bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.03),transparent_70%)] dark:bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.04),transparent_70%)]">
               <img
                 src={coverSrc}
                 alt={project.title}

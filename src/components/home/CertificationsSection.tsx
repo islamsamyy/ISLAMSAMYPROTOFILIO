@@ -152,8 +152,8 @@ export function CertificationsSection() {
                 onClick={() => setFilter(tab.id)}
                 className={`px-3.5 py-1.5 rounded-full text-xs font-label-md transition-colors duration-200 ${
                   filter === tab.id
-                    ? 'bg-primary text-on-primary font-bold shadow-[0_0_16px_rgba(160,120,255,0.4)]'
-                    : 'bg-white/40 dark:bg-white/[0.04] text-on-surface-variant hover:text-on-surface hover:bg-white/70 dark:hover:bg-white/[0.08] border border-black/[0.05] dark:border-white/[0.08]'
+                    ? 'bg-primary text-on-primary font-bold shadow-sm'
+                    : 'bg-surface-container-low text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high border border-outline-variant'
                 }`}
               >
                 {tab.label}
@@ -196,7 +196,7 @@ export function CertificationsSection() {
               key={cert.id}
               type="button"
               onClick={() => setViewingCert(cert)}
-              className="group/card relative text-left rounded-2xl bg-surface-container-low/90 dark:bg-[#0a0a0a]/95 hover:bg-surface-container-low border border-white/15 dark:border-white/[0.08] hover:border-primary/50 shadow-lg hover:shadow-[0_12px_32px_rgba(160,120,255,0.25)] transition-all duration-200 overflow-hidden flex flex-col"
+              className="group/card relative text-left rounded-2xl bg-surface-container-low/95 dark:bg-[#0a0a0a]/95 hover:bg-surface-container-low border border-outline-variant dark:border-white/[0.08] hover:border-outline shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden flex flex-col"
             >
               {/* Certificate Image Frame */}
               <div className="relative aspect-[16/10] w-full bg-surface-container-lowest overflow-hidden border-b border-white/10">
@@ -409,7 +409,7 @@ export function CertificationsSection() {
                     href={viewingCert.verificationUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full sm:flex-1 inline-flex items-center justify-center gap-2 py-3 px-5 rounded-xl bg-primary text-on-primary font-nexa font-bold text-xs uppercase tracking-wider shadow-[0_0_20px_rgba(160,120,255,0.4)] transition-all"
+                    className="w-full sm:flex-1 inline-flex items-center justify-center gap-2 py-3 px-5 rounded-xl bg-primary text-on-primary font-nexa font-bold text-xs uppercase tracking-wider shadow-sm hover:shadow-md transition-all"
                   >
                     <span>{t('certifications.verifyOnline', 'Verify On Official Registry')}</span>
                     <ExternalLink className="w-4 h-4" />

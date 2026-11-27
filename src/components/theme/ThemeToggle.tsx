@@ -42,10 +42,10 @@ export function ThemeToggle({
     <button
       type="button"
       onClick={toggleTheme}
-      aria-label={isDark ? "Switch to light mode" : "Switch to cybernetic dark mode"}
-      title={isDark ? "Switch to High-Contrast Light Mode" : "Switch to Cybernetic Dark Mode"}
+      aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
+      title={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
       className={cn(
-        "relative flex items-center justify-center w-9 h-9 rounded-full bg-surface-container-high/80 hover:bg-surface-container-highest border border-outline-variant/30 hover:border-primary/40 text-on-surface-variant hover:text-primary transition-all duration-200 active:scale-95 shadow-sm group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+        "relative flex items-center justify-center w-9 h-9 rounded-full bg-surface-container-high/80 hover:bg-surface-container-highest border border-outline-variant hover:border-outline text-on-surface-variant hover:text-primary transition-all duration-200 active:scale-95 shadow-sm group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background",
         className
       )}
       {...props}
@@ -58,7 +58,7 @@ export function ThemeToggle({
             animate={{ rotate: 0, scale: 1, opacity: 1 }}
             exit={{ rotate: 70, scale: 0.6, opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="flex items-center justify-center text-secondary group-hover:text-primary"
+            className="flex items-center justify-center text-on-surface group-hover:text-primary"
           >
             <Moon className="w-4 h-4" />
           </motion.div>
@@ -69,7 +69,7 @@ export function ThemeToggle({
             animate={{ rotate: 0, scale: 1, opacity: 1 }}
             exit={{ rotate: -70, scale: 0.6, opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="flex items-center justify-center text-amber-500 group-hover:text-amber-600"
+            className="flex items-center justify-center text-neutral-700 group-hover:text-black"
           >
             <Sun className="w-4 h-4" />
           </motion.div>
@@ -77,7 +77,7 @@ export function ThemeToggle({
       </AnimatePresence>
       {showLabel && (
         <span className="ml-2 font-label-sm text-xs text-on-surface">
-          {isDark ? "Cybernetic Dark" : "High-Contrast Light"}
+          {isDark ? "Obsidian Dark" : "Vercel Light"}
         </span>
       )}
     </button>

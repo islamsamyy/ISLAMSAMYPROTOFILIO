@@ -134,8 +134,8 @@ export function ParticleMeshCanvas({
     resizeObserver?.observe(canvas);
 
     // Color definitions
-    const primaryNode = nodeColor || (isDark ? '123, 208, 255' : '0, 101, 139');
-    const primaryLine = lineColor || (isDark ? '208, 188, 255' : '102, 38, 226');
+    const primaryNode = nodeColor || (isDark ? '237, 237, 237' : '23, 23, 23');
+    const primaryLine = lineColor || (isDark ? '115, 115, 115' : '163, 163, 163');
 
     // Drawing routine
     const draw = (animate: boolean) => {

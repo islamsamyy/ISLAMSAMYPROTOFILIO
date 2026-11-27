@@ -108,8 +108,8 @@ export default function PricingPage() {
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
             className="flex flex-col items-center text-center max-w-3xl mx-auto"
           >
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/40 dark:bg-white/[0.06] border border-primary/30 shadow-[0_0_24px_rgba(160,120,255,0.25)] mb-4 backdrop-blur-xl">
-              <span className="w-2 h-2 rounded-full bg-primary animate-pulse shadow-[0_0_8px_#d0bcff]"></span>
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-surface-container-low border border-outline-variant shadow-sm mb-4 backdrop-blur-xl">
+              <span className="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
               <span className="font-label-sm text-xs uppercase tracking-wider text-primary font-bold">
                 {language === 'ar' ? 'أسعار استشارات وباقات برمجية شفافة' : 'Transparent Engagement Models • Live Pricing'}
               </span>
@@ -129,7 +129,7 @@ export default function PricingPage() {
                 onClick={() => setBillingCycle('milestone')}
                 className={`px-5 py-2.5 rounded-full font-label-md text-xs sm:text-sm font-semibold transition-all duration-300 ${
                   billingCycle === 'milestone'
-                    ? 'bg-primary text-on-primary shadow-[0_0_20px_rgba(160,120,255,0.45)] font-bold'
+                    ? 'bg-primary text-on-primary shadow-sm font-bold'
                     : 'text-on-surface-variant hover:text-on-surface'
                 }`}
               >
@@ -140,7 +140,7 @@ export default function PricingPage() {
                 onClick={() => setBillingCycle('retainer')}
                 className={`px-5 py-2.5 rounded-full font-label-md text-xs sm:text-sm font-semibold transition-all duration-300 flex items-center gap-1.5 ${
                   billingCycle === 'retainer'
-                    ? 'bg-secondary text-on-secondary shadow-[0_0_20px_rgba(123,208,255,0.45)] font-bold'
+                    ? 'bg-secondary text-on-secondary shadow-sm font-bold'
                     : 'text-on-surface-variant hover:text-on-surface'
                 }`}
               >
@@ -207,15 +207,15 @@ export default function PricingPage() {
                   <div
                     className={`relative h-full p-7 sm:p-8 rounded-3xl backdrop-blur-2xl transition-all duration-300 flex flex-col justify-between gap-6 ${
                       isPopular
-                        ? 'border-2 border-primary/50 shadow-[0_0_35px_rgba(160,120,255,0.25),0_12px_40px_rgba(0,0,0,0.6)] bg-surface-container-low/95'
-                        : 'border border-white/20 dark:border-white/[0.08] hover:border-secondary/50 shadow-[0_8px_32px_rgba(0,0,0,0.35)] bg-surface-container-low/60'
+                        ? 'border-2 border-primary/70 shadow-md dark:shadow-[0_12px_40px_rgba(0,0,0,0.6)] bg-surface-container-low/95'
+                        : 'border border-outline-variant dark:border-white/[0.08] hover:border-outline shadow-sm dark:shadow-[0_8px_32px_rgba(0,0,0,0.35)] bg-surface-container-low/95 dark:bg-surface-container-low/60'
                     }`}
                   >
                     {/* Top Specular Rim */}
-                    <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/30 dark:via-primary/30 to-transparent pointer-events-none rounded-t-3xl" />
+                    <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-black/10 dark:via-white/20 to-transparent pointer-events-none rounded-t-3xl" />
 
                     {isPopular && (
-                      <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-gradient-to-r from-primary to-secondary text-on-primary font-label-sm text-[11px] font-bold uppercase tracking-wider shadow-[0_0_16px_rgba(160,120,255,0.5)] whitespace-nowrap">
+                      <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-primary text-on-primary font-label-sm text-[11px] font-bold uppercase tracking-wider shadow-sm whitespace-nowrap">
                         {isAr ? 'الأكثر طلباً • عائد استثماري مرتفع' : 'Most Requested • High ROI'}
                       </div>
                     )}
@@ -311,8 +311,8 @@ export default function PricingPage() {
                         href={`/book?package=${pkg.id}`}
                         className={`w-full py-3.5 px-5 rounded-2xl text-center font-nexa text-xs font-bold uppercase tracking-wider transition-all duration-200 flex items-center justify-center gap-2 ${
                           isPopular
-                            ? 'bg-primary text-on-primary shadow-[0_0_24px_rgba(160,120,255,0.45)] hover:shadow-[0_0_32px_rgba(160,120,255,0.65)] hover:scale-[1.02]'
-                            : 'bg-surface-container-high hover:bg-primary-container hover:text-on-primary-container text-on-surface border border-outline-variant/30 hover:border-primary/50'
+                            ? 'bg-primary text-on-primary shadow-sm hover:shadow-md hover:scale-[1.02]'
+                            : 'bg-surface-container-high hover:bg-primary hover:text-on-primary text-on-surface border border-outline-variant hover:border-primary'
                         }`}
                       >
                         <span>
@@ -332,7 +332,7 @@ export default function PricingPage() {
           </div>
 
           {/* SECTION 2: 1-ON-1 ARCHITECTURE ADVISORY SESSIONS */}
-          <div className="p-8 sm:p-12 rounded-3xl bg-surface-container-low/60 backdrop-blur-2xl border border-white/20 dark:border-white/[0.08] shadow-[0_16px_50px_rgba(0,0,0,0.35)] flex flex-col lg:flex-row lg:items-center justify-between gap-8">
+          <div className="p-8 sm:p-12 rounded-3xl bg-surface-container-low/95 dark:bg-surface-container-low/60 backdrop-blur-2xl border border-outline-variant dark:border-white/[0.08] shadow-sm dark:shadow-[0_16px_50px_rgba(0,0,0,0.35)] flex flex-col lg:flex-row lg:items-center justify-between gap-8">
             <div className="flex flex-col gap-4 max-w-2xl">
               <div className="flex items-center gap-2">
                 <span className="px-3 py-1 rounded-full bg-secondary/15 text-secondary border border-secondary/30 text-xs font-bold uppercase tracking-wider">
@@ -371,7 +371,7 @@ export default function PricingPage() {
                   </span>
                 </div>
 
-                <div className="p-4 rounded-2xl bg-surface-container-lowest/80 border border-secondary/30 flex flex-col gap-1 shadow-[0_0_20px_rgba(123,208,255,0.15)]">
+                <div className="p-4 rounded-2xl bg-surface-container-lowest/80 border border-secondary/30 flex flex-col gap-1 shadow-sm">
                   <div className="flex items-center justify-between">
                     <span className="text-xs font-mono uppercase text-secondary font-bold">
                       {language === 'ar' ? 'مراجعة معمارية شاملة 60 دقيقة' : '60-Minute Deep Architecture Review'}
@@ -398,7 +398,7 @@ export default function PricingPage() {
             <div className="flex flex-col gap-3 shrink-0 lg:max-w-xs w-full">
               <Link
                 href="/book"
-                className="w-full py-4 px-6 rounded-2xl bg-secondary text-on-secondary font-nexa text-xs sm:text-sm font-bold uppercase tracking-wider hover:bg-secondary-fixed transition-all shadow-[0_0_24px_rgba(123,208,255,0.4)] hover:shadow-[0_0_32px_rgba(123,208,255,0.6)] text-center flex items-center justify-center gap-2 hover:scale-105"
+                className="w-full py-4 px-6 rounded-2xl bg-primary text-on-primary font-nexa text-xs sm:text-sm font-bold uppercase tracking-wider hover:bg-primary/90 transition-all shadow-sm hover:shadow-md text-center flex items-center justify-center gap-2 hover:scale-105"
               >
                 <Calendar className="w-4 h-4" />
                 <span>{language === 'ar' ? 'احجز استشارة الآن ←' : 'Schedule Consultation →'}</span>

@@ -121,12 +121,12 @@ export default function PortfolioHomePage() {
     const tabRetainer = document.getElementById('pricing-tab-retainer');
     if (!tabMilestone || !tabRetainer) return;
     const onMilestone = () => {
-      tabMilestone.className = 'px-5 py-2 rounded-full font-label-md text-label-md bg-primary text-on-primary shadow-[0_0_16px_rgba(160,120,255,0.4)] transition-all duration-300 font-semibold';
+      tabMilestone.className = 'px-5 py-2 rounded-full font-label-md text-label-md bg-primary text-on-primary shadow-sm transition-all duration-300 font-semibold';
       tabRetainer.className = 'px-5 py-2 rounded-full font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-all duration-300 font-medium';
       document.querySelectorAll('.price-display').forEach((el) => { const v = el.getAttribute('data-milestone'); if (v) el.textContent = v; });
     };
     const onRetainer = () => {
-      tabRetainer.className = 'px-5 py-2 rounded-full font-label-md text-label-md bg-primary text-on-primary shadow-[0_0_16px_rgba(160,120,255,0.4)] transition-all duration-300 font-semibold';
+      tabRetainer.className = 'px-5 py-2 rounded-full font-label-md text-label-md bg-primary text-on-primary shadow-sm transition-all duration-300 font-semibold';
       tabMilestone.className = 'px-5 py-2 rounded-full font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-all duration-300 font-medium';
       document.querySelectorAll('.price-display').forEach((el) => { const v = el.getAttribute('data-retainer'); if (v) el.textContent = v; });
     };
@@ -140,13 +140,13 @@ export default function PortfolioHomePage() {
       <SiteHeader />
       <main id="main-content" className="w-full pt-20 bg-transparent flex-1">
         <div className="flex flex-col w-full relative overflow-hidden bg-transparent text-on-surface">
-{/*  Ambient Background Glows Layer (Hardware Accelerated Radial Gradients with 0px blur cost)  */}
+{/*  Ambient Background Glows Layer (Hardware Accelerated Subtle Neutral Gradients)  */}
 <div className="absolute inset-0 pointer-events-none select-none z-0 overflow-hidden">
-  <div id="mouse-ambient-glow" className="absolute w-[500px] h-[500px] rounded-full pointer-events-none transition-transform duration-300 ease-out -translate-x-1/2 -translate-y-1/2 opacity-60 z-0 bg-[radial-gradient(circle_at_center,_rgba(160,120,255,0.18)_0%,_rgba(123,208,255,0.06)_45%,_transparent_70%)]" style={{"left":"50%","top":"20%"}}></div>
-  <div className="absolute top-[-150px] left-1/2 -translate-x-1/2 w-[1000px] h-[750px] rounded-full bg-[radial-gradient(ellipse_at_center,_rgba(160,120,255,0.15)_0%,_rgba(123,208,255,0.06)_45%,_transparent_70%)] opacity-75"></div>
-  <div className="absolute top-[1800px] right-[-200px] w-[800px] h-[800px] rounded-full bg-[radial-gradient(ellipse_at_center,_rgba(0,166,224,0.12)_0%,_transparent_70%)] opacity-60"></div>
-  <div className="absolute top-[3600px] left-[-200px] w-[850px] h-[850px] rounded-full bg-[radial-gradient(ellipse_at_center,_rgba(160,120,255,0.10)_0%,_transparent_70%)] opacity-50"></div>
-  <div className="absolute top-[5200px] right-[10%] w-[900px] h-[600px] rounded-full bg-[radial-gradient(ellipse_at_center,_rgba(236,106,6,0.08)_0%,_transparent_70%)] opacity-40"></div>
+  <div id="mouse-ambient-glow" className="absolute w-[500px] h-[500px] rounded-full pointer-events-none transition-transform duration-300 ease-out -translate-x-1/2 -translate-y-1/2 opacity-50 z-0 bg-[radial-gradient(circle_at_center,_rgba(0,0,0,0.035)_0%,_transparent_70%)] dark:bg-[radial-gradient(circle_at_center,_rgba(255,255,255,0.05)_0%,_transparent_70%)]" style={{"left":"50%","top":"20%"}}></div>
+  <div className="absolute top-[-150px] left-1/2 -translate-x-1/2 w-[1000px] h-[750px] rounded-full bg-[radial-gradient(ellipse_at_center,_rgba(0,0,0,0.03)_0%,_transparent_70%)] dark:bg-[radial-gradient(ellipse_at_center,_rgba(255,255,255,0.04)_0%,_transparent_70%)] opacity-75"></div>
+  <div className="absolute top-[1800px] right-[-200px] w-[800px] h-[800px] rounded-full bg-[radial-gradient(ellipse_at_center,_rgba(30,138,76,0.04)_0%,_transparent_70%)] opacity-60"></div>
+  <div className="absolute top-[3600px] left-[-200px] w-[850px] h-[850px] rounded-full bg-[radial-gradient(ellipse_at_center,_rgba(0,0,0,0.025)_0%,_transparent_70%)] dark:bg-[radial-gradient(ellipse_at_center,_rgba(255,255,255,0.025)_0%,_transparent_70%)] opacity-50"></div>
+  <div className="absolute top-[5200px] right-[10%] w-[900px] h-[600px] rounded-full bg-[radial-gradient(ellipse_at_center,_rgba(30,138,76,0.035)_0%,_transparent_70%)] opacity-40"></div>
 </div>
 {/*  SECTION 1: HERO SECTION - EXECUTIVE 3D COMMAND CENTER  */}
 <section className="relative z-10 w-full max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8 pb-8 flex flex-col items-center text-center">
@@ -171,21 +171,21 @@ export default function PortfolioHomePage() {
   transition={{ duration: 0.5, delay: 0.16, ease: [0.16, 1, 0.3, 1] }}
   className="flex flex-wrap items-center justify-center gap-3 mb-5"
 >
-  <a className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-primary-container text-on-primary font-headline-sm text-xs uppercase tracking-wider shadow-[0_0_25px_rgba(160,120,255,0.5)] hover:shadow-[0_0_35px_rgba(160,120,255,0.7)] hover:bg-primary transition-all duration-300 hover:scale-105 active:scale-95" href="#projects">
+  <a className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-primary text-on-primary font-headline-sm text-xs uppercase tracking-wider shadow-sm hover:shadow-md hover:bg-primary/90 transition-all duration-300 hover:scale-105 active:scale-95" href="#projects">
     <span className="material-symbols-outlined text-[18px]">analytics</span>
     <span>{t('hero.ctaProjects', 'Explore Real Projects')}</span>
   </a>
-  <a className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-surface-container-high/80 text-on-surface hover:text-secondary font-headline-sm text-xs uppercase tracking-wider shadow-[inset_0_1px_1px_rgba(255,255,255,0.1)] hover:bg-surface-container-highest border border-outline-variant/40 transition-all duration-300 hover:scale-105 active:scale-95" href="#contact">
+  <a className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-surface-container-lowest text-on-surface hover:bg-surface-container-high font-headline-sm text-xs uppercase tracking-wider shadow-sm border border-outline-variant transition-all duration-300 hover:scale-105 active:scale-95" href="#contact">
     <span className="material-symbols-outlined text-[18px]">handshake</span>
     <span>{t('hero.ctaCollaborate', "Let's Collaborate")}</span>
   </a>
   <a
-    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-emerald-500/15 hover:bg-emerald-600 text-emerald-700 dark:text-emerald-400 hover:text-white border border-emerald-600/40 dark:border-emerald-500/40 shadow-[0_0_20px_rgba(160,120,255,0.2)] font-headline-sm text-xs uppercase tracking-wider transition-all duration-300 hover:scale-105 active:scale-95"
+    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-emerald-500/10 hover:bg-emerald-600 text-emerald-700 dark:text-emerald-400 hover:text-white border border-emerald-600/30 dark:border-emerald-500/40 shadow-sm font-headline-sm text-xs uppercase tracking-wider transition-all duration-300 hover:scale-105 active:scale-95"
     href={WHATSAPP_URL}
     target="_blank"
     rel="noopener noreferrer"
   >
-    <WhatsAppIcon className="w-4 h-4 text-emerald-400" />
+    <WhatsAppIcon className="w-4 h-4 text-emerald-600 dark:text-emerald-400 group-hover:text-white" />
     <span>{t('hero.ctaWhatsApp', 'WhatsApp:')} {WHATSAPP_NUMBER}</span>
   </a>
   <a className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-surface-container-lowest/80 text-on-surface-variant hover:text-on-surface border border-outline-variant/30 font-label-md text-xs transition-all duration-300 hover:scale-105 active:scale-95" href="https://www.linkedin.com/in/islam-samy-3b72061a9/" rel="noopener noreferrer" target="_blank">
@@ -207,7 +207,7 @@ export default function PortfolioHomePage() {
         <div className="group relative p-space-md rounded-xl bg-surface-container-low/90 dark:bg-[#0a0a0a]/95 hover:bg-surface-container/95 border border-primary/20 hover:border-primary/40 shadow-[0_4px_24px_rgba(0,0,0,0.4)] transition-all duration-300">
           <div className="flex items-center justify-between mb-1">
             <span className="font-label-sm text-label-sm text-primary uppercase tracking-widest font-semibold">{t('hero.card1Category', '01 • CUSTOM ERP SYSTEMS')}</span>
-            <span className="w-2 h-2 rounded-full bg-primary shadow-[0_0_8px_#d0bcff]"></span>
+            <span className="w-2 h-2 rounded-full bg-primary"></span>
           </div>
           <h2 className="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary transition-colors">{t('hero.card1Title', 'Custom ERP Architecture')}</h2>
           <p className="font-body-sm text-body-sm text-on-surface-variant mt-1">{t('hero.card1Desc', 'Engineered modular ERPs integrating inventory, financial ledgers, and OPERA PMS with zero downtime.')}</p>
@@ -217,7 +217,7 @@ export default function PortfolioHomePage() {
         <div className="group relative p-space-md rounded-xl bg-surface-container-low/90 dark:bg-[#0a0a0a]/95 hover:bg-surface-container/95 border border-secondary/20 hover:border-secondary/40 shadow-[0_4px_24px_rgba(0,0,0,0.4)] transition-all duration-300">
           <div className="flex items-center justify-between mb-1">
             <span className="font-label-sm text-label-sm text-secondary uppercase tracking-widest font-semibold">{t('hero.card2Category', '02 • WORKFLOW AUTOMATION')}</span>
-            <span className="w-2 h-2 rounded-full bg-secondary shadow-[0_0_8px_#7bd0ff]"></span>
+            <span className="w-2 h-2 rounded-full bg-secondary"></span>
           </div>
           <h2 className="font-headline-sm text-headline-sm text-on-surface group-hover:text-secondary transition-colors">{t('hero.card2Title', '60% Cost Reduction')}</h2>
           <p className="font-body-sm text-body-sm text-on-surface-variant mt-1">{t('hero.card2Desc', 'Eliminated manual operational overhead through event-driven n8n orchestrations and automated ETL.')}</p>
@@ -227,7 +227,7 @@ export default function PortfolioHomePage() {
         <div className="group relative p-space-md rounded-xl bg-surface-container-low/90 dark:bg-[#0a0a0a]/95 hover:bg-surface-container/95 border border-tertiary/20 hover:border-tertiary/40 shadow-[0_4px_24px_rgba(0,0,0,0.4)] transition-all duration-300">
           <div className="flex items-center justify-between mb-1">
             <span className="font-label-sm text-label-sm text-tertiary uppercase tracking-widest font-semibold">{t('hero.card3Category', '03 • AUTONOMOUS AI AGENTS')}</span>
-            <span className="w-2 h-2 rounded-full bg-tertiary shadow-[0_0_8px_#ffb690]"></span>
+            <span className="w-2 h-2 rounded-full bg-tertiary"></span>
           </div>
           <h2 className="font-headline-sm text-headline-sm text-on-surface group-hover:text-tertiary transition-colors">{t('hero.card3Title', 'Multi-Agent AI Workflows')}</h2>
           <p className="font-body-sm text-body-sm text-on-surface-variant mt-1">{t('hero.card3Desc', 'Autonomous LLM agent networks (LangChain, CrewAI) executing real-time data analysis and routing.')}</p>
@@ -243,8 +243,8 @@ export default function PortfolioHomePage() {
     >
       {/*  3D Orbit & Portrait Concentric Anchor: mathematically dead-centered on portrait  */}
       <div className="relative flex items-center justify-center">
-        {/* Dynamic Background Halo Glow (Hardware-accelerated radial gradient) */}
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[420px] h-[420px] sm:w-[500px] sm:h-[500px] rounded-full bg-[radial-gradient(circle_at_center,_rgba(160,120,255,0.22)_0%,_rgba(123,208,255,0.12)_40%,_transparent_70%)] pointer-events-none -z-10" />
+        {/* Dynamic Background Halo Glow (Hardware-accelerated subtle radial gradient) */}
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[420px] h-[420px] sm:w-[500px] sm:h-[500px] rounded-full bg-[radial-gradient(circle_at_center,_rgba(0,0,0,0.04)_0%,_transparent_70%)] dark:bg-[radial-gradient(circle_at_center,_rgba(255,255,255,0.05)_0%,_transparent_70%)] pointer-events-none -z-10" />
 
         {/* 3D Interactive Gyroscopic Canvas - 100% Dead-Centered on Portrait */}
         <Hero3DOrbit
@@ -255,23 +255,23 @@ export default function PortfolioHomePage() {
         {/* Telemetry Vector Beams & Rings SVG - 100% Dead-Centered on Portrait */}
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[520px] h-[440px] pointer-events-none z-0">
           <svg className="w-full h-full" fill="none" viewBox="0 0 520 440">
-            <circle cx="260" cy="220" r="190" stroke="#a078ff" strokeDasharray="4 6" strokeOpacity="0.22" strokeWidth="1.5" />
-            <circle cx="260" cy="220" r="145" stroke="#7bd0ff" strokeOpacity="0.28" strokeWidth="1.2" />
-            <path d="M 40 90 C 130 110, 170 170, 210 200" stroke="#d0bcff" strokeOpacity="0.45" strokeWidth="1.5" />
-            <path d="M 30 220 C 110 220, 150 220, 200 220" stroke="#7bd0ff" strokeOpacity="0.55" strokeWidth="1.5" />
-            <path d="M 40 350 C 130 330, 170 270, 210 240" stroke="#ffb690" strokeOpacity="0.45" strokeWidth="1.5" />
-            <path d="M 480 90 C 390 110, 350 170, 310 200" stroke="#7bd0ff" strokeOpacity="0.45" strokeWidth="1.5" />
-            <path d="M 490 220 C 410 220, 370 220, 320 220" stroke="#ffb690" strokeOpacity="0.55" strokeWidth="1.5" />
-            <path d="M 480 350 C 390 330, 350 270, 310 240" stroke="#d0bcff" strokeOpacity="0.45" strokeWidth="1.5" />
-            <circle className="animate-pulse" cx="150" cy="130" fill="#d0bcff" r="4.5" />
-            <circle className="animate-pulse" cx="370" cy="135" fill="#7bd0ff" r="4.5" />
-            <circle className="animate-pulse" cx="380" cy="305" fill="#ffb690" r="4" />
-            <circle className="animate-pulse" cx="140" cy="300" fill="#a078ff" r="4" />
+            <circle cx="260" cy="220" r="190" stroke="currentColor" className="text-on-surface/20" strokeDasharray="4 6" strokeWidth="1.5" />
+            <circle cx="260" cy="220" r="145" stroke="currentColor" className="text-secondary/35" strokeWidth="1.2" />
+            <path d="M 40 90 C 130 110, 170 170, 210 200" stroke="currentColor" className="text-on-surface/25" strokeWidth="1.5" />
+            <path d="M 30 220 C 110 220, 150 220, 200 220" stroke="currentColor" className="text-secondary/45" strokeWidth="1.5" />
+            <path d="M 40 350 C 130 330, 170 270, 210 240" stroke="currentColor" className="text-on-surface/25" strokeWidth="1.5" />
+            <path d="M 480 90 C 390 110, 350 170, 310 200" stroke="currentColor" className="text-secondary/35" strokeWidth="1.5" />
+            <path d="M 490 220 C 410 220, 370 220, 320 220" stroke="currentColor" className="text-on-surface/35" strokeWidth="1.5" />
+            <path d="M 480 350 C 390 330, 350 270, 310 240" stroke="currentColor" className="text-on-surface/25" strokeWidth="1.5" />
+            <circle className="animate-pulse text-on-surface/60" cx="150" cy="130" fill="currentColor" r="4.5" />
+            <circle className="animate-pulse text-secondary" cx="370" cy="135" fill="currentColor" r="4.5" />
+            <circle className="animate-pulse text-on-surface/50" cx="380" cy="305" fill="currentColor" r="4" />
+            <circle className="animate-pulse text-secondary/80" cx="140" cy="300" fill="currentColor" r="4" />
           </svg>
         </div>
 
-        {/* Islam Samy Portrait Card with Glowing Violet-Cyan Border */}
-        <div className="relative z-10 p-1.5 rounded-3xl bg-gradient-to-br from-primary via-secondary to-tertiary shadow-[0_0_60px_rgba(160,120,255,0.4),0_0_20px_rgba(123,208,255,0.3)] hover:shadow-[0_0_80px_rgba(160,120,255,0.6),0_0_30px_rgba(123,208,255,0.5)] transition-all duration-500">
+        {/* Islam Samy Portrait Card with Clean Vercel Border */}
+        <div className="relative z-10 p-1 rounded-3xl bg-outline-variant dark:bg-[#262626] shadow-xl dark:shadow-[0_20px_50px_rgba(0,0,0,0.8)] hover:shadow-2xl transition-all duration-500">
           <div className="relative w-64 h-72 sm:w-72 sm:h-80 rounded-[22px] overflow-hidden bg-surface-container-lowest flex items-center justify-center group">
             <img alt="Islam Samy - Data Engineer &amp; ERP Systems Architect" className="w-full h-full object-cover object-top filter brightness-105 contrast-105 group-hover:scale-105 transition-transform duration-500" src="/images/islam-samy-portrait.jpg" />
             <div className="absolute inset-0 bg-gradient-to-t from-surface-container-lowest via-transparent to-transparent opacity-80"></div>
@@ -306,7 +306,7 @@ export default function PortfolioHomePage() {
         <div className="group relative p-space-md rounded-xl bg-surface-container-low/90 dark:bg-[#0a0a0a]/95 hover:bg-surface-container/95 border border-secondary/20 hover:border-secondary/40 shadow-[0_4px_24px_rgba(0,0,0,0.4)] transition-all duration-300">
           <div className="flex items-center justify-between mb-1">
             <span className="font-label-sm text-label-sm text-secondary uppercase tracking-widest font-semibold">{t('hero.card4Category', '04 • DATA ANALYSIS & BI')}</span>
-            <span className="w-2 h-2 rounded-full bg-secondary shadow-[0_0_8px_#7bd0ff]"></span>
+            <span className="w-2 h-2 rounded-full bg-secondary"></span>
           </div>
           <h2 className="font-headline-sm text-headline-sm text-on-surface group-hover:text-secondary transition-colors">{t('hero.card4Title', 'Sub-Second Executive BI')}</h2>
           <p className="font-body-sm text-body-sm text-on-surface-variant mt-1">{t('hero.card4Desc', 'High-speed analytical lakehouses & Power BI suites delivering real-time telemetry across revenue channels.')}</p>
@@ -316,7 +316,7 @@ export default function PortfolioHomePage() {
         <div className="group relative p-space-md rounded-xl bg-surface-container-low/90 dark:bg-[#0a0a0a]/95 hover:bg-surface-container/95 border border-tertiary/20 hover:border-tertiary/40 shadow-[0_4px_24px_rgba(0,0,0,0.4)] transition-all duration-300">
           <div className="flex items-center justify-between mb-1">
             <span className="font-label-sm text-label-sm text-tertiary uppercase tracking-widest font-semibold">{t('hero.card5Category', '05 • FULL-STACK WEB DEV')}</span>
-            <span className="w-2 h-2 rounded-full bg-tertiary shadow-[0_0_8px_#ffb690]"></span>
+            <span className="w-2 h-2 rounded-full bg-tertiary"></span>
           </div>
           <h2 className="font-headline-sm text-headline-sm text-on-surface group-hover:text-tertiary transition-colors">{t('hero.card5Title', 'Modern Web Platforms')}</h2>
           <p className="font-body-sm text-body-sm text-on-surface-variant mt-1">{t('hero.card5Desc', 'Production Next.js 15 & React architectures with sub-250ms p99 response times and resilient distributed APIs.')}</p>
@@ -326,7 +326,7 @@ export default function PortfolioHomePage() {
         <div className="group relative p-space-md rounded-xl bg-surface-container-low/90 dark:bg-[#0a0a0a]/95 hover:bg-surface-container/95 border border-primary/20 hover:border-primary/40 shadow-[0_4px_24px_rgba(0,0,0,0.4)] transition-all duration-300">
           <div className="flex items-center justify-between mb-1">
             <span className="font-label-sm text-label-sm text-primary uppercase tracking-widest font-semibold">{t('hero.card6Category', '06 • DATA PIPELINE SCALE')}</span>
-            <span className="w-2 h-2 rounded-full bg-primary shadow-[0_0_8px_#d0bcff]"></span>
+            <span className="w-2 h-2 rounded-full bg-primary"></span>
           </div>
           <h2 className="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary transition-colors">{t('hero.card6Title', '1.4M msg/sec Streaming')}</h2>
           <p className="font-body-sm text-body-sm text-on-surface-variant mt-1">{t('hero.card6Desc', 'High-throughput CDC streaming using Kafka & ClickHouse, delivering 95%+ predictive modeling accuracy.')}</p>
@@ -433,20 +433,20 @@ export default function PortfolioHomePage() {
 {/*  SECTION 7: INTERACTIVE CONTACT & INQUIRY FORM  */}
 <ScrollRevealSection className="w-full max-w-[1280px] mx-auto px-gutter py-12 relative z-10 content-auto" id="pricing" suppressHydrationWarning>
   <div className="text-center max-w-3xl mx-auto mb-12">
-    <div className="inline-flex items-center gap-space-xs px-space-md py-1.5 rounded-full bg-surface-container-high/90 border border-primary/30 shadow-[0_0_24px_rgba(160,120,255,0.2)] mb-space-sm backdrop-blur-md">
-      <span className="w-2 h-2 rounded-full bg-primary shadow-[0_0_8px_#d0bcff]"></span>
+    <div className="inline-flex items-center gap-space-xs px-space-md py-1.5 rounded-full bg-surface-container-low border border-outline-variant shadow-sm mb-space-sm backdrop-blur-md">
+      <span className="w-2 h-2 rounded-full bg-secondary"></span>
       <span className="font-label-sm text-label-sm uppercase tracking-wider text-primary font-semibold">{t('pricing.badge', 'Enterprise Engagement & Advisory')}</span>
     </div>
     <h2 className="font-headline-lg text-headline-lg text-on-surface mt-2 mb-4 tracking-tight">{t('pricing.title', 'Custom ERP, AI Automation & Data Engineering Sprints.')}</h2>
     <p className="font-body-md text-body-md text-on-surface-variant leading-relaxed">{t('pricing.subtitle', 'Turnkey architecture sprints and dedicated advisory engagements tailored for scaling enterprises, hospitality brands, and modern platforms.')}</p>
     <div className="mt-8 flex flex-col items-center gap-4">
-      <div className="inline-flex items-center p-1 rounded-full bg-surface-container-low/50 border border-surface-container-high/60 backdrop-blur-md shadow-[inset_0_1px_2px_rgba(0,0,0,0.4)]">
-        <button type="button" id="pricing-tab-milestone" className="px-5 py-2 rounded-full font-label-md text-label-md bg-primary text-on-primary shadow-[0_0_16px_rgba(160,120,255,0.4)] transition-all duration-300 font-semibold">{t('pricing.tabMilestone', 'Project-Based / Milestones')}</button>
+      <div className="inline-flex items-center p-1 rounded-full bg-surface-container-high border border-outline-variant backdrop-blur-md shadow-sm">
+        <button type="button" id="pricing-tab-milestone" className="px-5 py-2 rounded-full font-label-md text-label-md bg-primary text-on-primary shadow-sm transition-all duration-300 font-semibold">{t('pricing.tabMilestone', 'Project-Based / Milestones')}</button>
         <button type="button" id="pricing-tab-retainer" className="px-5 py-2 rounded-full font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-all duration-300 font-medium">{t('pricing.tabRetainer', 'Dedicated Advisory / Monthly Retainer')}</button>
       </div>
       <Link
         href="/pricing"
-        className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-surface-container-high/70 hover:bg-surface-container-highest text-secondary hover:text-secondary-fixed text-xs font-mono font-semibold border border-secondary/30 transition-all shadow-sm hover:scale-105"
+        className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-surface-container-low hover:bg-surface-container-high text-secondary text-xs font-mono font-semibold border border-secondary/30 transition-all shadow-sm hover:scale-105"
       >
         <span>{t('pricing.viewFullPricing', 'View Full Dedicated Pricing & Consultation Rates Page')}</span>
         <span className="material-symbols-outlined text-sm">arrow_forward</span>
@@ -457,15 +457,15 @@ export default function PortfolioHomePage() {
     {packages.map((pkg, idx) => {
       const isPopular = pkg.isPopular;
       const borderCls = isPopular
-        ? 'border-2 border-primary/50 shadow-[0_0_35px_rgba(160,120,255,0.25),0_12px_40px_rgba(0,0,0,0.6)] bg-surface-container-low/95 dark:bg-[#111111]/95'
+        ? 'border-2 border-primary/70 shadow-md dark:shadow-[0_12px_40px_rgba(0,0,0,0.6)] bg-surface-container-low/95 dark:bg-[#111111]/95'
         : idx === 0
-        ? 'border border-primary/20 hover:border-primary/40 shadow-[0_8px_30px_rgba(0,0,0,0.5)] bg-surface-container-low/90 dark:bg-[#0a0a0a]/95'
-        : 'border border-tertiary/20 hover:border-tertiary/40 shadow-[0_8px_30px_rgba(0,0,0,0.5)] bg-surface-container-low/90 dark:bg-[#0a0a0a]/95';
+        ? 'border border-outline-variant hover:border-outline shadow-sm dark:shadow-[0_8px_30px_rgba(0,0,0,0.5)] bg-surface-container-low/90 dark:bg-[#0a0a0a]/95'
+        : 'border border-outline-variant hover:border-outline shadow-sm dark:shadow-[0_8px_30px_rgba(0,0,0,0.5)] bg-surface-container-low/90 dark:bg-[#0a0a0a]/95';
 
       return (
         <div key={pkg.id} className={`relative p-space-lg rounded-2xl transition-all duration-300 flex flex-col justify-between group ${borderCls}`} suppressHydrationWarning>
           {isPopular && (
-            <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-gradient-to-r from-primary-container via-primary to-secondary text-on-primary-container font-label-sm text-[11px] font-bold uppercase tracking-wider shadow-[0_0_16px_rgba(160,120,255,0.5)]">
+            <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-primary text-on-primary font-label-sm text-[11px] font-bold uppercase tracking-wider shadow-sm">
               Most Requested • Enterprise
             </div>
           )}
@@ -512,8 +512,8 @@ export default function PortfolioHomePage() {
               href={`/book?package=${pkg.id}`}
               className={`w-full py-3 px-4 rounded-xl text-center transition-all duration-300 font-label-md text-xs sm:text-sm uppercase tracking-wider font-semibold flex items-center justify-center gap-1.5 ${
                 isPopular
-                  ? 'bg-primary-container text-on-primary shadow-[0_0_25px_rgba(160,120,255,0.45)] hover:shadow-[0_0_35px_rgba(160,120,255,0.6)] hover:bg-primary'
-                  : 'bg-surface-container-high/90 hover:bg-surface-container-highest border border-primary/30 text-on-surface hover:text-primary shadow-[inset_0_1px_1px_rgba(255,255,255,0.1)]'
+                  ? 'bg-primary text-on-primary shadow-sm hover:shadow-md hover:bg-primary/90'
+                  : 'bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant text-on-surface hover:text-primary'
               }`}
             >
               <span>{isPopular ? t('pricing.deployCta', 'Deploy Enterprise Architecture') : `${t('pricing.bookCta', 'Book')} ${pkg.name}`}</span>
@@ -575,7 +575,7 @@ export default function PortfolioHomePage() {
 {/*  Verified Direct Contact Info Cards  */}
 <div className="space-y-4">
 <a
-  className="flex items-center justify-between p-3.5 rounded-xl bg-emerald-500/10 border border-emerald-500/35 hover:border-emerald-500/60 shadow-[0_0_24px_rgba(160,120,255,0.18)] transition-all hover:scale-[1.01]"
+  className="flex items-center justify-between p-3.5 rounded-xl bg-emerald-500/10 border border-emerald-500/35 hover:border-emerald-500/60 shadow-sm transition-all hover:scale-[1.01]"
   href={WHATSAPP_URL}
   target="_blank"
   rel="noopener noreferrer"
@@ -646,24 +646,24 @@ export default function PortfolioHomePage() {
 {/*  Name Input  */}
 <div className="flex flex-col gap-1.5">
 <label className="font-label-sm text-label-sm text-on-surface uppercase">{t('contact.formName', 'Your Name *')}</label>
-<input value={inqName} onChange={(e) => setInqName(e.target.value)} className="w-full px-4 py-3 rounded-lg bg-surface-container-lowest/80 border border-outline-variant/30 text-on-surface font-body-sm text-body-sm placeholder:text-on-surface-variant/40 focus:outline-none focus:ring-2 focus:ring-primary shadow-[inset_0_1px_2px_rgba(0,0,0,0.4)]" placeholder={t('contact.formNamePlaceholder', 'e.g. Omar Mansour')} required type="text" />
+<input value={inqName} onChange={(e) => setInqName(e.target.value)} className="w-full px-4 py-3 rounded-lg bg-surface-container-lowest border border-outline-variant text-on-surface font-body-sm text-body-sm placeholder:text-on-surface-variant/50 focus:outline-none focus:ring-2 focus:ring-primary" placeholder={t('contact.formNamePlaceholder', 'e.g. Omar Mansour')} required type="text" />
 </div>
 {/*  Email Input  */}
 <div className="flex flex-col gap-1.5">
 <label className="font-label-sm text-label-sm text-on-surface uppercase">{t('contact.formEmail', 'Work Email *')}</label>
-<input value={inqEmail} onChange={(e) => setInqEmail(e.target.value)} className="w-full px-4 py-3 rounded-lg bg-surface-container-lowest/80 border border-outline-variant/30 text-on-surface font-body-sm text-body-sm placeholder:text-on-surface-variant/40 focus:outline-none focus:ring-2 focus:ring-primary shadow-[inset_0_1px_2px_rgba(0,0,0,0.4)]" placeholder={t('contact.formEmailPlaceholder', 'omar@company.com')} required type="email" />
+<input value={inqEmail} onChange={(e) => setInqEmail(e.target.value)} className="w-full px-4 py-3 rounded-lg bg-surface-container-lowest border border-outline-variant text-on-surface font-body-sm text-body-sm placeholder:text-on-surface-variant/50 focus:outline-none focus:ring-2 focus:ring-primary" placeholder={t('contact.formEmailPlaceholder', 'omar@company.com')} required type="email" />
 </div>
 </div>
 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
 {/*  Company / Project Name  */}
 <div className="flex flex-col gap-1.5">
 <label className="font-label-sm text-label-sm text-on-surface uppercase">{t('contact.formCompany', 'Company / Venture')}</label>
-<input value={inqCompany} onChange={(e) => setInqCompany(e.target.value)} className="w-full px-4 py-3 rounded-lg bg-surface-container-lowest/80 border border-outline-variant/30 text-on-surface font-body-sm text-body-sm placeholder:text-on-surface-variant/40 focus:outline-none focus:ring-2 focus:ring-primary shadow-[inset_0_1px_2px_rgba(0,0,0,0.4)]" placeholder={t('contact.formCompanyPlaceholder', 'e.g. Nexa Hospitality Group')} type="text" />
+<input value={inqCompany} onChange={(e) => setInqCompany(e.target.value)} className="w-full px-4 py-3 rounded-lg bg-surface-container-lowest border border-outline-variant text-on-surface font-body-sm text-body-sm placeholder:text-on-surface-variant/50 focus:outline-none focus:ring-2 focus:ring-primary" placeholder={t('contact.formCompanyPlaceholder', 'e.g. Nexa Hospitality Group')} type="text" />
 </div>
 {/*  Project Type Selection  */}
 <div className="flex flex-col gap-1.5">
 <label className="font-label-sm text-label-sm text-on-surface uppercase">{t('contact.formFocus', 'Engagement Focus *')}</label>
-<select value={inqFocus} onChange={(e) => setInqFocus(e.target.value)} className="w-full px-4 py-3 rounded-lg bg-surface-container-lowest/80 border border-outline-variant/30 text-on-surface font-body-sm text-body-sm focus:outline-none focus:ring-2 focus:ring-primary shadow-[inset_0_1px_2px_rgba(0,0,0,0.4)]" required>
+<select value={inqFocus} onChange={(e) => setInqFocus(e.target.value)} className="w-full px-4 py-3 rounded-lg bg-surface-container-lowest border border-outline-variant text-on-surface font-body-sm text-body-sm focus:outline-none focus:ring-2 focus:ring-primary" required>
 <option value="custom-erp">{t('contact.formFocusErp', 'Custom ERP System Architecture & Development')}</option>
 <option value="ai-agents">{t('contact.formFocusAi', 'Autonomous AI Agents & Intelligent Workflows')}</option>
 <option value="n8n-automation">{t('contact.formFocusAutomation', 'n8n & Python Workflow Automation (Cost Reduction)')}</option>
@@ -677,10 +677,10 @@ export default function PortfolioHomePage() {
 {/*  Message Input  */}
 <div className="flex flex-col gap-1.5">
 <label className="font-label-sm text-label-sm text-on-surface uppercase">{t('contact.formMessage', 'Project Objectives & Requirements *')}</label>
-<textarea value={inqMessage} onChange={(e) => setInqMessage(e.target.value)} className="w-full px-4 py-3 rounded-lg bg-surface-container-lowest/80 border border-outline-variant/30 text-on-surface font-body-sm text-body-sm placeholder:text-on-surface-variant/40 focus:outline-none focus:ring-2 focus:ring-primary shadow-[inset_0_1px_2px_rgba(0,0,0,0.4)]" placeholder={t('contact.formMessagePlaceholder', 'Describe your data sources, expected metrics, target timelines, or existing operational bottlenecks...')} required rows={4}></textarea>
+<textarea value={inqMessage} onChange={(e) => setInqMessage(e.target.value)} className="w-full px-4 py-3 rounded-lg bg-surface-container-lowest border border-outline-variant text-on-surface font-body-sm text-body-sm placeholder:text-on-surface-variant/50 focus:outline-none focus:ring-2 focus:ring-primary" placeholder={t('contact.formMessagePlaceholder', 'Describe your data sources, expected metrics, target timelines, or existing operational bottlenecks...')} required rows={4}></textarea>
 </div>
 {/*  Submit Button  */}
-<button disabled={inqSending} className="w-full mt-2 py-4 rounded-xl bg-primary-container text-on-primary font-headline-sm text-label-md uppercase tracking-wider shadow-[0_0_25px_rgba(160,120,255,0.45)] hover:bg-primary hover:shadow-[0_0_35px_rgba(160,120,255,0.6)] transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-50" type="submit">
+<button disabled={inqSending} className="w-full mt-2 py-4 rounded-xl bg-primary text-on-primary font-headline-sm text-label-md uppercase tracking-wider shadow-sm hover:bg-primary/90 hover:shadow-md transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-50" type="submit">
 <span className="material-symbols-outlined text-[20px]">send</span>
 <span>{inqSending ? t('contact.formSending', 'Transmitting to Supabase...') : t('contact.formSubmit', 'Send Message to Islam Samy')}</span>
 </button>

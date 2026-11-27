@@ -27,51 +27,51 @@
   :root {
     color-scheme: light;
 
-    /* Light Mode Tokens (Executive High-Contrast Slate + Royal Violet + Ocean Cyan) */
-    --background: 248 250 252;
-    --on-background: 15 23 42;
+    /* Light Mode Tokens (Vercel Geist Neutral White & Charcoal Palette) */
+    --background: 250 250 250;
+    --on-background: 23 23 23;
     --surface: 255 255 255;
-    --surface-dim: 226 232 240;
+    --surface-dim: 242 242 242;
     --surface-bright: 255 255 255;
     --surface-container-lowest: 255 255 255;
     --surface-container-low: 255 255 255;
-    --surface-container: 241 245 249;
-    --surface-container-high: 226 232 240;
-    --surface-container-highest: 203 213 225;
-    --surface-variant: 226 232 240;
-    --surface-tint: 91 33 182;
-    --on-surface: 15 23 42;
-    --on-surface-variant: 51 65 85;
-    --inverse-surface: 15 23 42;
-    --inverse-on-surface: 248 250 252;
-    --outline: 100 116 139;
-    --outline-variant: 203 213 225;
-    --primary: 91 33 182;
-    --primary-container: 109 40 217;
-    --primary-fixed: 237 233 254;
-    --primary-fixed-dim: 196 181 253;
+    --surface-container: 250 250 250;
+    --surface-container-high: 242 242 242;
+    --surface-container-highest: 230 230 230;
+    --surface-variant: 242 242 242;
+    --surface-tint: 23 23 23;
+    --on-surface: 23 23 23;
+    --on-surface-variant: 102 102 102;
+    --inverse-surface: 23 23 23;
+    --inverse-on-surface: 250 250 250;
+    --outline: 143 143 143;
+    --outline-variant: 234 234 234;
+    --primary: 23 23 23;
+    --primary-container: 0 0 0;
+    --primary-fixed: 242 242 242;
+    --primary-fixed-dim: 212 212 212;
     --on-primary: 255 255 255;
     --on-primary-container: 255 255 255;
-    --on-primary-fixed: 46 16 101;
-    --on-primary-fixed-variant: 91 33 182;
-    --inverse-primary: 196 181 253;
-    --secondary: 3 105 161;
-    --secondary-container: 224 242 254;
-    --secondary-fixed: 224 242 254;
-    --secondary-fixed-dim: 125 211 252;
+    --on-primary-fixed: 23 23 23;
+    --on-primary-fixed-variant: 64 64 64;
+    --inverse-primary: 237 237 237;
+    --secondary: 30 138 76;
+    --secondary-container: 235 249 240;
+    --secondary-fixed: 220 252 231;
+    --secondary-fixed-dim: 134 239 172;
     --on-secondary: 255 255 255;
-    --on-secondary-container: 12 74 110;
-    --on-secondary-fixed: 12 74 110;
-    --on-secondary-fixed-variant: 3 105 161;
-    --tertiary: 194 65 12;
-    --tertiary-container: 255 237 213;
-    --tertiary-fixed: 194 65 12;
-    --tertiary-fixed-dim: 251 146 60;
+    --on-secondary-container: 20 83 45;
+    --on-secondary-fixed: 20 83 45;
+    --on-secondary-fixed-variant: 22 101 52;
+    --tertiary: 102 102 102;
+    --tertiary-container: 242 242 242;
+    --tertiary-fixed: 23 23 23;
+    --tertiary-fixed-dim: 102 102 102;
     --on-tertiary: 255 255 255;
-    --on-tertiary-container: 124 45 18;
-    --on-tertiary-fixed: 124 45 18;
-    --on-tertiary-fixed-variant: 194 65 12;
-    --error: 185 28 28;
+    --on-tertiary-container: 23 23 23;
+    --on-tertiary-fixed: 23 23 23;
+    --on-tertiary-fixed-variant: 64 64 64;
+    --error: 203 43 49;
     --error-container: 254 226 226;
     --on-error: 255 255 255;
     --on-error-container: 127 29 29;
@@ -81,9 +81,9 @@
     --input: var(--outline-variant);
     --ring: var(--primary);
     --foreground: var(--on-surface);
-    --card: var(--surface-container);
+    --card: var(--surface-container-low);
     --card-foreground: var(--on-surface);
-    --popover: var(--surface-container-high);
+    --popover: var(--surface-container-low);
     --popover-foreground: var(--on-surface);
     --muted: var(--surface-container-high);
     --muted-foreground: var(--on-surface-variant);
@@ -356,15 +356,19 @@ body {
   }
 }
 
-/* Light Mode Executive Surface & Shadow Refinement */
+/* Light Mode Vercel Geist Surface & Shadow Refinement */
 html:not(.dark) .shadow-\[0_4px_24px_rgba\(0\,0\,0\,0\.4\)\],
 html:not(.dark) .shadow-\[0_8px_30px_rgba\(0\,0\,0\,0\.4\)\],
 html:not(.dark) .shadow-\[0_8px_30px_rgba\(0\,0\,0\,0\.5\)\],
+html:not(.dark) .shadow-\[0_8px_32px_rgba\(0\,0\,0\,0\.4\)\],
+html:not(.dark) .shadow-\[0_8px_32px_rgba\(0\,0\,0\,0\.6\)\],
+html:not(.dark) .shadow-\[0_8px_24px_rgba\(0\,0\,0\,0\.35\)\],
+html:not(.dark) .shadow-\[0_8px_24px_rgba\(0\,0\,0\,0\.45\)\],
 html:not(.dark) .shadow-\[0_10px_28px_rgba\(0\,0\,0\,0\.2\)\],
 html:not(.dark) .shadow-\[0_10px_30px_rgba\(0\,0\,0\,0\.22\)\],
 html:not(.dark) .shadow-\[0_20px_50px_rgba\(0\,0\,0\,0\.7\)\],
 html:not(.dark) .shadow-\[0_20px_60px_rgba\(0\,0\,0\,0\.35\)\] {
-  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.06), 0 1px 3px rgba(15, 23, 42, 0.05) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.03) !important;
 }
 
 html:not(.dark) .border-white\/\[0\.06\],
@@ -372,7 +376,7 @@ html:not(.dark) .border-white\/\[0\.08\],
 html:not(.dark) .border-white\/5,
 html:not(.dark) .border-white\/10,
 html:not(.dark) .border-white\/15 {
-  border-color: rgba(15, 23, 42, 0.1) !important;
+  border-color: #eaeaea !important;
 }
 
 

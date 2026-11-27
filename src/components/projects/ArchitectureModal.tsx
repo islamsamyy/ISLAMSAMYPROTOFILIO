@@ -156,7 +156,7 @@ export function ArchitectureModal({ project, isOpen, onClose }: ArchitectureModa
               <Link
                 href="/book"
                 onClick={onClose}
-                className="px-4 py-2 rounded-xl bg-primary text-on-primary text-xs font-semibold hover:bg-primary/90 shadow-[0_0_16px_rgba(160,120,255,0.4)] transition-all"
+                className="px-4 py-2 rounded-xl bg-primary text-on-primary text-xs font-semibold hover:bg-primary/90 shadow-sm transition-all"
               >
                 {language === 'ar' ? 'استشارة حول معمارية مشابهة' : 'Consult on Similar Architecture'}
               </Link>

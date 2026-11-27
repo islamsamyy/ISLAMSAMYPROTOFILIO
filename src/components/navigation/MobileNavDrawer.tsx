@@ -155,22 +155,22 @@ export function MobileNavDrawer({
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
             className={cn(
-              'relative z-10 flex flex-col justify-between w-[86vw] sm:w-[380px] max-w-[400px] h-full bg-[#0a0a0a]/98 text-zinc-100 backdrop-blur-2xl shadow-[-10px_0_40px_rgba(0,0,0,0.85)] overflow-y-auto',
-              isAr ? 'border-r border-white/10' : 'border-l border-white/10'
+              'relative z-10 flex flex-col justify-between w-[86vw] sm:w-[380px] max-w-[400px] h-full bg-white/98 dark:bg-[#0a0a0a]/98 text-neutral-900 dark:text-zinc-100 backdrop-blur-2xl shadow-[-10px_0_40px_rgba(0,0,0,0.12)] dark:shadow-[-10px_0_40px_rgba(0,0,0,0.85)] overflow-y-auto',
+              isAr ? 'border-r border-black/10 dark:border-white/10' : 'border-l border-black/10 dark:border-white/10'
             )}
           >
             {/* Drawer Header */}
-            <div className="flex items-center justify-between p-4 sm:p-5 border-b border-white/10 shrink-0">
+            <div className="flex items-center justify-between p-4 sm:p-5 border-b border-black/10 dark:border-white/10 shrink-0">
               <Link href="/" onClick={onClose} className="flex items-center gap-3 group min-w-0">
                 <div className="relative flex items-center justify-center shrink-0">
                   <img
                     src="/images/artboard-mark.png"
                     alt="Islam Samy"
-                    className="h-9 w-auto object-contain filter drop-shadow-[0_0_14px_rgba(123,208,255,0.9)] brightness-110"
+                    className="h-9 w-auto object-contain filter drop-shadow-sm dark:drop-shadow-[0_0_10px_rgba(255,255,255,0.25)] dark:brightness-110"
                   />
                 </div>
                 <div className="flex flex-col min-w-0">
-                  <span className="font-nexa text-base font-extrabold text-white group-hover:text-primary transition-colors truncate">
+                  <span className="font-nexa text-base font-extrabold text-neutral-950 dark:text-white group-hover:text-primary transition-colors truncate">
                     {t('header.name', 'Islam Samy')}
                   </span>
                   <span className="text-[10px] text-secondary font-medium tracking-wide truncate">
@@ -183,7 +183,7 @@ export function MobileNavDrawer({
                 type="button"
                 onClick={onClose}
                 aria-label={isAr ? 'إغلاق القائمة' : 'Close navigation menu'}
-                className="flex items-center justify-center w-9 h-9 rounded-lg bg-white/10 hover:bg-white/20 border border-white/15 text-zinc-200 hover:text-white transition-colors shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                className="flex items-center justify-center w-9 h-9 rounded-lg bg-neutral-100 hover:bg-neutral-200 dark:bg-white/10 dark:hover:bg-white/20 border border-black/10 dark:border-white/15 text-neutral-700 hover:text-neutral-950 dark:text-zinc-200 dark:hover:text-white transition-colors shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -192,7 +192,7 @@ export function MobileNavDrawer({
             {/* Drawer Body */}
             <div className="flex-1 px-4 sm:px-5 py-4 flex flex-col gap-4">
               {/* All Pages Navigation Links */}
-              <div className="text-[10px] font-mono uppercase tracking-widest text-zinc-400 px-1">
+              <div className="text-[10px] font-mono uppercase tracking-widest text-neutral-500 dark:text-zinc-400 px-1">
                 {isAr ? 'صفحات المنصة' : 'Pages & Navigation'}
               </div>
               <nav className="flex flex-col gap-1.5" aria-label="Mobile Navigation Links">
@@ -217,8 +217,8 @@ export function MobileNavDrawer({
                       className={cn(
                         'flex items-center justify-between px-3.5 py-3 rounded-xl text-sm font-medium transition-all min-h-[46px]',
                         isActive
-                          ? 'bg-primary/20 text-white border border-primary/40 font-semibold shadow-sm'
-                          : 'text-zinc-200 hover:text-white hover:bg-white/[0.07] border border-transparent'
+                          ? 'bg-neutral-100 dark:bg-white/[0.10] text-neutral-950 dark:text-white border border-black/15 dark:border-white/20 font-semibold shadow-sm'
+                          : 'text-neutral-700 hover:text-neutral-950 hover:bg-neutral-100/70 dark:text-zinc-200 dark:hover:text-white dark:hover:bg-white/[0.07] border border-transparent'
                       )}
                     >
                       <div className="flex items-center gap-3 min-w-0">
@@ -226,14 +226,14 @@ export function MobileNavDrawer({
                           <Icon
                             className={cn(
                               'w-4 h-4 shrink-0',
-                              isActive ? 'text-primary' : 'text-zinc-400'
+                              isActive ? 'text-primary' : 'text-neutral-500 dark:text-zinc-400'
                             )}
                           />
                         )}
                         <span className="truncate">{displayLabel}</span>
                       </div>
                       {displayBadge && (
-                        <span className="text-[10px] px-2 py-0.5 rounded-full bg-primary/20 text-secondary border border-secondary/30 font-bold shrink-0">
+                        <span className="text-[10px] px-2 py-0.5 rounded-full bg-secondary/10 text-secondary border border-secondary/30 font-bold shrink-0">
                           {displayBadge}
                         </span>
                       )}
@@ -243,8 +243,8 @@ export function MobileNavDrawer({
               </nav>
 
               {/* Quick Homepage Sections */}
-              <div className="pt-3 border-t border-white/10">
-                <div className="flex items-center gap-1.5 text-[10px] font-mono uppercase tracking-widest text-zinc-400 px-1 mb-2">
+              <div className="pt-3 border-t border-black/10 dark:border-white/10">
+                <div className="flex items-center gap-1.5 text-[10px] font-mono uppercase tracking-widest text-neutral-500 dark:text-zinc-400 px-1 mb-2">
                   <Compass className="w-3 h-3 text-secondary" />
                   <span>{isAr ? 'أقسام الصفحة الرئيسية' : 'Quick Jump Sections'}</span>
                 </div>
@@ -259,7 +259,7 @@ export function MobileNavDrawer({
                       key={sec.href}
                       href={sec.href}
                       onClick={onClose}
-                      className="px-2.5 py-2 rounded-lg bg-white/[0.05] hover:bg-primary/20 border border-white/10 text-[11px] font-medium text-zinc-200 hover:text-white text-center transition-colors truncate"
+                      className="px-2.5 py-2 rounded-lg bg-neutral-100 hover:bg-neutral-200/80 dark:bg-white/[0.05] dark:hover:bg-white/[0.12] border border-black/10 dark:border-white/10 text-[11px] font-medium text-neutral-700 hover:text-neutral-950 dark:text-zinc-200 dark:hover:text-white text-center transition-colors truncate"
                     >
                       {sec.label}
                     </Link>
@@ -268,12 +268,12 @@ export function MobileNavDrawer({
               </div>
 
               {/* Quick Actions Cluster */}
-              <div className="pt-3 border-t border-white/10 flex flex-col gap-2.5">
+              <div className="pt-3 border-t border-black/10 dark:border-white/10 flex flex-col gap-2.5">
                 {/* Language Switcher Row */}
-                <div className="flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/10">
+                <div className="flex items-center justify-between p-3 rounded-xl bg-neutral-50 dark:bg-white/[0.04] border border-black/10 dark:border-white/10">
                   <div className="flex flex-col">
-                    <span className="text-xs font-semibold text-white">Language / اللغة</span>
-                    <span className="text-[11px] text-zinc-400 font-medium">
+                    <span className="text-xs font-semibold text-neutral-900 dark:text-white">Language / اللغة</span>
+                    <span className="text-[11px] text-neutral-500 dark:text-zinc-400 font-medium">
                       {isAr ? 'العربية (RTL)' : 'English (LTR)'}
                     </span>
                   </div>
@@ -281,7 +281,7 @@ export function MobileNavDrawer({
                     type="button"
                     onClick={toggleLanguage}
                     aria-label={t('header.switchAria', isAr ? 'التبديل إلى الإنجليزية' : 'Switch to Arabic')}
-                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary/20 hover:bg-primary/30 border border-primary/40 text-secondary text-xs font-bold transition-all"
+                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-neutral-200/80 hover:bg-neutral-300/80 dark:bg-white/10 dark:hover:bg-white/20 border border-black/10 dark:border-white/15 text-neutral-900 dark:text-white text-xs font-bold transition-all"
                   >
                     <Globe className="w-3.5 h-3.5" />
                     <span>{t('header.switchLanguage', isAr ? 'English' : 'العربية')}</span>
@@ -289,13 +289,13 @@ export function MobileNavDrawer({
                 </div>
 
                 {/* Theme Switcher Row */}
-                <div className="flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/10">
+                <div className="flex items-center justify-between p-3 rounded-xl bg-neutral-50 dark:bg-white/[0.04] border border-black/10 dark:border-white/10">
                   <div className="flex flex-col">
-                    <span className="text-xs font-semibold text-white">
+                    <span className="text-xs font-semibold text-neutral-900 dark:text-white">
                       {isAr ? 'المظهر' : 'Appearance'}
                     </span>
-                    <span className="text-[11px] text-zinc-400 font-mono">
-                      {resolvedTheme === 'dark' ? 'Obsidian Dark' : 'High-Contrast Light'}
+                    <span className="text-[11px] text-neutral-500 dark:text-zinc-400 font-mono">
+                      {resolvedTheme === 'dark' ? 'Obsidian Dark' : 'Vercel Light'}
                     </span>
                   </div>
                   <ThemeToggle />
@@ -305,7 +305,7 @@ export function MobileNavDrawer({
                 <Link
                   href="/book"
                   onClick={onClose}
-                  className="flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-gradient-to-r from-primary-container via-primary to-secondary dark:bg-none dark:bg-[#ededed] dark:hover:bg-white text-white dark:text-[#0a0a0a] font-semibold text-sm shadow-[0_0_18px_rgba(160,120,255,0.4)] dark:shadow-none transition-all active:scale-[0.98] min-h-[48px]"
+                  className="flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-[#171717] hover:bg-black dark:bg-[#ededed] dark:hover:bg-white text-white dark:text-[#0a0a0a] font-semibold text-sm shadow-sm transition-all active:scale-[0.98] min-h-[48px]"
                 >
                   <Calendar className="w-4 h-4" />
                   <span>{t('header.bookAdvisory', 'Book ROI Consultation')}</span>
@@ -314,19 +314,19 @@ export function MobileNavDrawer({
             </div>
 
             {/* Drawer Footer */}
-            <div className="p-4 sm:p-5 border-t border-white/10 bg-black/30 flex flex-col gap-2 text-xs text-zinc-400 shrink-0">
+            <div className="p-4 sm:p-5 border-t border-black/10 dark:border-white/10 bg-neutral-50 dark:bg-black/30 flex flex-col gap-2 text-xs text-neutral-500 dark:text-zinc-400 shrink-0">
               <div className="flex items-center justify-between">
                 <span className="font-mono text-[11px] text-secondary">
                   {isAr ? 'أنظمة ERP وبحوث العمليات' : 'ERP & Operations Research'}
                 </span>
-                <span className="text-[10px] text-zinc-500">v2.0</span>
+                <span className="text-[10px] text-neutral-400 dark:text-zinc-500">v2.0</span>
               </div>
               <div className="flex items-center gap-4 text-xs">
                 <a
                   href="https://www.linkedin.com/in/islam-samy-3b72061a9/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-1 hover:text-white transition-colors"
+                  className="flex items-center gap-1 hover:text-neutral-950 dark:hover:text-white transition-colors"
                 >
                   <span>LinkedIn</span>
                   <ExternalLink className="w-3 h-3 text-secondary" />
@@ -336,7 +336,7 @@ export function MobileNavDrawer({
                   href="https://github.com/islamsamyy"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-1 hover:text-white transition-colors"
+                  className="flex items-center gap-1 hover:text-neutral-950 dark:hover:text-white transition-colors"
                 >
                   <span>GitHub</span>
                   <ExternalLink className="w-3 h-3 text-primary" />

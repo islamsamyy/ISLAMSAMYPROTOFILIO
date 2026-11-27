@@ -98,13 +98,13 @@ export const Hero3DOrbit = React.forwardRef<HTMLDivElement, Hero3DOrbitProps>(
           tiltX: (62 * Math.PI) / 180,
           tiltY: (20 * Math.PI) / 180,
           speed: 0.008 * speed,
-          color: isDark ? 'rgba(237, 237, 237, 0.35)' : 'rgba(102, 38, 226, 0.42)',
-          glowColor: isDark ? 'rgba(255, 255, 255, 0.4)' : 'rgba(102, 38, 226, 0.45)',
+          color: isDark ? 'rgba(237, 237, 237, 0.35)' : 'rgba(23, 23, 23, 0.26)',
+          glowColor: isDark ? 'rgba(255, 255, 255, 0.4)' : 'rgba(23, 23, 23, 0.25)',
           dash: [6, 8],
           lineWidth: 1.5,
           satellites: [
-            { phase: 0, speed: 0.012 * speed, radius: 4, color: isDark ? '#ededed' : '#6626e2', glow: isDark ? '#ffffff' : '#6626e2' },
-            { phase: Math.PI, speed: 0.012 * speed, radius: 3, color: isDark ? '#a1a1a1' : '#7c3aed', glow: isDark ? '#d4d4d4' : '#7c3aed' },
+            { phase: 0, speed: 0.012 * speed, radius: 4, color: isDark ? '#ededed' : '#171717', glow: isDark ? '#ffffff' : '#171717' },
+            { phase: Math.PI, speed: 0.012 * speed, radius: 3, color: isDark ? '#a1a1a1' : '#525252', glow: isDark ? '#d4d4d4' : '#525252' },
           ],
         },
         {
@@ -112,12 +112,12 @@ export const Hero3DOrbit = React.forwardRef<HTMLDivElement, Hero3DOrbitProps>(
           tiltX: (46 * Math.PI) / 180,
           tiltY: (-32 * Math.PI) / 180,
           speed: -0.011 * speed,
-          color: isDark ? 'rgba(70, 167, 88, 0.40)' : 'rgba(2, 132, 199, 0.42)',
-          glowColor: isDark ? 'rgba(70, 167, 88, 0.55)' : 'rgba(2, 132, 199, 0.45)',
+          color: isDark ? 'rgba(70, 167, 88, 0.40)' : 'rgba(30, 138, 76, 0.34)',
+          glowColor: isDark ? 'rgba(70, 167, 88, 0.55)' : 'rgba(30, 138, 76, 0.35)',
           dash: [4, 6],
           lineWidth: 1.25,
           satellites: [
-            { phase: Math.PI * 0.5, speed: -0.015 * speed, radius: 3.5, color: isDark ? '#46a758' : '#0284c7', glow: isDark ? '#3ecf8e' : '#0284c7' },
+            { phase: Math.PI * 0.5, speed: -0.015 * speed, radius: 3.5, color: isDark ? '#46a758' : '#1e8a4c', glow: isDark ? '#3ecf8e' : '#1e8a4c' },
           ],
         },
         {
@@ -125,12 +125,12 @@ export const Hero3DOrbit = React.forwardRef<HTMLDivElement, Hero3DOrbitProps>(
           tiltX: (74 * Math.PI) / 180,
           tiltY: (40 * Math.PI) / 180,
           speed: 0.005 * speed,
-          color: isDark ? 'rgba(161, 161, 161, 0.28)' : 'rgba(217, 119, 6, 0.38)',
-          glowColor: isDark ? 'rgba(161, 161, 161, 0.35)' : 'rgba(217, 119, 6, 0.4)',
+          color: isDark ? 'rgba(161, 161, 161, 0.28)' : 'rgba(115, 115, 115, 0.24)',
+          glowColor: isDark ? 'rgba(161, 161, 161, 0.35)' : 'rgba(115, 115, 115, 0.25)',
           dash: [8, 10],
           lineWidth: 1.2,
           satellites: [
-            { phase: Math.PI * 1.3, speed: 0.007 * speed, radius: 3, color: isDark ? '#d4d4d4' : '#d97706', glow: isDark ? '#a1a1a1' : '#d97706' },
+            { phase: Math.PI * 1.3, speed: 0.007 * speed, radius: 3, color: isDark ? '#d4d4d4' : '#404040', glow: isDark ? '#a1a1a1' : '#737373' },
           ],
         },
         {
@@ -138,12 +138,12 @@ export const Hero3DOrbit = React.forwardRef<HTMLDivElement, Hero3DOrbitProps>(
           tiltX: (30 * Math.PI) / 180,
           tiltY: (-55 * Math.PI) / 180,
           speed: -0.004 * speed,
-          color: isDark ? 'rgba(102, 102, 102, 0.25)' : 'rgba(102, 38, 226, 0.24)',
-          glowColor: isDark ? 'rgba(102, 102, 102, 0.35)' : 'rgba(102, 38, 226, 0.3)',
+          color: isDark ? 'rgba(102, 102, 102, 0.25)' : 'rgba(163, 163, 163, 0.28)',
+          glowColor: isDark ? 'rgba(102, 102, 102, 0.35)' : 'rgba(163, 163, 163, 0.3)',
           dash: [2, 10],
           lineWidth: 1.0,
           satellites: [
-            { phase: Math.PI * 0.2, speed: -0.006 * speed, radius: 2.5, color: isDark ? '#ededed' : '#6626e2', glow: isDark ? '#a1a1a1' : '#6626e2' },
+            { phase: Math.PI * 0.2, speed: -0.006 * speed, radius: 2.5, color: isDark ? '#ededed' : '#171717', glow: isDark ? '#a1a1a1' : '#525252' },
           ],
         },
       ];
@@ -209,8 +209,8 @@ export const Hero3DOrbit = React.forwardRef<HTMLDivElement, Hero3DOrbitProps>(
 
       // Precomputed Core Hologram Glow Radial Gradient (Instantiated ONCE instead of every frame)
       const coreGrad = ctx.createRadialGradient(cx, cy, 10, cx, cy, size * 0.45);
-      coreGrad.addColorStop(0, 'rgba(160, 120, 255, 0.08)');
-      coreGrad.addColorStop(0.5, 'rgba(123, 208, 255, 0.03)');
+      coreGrad.addColorStop(0, 'rgba(115, 115, 115, 0.06)');
+      coreGrad.addColorStop(0.5, 'rgba(161, 161, 161, 0.02)');
       coreGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
 
       let isWindowScrolling = false;

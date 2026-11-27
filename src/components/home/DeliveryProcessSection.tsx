@@ -133,7 +133,7 @@ export function DeliveryProcessSection() {
       </div>
 
       {/* Bottom 48-Hour Diagnostic Banner */}
-      <div className="mt-7 p-5 sm:p-6 rounded-2xl bg-gradient-to-r from-primary/15 via-surface-container-low/95 to-secondary/15 border border-primary/30 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="mt-7 p-5 sm:p-6 rounded-2xl bg-surface-container-low border border-outline-variant shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="max-w-2xl">
           <span className="text-[11px] font-mono uppercase tracking-wider text-secondary font-bold block mb-1">
             {isAr ? 'تشخيص فني مجاني خلال 48 ساعة' : 'Complimentary 48-Hour Technical Diagnostic'}

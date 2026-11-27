@@ -59,8 +59,8 @@ export default function MyBookingsPage() {
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
             className="flex flex-col items-center text-center max-w-3xl mx-auto"
           >
-            <div className="inline-flex items-center gap-space-xs px-4 py-1.5 rounded-full bg-white/40 dark:bg-white/[0.06] border border-secondary/30 shadow-[0_0_24px_rgba(123,208,255,0.25)] mb-4 backdrop-blur-xl">
-              <span className="w-2 h-2 rounded-full bg-secondary animate-pulse shadow-[0_0_8px_#7bd0ff]"></span>
+            <div className="inline-flex items-center gap-space-xs px-4 py-1.5 rounded-full bg-surface-container-low border border-outline-variant shadow-sm mb-4 backdrop-blur-xl">
+              <span className="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
               <span className="font-label-sm text-xs uppercase tracking-wider text-secondary font-bold">
                 {t('portal.badge')}
               </span>
@@ -116,7 +116,7 @@ export default function MyBookingsPage() {
                   <motion.div
                     key={res.id}
                     whileHover={{ y: -4 }}
-                    className="group relative p-6 sm:p-8 rounded-3xl bg-surface-container-low/40 hover:bg-surface-container-low/65 backdrop-blur-2xl border border-white/20 dark:border-white/[0.08] hover:border-primary/50 shadow-[0_8px_32px_rgba(0,0,0,0.35)] hover:shadow-[0_16px_48px_rgba(160,120,255,0.3)] transition-all duration-300 flex flex-col justify-between gap-6"
+                    className="group relative p-6 sm:p-8 rounded-3xl bg-surface-container-low/95 dark:bg-surface-container-low/40 hover:bg-surface-container-low backdrop-blur-2xl border border-outline-variant dark:border-white/[0.08] hover:border-outline shadow-sm hover:shadow-md dark:shadow-[0_8px_32px_rgba(0,0,0,0.35)] transition-all duration-300 flex flex-col justify-between gap-6"
                   >
                     {/* Top Specular Rim Light */}
                     <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/30 dark:via-primary/30 to-transparent pointer-events-none rounded-t-3xl" />
@@ -170,7 +170,7 @@ export default function MyBookingsPage() {
                         href={res.meetLink}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-primary-container text-on-primary-container font-semibold text-xs hover:bg-primary hover:text-on-primary shadow-[0_0_16px_rgba(160,120,255,0.4)] transition-all"
+                        className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-primary text-on-primary font-semibold text-xs hover:bg-primary/90 shadow-sm transition-all"
                       >
                         <span className="material-symbols-outlined text-base">video_call</span>
                         <span>{t('portal.launchMeet')}</span>

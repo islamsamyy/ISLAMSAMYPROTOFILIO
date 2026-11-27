@@ -64,7 +64,7 @@ export default function BlogPage() {
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
             className="flex flex-col items-center text-center max-w-3xl mx-auto"
           >
-            <div className="inline-flex items-center gap-space-xs px-4 py-1.5 rounded-full bg-white/40 dark:bg-white/[0.06] border border-primary/30 shadow-[0_0_24px_rgba(160,120,255,0.25)] mb-4 backdrop-blur-xl">
+            <div className="inline-flex items-center gap-space-xs px-4 py-1.5 rounded-full bg-surface-container-low border border-outline-variant shadow-sm mb-4 backdrop-blur-xl">
               <span className="material-symbols-outlined text-primary text-base">code_blocks</span>
               <span className="font-label-sm text-xs uppercase tracking-wider text-primary font-bold">
                 {language === 'ar' ? 'المدونة الهندسية • رؤى تقنية متقدمة' : 'Engineering Blog • Technical Insights'}
@@ -84,7 +84,7 @@ export default function BlogPage() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="relative p-8 sm:p-10 rounded-3xl bg-surface-container-low/40 backdrop-blur-2xl border border-white/20 dark:border-white/[0.08] shadow-[0_16px_50px_rgba(0,0,0,0.35)] overflow-hidden"
+              className="relative p-8 sm:p-10 rounded-3xl bg-surface-container-low/95 dark:bg-surface-container-low/40 backdrop-blur-2xl border border-outline-variant dark:border-white/[0.08] shadow-sm dark:shadow-[0_16px_50px_rgba(0,0,0,0.35)] overflow-hidden"
             >
               <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8 relative z-10">
                 <div className="flex flex-col gap-4 max-w-2xl">
@@ -111,7 +111,7 @@ export default function BlogPage() {
                   <div className="flex items-center gap-4 pt-2">
                     <Link
                       href={`/blog/${encodeURIComponent(featured.slug || featured.id)}`}
-                      className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary-container text-on-primary-container font-label-md text-xs sm:text-sm font-semibold hover:bg-primary hover:text-on-primary shadow-[0_0_20px_rgba(160,120,255,0.4)] transition-all hover:scale-105"
+                      className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary text-on-primary font-label-md text-xs sm:text-sm font-semibold hover:bg-primary/90 shadow-sm transition-all hover:scale-105"
                     >
                       <span className="material-symbols-outlined text-base">menu_book</span>
                       <span>{language === 'ar' ? 'قراءة التحليل المعماري الكامل' : 'Read Full Architecture Deep Dive'}</span>
@@ -156,7 +156,7 @@ export default function BlogPage() {
                       onClick={() => setSelectedCategory(cat)}
                       className={`px-3.5 py-1.5 rounded-full font-label-md text-xs transition-all flex items-center gap-1.5 ${
                         selectedCategory === cat
-                          ? 'bg-primary text-on-primary font-bold shadow-[0_0_16px_rgba(160,120,255,0.45)]'
+                          ? 'bg-primary text-on-primary font-bold shadow-sm'
                           : 'text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high/70'
                       }`}
                     >

@@ -8,7 +8,7 @@ export function SiteFooter() {
   const { t } = useLanguage();
 
   return (
-    <footer className="w-full bg-surface-container-lowest border-t border-surface-container-high/40 shadow-[0_-1px_16px_rgba(0,0,0,0.6)] relative z-20">
+    <footer className="w-full bg-surface-container-lowest border-t border-outline-variant dark:shadow-[0_-1px_16px_rgba(0,0,0,0.6)] relative z-20">
       <div className="max-w-[1280px] mx-auto px-gutter py-14 flex flex-col gap-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
           
@@ -19,7 +19,7 @@ export function SiteFooter() {
                 <img
                   src="/images/artboard-mark.png"
                   alt="Islam Samy"
-                  className="h-8 w-auto object-contain filter drop-shadow-[0_0_10px_rgba(255,255,255,0.25)] brightness-110"
+                  className="h-8 w-auto object-contain filter drop-shadow-sm dark:drop-shadow-[0_0_10px_rgba(255,255,255,0.25)] dark:brightness-110"
                 />
               </div>
               <span className="font-headline-sm text-lg text-on-surface font-semibold group-hover:text-primary transition-colors">

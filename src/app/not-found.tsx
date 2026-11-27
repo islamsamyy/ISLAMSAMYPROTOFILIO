@@ -33,7 +33,7 @@ export default function NotFoundPage() {
             <img
               src="/images/artboard-mark.png"
               alt="Islam Samy"
-              className="h-11 w-auto object-contain filter drop-shadow-[0_0_16px_rgba(123,208,255,0.75)] brightness-110"
+              className="h-11 w-auto object-contain filter drop-shadow-sm dark:drop-shadow-[0_0_12px_rgba(255,255,255,0.25)] dark:brightness-110"
             />
           </motion.div>
 
@@ -55,7 +55,7 @@ export default function NotFoundPage() {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="relative select-none my-2"
           >
-            <span className="font-nexa text-7xl sm:text-9xl font-black tracking-tighter bg-gradient-to-r from-primary via-secondary to-tertiary bg-clip-text text-transparent drop-shadow-[0_0_35px_rgba(160,120,255,0.4)]">
+            <span className="font-nexa text-7xl sm:text-9xl font-black tracking-tighter bg-gradient-to-r from-primary via-secondary to-tertiary bg-clip-text text-transparent">
               404
             </span>
           </motion.div>

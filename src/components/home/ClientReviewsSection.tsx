@@ -105,7 +105,7 @@ export function ClientReviewsSection() {
       <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-12">
         <Link
           href="/reviews"
-          className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-primary-container text-on-primary-container font-label-md text-xs sm:text-sm font-semibold uppercase tracking-wider hover:bg-primary hover:text-on-primary shadow-[0_0_20px_rgba(160,120,255,0.4)] transition-all duration-300"
+          className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-primary text-on-primary font-label-md text-xs sm:text-sm font-semibold uppercase tracking-wider hover:bg-primary/90 shadow-sm hover:shadow-md transition-all duration-300"
         >
           <span>Explore All Verified Client Reviews</span>
           <span className="material-symbols-outlined text-base">arrow_forward</span>

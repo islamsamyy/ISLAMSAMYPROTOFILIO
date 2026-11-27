@@ -109,8 +109,8 @@ export function CyberneticGridCanvas({
     resizeObserver?.observe(canvas);
 
     // Color palette
-    const cyan = isDark ? '161, 161, 161' : '0, 101, 139';
-    const purple = isDark ? '70, 167, 88' : '102, 38, 226';
+    const cyan = isDark ? '161, 161, 161' : '115, 115, 115';
+    const purple = isDark ? '70, 167, 88' : '30, 138, 76';
 
     const draw = (animate: boolean) => {
       ctx.clearRect(0, 0, width, height);

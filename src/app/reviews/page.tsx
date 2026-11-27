@@ -144,7 +144,7 @@ export default function ReviewsPage() {
                 <button
                   type="button"
                   onClick={() => setModalOpen(true)}
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-primary text-on-primary font-nexa text-xs uppercase tracking-wider font-semibold shadow-[0_0_20px_rgba(160,120,255,0.4)] hover:shadow-[0_0_28px_rgba(160,120,255,0.6)] transition-all hover:scale-105 active:scale-95"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-primary text-on-primary font-nexa text-xs uppercase tracking-wider font-semibold shadow-sm hover:shadow-md transition-all hover:scale-105 active:scale-95"
                 >
                   <Plus className="w-4 h-4" />
                   {t('reviewsPage.leaveReview', 'Leave Review')}
@@ -172,7 +172,7 @@ export default function ReviewsPage() {
           </AnimatePresence>
 
           {/* Filter Bar */}
-          <div className="flex flex-wrap items-center justify-between gap-4 p-4 rounded-3xl bg-surface-container-low/40 backdrop-blur-2xl border border-white/20 dark:border-white/[0.08] shadow-[0_8px_32px_rgba(0,0,0,0.35)]">
+          <div className="flex flex-wrap items-center justify-between gap-4 p-4 rounded-3xl bg-surface-container-low/95 dark:bg-surface-container-low/40 backdrop-blur-2xl border border-outline-variant dark:border-white/[0.08] shadow-sm dark:shadow-[0_8px_32px_rgba(0,0,0,0.35)]">
             <div className="flex items-center flex-wrap gap-2">
               <span className="text-xs font-label-sm text-on-surface-variant uppercase mr-2 flex items-center gap-1.5">
                 <Filter className="w-3.5 h-3.5" /> {t('reviewsPage.scopeFilter')}
@@ -223,7 +223,7 @@ export default function ReviewsPage() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.35, delay: idx * 0.05 }}
-                className="group relative p-6 sm:p-7 rounded-3xl bg-surface-container-low/40 hover:bg-surface-container-low/65 backdrop-blur-2xl border border-white/20 dark:border-white/[0.08] hover:border-primary/50 shadow-[0_8px_32px_rgba(0,0,0,0.35)] hover:shadow-[0_16px_48px_rgba(160,120,255,0.3)] transition-all duration-300 flex flex-col justify-between"
+                className="group relative p-6 sm:p-7 rounded-3xl bg-surface-container-low/95 dark:bg-surface-container-low/40 hover:bg-surface-container-low backdrop-blur-2xl border border-outline-variant dark:border-white/[0.08] hover:border-outline shadow-sm hover:shadow-md dark:shadow-[0_8px_32px_rgba(0,0,0,0.35)] transition-all duration-300 flex flex-col justify-between"
               >
                 {/* Top Specular Rim Light */}
                 <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/30 dark:via-primary/30 to-transparent pointer-events-none rounded-t-3xl" />
@@ -285,7 +285,7 @@ export default function ReviewsPage() {
           )}
 
           {/* CTA Section */}
-          <div className="rounded-3xl p-8 sm:p-10 bg-gradient-to-r from-primary-container/20 via-secondary-container/15 to-primary-container/10 border border-primary/30 flex flex-col sm:flex-row items-center justify-between gap-6">
+          <div className="rounded-3xl p-8 sm:p-10 bg-surface-container-low border border-outline-variant shadow-sm flex flex-col sm:flex-row items-center justify-between gap-6">
             <div>
               <h2 className="font-nexa text-2xl font-bold text-on-surface">
                 {language === 'ar' ? 'هل أنت مستعد لتحقيق نتائج مماثلة؟' : 'Ready to Achieve Similar Results?'}
@@ -297,7 +297,7 @@ export default function ReviewsPage() {
             <div className="flex items-center gap-3 shrink-0">
               <Link
                 href="/book"
-                className="px-6 py-3 rounded-xl bg-primary text-on-primary font-nexa text-xs uppercase tracking-wider font-semibold shadow-[0_0_20px_rgba(160,120,255,0.4)] hover:scale-105 active:scale-95 transition-all"
+                className="px-6 py-3 rounded-xl bg-primary text-on-primary font-nexa text-xs uppercase tracking-wider font-semibold shadow-sm hover:scale-105 active:scale-95 transition-all"
               >
                 {t('header.bookAdvisory')}
               </Link>

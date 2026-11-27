@@ -184,8 +184,8 @@ export default function ProjectsPage() {
             transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
             className="flex flex-col items-center text-center max-w-4xl mx-auto gap-5"
           >
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-surface-container-low/80 dark:bg-white/[0.06] border border-secondary/40 shadow-[0_0_24px_rgba(123,208,255,0.22)] backdrop-blur-xl">
-              <span className="w-2 h-2 rounded-full bg-secondary animate-pulse shadow-[0_0_8px_#7bd0ff]" />
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-surface-container-low border border-outline-variant shadow-sm backdrop-blur-xl">
+              <span className="w-2 h-2 rounded-full bg-secondary animate-pulse" />
               <span className="font-label-sm text-xs uppercase tracking-wider text-secondary font-bold">
                 {isArabic
                   ? 'دراسات حالة بيئات الإنتاج • مستودعات GitHub'
@@ -208,7 +208,7 @@ export default function ProjectsPage() {
             <div className="flex flex-wrap items-center justify-center gap-3 pt-1">
               <a
                 href="#project-explorer"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary text-on-primary font-nexa text-xs font-bold uppercase tracking-wider shadow-[0_0_24px_rgba(160,120,255,0.4)] hover:opacity-95 transition-all"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary text-on-primary font-nexa text-xs font-bold uppercase tracking-wider shadow-sm hover:opacity-95 transition-all"
               >
                 <span>{isArabic ? 'استكشاف المشاريع' : 'Browse Project Gallery'}</span>
                 <ArrowRight className="w-4 h-4 rtl-flip" />
@@ -268,8 +268,8 @@ export default function ProjectsPage() {
                   }}
                   className={`text-left p-5 rounded-3xl backdrop-blur-2xl border transition-all flex flex-col justify-between gap-3 group ${
                     isSelected
-                      ? 'bg-primary-container/25 border-primary shadow-[0_8px_32px_rgba(160,120,255,0.2)]'
-                      : 'bg-surface-container-low/70 dark:bg-surface-container-low/45 border-outline-variant/25 dark:border-white/[0.08] hover:border-primary/40'
+                      ? 'bg-surface-container-high border-primary shadow-sm'
+                      : 'bg-surface-container-low/95 dark:bg-surface-container-low/45 border-outline-variant dark:border-white/[0.08] hover:border-outline'
                   }`}
                 >
                   <div className="flex items-center justify-between gap-2 w-full">
@@ -450,7 +450,7 @@ export default function ProjectsPage() {
                       <div className="flex items-center gap-2.5">
                         <Link
                           href={`/projects/${current.project.id}`}
-                          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-primary text-on-primary text-xs font-nexa font-bold uppercase tracking-wider shadow-[0_0_20px_rgba(160,120,255,0.35)] hover:opacity-90 transition-opacity"
+                          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-primary text-on-primary text-xs font-nexa font-bold uppercase tracking-wider shadow-sm hover:opacity-90 transition-opacity"
                         >
                           <span>{isArabic ? 'عرض التفاصيل' : 'Explore Case Study'}</span>
                           <ArrowRight className="w-3.5 h-3.5 rtl-flip" />
@@ -590,7 +590,7 @@ export default function ProjectsPage() {
             <div className="flex flex-wrap items-center gap-3 shrink-0">
               <Link
                 href="/book"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-primary text-on-primary font-nexa text-xs font-bold uppercase tracking-wider shadow-[0_0_24px_rgba(160,120,255,0.45)] hover:opacity-95 transition-opacity"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-primary text-on-primary font-nexa text-xs font-bold uppercase tracking-wider shadow-sm hover:opacity-95 transition-opacity"
               >
                 <Calendar className="w-4 h-4" />
                 <span>{isArabic ? 'احجز جلسة استشارية' : 'Book Consultation'}</span>

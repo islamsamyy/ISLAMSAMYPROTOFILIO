@@ -81,14 +81,14 @@ export function OperationsResearchSection() {
       id="operations-research"
       className="w-full max-w-[1280px] mx-auto px-gutter py-12 relative z-10 scroll-mt-24 content-auto"
     >
-      <div className="rounded-3xl bg-surface-container-low/85 dark:bg-[#0a0a0a]/95 border border-primary/30 shadow-[0_20px_60px_rgba(0,0,0,0.35)] p-6 sm:p-10 relative overflow-hidden">
+      <div className="rounded-3xl bg-surface-container-low/95 dark:bg-[#0a0a0a]/95 border border-outline-variant shadow-sm dark:shadow-[0_20px_60px_rgba(0,0,0,0.35)] p-6 sm:p-10 relative overflow-hidden">
         {/* Ambient Accent Glow */}
-        <div className="absolute -top-24 -right-24 w-72 h-72 rounded-full bg-[radial-gradient(circle,rgba(160,120,255,0.22),transparent_70%)] pointer-events-none" />
-        <div className="absolute -bottom-24 -left-24 w-72 h-72 rounded-full bg-[radial-gradient(circle,rgba(123,208,255,0.18),transparent_70%)] pointer-events-none" />
+        <div className="absolute -top-24 -right-24 w-72 h-72 rounded-full bg-[radial-gradient(circle,rgba(0,0,0,0.03),transparent_70%)] dark:bg-[radial-gradient(circle,rgba(255,255,255,0.04),transparent_70%)] pointer-events-none" />
+        <div className="absolute -bottom-24 -left-24 w-72 h-72 rounded-full bg-[radial-gradient(circle,rgba(30,138,76,0.06),transparent_70%)] pointer-events-none" />
 
         {/* Header */}
         <div className="relative z-10 text-center max-w-4xl mx-auto mb-10">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/15 border border-primary/35 mb-4">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-surface-container-high border border-outline-variant mb-4">
             <Factory className="w-4 h-4 text-primary" />
             <span className="font-label-sm text-[11px] sm:text-xs uppercase tracking-wider text-primary font-bold">
               {isAr
@@ -165,10 +165,10 @@ export function OperationsResearchSection() {
         </div>
 
         {/* Contract-Backed Guaranteed ROI Box */}
-        <div className="relative z-10 p-6 sm:p-8 rounded-2xl bg-gradient-to-r from-primary/15 via-surface-container-high/85 to-secondary/15 border border-primary/40 shadow-[0_12px_36px_rgba(160,120,255,0.18)]">
+        <div className="relative z-10 p-6 sm:p-8 rounded-2xl bg-surface-container border border-outline-variant shadow-sm">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
             <div className="lg:col-span-8 space-y-3">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/35 text-emerald-400 text-[11px] font-mono font-bold uppercase">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-600/30 text-emerald-700 dark:text-emerald-400 text-[11px] font-mono font-bold uppercase">
                 <ShieldCheck className="w-3.5 h-3.5" />
                 <span>
                   {isAr ? 'ضمان العائد على كافة الأنظمة بمجرد التعاقد' : 'Contract-Backed ROI Guarantee Across Every System'}

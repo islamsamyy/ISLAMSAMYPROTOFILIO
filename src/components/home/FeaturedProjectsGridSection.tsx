@@ -163,8 +163,8 @@ export function FeaturedProjectsGridSection() {
             onClick={() => setArrangeMode((v) => !v)}
             className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-nexa font-bold uppercase tracking-wider border transition-all ${
               arrangeMode
-                ? 'bg-primary text-on-primary border-primary shadow-[0_0_20px_rgba(160,120,255,0.45)]'
-                : 'bg-surface-container-high/80 hover:bg-surface-container-highest text-on-surface border-outline-variant/35 hover:border-primary/40'
+                ? 'bg-primary text-on-primary border-primary shadow-sm'
+                : 'bg-surface-container-high/80 hover:bg-surface-container-highest text-on-surface border-outline-variant hover:border-outline'
             }`}
           >
             <ArrowUpDown className="w-3.5 h-3.5" />
@@ -218,8 +218,8 @@ export function FeaturedProjectsGridSection() {
                 }}
                 className={`px-3.5 py-1.5 rounded-full text-xs font-label-md transition-all border ${
                   active
-                    ? 'bg-primary-container text-on-primary-container border-primary/50 font-bold shadow-[0_0_14px_rgba(160,120,255,0.35)]'
-                    : 'bg-surface-container-high/60 text-on-surface-variant hover:text-on-surface border-outline-variant/25 hover:border-primary/35'
+                    ? 'bg-primary text-on-primary border-primary font-bold shadow-sm'
+                    : 'bg-surface-container-low text-on-surface-variant hover:text-on-surface border-outline-variant hover:border-outline'
                 }`}
               >
                 {categoryLabels[cat]} <span className="opacity-75 font-mono">({count})</span>
@@ -274,7 +274,7 @@ export function FeaturedProjectsGridSection() {
               className={`h-full rounded-2xl transition-all ${
                 arrangeMode ? 'cursor-grab active:cursor-grabbing' : ''
               } ${isBeingDragged ? 'opacity-45 scale-[0.98]' : ''} ${
-                isDragTarget ? 'ring-2 ring-secondary shadow-[0_0_24px_rgba(123,208,255,0.45)]' : ''
+                isDragTarget ? 'ring-2 ring-secondary shadow-md' : ''
               }`}
             >
               <TiltCard maxTilt={arrangeMode ? 0 : 4} depth={8} glare={!arrangeMode} className="rounded-2xl h-full">
