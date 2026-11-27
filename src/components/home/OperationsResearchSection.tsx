@@ -81,7 +81,7 @@ export function OperationsResearchSection() {
       id="operations-research"
       className="w-full max-w-[1280px] mx-auto px-gutter py-12 relative z-10 scroll-mt-24 content-auto"
     >
-      <div className="rounded-3xl bg-surface-container-low/85 dark:bg-[#121520]/95 border border-primary/30 shadow-[0_20px_60px_rgba(0,0,0,0.35)] p-6 sm:p-10 relative overflow-hidden">
+      <div className="rounded-3xl bg-surface-container-low/85 dark:bg-[#0a0a0a]/95 border border-primary/30 shadow-[0_20px_60px_rgba(0,0,0,0.35)] p-6 sm:p-10 relative overflow-hidden">
         {/* Ambient Accent Glow */}
         <div className="absolute -top-24 -right-24 w-72 h-72 rounded-full bg-[radial-gradient(circle,rgba(160,120,255,0.22),transparent_70%)] pointer-events-none" />
         <div className="absolute -bottom-24 -left-24 w-72 h-72 rounded-full bg-[radial-gradient(circle,rgba(123,208,255,0.18),transparent_70%)] pointer-events-none" />
@@ -135,7 +135,7 @@ export function OperationsResearchSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.2 }}
                 transition={{ duration: 0.35, delay: idx * 0.07 }}
-                className="p-5 sm:p-6 rounded-2xl bg-surface-container-lowest/80 dark:bg-[#171a26]/90 border border-outline-variant/25 dark:border-white/[0.08] hover:border-primary/45 transition-all flex flex-col justify-between"
+                className="p-5 sm:p-6 rounded-2xl bg-surface-container-lowest/80 dark:bg-[#111111]/95 border border-outline-variant/25 dark:border-white/[0.08] hover:border-primary/45 transition-all flex flex-col justify-between"
               >
                 <div>
                   <div className="flex items-center justify-between gap-3 mb-3.5">

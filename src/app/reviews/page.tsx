@@ -190,7 +190,7 @@ export default function ReviewsPage() {
                   onClick={() => setSelectedCategory(tab.id)}
                   className={`px-3.5 py-1.5 rounded-full text-xs font-label-sm transition-all duration-200 ${
                     selectedCategory === tab.id
-                      ? 'bg-primary text-white font-bold shadow-[0_0_12px_rgba(160,120,255,0.4)]'
+                      ? 'bg-primary text-on-primary font-bold shadow-sm'
                       : 'bg-white/40 dark:bg-white/[0.04] text-on-surface-variant hover:text-on-surface hover:bg-white/60 dark:hover:bg-white/[0.08]'
                   }`}
                 >

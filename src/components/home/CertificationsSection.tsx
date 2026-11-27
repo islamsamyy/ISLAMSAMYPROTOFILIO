@@ -196,7 +196,7 @@ export function CertificationsSection() {
               key={cert.id}
               type="button"
               onClick={() => setViewingCert(cert)}
-              className="group/card relative text-left rounded-2xl bg-surface-container-low/90 dark:bg-[#14161f]/95 hover:bg-surface-container-low border border-white/15 dark:border-white/[0.08] hover:border-primary/50 shadow-lg hover:shadow-[0_12px_32px_rgba(160,120,255,0.25)] transition-all duration-200 overflow-hidden flex flex-col"
+              className="group/card relative text-left rounded-2xl bg-surface-container-low/90 dark:bg-[#0a0a0a]/95 hover:bg-surface-container-low border border-white/15 dark:border-white/[0.08] hover:border-primary/50 shadow-lg hover:shadow-[0_12px_32px_rgba(160,120,255,0.25)] transition-all duration-200 overflow-hidden flex flex-col"
             >
               {/* Certificate Image Frame */}
               <div className="relative aspect-[16/10] w-full bg-surface-container-lowest overflow-hidden border-b border-white/10">
@@ -231,7 +231,7 @@ export function CertificationsSection() {
                   )}
                   {cert.status}
                 </span>
-                <span className="absolute bottom-2.5 right-2.5 inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-background/85 backdrop-blur-md border border-primary/40 text-primary text-[10px] font-mono font-bold group-hover/card:bg-primary group-hover/card:text-white transition-colors">
+                <span className="absolute bottom-2.5 right-2.5 inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-background/85 backdrop-blur-md border border-primary/40 text-primary text-[10px] font-mono font-bold group-hover/card:bg-primary group-hover/card:text-on-primary transition-colors">
                   <Eye className="w-3 h-3" />
                   <span>View</span>
                 </span>

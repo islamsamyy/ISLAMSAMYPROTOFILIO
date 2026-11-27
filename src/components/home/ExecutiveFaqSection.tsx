@@ -82,8 +82,8 @@ export function ExecutiveFaqSection() {
               key={idx}
               className={`rounded-2xl border transition-all overflow-hidden ${
                 isOpen
-                  ? 'bg-surface-container-low/95 dark:bg-[#151822]/95 border-primary/40 shadow-[0_8px_24px_rgba(0,0,0,0.2)]'
-                  : 'bg-surface-container-low/70 dark:bg-[#14161f]/80 border-outline-variant/25 hover:border-primary/30'
+                  ? 'bg-surface-container-low/95 dark:bg-[#111111]/95 border-primary/40 shadow-[0_8px_24px_rgba(0,0,0,0.2)]'
+                  : 'bg-surface-container-low/70 dark:bg-[#0a0a0a]/85 border-outline-variant/25 hover:border-primary/30'
               }`}
             >
               <button

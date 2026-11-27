@@ -300,7 +300,7 @@ export function TechArsenalSection() {
       </div>
 
       {/* Live Architecture Telemetry Stream Box */}
-      <div className="w-full max-w-5xl mx-auto mb-8 p-4 sm:p-5 rounded-2xl bg-surface-container-low/90 dark:bg-[#14161f]/95 border border-primary/30 shadow-[0_8px_32px_rgba(0,0,0,0.6)] relative overflow-hidden group">
+      <div className="w-full max-w-5xl mx-auto mb-8 p-4 sm:p-5 rounded-2xl bg-surface-container-low/90 dark:bg-[#0a0a0a]/95 border border-primary/30 shadow-[0_8px_32px_rgba(0,0,0,0.6)] relative overflow-hidden group">
         <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-surface-container-high/60">
           <div className="flex items-center gap-2">
             <span className="w-2.5 h-2.5 rounded-full bg-secondary animate-pulse shadow-[0_0_8px_#7bd0ff]" />
@@ -469,7 +469,7 @@ export function TechArsenalSection() {
               return (
                 <div
                   key={`${tech.id}-${index}`}
-                  className={`tech-card group/card relative w-[310px] sm:w-[350px] min-h-[320px] shrink-0 p-6 rounded-2xl bg-surface-container-low/90 dark:bg-[#14161f]/95 border ${borderTheme} shadow-[0_8px_24px_rgba(0,0,0,0.45)] transition-all duration-300 flex flex-col justify-between`}
+                  className={`tech-card group/card relative w-[310px] sm:w-[350px] min-h-[320px] shrink-0 p-6 rounded-2xl bg-surface-container-low/90 dark:bg-[#0a0a0a]/95 border ${borderTheme} shadow-[0_8px_24px_rgba(0,0,0,0.45)] transition-all duration-300 flex flex-col justify-between`}
                   data-categories={tech.categories}
                 >
                   {/* Top Specular Rim Light */}

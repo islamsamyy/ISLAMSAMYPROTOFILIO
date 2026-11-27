@@ -233,7 +233,7 @@ export default function AdminReservationsPage() {
                   onClick={() => setFilterStatus(st)}
                   className={`px-3.5 py-1.5 rounded-full font-label-md text-xs uppercase tracking-wider transition-all ${
                     filterStatus === st
-                      ? 'bg-primary text-white font-bold shadow-[0_0_12px_rgba(160,120,255,0.4)]'
+                      ? 'bg-primary text-on-primary font-bold shadow-sm'
                       : 'text-on-surface-variant hover:text-on-surface hover:bg-white/40 dark:hover:bg-white/[0.06]'
                   }`}
                 >

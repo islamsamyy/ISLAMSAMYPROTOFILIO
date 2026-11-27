@@ -278,7 +278,7 @@ export function FeaturedProjectsGridSection() {
               }`}
             >
               <TiltCard maxTilt={arrangeMode ? 0 : 4} depth={8} glare={!arrangeMode} className="rounded-2xl h-full">
-                <div className="p-4 sm:p-5 rounded-2xl bg-surface-container-low/90 dark:bg-[#14161f]/95 border border-outline-variant/25 dark:border-white/[0.08] hover:border-primary/45 shadow-[0_10px_30px_rgba(0,0,0,0.22)] flex flex-col justify-between h-full transition-colors">
+                <div className="p-4 sm:p-5 rounded-2xl bg-surface-container-low/90 dark:bg-[#0a0a0a]/95 border border-outline-variant/25 dark:border-white/[0.08] hover:border-primary/45 shadow-[0_10px_30px_rgba(0,0,0,0.22)] flex flex-col justify-between h-full transition-colors">
                   <div>
                     {/* Top Meta Bar: Priority Rank + Category + Arrange Controls */}
                     <div className="flex items-center justify-between gap-2 mb-3">

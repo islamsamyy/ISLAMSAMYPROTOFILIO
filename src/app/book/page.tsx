@@ -163,7 +163,7 @@ export default function BookPage() {
                 onClick={() => setBookingMode('packages')}
                 className={`relative px-6 py-2.5 rounded-full font-label-md text-xs sm:text-sm font-semibold transition-all ${
                   bookingMode === 'packages'
-                    ? 'text-white bg-primary shadow-[0_0_16px_rgba(160,120,255,0.5)] font-bold'
+                    ? 'text-on-primary bg-primary shadow-[0_0_16px_rgba(255,255,255,0.15)] font-bold'
                     : 'text-on-surface-variant hover:text-on-surface'
                 }`}
               >
@@ -173,7 +173,7 @@ export default function BookPage() {
                 onClick={() => setBookingMode('consultation')}
                 className={`relative px-6 py-2.5 rounded-full font-label-md text-xs sm:text-sm font-semibold transition-all ${
                   bookingMode === 'consultation'
-                    ? 'text-white bg-primary shadow-[0_0_16px_rgba(160,120,255,0.5)] font-bold'
+                    ? 'text-on-primary bg-primary shadow-[0_0_16px_rgba(255,255,255,0.15)] font-bold'
                     : 'text-on-surface-variant hover:text-on-surface'
                 }`}
               >

@@ -204,7 +204,7 @@ export default function PortfolioHomePage() {
       className="lg:col-span-3 flex flex-col gap-3.5 text-left order-2 lg:order-1 w-full max-w-md sm:max-w-lg lg:max-w-none mx-auto"
     >
       <TiltCard maxTilt={6} depth={10} glare={true} className="rounded-xl">
-        <div className="group relative p-space-md rounded-xl bg-surface-container-low/90 dark:bg-[#14161f]/95 hover:bg-surface-container/95 border border-primary/20 hover:border-primary/40 shadow-[0_4px_24px_rgba(0,0,0,0.4)] transition-all duration-300">
+        <div className="group relative p-space-md rounded-xl bg-surface-container-low/90 dark:bg-[#0a0a0a]/95 hover:bg-surface-container/95 border border-primary/20 hover:border-primary/40 shadow-[0_4px_24px_rgba(0,0,0,0.4)] transition-all duration-300">
           <div className="flex items-center justify-between mb-1">
             <span className="font-label-sm text-label-sm text-primary uppercase tracking-widest font-semibold">{t('hero.card1Category', '01 • CUSTOM ERP SYSTEMS')}</span>
             <span className="w-2 h-2 rounded-full bg-primary shadow-[0_0_8px_#d0bcff]"></span>
@@ -214,7 +214,7 @@ export default function PortfolioHomePage() {
         </div>
       </TiltCard>
       <TiltCard maxTilt={6} depth={10} glare={true} className="rounded-xl">
-        <div className="group relative p-space-md rounded-xl bg-surface-container-low/90 dark:bg-[#14161f]/95 hover:bg-surface-container/95 border border-secondary/20 hover:border-secondary/40 shadow-[0_4px_24px_rgba(0,0,0,0.4)] transition-all duration-300">
+        <div className="group relative p-space-md rounded-xl bg-surface-container-low/90 dark:bg-[#0a0a0a]/95 hover:bg-surface-container/95 border border-secondary/20 hover:border-secondary/40 shadow-[0_4px_24px_rgba(0,0,0,0.4)] transition-all duration-300">
           <div className="flex items-center justify-between mb-1">
             <span className="font-label-sm text-label-sm text-secondary uppercase tracking-widest font-semibold">{t('hero.card2Category', '02 • WORKFLOW AUTOMATION')}</span>
             <span className="w-2 h-2 rounded-full bg-secondary shadow-[0_0_8px_#7bd0ff]"></span>
@@ -224,7 +224,7 @@ export default function PortfolioHomePage() {
         </div>
       </TiltCard>
       <TiltCard maxTilt={6} depth={10} glare={true} className="rounded-xl">
-        <div className="group relative p-space-md rounded-xl bg-surface-container-low/90 dark:bg-[#14161f]/95 hover:bg-surface-container/95 border border-tertiary/20 hover:border-tertiary/40 shadow-[0_4px_24px_rgba(0,0,0,0.4)] transition-all duration-300">
+        <div className="group relative p-space-md rounded-xl bg-surface-container-low/90 dark:bg-[#0a0a0a]/95 hover:bg-surface-container/95 border border-tertiary/20 hover:border-tertiary/40 shadow-[0_4px_24px_rgba(0,0,0,0.4)] transition-all duration-300">
           <div className="flex items-center justify-between mb-1">
             <span className="font-label-sm text-label-sm text-tertiary uppercase tracking-widest font-semibold">{t('hero.card3Category', '03 • AUTONOMOUS AI AGENTS')}</span>
             <span className="w-2 h-2 rounded-full bg-tertiary shadow-[0_0_8px_#ffb690]"></span>
@@ -303,7 +303,7 @@ export default function PortfolioHomePage() {
       className="lg:col-span-3 flex flex-col gap-3.5 text-left order-3 w-full max-w-md sm:max-w-lg lg:max-w-none mx-auto"
     >
       <TiltCard maxTilt={6} depth={10} glare={true} className="rounded-xl">
-        <div className="group relative p-space-md rounded-xl bg-surface-container-low/90 dark:bg-[#14161f]/95 hover:bg-surface-container/95 border border-secondary/20 hover:border-secondary/40 shadow-[0_4px_24px_rgba(0,0,0,0.4)] transition-all duration-300">
+        <div className="group relative p-space-md rounded-xl bg-surface-container-low/90 dark:bg-[#0a0a0a]/95 hover:bg-surface-container/95 border border-secondary/20 hover:border-secondary/40 shadow-[0_4px_24px_rgba(0,0,0,0.4)] transition-all duration-300">
           <div className="flex items-center justify-between mb-1">
             <span className="font-label-sm text-label-sm text-secondary uppercase tracking-widest font-semibold">{t('hero.card4Category', '04 • DATA ANALYSIS & BI')}</span>
             <span className="w-2 h-2 rounded-full bg-secondary shadow-[0_0_8px_#7bd0ff]"></span>
@@ -313,7 +313,7 @@ export default function PortfolioHomePage() {
         </div>
       </TiltCard>
       <TiltCard maxTilt={6} depth={10} glare={true} className="rounded-xl">
-        <div className="group relative p-space-md rounded-xl bg-surface-container-low/90 dark:bg-[#14161f]/95 hover:bg-surface-container/95 border border-tertiary/20 hover:border-tertiary/40 shadow-[0_4px_24px_rgba(0,0,0,0.4)] transition-all duration-300">
+        <div className="group relative p-space-md rounded-xl bg-surface-container-low/90 dark:bg-[#0a0a0a]/95 hover:bg-surface-container/95 border border-tertiary/20 hover:border-tertiary/40 shadow-[0_4px_24px_rgba(0,0,0,0.4)] transition-all duration-300">
           <div className="flex items-center justify-between mb-1">
             <span className="font-label-sm text-label-sm text-tertiary uppercase tracking-widest font-semibold">{t('hero.card5Category', '05 • FULL-STACK WEB DEV')}</span>
             <span className="w-2 h-2 rounded-full bg-tertiary shadow-[0_0_8px_#ffb690]"></span>
@@ -323,7 +323,7 @@ export default function PortfolioHomePage() {
         </div>
       </TiltCard>
       <TiltCard maxTilt={6} depth={10} glare={true} className="rounded-xl">
-        <div className="group relative p-space-md rounded-xl bg-surface-container-low/90 dark:bg-[#14161f]/95 hover:bg-surface-container/95 border border-primary/20 hover:border-primary/40 shadow-[0_4px_24px_rgba(0,0,0,0.4)] transition-all duration-300">
+        <div className="group relative p-space-md rounded-xl bg-surface-container-low/90 dark:bg-[#0a0a0a]/95 hover:bg-surface-container/95 border border-primary/20 hover:border-primary/40 shadow-[0_4px_24px_rgba(0,0,0,0.4)] transition-all duration-300">
           <div className="flex items-center justify-between mb-1">
             <span className="font-label-sm text-label-sm text-primary uppercase tracking-widest font-semibold">{t('hero.card6Category', '06 • DATA PIPELINE SCALE')}</span>
             <span className="w-2 h-2 rounded-full bg-primary shadow-[0_0_8px_#d0bcff]"></span>
@@ -457,10 +457,10 @@ export default function PortfolioHomePage() {
     {packages.map((pkg, idx) => {
       const isPopular = pkg.isPopular;
       const borderCls = isPopular
-        ? 'border-2 border-primary/50 shadow-[0_0_35px_rgba(160,120,255,0.25),0_12px_40px_rgba(0,0,0,0.6)] bg-surface-container-low/95 dark:bg-[#151821]/95'
+        ? 'border-2 border-primary/50 shadow-[0_0_35px_rgba(160,120,255,0.25),0_12px_40px_rgba(0,0,0,0.6)] bg-surface-container-low/95 dark:bg-[#111111]/95'
         : idx === 0
-        ? 'border border-primary/20 hover:border-primary/40 shadow-[0_8px_30px_rgba(0,0,0,0.5)] bg-surface-container-low/90 dark:bg-[#14161f]/95'
-        : 'border border-tertiary/20 hover:border-tertiary/40 shadow-[0_8px_30px_rgba(0,0,0,0.5)] bg-surface-container-low/90 dark:bg-[#14161f]/95';
+        ? 'border border-primary/20 hover:border-primary/40 shadow-[0_8px_30px_rgba(0,0,0,0.5)] bg-surface-container-low/90 dark:bg-[#0a0a0a]/95'
+        : 'border border-tertiary/20 hover:border-tertiary/40 shadow-[0_8px_30px_rgba(0,0,0,0.5)] bg-surface-container-low/90 dark:bg-[#0a0a0a]/95';
 
       return (
         <div key={pkg.id} className={`relative p-space-lg rounded-2xl transition-all duration-300 flex flex-col justify-between group ${borderCls}`} suppressHydrationWarning>
@@ -534,7 +534,7 @@ export default function PortfolioHomePage() {
       );
     })}
   </div>
-  <div className="p-space-md sm:p-space-lg rounded-2xl bg-surface-container-low/90 dark:bg-[#14161f]/95 border border-surface-container-high/60 shadow-[0_8px_30px_rgba(0,0,0,0.4)] flex flex-wrap items-center justify-around gap-6 text-on-surface-variant font-label-sm text-label-sm">
+  <div className="p-space-md sm:p-space-lg rounded-2xl bg-surface-container-low/90 dark:bg-[#0a0a0a]/95 border border-surface-container-high/60 shadow-[0_8px_30px_rgba(0,0,0,0.4)] flex flex-wrap items-center justify-around gap-6 text-on-surface-variant font-label-sm text-label-sm">
     <div className="flex items-center gap-2"><span className="material-symbols-outlined text-primary text-[20px]">verified_user</span><span className="text-on-surface font-semibold">{t('pricing.guarantee1', '100% Milestone-Gated Delivery')}</span></div>
     <div className="w-1.5 h-1.5 rounded-full bg-surface-container-highest hidden sm:block"></div>
     <div className="flex items-center gap-2"><span className="material-symbols-outlined text-secondary text-[20px]">tune</span><span className="text-on-surface font-semibold">{t('pricing.guarantee2', 'Fixed-Scope or Flexible T&M')}</span></div>
@@ -641,7 +641,7 @@ export default function PortfolioHomePage() {
 </div>
 {/*  Interactive Project Inquiry Form  */}
 <div className="lg:col-span-7">
-<form onSubmit={handleInquirySubmit} className="p-space-lg sm:p-space-xl rounded-2xl bg-surface-container-low/90 dark:bg-[#14161f]/95 border border-primary/20 shadow-[0_20px_50px_rgba(0,0,0,0.7)] flex flex-col gap-5" id="project-form">
+<form onSubmit={handleInquirySubmit} className="p-space-lg sm:p-space-xl rounded-2xl bg-surface-container-low/90 dark:bg-[#0a0a0a]/95 border border-primary/20 shadow-[0_20px_50px_rgba(0,0,0,0.7)] flex flex-col gap-5" id="project-form">
 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
 {/*  Name Input  */}
 <div className="flex flex-col gap-1.5">

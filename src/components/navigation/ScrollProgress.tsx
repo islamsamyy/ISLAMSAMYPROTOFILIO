@@ -64,7 +64,7 @@ export function ScrollProgress() {
             onClick={scrollToTop}
             aria-label={`Back to top (${scrollPercentage}% scrolled)`}
             title={`Scroll to Top (${scrollPercentage}%)`}
-            className="fixed bottom-6 right-6 z-40 flex items-center gap-2 px-3 py-2 rounded-full bg-surface-container-high/90 dark:bg-[#191c24]/90 backdrop-blur-xl border border-primary/30 hover:border-primary/60 text-on-surface shadow-[0_8px_30px_rgba(0,0,0,0.4)] hover:shadow-[0_0_25px_rgba(208,188,255,0.35)] transition-all duration-300 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            className="fixed bottom-6 right-6 z-40 flex items-center gap-2 px-3 py-2 rounded-full bg-surface-container-high/90 dark:bg-[#111111]/95 backdrop-blur-xl border border-outline-variant hover:border-primary/60 text-on-surface shadow-[0_8px_30px_rgba(0,0,0,0.5)] transition-all duration-300 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
           >
             <div className="relative w-6 h-6 flex items-center justify-center">
               {/* Circular SVG Progress Ring */}

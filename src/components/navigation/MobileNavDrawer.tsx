@@ -155,7 +155,7 @@ export function MobileNavDrawer({
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
             className={cn(
-              'relative z-10 flex flex-col justify-between w-[86vw] sm:w-[380px] max-w-[400px] h-full bg-[#0a0d18]/98 text-zinc-100 backdrop-blur-2xl shadow-[-10px_0_40px_rgba(0,0,0,0.85)] overflow-y-auto',
+              'relative z-10 flex flex-col justify-between w-[86vw] sm:w-[380px] max-w-[400px] h-full bg-[#0a0a0a]/98 text-zinc-100 backdrop-blur-2xl shadow-[-10px_0_40px_rgba(0,0,0,0.85)] overflow-y-auto',
               isAr ? 'border-r border-white/10' : 'border-l border-white/10'
             )}
           >
@@ -295,7 +295,7 @@ export function MobileNavDrawer({
                       {isAr ? 'المظهر' : 'Appearance'}
                     </span>
                     <span className="text-[11px] text-zinc-400 font-mono">
-                      {resolvedTheme === 'dark' ? 'Cybernetic Dark' : 'High-Contrast Light'}
+                      {resolvedTheme === 'dark' ? 'Obsidian Dark' : 'High-Contrast Light'}
                     </span>
                   </div>
                   <ThemeToggle />
@@ -305,7 +305,7 @@ export function MobileNavDrawer({
                 <Link
                   href="/book"
                   onClick={onClose}
-                  className="flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-gradient-to-r from-primary-container via-primary to-secondary text-white font-semibold text-sm shadow-[0_0_18px_rgba(160,120,255,0.4)] transition-all active:scale-[0.98] min-h-[48px]"
+                  className="flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-gradient-to-r from-primary-container via-primary to-secondary dark:bg-none dark:bg-[#ededed] dark:hover:bg-white text-white dark:text-[#0a0a0a] font-semibold text-sm shadow-[0_0_18px_rgba(160,120,255,0.4)] dark:shadow-none transition-all active:scale-[0.98] min-h-[48px]"
                 >
                   <Calendar className="w-4 h-4" />
                   <span>{t('header.bookAdvisory', 'Book ROI Consultation')}</span>

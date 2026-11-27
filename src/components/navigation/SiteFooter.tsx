@@ -19,7 +19,7 @@ export function SiteFooter() {
                 <img
                   src="/images/artboard-mark.png"
                   alt="Islam Samy"
-                  className="h-8 w-auto object-contain filter drop-shadow-[0_0_12px_rgba(123,208,255,0.85)] brightness-110"
+                  className="h-8 w-auto object-contain filter drop-shadow-[0_0_10px_rgba(255,255,255,0.25)] brightness-110"
                 />
               </div>
               <span className="font-headline-sm text-lg text-on-surface font-semibold group-hover:text-primary transition-colors">
@@ -33,7 +33,7 @@ export function SiteFooter() {
               )}
             </p>
             <div className="flex items-center gap-2 pt-1">
-              <span className="w-2 h-2 rounded-full bg-secondary animate-pulse shadow-[0_0_8px_#7bd0ff]"></span>
+              <span className="w-2 h-2 rounded-full bg-secondary animate-pulse shadow-[0_0_8px_rgba(70,167,88,0.8)]"></span>
               <span className="font-label-sm text-xs text-secondary font-medium">
                 {t('footer.openingsBadge', 'Advisory Openings: Q3/Q4 Available')}
               </span>

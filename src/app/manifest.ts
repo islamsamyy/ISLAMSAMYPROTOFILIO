@@ -7,8 +7,8 @@ export default function manifest(): MetadataRoute.Manifest {
     description: 'Executive Portfolio, Technical Advisory & Autonomous AI Systems Showcase.',
     start_url: '/',
     display: 'standalone',
-    background_color: '#0c0e15',
-    theme_color: '#0c0e15',
+    background_color: '#000000',
+    theme_color: '#000000',
     icons: [
       {
         src: '/favicon.ico',

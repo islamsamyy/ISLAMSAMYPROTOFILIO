@@ -45,7 +45,7 @@ export function ExperienceTimelineSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.4, delay: idx * 0.06 }}
-            className="group p-5 rounded-2xl bg-surface-container-low/90 dark:bg-[#14161f]/95 hover:bg-surface-container-high/90 border border-outline-variant/30 hover:border-primary/50 shadow-[0_8px_24px_rgba(0,0,0,0.35)] transition-all duration-300 flex flex-col justify-between gap-3.5"
+            className="group p-5 rounded-2xl bg-surface-container-low/90 dark:bg-[#0a0a0a]/95 hover:bg-surface-container-high/90 border border-outline-variant/30 hover:border-primary/50 shadow-[0_8px_24px_rgba(0,0,0,0.35)] transition-all duration-300 flex flex-col justify-between gap-3.5"
           >
             <div>
               {/* Header Info */}

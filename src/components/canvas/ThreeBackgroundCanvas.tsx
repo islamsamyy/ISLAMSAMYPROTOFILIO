@@ -34,7 +34,7 @@ export function ThreeBackgroundCanvas({
       typeof document !== 'undefined' &&
       document.documentElement.classList.contains('dark');
 
-    const getBgColor = () => (isDark() ? 0x0c0e15 : 0xf6f7fc);
+    const getBgColor = () => (isDark() ? 0x000000 : 0xf6f7fc);
 
     let renderer: THREE.WebGLRenderer | null = null;
     let animId = 0;
@@ -77,9 +77,9 @@ export function ThreeBackgroundCanvas({
         if (ctx) {
           const gradient = ctx.createRadialGradient(24, 24, 0, 24, 24, 24);
           gradient.addColorStop(0, 'rgba(255, 255, 255, 1)');
-          gradient.addColorStop(0.25, 'rgba(220, 235, 255, 0.9)');
-          gradient.addColorStop(0.55, 'rgba(123, 208, 255, 0.45)');
-          gradient.addColorStop(0.85, 'rgba(160, 120, 255, 0.15)');
+          gradient.addColorStop(0.25, 'rgba(237, 237, 237, 0.85)');
+          gradient.addColorStop(0.55, 'rgba(161, 161, 161, 0.35)');
+          gradient.addColorStop(0.85, 'rgba(70, 167, 88, 0.12)');
           gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
           ctx.fillStyle = gradient;
           ctx.fillRect(0, 0, 48, 48);
@@ -100,9 +100,9 @@ export function ThreeBackgroundCanvas({
       const positions = new Float32Array(particleCount * 3);
       const colors = new Float32Array(particleCount * 3);
 
-      const colorViolet = new THREE.Color(0xd0bcff);
-      const colorCyan = new THREE.Color(0x7bd0ff);
-      const colorAmber = new THREE.Color(0xffb690);
+      const colorPrimary = new THREE.Color(0xededed);
+      const colorMuted = new THREE.Color(0x888888);
+      const colorEmerald = new THREE.Color(0x46a758);
 
       for (let i = 0; i < particleCount; i++) {
         const i3 = i * 3;
@@ -115,7 +115,7 @@ export function ThreeBackgroundCanvas({
         positions[i3 + 2] = z;
 
         const rnd = Math.random();
-        const chosenColor = rnd < 0.55 ? colorViolet : rnd < 0.88 ? colorCyan : colorAmber;
+        const chosenColor = rnd < 0.6 ? colorPrimary : rnd < 0.9 ? colorMuted : colorEmerald;
         colors[i3] = chosenColor.r;
         colors[i3 + 1] = chosenColor.g;
         colors[i3 + 2] = chosenColor.b;
@@ -126,12 +126,12 @@ export function ThreeBackgroundCanvas({
 
       const initialDark = isDark();
       const particleMaterial = new THREE.PointsMaterial({
-        size: initialDark ? 14.0 : 12.0,
+        size: initialDark ? 11.0 : 12.0,
         map: particleTexture,
         color: new THREE.Color(initialDark ? 0xffffff : 0x5b21b6),
         vertexColors: true,
         transparent: true,
-        opacity: initialDark ? 0.92 : 0.72,
+        opacity: initialDark ? 0.5 : 0.72,
         blending: initialDark ? THREE.AdditiveBlending : THREE.NormalBlending,
         depthWrite: false,
       });
@@ -163,8 +163,8 @@ export function ThreeBackgroundCanvas({
           if (distSq < maxConnectDistSq) {
             lineCoords.push(x1, y1, z1, positions[j3], positions[j3 + 1], positions[j3 + 2]);
             const alpha = 1 - Math.sqrt(distSq) / maxConnectDist;
-            lineCol.push(0.82 * alpha, 0.74 * alpha, 1.0 * alpha);
-            lineCol.push(0.48 * alpha, 0.82 * alpha, 1.0 * alpha);
+            lineCol.push(0.45 * alpha, 0.45 * alpha, 0.45 * alpha);
+            lineCol.push(0.28 * alpha, 0.28 * alpha, 0.28 * alpha);
             lineSegmentsCount++;
           }
         }
@@ -229,9 +229,9 @@ export function ThreeBackgroundCanvas({
       gridGeometry.setIndex(gridIndices);
 
       const gridMaterial = new THREE.LineBasicMaterial({
-        color: new THREE.Color(initialDark ? 0x7bd0ff : 0x0284c7),
+        color: new THREE.Color(initialDark ? 0x2e2e2e : 0x0284c7),
         transparent: true,
-        opacity: initialDark ? 0.25 : 0.22,
+        opacity: initialDark ? 0.35 : 0.22,
         blending: initialDark ? THREE.AdditiveBlending : THREE.NormalBlending,
         depthWrite: false,
       });
@@ -243,7 +243,7 @@ export function ThreeBackgroundCanvas({
       // 8. Minimalist Gyroscopic Ambient Rings
       const orbitGroup = new THREE.Group();
       const ringRadii = [320, 460];
-      const ringColors = [0xd0bcff, 0x7bd0ff];
+      const ringColors = [0x333333, 0x262626];
       const ringMaterials: THREE.LineBasicMaterial[] = [];
 
       ringRadii.forEach((radius, idx) => {
@@ -313,25 +313,25 @@ export function ThreeBackgroundCanvas({
 
         const blend = dark ? THREE.AdditiveBlending : THREE.NormalBlending;
 
-        particleMaterial.size = dark ? 14.0 : 12.0;
+        particleMaterial.size = dark ? 11.0 : 12.0;
         particleMaterial.color.setHex(dark ? 0xffffff : 0x5b21b6);
-        particleMaterial.opacity = dark ? 0.92 : 0.72;
+        particleMaterial.opacity = dark ? 0.5 : 0.72;
         particleMaterial.blending = blend;
         particleMaterial.needsUpdate = true;
 
         lineMaterial.color.setHex(dark ? 0xffffff : 0x4c1d95);
-        lineMaterial.opacity = dark ? 0.35 : 0.28;
+        lineMaterial.opacity = dark ? 0.25 : 0.28;
         lineMaterial.blending = blend;
         lineMaterial.needsUpdate = true;
 
-        gridMaterial.color.setHex(dark ? 0x7bd0ff : 0x0284c7);
-        gridMaterial.opacity = dark ? 0.25 : 0.22;
+        gridMaterial.color.setHex(dark ? 0x2e2e2e : 0x0284c7);
+        gridMaterial.opacity = dark ? 0.35 : 0.22;
         gridMaterial.blending = blend;
         gridMaterial.needsUpdate = true;
 
         ringMaterials.forEach((m, idx) => {
           m.color.setHex(dark ? ringColors[idx] : idx === 0 ? 0x6626e2 : 0x00658b);
-          m.opacity = dark ? 0.2 : 0.24;
+          m.opacity = dark ? 0.22 : 0.24;
           m.blending = blend;
           m.needsUpdate = true;
         });

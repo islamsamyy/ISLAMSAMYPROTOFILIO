@@ -58,7 +58,7 @@ export function LatestInsightsSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.35, delay: idx * 0.08 }}
-              className="group p-5 sm:p-6 rounded-2xl bg-surface-container-low/90 dark:bg-[#14161f]/95 border border-outline-variant/25 dark:border-white/[0.08] hover:border-primary/45 shadow-[0_10px_28px_rgba(0,0,0,0.2)] flex flex-col justify-between transition-all"
+              className="group p-5 sm:p-6 rounded-2xl bg-surface-container-low/90 dark:bg-[#0a0a0a]/95 border border-outline-variant/25 dark:border-white/[0.08] hover:border-primary/45 shadow-[0_10px_28px_rgba(0,0,0,0.2)] flex flex-col justify-between transition-all"
             >
               <div>
                 <div className="flex items-center justify-between gap-2 mb-3">

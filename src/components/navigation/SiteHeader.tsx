@@ -84,12 +84,12 @@ export function SiteHeader() {
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
         scrolled
-          ? "bg-white/92 dark:bg-[#0c0e15]/88 backdrop-blur-xl border-b border-slate-200/90 dark:border-white/[0.10] shadow-[0_4px_24px_rgba(15,23,42,0.08)] dark:shadow-[0_4px_24px_rgba(0,0,0,0.5)]"
-          : "bg-white/80 dark:bg-transparent backdrop-blur-md border-b border-slate-200/60 dark:border-white/[0.05]"
+          ? "bg-white/92 dark:bg-[#000000]/90 backdrop-blur-xl border-b border-slate-200/90 dark:border-white/[0.10] shadow-[0_4px_24px_rgba(15,23,42,0.08)] dark:shadow-[0_4px_24px_rgba(0,0,0,0.6)]"
+          : "bg-white/80 dark:bg-transparent backdrop-blur-md border-b border-slate-200/60 dark:border-white/[0.08]"
       )}
     >
       {/* Top Specular Rim Reflection */}
-      <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-primary/35 dark:via-cyan-400/40 to-transparent pointer-events-none" />
+      <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-primary/35 dark:via-white/20 to-transparent pointer-events-none" />
 
       <div className="h-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4 relative z-10">
         
@@ -104,7 +104,7 @@ export function SiteHeader() {
             <img
               src="/images/250LOGO.png"
               alt="Islam Samy"
-              className="h-9 sm:h-12 md:h-14 w-auto object-contain filter drop-shadow-[0_2px_8px_rgba(91,33,182,0.22)] dark:drop-shadow-[0_0_18px_rgba(123,208,255,0.95)] dark:brightness-110 transition-all duration-300"
+              className="h-9 sm:h-12 md:h-14 w-auto object-contain filter drop-shadow-[0_2px_8px_rgba(91,33,182,0.22)] dark:drop-shadow-[0_0_12px_rgba(255,255,255,0.28)] dark:brightness-110 transition-all duration-300"
             />
           </div>
           <div className="flex flex-col min-w-0">
@@ -158,7 +158,7 @@ export function SiteHeader() {
                 {isActive && (
                   <motion.div
                     layoutId="header-active-pill"
-                    className="absolute inset-0 rounded-full bg-white/90 dark:bg-white/[0.12] border border-primary/30 dark:border-primary/40 shadow-[0_2px_14px_rgba(0,0,0,0.1)] dark:shadow-[0_0_20px_rgba(160,120,255,0.35)] -z-10"
+                    className="absolute inset-0 rounded-full bg-white/90 dark:bg-white/[0.12] border border-primary/30 dark:border-white/20 shadow-[0_2px_14px_rgba(0,0,0,0.1)] dark:shadow-none -z-10"
                     transition={{ type: 'spring', stiffness: 400, damping: 30 }}
                   />
                 )}
@@ -174,7 +174,7 @@ export function SiteHeader() {
           <Link
             href="/book"
             onClick={() => setCurrentHash('')}
-            className="hidden sm:inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-gradient-to-r from-primary-container via-primary to-secondary text-white font-nexa font-bold text-xs tracking-wide shadow-[0_0_20px_rgba(160,120,255,0.4)] hover:shadow-[0_0_30px_rgba(123,208,255,0.6)] border border-white/25 backdrop-blur-md transition-all hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary whitespace-nowrap"
+            className="hidden sm:inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-gradient-to-r from-primary-container via-primary to-secondary dark:bg-none dark:bg-[#ededed] dark:hover:bg-white text-white dark:text-[#0a0a0a] font-nexa font-bold text-xs tracking-wide shadow-[0_0_20px_rgba(160,120,255,0.4)] dark:shadow-none border border-white/25 dark:border-transparent backdrop-blur-md transition-all hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary whitespace-nowrap"
           >
             <span className="material-symbols-outlined text-[15px]">calendar_month</span>
             <span>{t('header.bookAdvisory', 'Book Advisory')}</span>
